@@ -1,0 +1,100 @@
+<<<<<<< HEAD
+item.oldGensokyoSpell.name=Old Gensokyo Spellcard
+item.oldDemonSpell.name=Old Demon Spellcard
+item.oldCelestialSpell.name=Old Celestial Spellcard
+=======
+item.gensokyoNote.name=Gensokyo Note
+item.demonNote.name=Demon Note
+item.celestialNote.name=Celestial Note
+>>>>>>> origin/master
+
+item.gensokyoIngot.name=Gensokium
+item.demonIngot.name=Makaiium
+item.celestialIngot.name=Celestium
+
+item.gensokyoDust.name=Gensokium Dust
+item.demonDust.name=Makaiium Dust
+item.celestialDust.name=Celestium Dust
+
+<<<<<<< HEAD
+item.gensokyoNotesRuined.name=Ruined Old Notebook
+item.gensokyoNotesPat.name=Patched Gensokyo Notes
+item.gensokyoNotesDus.name=Dusty Gensokyo Notes
+item.gensokyoNotes.name=Gensokyo Notes
+item.gensokyoNotesImb.name=Imbued Gensokyo Notes
+item.gensokyoNotesArc.name=Arcane Gensokyo Notes
+=======
+item.researchNotesRuined.name=Ruined Old Notebook
+item.researchNotes.name=Gensokyo Research Notes
+item.researchNotesDec.name=Decrypted Gensokyo Research Notes
+item.researchNotesSol.name=Solved Gensokyo Research Notes
+item.researchNotesImb.name=Imbued Gensokyo Research Notes
+item.researchNotesArc.name=Arcane Gensokyo Research Notes
+>>>>>>> origin/master
+
+tile.gensokyoOreBlock.name=Gensokium Ore
+tile.demonOreBlock.name=Makaiium Ore
+tile.celestialOreBlock.name=Celestium Ore
+
+tile.keyStoneBlock.name=Keystone
+
+item.thSpellCard.300.name=Loving Heart "Double Spark"
+item.thSpellCard.301.name=Magicannon "Final Spark" 
+
+entity.THFairyIce.name=Ice Fairy
+entity.THFairyNether.name=Nether Fairy
+entity.HellRaven.name=Hell Raven
+<<<<<<< HEAD
+entity.TenguCrow.name=Crow Tengu
+=======
+entity.TenguCrow.name=Crow Tengu
+
+tc.research_category.JTG=Journey To Gensokyo
+jtg.research.name.RESEARCH_NOTES_DEC=Decrypted Research Notes
+jtg.research.text.RESEARCH_NOTES_DEC=You have managed to make sense of the data you collected about Gensokyo. The data you found appears to be a sequence of riddles. Maybe you could ask the fairies if they know more about this? You feel that solving these riddles will bring you a step closer to the magical world of Gensokyo.
+jtg.research.desc.RESEARCH_NOTES_DEC=Maybe you can ask that Baka for advice?
+
+jtg.research.name.RESEARCH_NOTES_SOL=Solved Research Notes
+jtg.research.text.RESEARCH_NOTES_SOL=While studying the notes you found, you managed to find useful data about a world called Gensokyo. With this data, you should one day be able to rip a gap in time and space, so it’ll be easier to get to Gensokyo. This data, however, brings with it even more questions, so more research will be needed.
+jtg.research.desc.RESEARCH_NOTES_SOL=Who knew that Baka knew that much?
+
+jtg.research.name.COLOR_PEARLS=Pearls Of Hourai
+jtg.research.text.COLOR_PEARLS=Hidden away inside the notes you find information on how to make what is refeared to as a Pearl Of Hourai. While the initial pearl is white, you think that you will be able to attune it to different elements with a bit more research.
+jtg.research.desc.COLOR_PEARLS=After this, you can accept five impossible requests
+
+jtg.research.name.COLOR_PEARLS_red=Red Pearl Of Hourai
+jtg.research.text.COLOR_PEARLS_red=You have found a way to attune the Pearls Of Hourai with the element of power and lunacy. You don't know what use they have at the moment, but you are sure they will come in handy.
+jtg.research.desc.COLOR_PEARLS_red=Lunatic Red Eyes
+
+jtg.research.name.COLOR_PEARLS_blue=Blue Pearl Of Hourai
+jtg.research.text.COLOR_PEARLS_blue=You have found a way to attune the Pearls Of Hourai with the element of calmness and the flowing water. You don't know what use they have at the moment, but you are sure they will come in handy.
+jtg.research.desc.COLOR_PEARLS_blue=Take the flow into my heart...!
+
+jtg.research.name.COLOR_PEARLS_green=Green Pearl Of Hourai
+jtg.research.text.COLOR_PEARLS_green=You have found a way to attune the Pearls Of Hourai with the element of flora and fauna, yet a shiver of greed managed to get in too. You don't know what use they have at the moment, but you are sure they will come in handy.
+jtg.research.desc.COLOR_PEARLS_green=Green Eyed Jealousy
+
+jtg.research.name.COLOR_PEARLS_yellow=Yellow Pearl Of Hourai
+jtg.research.text.COLOR_PEARLS_yellow=You have found a way to attune the Pearls Of Hourai with the element of light and the flowing of time. You don't know what use they have at the moment, but you are sure they will come in handy.
+jtg.research.desc.COLOR_PEARLS_yellow=ZA WARUDO!
+
+jtg.research.name.COLOR_PEARLS_purple=Purple Pearl Of Hourai
+jtg.research.text.COLOR_PEARLS_purple=You have found a way to attune the Pearls Of Hourai with the element of hardness and the darkest of nights. You don't know what use they have at the moment, but you are sure they will come in handy.
+jtg.research.desc.COLOR_PEARLS_purple=Hiding from Animatronic Animals for Six Hours.
+
+jtg.research.name.COLOR_PEARLS_aqua=Aqua Pearl Of Hourai
+jtg.research.text.COLOR_PEARLS_aqua=You have found a way to attune the Pearls Of Hourai with the element of ice and the freezing cold. You don't know what use they have at the moment, but you are sure they will come in handy.
+jtg.research.desc.COLOR_PEARLS_aqua=Do you wanna build a snowman?
+
+jtg.research.name.COLOR_PEARLS_orange=Orange Pearl Of Hourai
+jtg.research.text.COLOR_PEARLS_orange=You have found a way to attune the Pearls Of Hourai with the element of fire and the bright sun. You don't know what use they have at the moment, but you are sure they will come in handy.
+jtg.research.desc.COLOR_PEARLS_orange=Karyu no Hoko!
+
+jtg.research.name.POWER_ITEM=Power Up Item
+jtg.research.text.POWER_ITEM=Using some Shot materials and and some Gensokium Ingots, you have found a way to make Power Up Items.
+jtg.research.desc.POWER_ITEM=Moon Prism Power, Make Up!
+
+jtg.research.name.POINT_ITEM=Point Item
+jtg.research.text.POINT_ITEM=Using some Shot materials and and some Gensokium Ingots, you have found a way to make Point Items.
+jtg.research.desc.POINT_ITEM=Collect 100 for a One-Up!
+>>>>>>> origin/master

@@ -1,0 +1,16 @@
+[
+{
+  "modid": "journeyToGensokyo",
+  "name": "Journey To Gensokyo",
+  "description": "Journey to gensokyo is an addon to Touhou Items Mod that adds more spellcards and more mobs.",
+  "version": "0.5.3",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Katrix"],
+  "credits": "Cyros_Lugoth, Redleaf64",
+  "logoFile": "",
+  "screenshots": [],
+  "requiredMods": []
+}
+]
