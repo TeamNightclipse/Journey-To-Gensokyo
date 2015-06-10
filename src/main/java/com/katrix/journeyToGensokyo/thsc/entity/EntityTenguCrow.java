@@ -180,24 +180,20 @@ public class EntityTenguCrow extends EntityTHFairy {
 		    if(randMov == 0)
 		    {
 		    	this.moveRight(rand.nextDouble() * 0.5D + 0.5D, 12);
-		    	System.out.println("Moving Right " + randMov);
 		    }
 		    else if(randMov == 1)
 		    {
 		    	this.moveLeft(rand.nextDouble() * 0.5D + 0.5D, 12);
-		    	System.out.println("Moving Left " + randMov);
 		    }
 		    else if(randMov == 2)
 		    {
 		    	this.moveForward(rand.nextDouble() * 0.1D + 0.1D, 12);
-		    	System.out.println("Moving Back " + randMov);
 		    }
 		    else if(randMov == 3)
 		    {
 		    	if(rand.nextInt(2) == 0){
 			    	THShotLib.createShot(getShooter(), pos(), angle, 0.9F, ShotData.shot(THShotLib.FORM_WIND, THShotLib.RED, 0.8F, 1.0F, 0, 25));
 			    	this.moveForward(rand.nextDouble() * 0.2D + 3.0D, 20);
-			    	System.out.println("Super " + randMov);
 		    	}
 		    }
 		}
@@ -217,24 +213,20 @@ public class EntityTenguCrow extends EntityTHFairy {
 		    if(randMov == 0)
 		    {
 		    	this.moveRight(rand.nextDouble() * 0.5D + 0.5D, 12);
-		    	System.out.println("Moving Right " + randMov);
 		    }
 		    else if(randMov == 1)
 		    {
 		    	this.moveLeft(rand.nextDouble() * 0.5D + 0.5D, 12);
-		    	System.out.println("Moving Left " + randMov);
 		    }
 		    else if(randMov == 2)
 		    {
 		    	this.moveForward(rand.nextDouble() * 0.1D + 0.1D, 12);
-		    	System.out.println("Moving Back " + randMov);
 		    }
 		    else if(randMov == 3)
 		    {
 		    	if(rand.nextInt(2) == 0){
 			    	THShotLib.createShot(getShooter(), pos(), angle, 0.9F, ShotData.shot(THShotLib.FORM_WIND, THShotLib.RED, 0.8F, 1.0F, 0, 25));
 			    	this.moveForward(rand.nextDouble() * 0.2D + 3.0D, 20);
-			    	System.out.println("Super " + randMov);
 		    	}
 		    }
 		}

@@ -1,14 +1,5 @@
 package com.katrix.journeyToGensokyo.thsc;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraftforge.common.BiomeDictionary;
-import net.minecraftforge.common.BiomeDictionary.Type;
-
 import com.katrix.journeyToGensokyo.reference.ModInfo;
 import com.katrix.journeyToGensokyo.thsc.entity.EntityFamiliarIce;
 import com.katrix.journeyToGensokyo.thsc.entity.EntityHellRaven;
@@ -18,8 +9,7 @@ import com.katrix.journeyToGensokyo.thsc.entity.EntityTenguCrow;
 import com.katrix.journeyToGensokyo.thsc.entity.spellcard.THSC_DoubleSpark;
 import com.katrix.journeyToGensokyo.thsc.entity.spellcard.THSC_FinalSpark;
 
-import cpw.mods.fml.common.registry.EntityRegistry;
-import thKaguyaMod.entity.living.EntityCirno;
+import thKaguyaMod.init.THKaguyaConfig;
 import thKaguyaMod.registry.SpellCardRegistry;
 
 public class JTG_THSC {
@@ -40,23 +30,28 @@ public class JTG_THSC {
 		EntityTenguCrow.Init();
 		EntityTHFairyNether.Init();
 		
-		List<BiomeGenBase> spawnbiomes = new ArrayList<BiomeGenBase>(Arrays.asList(BiomeDictionary.getBiomesForType(Type.COLD)));
-		for (BiomeGenBase biome : BiomeDictionary.getBiomesForType(Type.SNOWY)) {
-			if (!spawnbiomes.contains(biome)) {
-				spawnbiomes.add(biome);
+		if(THKaguyaConfig.spawnDanmakuMob) {
+			
+			if(THKaguyaConfig.spawnFairy){
+				SpawnBiomeFixer.FairyFix();
 			}
-		}
-		for (BiomeGenBase biome : BiomeDictionary.getBiomesForType(Type.MOUNTAIN)) {
-			if (!spawnbiomes.contains(biome)) {
-				spawnbiomes.add(biome);
+			
+			if(THKaguyaConfig.spawnPhantom){
+				SpawnBiomeFixer.PhantomFix();
 			}
-		}
-		for (BiomeGenBase biome : BiomeDictionary.getBiomesForType(Type.END)) {
-			if (spawnbiomes.contains(biome)) {
-				spawnbiomes.remove(biome);
+			
+			if(THKaguyaConfig.spawnHanabeeper){
+				SpawnBiomeFixer.HanabeeperFix();
 			}
+			
+			if(THKaguyaConfig.spawnBoss){
+				SpawnBiomeFixer.CirnoFix();
+				SpawnBiomeFixer.RumiaFix();
+				SpawnBiomeFixer.TozikoFix();
+				SpawnBiomeFixer.WriggleFix();
+			}
+			
+			SpawnBiomeFixer.AmbientFix();
 		}
-		
-		EntityRegistry.addSpawn(EntityCirno.class, 2, 1, 1, EnumCreatureType.monster, spawnbiomes.toArray(new BiomeGenBase[0]));
 	}
 }

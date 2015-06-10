@@ -19,7 +19,7 @@ apply plugin: 'forge'
 
 compileJava.options.encoding = 'UTF-8'
 
-version = "1.7.10-0.5.3"
+version = "1.7.10-0.6.0"
 group= "com.katrix" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "journeyToGensokyo"
 

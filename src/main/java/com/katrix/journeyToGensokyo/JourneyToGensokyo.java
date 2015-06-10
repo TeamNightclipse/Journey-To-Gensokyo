@@ -1,5 +1,8 @@
 package com.katrix.journeyToGensokyo;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.katrix.journeyToGensokyo.net.PacketHandler;
 import com.katrix.journeyToGensokyo.reference.ModInfo;
 import com.katrix.journeyToGensokyo.block.JTGBlock;
@@ -29,6 +32,8 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 		+ "after:AdvancedSolarPanel")
 
 public class JourneyToGensokyo {
+	
+		public static final Logger log = LogManager.getLogger(ModInfo.MODID);
 
         // The instance of your mod that Forge uses.
         @Instance(value = "journeyToGensokyo")
@@ -49,6 +54,7 @@ public class JourneyToGensokyo {
         	JTG_THSC.preInit();
         	
         	if(Config.NotesEnabled) {
+        		log.info("JTG Notes enabled, this is not a officialy suported feature");
         		ChestGen.preInit();
         	}
         }
@@ -59,10 +65,12 @@ public class JourneyToGensokyo {
             proxy.registerRenderers();
             
         	if(Loader.isModLoaded("ThermalExpansion") && Config.OresEnabled) {
+        		log.info("JTG adding TE Ore recipes");
         		TEOreCrafting.init();
         	}
         	
         	if(Loader.isModLoaded("ThermalExpansion") && Config.OresEnabled) {
+        		log.info("JTG adding IC2 Ore recipes");
                 IC2OreCrafting.init();
         	}
             VanillaCrafting.init();
@@ -75,6 +83,7 @@ public class JourneyToGensokyo {
         public void postInit(FMLPostInitializationEvent event) {
     	
         	if(Loader.isModLoaded("Thaumcraft")) {
+        		log.info("JTG adding Thaumcraft aspects");
             	JTGThaumcraft.postInit();
         	}
         }
