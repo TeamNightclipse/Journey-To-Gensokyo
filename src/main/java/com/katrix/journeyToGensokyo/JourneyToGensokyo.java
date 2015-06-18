@@ -6,6 +6,7 @@ import com.katrix.journeyToGensokyo.block.JTGBlock;
 import com.katrix.journeyToGensokyo.crafting.IC2OreCrafting;
 import com.katrix.journeyToGensokyo.crafting.TEOreCrafting;
 import com.katrix.journeyToGensokyo.crafting.VanillaCrafting;
+import com.katrix.journeyToGensokyo.handler.ConfigHandler;
 import com.katrix.journeyToGensokyo.item.JTGItem;
 import com.katrix.journeyToGensokyo.thaumcraft.JTGThaumcraft;
 import com.katrix.journeyToGensokyo.thsc.JTG_THSC;
@@ -22,25 +23,30 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
-@Mod(modid= ModInfo.MODID, name= ModInfo.NAME, version= ModInfo.VERSION, dependencies  = "required-after:THKaguyaMod;"
-		+ "after:Thaumcraft;"
-		+ "after:IC2;"
-		+ "after:Botania;"
-		+ "after:ThermalExpansion;"
-		+ "after:AdvancedSolarPanel")
+@Mod(
+		modid = ModInfo.MODID, 
+		name = ModInfo.NAME, 
+		version = ModInfo.VERSION,
+		guiFactory = ModInfo.GUI_FACTORY_CLASS,
+		dependencies  = "required-after:THKaguyaMod;"
+				+ "after:Thaumcraft;"
+				+ "after:IC2;"
+				+ "after:Botania;"
+				+ "after:ThermalExpansion;"
+				+ "after:AdvancedSolarPanel")
 
 public class JourneyToGensokyo {
 
         @Instance(value = "journeyToGensokyo")
         public static JourneyToGensokyo instance;
        
-        @SidedProxy(clientSide="com.katrix.journeyToGensokyo.client.ClientProxy", serverSide="com.katrix.journeyToGensokyo.CommonProxy")
+        @SidedProxy(clientSide=ModInfo.CLIENT_PROXY_CLASS, serverSide=ModInfo.SERVER_PROXY_CLASS)
         public static CommonProxy proxy;
        
         @EventHandler
         public void preInit(FMLPreInitializationEvent event) {
         	
-    		Config.setConfig(event);
+    		ConfigHandler.setConfig(event.getSuggestedConfigurationFile());
         	
             PacketHandler.preInit();
         	
@@ -48,7 +54,7 @@ public class JourneyToGensokyo {
         	JTGBlock.preInit();
         	JTG_THSC.preInit();
         	
-        	if(Config.NotesEnabled) {
+        	if(ConfigHandler.NotesEnabled) {
         		LogHelper.warn("JTG Notes enabled, this is not a officialy suported feature");
         		ChestGen.preInit();
         	}
@@ -59,12 +65,12 @@ public class JourneyToGensokyo {
         	
             proxy.registerRenderers();
             
-        	if(Loader.isModLoaded("ThermalExpansion") && Config.OresEnabled) {
+        	if(Loader.isModLoaded("ThermalExpansion") && ConfigHandler.OresEnabled) {
         		LogHelper.info("JTG adding TE Ore recipes");
         		TEOreCrafting.init();
         	}
         	
-        	if(Loader.isModLoaded("ThermalExpansion") && Config.OresEnabled) {
+        	if(Loader.isModLoaded("ThermalExpansion") && ConfigHandler.OresEnabled) {
         		LogHelper.info("JTG adding IC2 Ore recipes");
                 IC2OreCrafting.init();
         	}

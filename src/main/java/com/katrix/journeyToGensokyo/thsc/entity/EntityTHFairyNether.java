@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.katrix.journeyToGensokyo.Config;
 import com.katrix.journeyToGensokyo.JourneyToGensokyo;
+import com.katrix.journeyToGensokyo.handler.ConfigHandler;
 
 import cpw.mods.fml.common.registry.EntityRegistry;
 import net.minecraft.entity.EnumCreatureType;
@@ -58,7 +58,7 @@ public class EntityTHFairyNether extends EntityTHFairy {
     
     public static void Init() {
     	
-    	EntityRegistry.registerGlobalEntityID(EntityTHFairyNether.class, "THFairyNether", Config.entityIdTHFairyNether, 0x2D2727, 0xA0A000);
+    	EntityRegistry.registerGlobalEntityID(EntityTHFairyNether.class, "THFairyNether", ConfigHandler.entityIdTHFairyNether, 0x2D2727, 0xA0A000);
     	EntityRegistry.registerModEntity(EntityTHFairyNether.class, "THFairyNether",  2, JourneyToGensokyo.instance, 80, 1, true);
 		
 		List<BiomeGenBase> spawnbiomes = new ArrayList<BiomeGenBase>(Arrays.asList(BiomeDictionary.getBiomesForType(Type.NETHER)));

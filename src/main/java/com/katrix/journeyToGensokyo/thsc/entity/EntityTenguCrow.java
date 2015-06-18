@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.katrix.journeyToGensokyo.Config;
 import com.katrix.journeyToGensokyo.JourneyToGensokyo;
+import com.katrix.journeyToGensokyo.handler.ConfigHandler;
 
 import cpw.mods.fml.common.registry.EntityRegistry;
 import thKaguyaMod.ShotData;
@@ -276,7 +276,7 @@ public class EntityTenguCrow extends EntityTHFairy {
 	
 	public static void Init() {
     	
-    	EntityRegistry.registerGlobalEntityID(EntityTenguCrow.class, "TenguCrow", Config.entityIdTenguCrow, 0x191616, 0x593A30);
+    	EntityRegistry.registerGlobalEntityID(EntityTenguCrow.class, "TenguCrow", ConfigHandler.entityIdTenguCrow, 0x191616, 0x593A30);
     	EntityRegistry.registerModEntity(EntityTenguCrow.class, "TenguCrow",  4, JourneyToGensokyo.instance, 80, 1, true);
 		
 		List<BiomeGenBase> spawnbiomes = new ArrayList<BiomeGenBase>(Arrays.asList(BiomeDictionary.getBiomesForType(Type.MOUNTAIN)));
