@@ -20,11 +20,11 @@ apply plugin: 'forge'
 compileJava.options.encoding = 'UTF-8'
 
 version = "1.7.10-0.6.0"
-group= "com.katrix" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+group= "com.katrix.journeyToGensokyo" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "journeyToGensokyo"
 
 minecraft {
-    version = "1.7.10-10.13.3.1424-1.7.10"
+    version = "1.7.10-10.13.4.1448-1.7.10"
 	if (file('../run').exists()) {
 		runDir = "../run"
 	} else {

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.katrix.journeyToGensokyo.JourneyToGensokyo;
+import com.katrix.journeyToGensokyo.util.LogHelper;
 
 import cpw.mods.fml.common.registry.EntityRegistry;
 import net.minecraft.entity.EnumCreatureType;
@@ -69,10 +69,10 @@ public class SpawnBiomeFixer {
 			}
 		}
 		
-		JourneyToGensokyo.log.info("JTG fixing spawn biomes for THFairy");
+		LogHelper.info("JTG fixing spawn biomes for THFairy");
 		EntityRegistry.addSpawn(EntityTHFairy.class,  30, 1, 6,EnumCreatureType.monster, spawnbiomes.toArray(new BiomeGenBase[0]));
 		
-		JourneyToGensokyo.log.info("JTG fixing spawn biomes for SunflowerFairy");
+		LogHelper.info("JTG fixing spawn biomes for SunflowerFairy");
 		EntityRegistry.addSpawn(EntitySunFlowerFairy.class,  30, 1, 6,EnumCreatureType.monster, spawnbiomes.toArray(new BiomeGenBase[0]));
 	}
 	
@@ -135,7 +135,7 @@ public class SpawnBiomeFixer {
 			}
 		}
 		
-		JourneyToGensokyo.log.info("JTG fixing spawn biomes for THPhantom");
+		LogHelper.info("JTG fixing spawn biomes for THPhantom");
 		EntityRegistry.addSpawn(EntityTHPhantom.class,  20, 1, 3,EnumCreatureType.monster, spawnbiomes.toArray(new BiomeGenBase[0]));
 	}
 	
@@ -143,7 +143,7 @@ public class SpawnBiomeFixer {
 		
 		List<BiomeGenBase> spawnbiomes = new ArrayList<BiomeGenBase>(Arrays.asList(BiomeDictionary.getBiomesForType(Type.SANDY)));
 		
-		JourneyToGensokyo.log.info("JTG fixing spawn biomes for Hanabeeper");
+		LogHelper.info("JTG fixing spawn biomes for Hanabeeper");
 		EntityRegistry.addSpawn(EntityDanmakuCreeper.class, 2, 1, 4, EnumCreatureType.monster, spawnbiomes.toArray(new BiomeGenBase[0]));
 	}
 	
@@ -166,7 +166,7 @@ public class SpawnBiomeFixer {
 			}
 		}
 		
-		JourneyToGensokyo.log.info("JTG fixing spawn biomes for Cirno");
+		LogHelper.info("JTG fixing spawn biomes for Cirno");
 		EntityRegistry.addSpawn(EntityCirno.class, 2, 1, 1, EnumCreatureType.monster, spawnbiomes.toArray(new BiomeGenBase[0]));
 	}
 	
@@ -179,7 +179,7 @@ public class SpawnBiomeFixer {
 			}
 		}
 		
-		JourneyToGensokyo.log.info("JTG fixing spawn biomes for Rumia");
+		LogHelper.info("JTG fixing spawn biomes for Rumia");
 		EntityRegistry.addSpawn(EntityRumia.class, 4, 1, 1, EnumCreatureType.monster, spawnbiomes.toArray(new BiomeGenBase[0]));
 	}
 	
@@ -197,7 +197,7 @@ public class SpawnBiomeFixer {
 			}
 		}
 		
-		JourneyToGensokyo.log.info("JTG fixing spawn biomes for Toziko");
+		LogHelper.info("JTG fixing spawn biomes for Toziko");
 		EntityRegistry.addSpawn(EntityToziko.class, 10, 1, 1, EnumCreatureType.monster, spawnbiomes.toArray(new BiomeGenBase[0]));
 	}
 	
@@ -215,7 +215,7 @@ public class SpawnBiomeFixer {
 			}
 		}
 		
-		JourneyToGensokyo.log.info("JTG fixing spawn biomes for Wriggle");
+		LogHelper.info("JTG fixing spawn biomes for Wriggle");
 		EntityRegistry.addSpawn(EntityWriggle.class, 20, 1, 3, EnumCreatureType.monster, spawnbiomes.toArray(new BiomeGenBase[0]));
 	}
 	
@@ -278,7 +278,7 @@ public class SpawnBiomeFixer {
 			}
 		}
 		
-		JourneyToGensokyo.log.info("JTG fixing spawn biomes for Ambient mobs(Sanae, Sakuya, Rinnosuke)");
+		LogHelper.info("JTG fixing spawn biomes for Ambient mobs(Sanae, Sakuya, Rinnosuke)");
 		EntityRegistry.addSpawn(EntitySanae.class, 1, 0, 1, EnumCreatureType.ambient, spawnbiomes.toArray(new BiomeGenBase[0]));
 		EntityRegistry.addSpawn(EntitySakuya.class, 1, 0, 1, EnumCreatureType.ambient, spawnbiomes.toArray(new BiomeGenBase[0]));
 		EntityRegistry.addSpawn(EntityRinnosuke.class, 1, 0, 1, EnumCreatureType.ambient, spawnbiomes.toArray(new BiomeGenBase[0]));
