@@ -1,3 +1,12 @@
+/**
+ * This class was created by <Katrix>. It's distributed as
+ * part of the Journey To Gensokyo Mod. Get the Source Code in github:
+ * https://github.com/Katrix-/JTG
+ * 
+ * Journey To Gensokyo is Open Source and distributed under the
+ * a modifed Botania license: https://github.com/Katrix-/JTG/blob/master/LICENSE.md
+ */
+
 package com.katrix.journeyToGensokyo.item;
 
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -8,58 +17,58 @@ public class JTGItem {
 	
 	public static void preInit(){
 		
-    	oldGensokyoSpellItem = new BaseItem()
+    	oldGensokyoSpellItem = new JTGBaseItem()
 							.setUnlocalizedName("oldGensokyoSpell")
 							.setTextureName("journeytogensokyo:oldGensokyoSpell");
-    	oldDemonSpellItem = new BaseItem()
+    	oldDemonSpellItem = new JTGBaseItem()
 							.setUnlocalizedName("oldDemonSpell")
 							.setTextureName("journeytogensokyo:oldDemonSpell");
-    	oldCelestialSpellItem = new BaseItem()
+    	oldCelestialSpellItem = new JTGBaseItem()
 							.setUnlocalizedName("oldCelestialSpell")
 							.setTextureName("journeytogensokyo:oldCelestialSpell");
 
-    	gensokyoIngotItem = new BaseItem()
+    	gensokyoIngotItem = new JTGBaseItem()
 							.setUnlocalizedName("gensokyoIngot")
 							.setTextureName("journeytogensokyo:gensokyoIngot")
 							.setCreativeTab(CreativeTabs.tabMaterials);
-    	demonIngotItem = new BaseItem()
+    	demonIngotItem = new JTGBaseItem()
 							.setUnlocalizedName("demonIngot")
 							.setTextureName("journeytogensokyo:demonIngot")
 							.setCreativeTab(CreativeTabs.tabMaterials);
-    	celestialIngotItem = new BaseItem()
+    	celestialIngotItem = new JTGBaseItem()
 							.setUnlocalizedName("celestialIngot")
 							.setTextureName("journeytogensokyo:celestialIngot")
 							.setCreativeTab(CreativeTabs.tabMaterials);
 
-    	gensokyoDustItem = new BaseItem()
+    	gensokyoDustItem = new JTGBaseItem()
 							.setUnlocalizedName("gensokyoDust")
 							.setTextureName("journeytogensokyo:gensokyoDust")
 							.setCreativeTab(CreativeTabs.tabMaterials);
-    	demonDustItem = new BaseItem()
+    	demonDustItem = new JTGBaseItem()
 							.setUnlocalizedName("demonDust")
 							.setTextureName("journeytogensokyo:demonDust")
 							.setCreativeTab(CreativeTabs.tabMaterials);
-    	celestialDustItem = new BaseItem()
+    	celestialDustItem = new JTGBaseItem()
 							.setUnlocalizedName("celestialDust")
 							.setTextureName("journeytogensokyo:celestialDust")
 							.setCreativeTab(CreativeTabs.tabMaterials);
 
-    	gensokyoNotesRuinedItem = new BaseItem()
+    	gensokyoNotesRuinedItem = new JTGBaseItem()
 							.setUnlocalizedName("gensokyoNotesRuined")
 							.setTextureName("journeytogensokyo:gensokyoNotesRuined");
-    	gensokyoNotesPatItem = new BaseItem()
+    	gensokyoNotesPatItem = new JTGBaseItem()
 							.setUnlocalizedName("gensokyoNotesPat")
 							.setTextureName("journeytogensokyo:gensokyoNotesPat");
-    	gensokyoNotesDusItem = new BaseItem()
+    	gensokyoNotesDusItem = new JTGBaseItem()
 							.setUnlocalizedName("gensokyoNotesDus")
 							.setTextureName("journeytogensokyo:gensokyoNotesDus");
-    	gensokyoNotesItem = new BaseItem()
+    	gensokyoNotesItem = new JTGBaseItem()
 							.setUnlocalizedName("gensokyoNotes")
 							.setTextureName("journeytogensokyo:gensokyoNotes");
-    	gensokyoNotesImbItem = new BaseItemEffect()
+    	gensokyoNotesImbItem = new JTGItemEffect()
 							.setUnlocalizedName("gensokyoNotesImb")
 							.setTextureName("journeytogensokyo:gensokyoNotes");
-    	gensokyoNotesArcItem = new BaseItemEffect()
+    	gensokyoNotesArcItem = new JTGItemEffect()
 							.setUnlocalizedName("gensokyoNotesArc")
 							.setTextureName("journeytogensokyo:gensokyoNotesArc");
     	

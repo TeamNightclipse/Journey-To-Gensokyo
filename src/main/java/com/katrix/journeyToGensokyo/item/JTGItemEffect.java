@@ -7,12 +7,17 @@
  * a modifed Botania license: https://github.com/Katrix-/JTG/blob/master/LICENSE.md
  */
 
-package com.katrix.journeyToGensokyo;
+package com.katrix.journeyToGensokyo.item;
 
-public class CommonProxy {
+import net.minecraft.item.ItemStack;
 
-        // Client stuff
-        public void registerRenderers() {
-                // Nothing here as the server doesn't render graphics or entities!
-        }
+public class JTGItemEffect extends JTGBaseItem {
+	
+	public JTGItemEffect() {}
+	
+	@Override
+	public boolean hasEffect(ItemStack par1ItemStack, int pass) {
+		return true;
+	}
+
 }

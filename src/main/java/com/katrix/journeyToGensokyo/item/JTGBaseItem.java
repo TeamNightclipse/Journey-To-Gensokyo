@@ -7,12 +7,18 @@
  * a modifed Botania license: https://github.com/Katrix-/JTG/blob/master/LICENSE.md
  */
 
-package com.katrix.journeyToGensokyo;
+package com.katrix.journeyToGensokyo.item;
 
-public class CommonProxy {
+import net.minecraft.item.Item;
+import net.minecraft.creativetab.CreativeTabs;
 
-        // Client stuff
-        public void registerRenderers() {
-                // Nothing here as the server doesn't render graphics or entities!
-        }
+public class JTGBaseItem extends Item {
+	
+	public JTGBaseItem() {
+		
+		super();
+		setCreativeTab(CreativeTabs.tabMisc);
+		
+	}
+
 }

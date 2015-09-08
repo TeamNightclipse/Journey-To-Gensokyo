@@ -7,12 +7,15 @@
  * a modifed Botania license: https://github.com/Katrix-/JTG/blob/master/LICENSE.md
  */
 
-package com.katrix.journeyToGensokyo;
+package com.katrix.journeyToGensokyo.block;
 
-public class CommonProxy {
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 
-        // Client stuff
-        public void registerRenderers() {
-                // Nothing here as the server doesn't render graphics or entities!
-        }
+public class JTGBaseBlock extends Block{
+	
+	public JTGBaseBlock (Material material){
+
+		super(material);
+	}
 }
