@@ -9,7 +9,7 @@
 
 package com.katrix.journeyToGensokyo.client.render;
 
-import com.katrix.journeyToGensokyo.client.model.ModelTHFairyNether;
+import com.katrix.journeyToGensokyo.client.model.ModelTHFairyJTG;
 
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.Entity;
@@ -18,14 +18,13 @@ import thKaguyaMod.entity.living.EntityTHFairy;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-/** å¦–ç²¾ã‚’æ��ç”»ã�™ã‚‹ */
 @SideOnly(Side.CLIENT)
 public class RenderTHFairyNether extends RenderLiving
 {	
 	
     public RenderTHFairyNether()
     {
-        super(new ModelTHFairyNether(), 0.25F);
+        super(new ModelTHFairyJTG(), 0.25F);
     }
     
     @Override

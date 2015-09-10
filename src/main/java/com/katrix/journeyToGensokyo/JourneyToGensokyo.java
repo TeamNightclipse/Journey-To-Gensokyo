@@ -85,13 +85,14 @@ public class JourneyToGensokyo {
         	}
             VanillaCrafting.init();
             JTGWorldGen.init();
-            JTG_THSC.init();
             
         }
        
         @EventHandler
         public void postInit(FMLPostInitializationEvent event) {
     	
+            JTG_THSC.postInit();
+        	
         	if(Loader.isModLoaded("Thaumcraft")) {
         		LogHelper.info("JTG adding Thaumcraft aspects");
             	JTGThaumcraft.postInit();

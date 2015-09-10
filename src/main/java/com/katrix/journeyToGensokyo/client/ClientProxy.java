@@ -11,10 +11,14 @@ package com.katrix.journeyToGensokyo.client;
 
 import com.katrix.journeyToGensokyo.CommonProxy;
 import com.katrix.journeyToGensokyo.client.render.RenderHellRaven;
+import com.katrix.journeyToGensokyo.client.render.RenderSunFlowerFairyEnd;
+import com.katrix.journeyToGensokyo.client.render.RenderTHFairyEnd;
 import com.katrix.journeyToGensokyo.client.render.RenderTHFairyIce;
 import com.katrix.journeyToGensokyo.client.render.RenderTHFairyNether;
 import com.katrix.journeyToGensokyo.client.render.RenderTenguCrow;
 import com.katrix.journeyToGensokyo.thsc.entity.EntityHellRaven;
+import com.katrix.journeyToGensokyo.thsc.entity.EntitySunFlowerFairyEnd;
+import com.katrix.journeyToGensokyo.thsc.entity.EntityTHFairyEnd;
 import com.katrix.journeyToGensokyo.thsc.entity.EntityTHFairyIce;
 import com.katrix.journeyToGensokyo.thsc.entity.EntityTHFairyNether;
 import com.katrix.journeyToGensokyo.thsc.entity.EntityTenguCrow;
@@ -33,6 +37,8 @@ public class ClientProxy extends CommonProxy {
         	RenderingRegistry.registerEntityRenderingHandler(EntityHellRaven.class, new RenderHellRaven());
         	RenderingRegistry.registerEntityRenderingHandler(EntityTenguCrow.class, new RenderTenguCrow());
         	RenderingRegistry.registerEntityRenderingHandler(EntityTHFairyNether.class, new RenderTHFairyNether());
+        	RenderingRegistry.registerEntityRenderingHandler(EntityTHFairyEnd.class, new RenderTHFairyEnd());
+        	RenderingRegistry.registerEntityRenderingHandler(EntitySunFlowerFairyEnd.class, new RenderSunFlowerFairyEnd());
         }
        
 }

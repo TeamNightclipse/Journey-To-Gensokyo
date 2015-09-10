@@ -15,6 +15,7 @@ import java.util.List;
 
 import com.katrix.journeyToGensokyo.JourneyToGensokyo;
 import com.katrix.journeyToGensokyo.handler.ConfigHandler;
+import com.katrix.journeyToGensokyo.reference.MobModID;
 
 import cpw.mods.fml.common.registry.EntityRegistry;
 import net.minecraft.entity.EnumCreatureType;
@@ -27,17 +28,14 @@ import thKaguyaMod.THShotLib;
 import thKaguyaMod.entity.living.EntityTHFairy;
 import thKaguyaMod.registry.DanmakuPatternRegistry;
 
-/** ひまわり妖精 */
 public class EntityTHFairyIce extends EntityTHFairy
 {
 
     public EntityTHFairyIce(World world)
     {
         super(world);
-        
-        this.setSize(0.6F, 1.5F);//MOBの当たり判定の大きさ 横奥行き、高さ、大きさ
     	
-    	experienceValue = 15;//経験値の量
+    	experienceValue = 15;
 		shotColor = (byte)(THShotLib.AQUA);
 		
     	setForm((byte)1);
@@ -76,17 +74,16 @@ public class EntityTHFairyIce extends EntityTHFairy
     	speedRate = DanmakuPatternRegistry.speed.get(patternKey);
     }
     
-    //一つのチャンクに湧く最大数
     @Override
     public int getMaxSpawnedInChunk()
     {
-        return 5;
+        return 3;
     }
     
-    public static void Init() {
+    public static void postInit() {
     	
     	EntityRegistry.registerGlobalEntityID(EntityTHFairyIce.class, "THFairyIce", ConfigHandler.entityIdTHFairyIce, 0x3DFFEE, 0xA0A000);
-    	EntityRegistry.registerModEntity(EntityTHFairyIce.class, "THFairyIce",  1, JourneyToGensokyo.instance, 80, 1, true);
+    	EntityRegistry.registerModEntity(EntityTHFairyIce.class, "THFairyIce",  MobModID.ICE_FAIRY, JourneyToGensokyo.instance, 80, 1, true);
 		
 		List<BiomeGenBase> spawnbiomes = new ArrayList<BiomeGenBase>(Arrays.asList(BiomeDictionary.getBiomesForType(Type.COLD)));
 		for (BiomeGenBase biome : BiomeDictionary.getBiomesForType(Type.SNOWY)) {

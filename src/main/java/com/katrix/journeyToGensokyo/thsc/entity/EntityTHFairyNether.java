@@ -1,5 +1,5 @@
 /**
- * This class was created by <Katrix>, base on a class from Touhou Items Mod. It's distributed as
+ * This class was created by <Katrix>. It's distributed as
  * part of the Journey To Gensokyo Mod. Get the Source Code in github:
  * https://github.com/Katrix-/JTG
  * 
@@ -15,6 +15,7 @@ import java.util.List;
 
 import com.katrix.journeyToGensokyo.JourneyToGensokyo;
 import com.katrix.journeyToGensokyo.handler.ConfigHandler;
+import com.katrix.journeyToGensokyo.reference.MobModID;
 
 import cpw.mods.fml.common.registry.EntityRegistry;
 import net.minecraft.entity.EnumCreatureType;
@@ -65,10 +66,10 @@ public class EntityTHFairyNether extends EntityTHFairy {
         return this.worldObj.difficultySetting != EnumDifficulty.PEACEFUL;
     }
     
-    public static void Init() {
+    public static void postInit() {
     	
     	EntityRegistry.registerGlobalEntityID(EntityTHFairyNether.class, "THFairyNether", ConfigHandler.entityIdTHFairyNether, 0x2D2727, 0xA0A000);
-    	EntityRegistry.registerModEntity(EntityTHFairyNether.class, "THFairyNether",  2, JourneyToGensokyo.instance, 80, 1, true);
+    	EntityRegistry.registerModEntity(EntityTHFairyNether.class, "THFairyNether",  MobModID.FAIRY_NETHER, JourneyToGensokyo.instance, 80, 1, true);
 		
 		List<BiomeGenBase> spawnbiomes = new ArrayList<BiomeGenBase>(Arrays.asList(BiomeDictionary.getBiomesForType(Type.NETHER)));
 		

@@ -26,7 +26,7 @@ public class EntityFamiliarIce extends EntityFamiliar {
      	this.setFlyingHeight(3);
 	}
 	
-    public static void Init() {
+    public static void postInit() {
     	
     	EntityRegistry.registerGlobalEntityID(EntityFamiliarIce.class, "FamiliarIce", ConfigHandler.entityIdFamiliarIce);
     	

@@ -1,12 +1,6 @@
-<<<<<<< HEAD
 item.oldGensokyoSpell.name=Old Gensokyo Spellcard
 item.oldDemonSpell.name=Old Demon Spellcard
 item.oldCelestialSpell.name=Old Celestial Spellcard
-=======
-item.gensokyoNote.name=Gensokyo Note
-item.demonNote.name=Demon Note
-item.celestialNote.name=Celestial Note
->>>>>>> origin/master
 
 item.gensokyoIngot.name=Gensokium
 item.demonIngot.name=Makaiium
@@ -16,21 +10,12 @@ item.gensokyoDust.name=Gensokium Dust
 item.demonDust.name=Makaiium Dust
 item.celestialDust.name=Celestium Dust
 
-<<<<<<< HEAD
 item.gensokyoNotesRuined.name=Ruined Old Notebook
 item.gensokyoNotesPat.name=Patched Gensokyo Notes
 item.gensokyoNotesDus.name=Dusty Gensokyo Notes
 item.gensokyoNotes.name=Gensokyo Notes
 item.gensokyoNotesImb.name=Imbued Gensokyo Notes
 item.gensokyoNotesArc.name=Arcane Gensokyo Notes
-=======
-item.researchNotesRuined.name=Ruined Old Notebook
-item.researchNotes.name=Gensokyo Research Notes
-item.researchNotesDec.name=Decrypted Gensokyo Research Notes
-item.researchNotesSol.name=Solved Gensokyo Research Notes
-item.researchNotesImb.name=Imbued Gensokyo Research Notes
-item.researchNotesArc.name=Arcane Gensokyo Research Notes
->>>>>>> origin/master
 
 tile.gensokyoOreBlock.name=Gensokium Ore
 tile.demonOreBlock.name=Makaiium Ore
@@ -44,10 +29,9 @@ item.thSpellCard.301.name=Magicannon "Final Spark"
 entity.THFairyIce.name=Ice Fairy
 entity.THFairyNether.name=Nether Fairy
 entity.HellRaven.name=Hell Raven
-<<<<<<< HEAD
 entity.TenguCrow.name=Crow Tengu
-=======
-entity.TenguCrow.name=Crow Tengu
+entity.THFairyEnd.name=Moon Fairy
+entity.SunFlowerFairyEnd.name=Moon Sunflower Fairy
 
 tc.research_category.JTG=Journey To Gensokyo
 jtg.research.name.RESEARCH_NOTES_DEC=Decrypted Research Notes
@@ -97,4 +81,3 @@ jtg.research.desc.POWER_ITEM=Moon Prism Power, Make Up!
 jtg.research.name.POINT_ITEM=Point Item
 jtg.research.text.POINT_ITEM=Using some Shot materials and and some Gensokium Ingots, you have found a way to make Point Items.
 jtg.research.desc.POINT_ITEM=Collect 100 for a One-Up!
->>>>>>> origin/master

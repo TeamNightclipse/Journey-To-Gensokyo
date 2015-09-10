@@ -21,7 +21,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class RenderTHFairyIce extends RenderLiving
 {
-	//ひまわり妖精を描画する
 
     public RenderTHFairyIce()
     {
@@ -49,6 +48,6 @@ public class RenderTHFairyIce extends RenderLiving
     
     protected ResourceLocation getEntityTexture(EntityTHFairy thFairy)
     {	
-        return new ResourceLocation("journeytogensokyo", "textures/entity/mob/FairyTexture_0.png");
+        return new ResourceLocation("journeytogensokyo", "textures/entity/mob/FairyTextureIce.png");
     }
 }

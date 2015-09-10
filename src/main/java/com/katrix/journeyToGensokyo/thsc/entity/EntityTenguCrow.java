@@ -15,15 +15,15 @@ import java.util.List;
 
 import com.katrix.journeyToGensokyo.JourneyToGensokyo;
 import com.katrix.journeyToGensokyo.handler.ConfigHandler;
+import com.katrix.journeyToGensokyo.reference.MobModID;
 
 import cpw.mods.fml.common.registry.EntityRegistry;
 import thKaguyaMod.ShotData;
 import thKaguyaMod.THShotLib;
 import thKaguyaMod.entity.living.EntityTHFairy;
+import thKaguyaMod.init.THKaguyaConfig;
 import thKaguyaMod.init.THKaguyaItems;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.item.Item;
 import net.minecraft.util.Vec3;
@@ -59,47 +59,6 @@ public class EntityTenguCrow extends EntityTHFairy {
     	this.setDetectionDistance(16.0D);
     	this.setFlyingHeight(4);
 	}
-	
-    @Override
-    public IEntityLivingData onSpawnWithEgg(IEntityLivingData entityLivingData)
-    {
-        Object p_110161_1_1 = super.onSpawnWithEgg(entityLivingData);
-        return (IEntityLivingData)p_110161_1_1;
-    }
-    
-    public void onUpdate()
-    {	
-    	/*if(ridingEntity == null)
-    	{
-    		EntityFamiliar familiar = new EntityFamiliar(worldObj);
-    		familiar.mountEntity(this);
- 			if(!worldObj.isRemote)
- 			{
- 				worldObj.spawnEntityInWorld(familiar);
- 			}
-    		
-    	}*/
-    	//体力がないなら動かない
-    	if(this.getHealth() <= 0)
-    	{
-    		motionX = 0.0D;
-    		motionY = 0.0D;
-    		motionZ = 0.0D;
-    	}
-    	
-    	if(ticksExisted <= lastTime)
-    	{
-    		return;
-    	}
-    	else
-    	{
-    		super.onUpdate();
-    		if(this.attackCounter > danmakuSpan)
-    		{
-    			attackCounter = 0;
-    		}
-    	}
-    }
     
     @Override
     protected void onDeathUpdate()
@@ -133,12 +92,6 @@ public class EntityTenguCrow extends EntityTHFairy {
             }
         }
     }
-
-    
-    public EntityLivingBase getShooter()
-    {
-    	return this;
-    }
 	
     @Override
     public void danmakuPattern(int level)
@@ -156,7 +109,7 @@ public class EntityTenguCrow extends EntityTHFairy {
 				shotForm = THShotLib.FORM_SMALL;
 				speedRate = 0.3F;
 		    	shotData = ShotData.shot(shotForm, shotColor, 0, 80, special);
-		    	pattern = 3010;
+		    	pattern = 10;
 
 				danmaku01(angle, shotData, level, pattern);
 				break;
@@ -165,7 +118,7 @@ public class EntityTenguCrow extends EntityTHFairy {
 		    	shotForm = THShotLib.FORM_SMALL;
 		    	speedRate = 0.3F;
 		    	shotData = ShotData.shot(shotForm, shotColor, 0, 80, special);
-		    	pattern = 5001;
+		    	pattern = 1;
 		    	
 				danmaku02(angle, shotData, level, pattern);
 				break;
@@ -176,10 +129,14 @@ public class EntityTenguCrow extends EntityTHFairy {
     
     public void danmaku01(Vec3 angle, ShotData shotData, int level, int d)
     {  	
-		float shotSpan = (d % 100 + 1F) * (level/2);
-		int num = ((d - 3000) / 100 + 1) * (level/2);
+		float shotSpan = (d + 1F) * (level/2);
+		int num = (d / 100 + 1) * (level/2);
+		if(level == 1) shotSpan = 1.0f;
+		if(level == 1) num = 1;
 		if(attackCounter % 6 == 0){
 			THShotLib.createRandomRingShot(getShooter(), pos(), angle, speedRate, shotData, num, shotSpan);
+
+	    	THShotLib.playShotSound(this);
 		}
 		
 		if (attackCounter == 0){
@@ -203,6 +160,8 @@ public class EntityTenguCrow extends EntityTHFairy {
 		    	if(rand.nextInt(2) == 0){
 			    	THShotLib.createShot(getShooter(), pos(), angle, 0.9F, ShotData.shot(THShotLib.FORM_WIND, THShotLib.RED, 0.8F, 1.0F, 0, 25));
 			    	this.moveForward(rand.nextDouble() * 0.2D + 3.0D, 20);
+			    	
+			    	THShotLib.playShotSound(this);
 		    	}
 		    }
 		}
@@ -210,9 +169,11 @@ public class EntityTenguCrow extends EntityTHFairy {
     
     public void danmaku02(Vec3 angle, ShotData shotData, int level, int d)
     {  	
-		int num = d % 100 + 1;
+		int num = d + 1*level;
 		if (attackCounter % 8 == 0){
 			THShotLib.createRandomRingShot(getShooter(), pos(), angle, speedRate, shotData, num, 90F);
+			
+	    	THShotLib.playShotSound(this);
 		}
 		
 		if (attackCounter == 0){
@@ -236,6 +197,8 @@ public class EntityTenguCrow extends EntityTHFairy {
 		    	if(rand.nextInt(2) == 0){
 			    	THShotLib.createShot(getShooter(), pos(), angle, 0.9F, ShotData.shot(THShotLib.FORM_WIND, THShotLib.RED, 0.8F, 1.0F, 0, 25));
 			    	this.moveForward(rand.nextDouble() * 0.2D + 3.0D, 20);
+			    	
+			    	THShotLib.playShotSound(this);
 		    	}
 		    }
 		}
@@ -256,7 +219,7 @@ public class EntityTenguCrow extends EntityTHFairy {
     @Override
     public int getMaxSpawnedInChunk()
     {
-        return 5;
+        return 3;
     }
     
 	@Override
@@ -275,18 +238,21 @@ public class EntityTenguCrow extends EntityTHFairy {
 		}
     }
     
-    //自然スポーンするときに呼ばれ、trueならスポーンする
     @Override
     public boolean getCanSpawnHere()
     {
-    	//ゾンビなどと同じ湧き条件
+    	if(rand.nextInt(100) < THKaguyaConfig.fairySpawnRate)
+    	{
+    		return false;
+    	}
+    	
         return this.worldObj.difficultySetting != EnumDifficulty.PEACEFUL;
     }
 	
-	public static void Init() {
+	public static void postInit() {
     	
     	EntityRegistry.registerGlobalEntityID(EntityTenguCrow.class, "TenguCrow", ConfigHandler.entityIdTenguCrow, 0x191616, 0x593A30);
-    	EntityRegistry.registerModEntity(EntityTenguCrow.class, "TenguCrow",  4, JourneyToGensokyo.instance, 80, 1, true);
+    	EntityRegistry.registerModEntity(EntityTenguCrow.class, "TenguCrow",  MobModID.TENGU_CROW, JourneyToGensokyo.instance, 80, 1, true);
 		
 		List<BiomeGenBase> spawnbiomes = new ArrayList<BiomeGenBase>(Arrays.asList(BiomeDictionary.getBiomesForType(Type.MOUNTAIN)));
 		

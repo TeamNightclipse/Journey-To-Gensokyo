@@ -23,6 +23,8 @@ public class ConfigHandler {
 	
 	public static int entityIdTHFairyIce;
 	public static int entityIdTHFairyNether;
+	public static int entityIdTHFairyEnd;
+	public static int entityIdSunFlowerFairyEnd;
 	public static int entityIdFamiliarIce;
 	public static int entityIdHellRaven;
 	public static int entityIdTenguCrow;
@@ -59,6 +61,8 @@ public class ConfigHandler {
 		entityIdHellRaven = cfg.get(ConfigRef.CAT_ENTITYID, "HellRaven", 702).getInt();
 		entityIdTenguCrow = cfg.get(ConfigRef.CAT_ENTITYID, "TenguCrow", 703).getInt();
 		entityIdTHFairyNether = cfg.get(ConfigRef.CAT_ENTITYID, "THFairyNether", 704).getInt();
+		entityIdTHFairyEnd = cfg.get(ConfigRef.CAT_ENTITYID, "THFairyEnd", 705).getInt();
+		entityIdSunFlowerFairyEnd = cfg.get(ConfigRef.CAT_ENTITYID, "SunFlowerFairyEnd", 706).getInt();
 		
 		if (cfg.hasChanged())
 		{

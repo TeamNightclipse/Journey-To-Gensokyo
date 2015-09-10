@@ -1,5 +1,5 @@
 /**
- * This class was created by <Katrix>, base on a class from Touhou Items Mod. It's distributed as
+ * This class was created by <Katrix>, based on a class from Touhou Items Mod. It's distributed as
  * part of the Journey To Gensokyo Mod. Get the Source Code in github:
  * https://github.com/Katrix-/JTG
  * 

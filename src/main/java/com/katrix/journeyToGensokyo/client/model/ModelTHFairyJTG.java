@@ -1,5 +1,5 @@
 /**
- * This class was created by <Katrix>, base on a class from Touhou Items Mod. It's distributed as
+ * This class was created by <Katrix>, based on a class from Touhou Items Mod. It's distributed as
  * part of the Journey To Gensokyo Mod. Get the Source Code in github:
  * https://github.com/Katrix-/JTG
  * 
@@ -18,7 +18,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class ModelTHFairyNether extends ModelBase
+public class ModelTHFairyJTG extends ModelBase
 {
   //fields
     ModelRenderer head;
@@ -42,7 +42,7 @@ public class ModelTHFairyNether extends ModelBase
 	ModelRenderer flower3;
 	ModelRenderer flower4;
   
-  public ModelTHFairyNether()
+  public ModelTHFairyJTG()
   {
     textureWidth = 64;
     textureHeight = 64;

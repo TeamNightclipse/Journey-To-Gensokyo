@@ -15,9 +15,9 @@ import java.util.List;
 
 import com.katrix.journeyToGensokyo.JourneyToGensokyo;
 import com.katrix.journeyToGensokyo.handler.ConfigHandler;
+import com.katrix.journeyToGensokyo.reference.MobModID;
 
 import cpw.mods.fml.common.registry.EntityRegistry;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.item.EntityXPOrb;
@@ -31,6 +31,7 @@ import net.minecraftforge.common.BiomeDictionary.Type;
 import thKaguyaMod.ShotData;
 import thKaguyaMod.THShotLib;
 import thKaguyaMod.entity.living.EntityTHFairy;
+import thKaguyaMod.init.THKaguyaConfig;
 import thKaguyaMod.init.THKaguyaItems;
 
 public class EntityHellRaven extends EntityTHFairy  {
@@ -69,17 +70,6 @@ public class EntityHellRaven extends EntityTHFairy  {
     
     public void onUpdate()
     {	
-    	/*if(ridingEntity == null)
-    	{
-    		EntityFamiliar familiar = new EntityFamiliar(worldObj);
-    		familiar.mountEntity(this);
- 			if(!worldObj.isRemote)
- 			{
- 				worldObj.spawnEntityInWorld(familiar);
- 			}
-    		
-    	}*/
-    	//体力がないなら動かない
     	if(this.getHealth() <= 0)
     	{
     		motionX = 0.0D;
@@ -133,12 +123,6 @@ public class EntityHellRaven extends EntityTHFairy  {
             }
         }
     }
-
-    
-    public EntityLivingBase getShooter()
-    {
-    	return this;
-    }
     
     @Override
     public void danmakuPattern(int level)
@@ -153,7 +137,7 @@ public class EntityHellRaven extends EntityTHFairy  {
 				danmakuSpan = 81;
 				shotForm = THShotLib.FORM_KUNAI;
 				speedRate = 0.25F * level;
-		    	shotData = ShotData.shot(shotForm, shotColor, 0, 80, special);
+		    	shotData = ShotData.shot(shotForm, shotColor, 0, 60, special);
 		    	int pattern = 6;
 		    	
 				danmaku01(angle, shotData, level, pattern);
@@ -178,9 +162,16 @@ public class EntityHellRaven extends EntityTHFairy  {
 			
 	    	THShotLib.playShotSound(this);
 					
-			int way = d % 100 + 1;
-			int num = d / 100 + 1;
+			int way = (d % 100 + 1);
+			int num = (d / 100 + 1);
 			double speed = speedRate;
+			
+			if(level == 1) {
+				for(int i = 0; i < num; i++)
+				{
+					THShotLib.createSphereShot(getShooter(), pos(), angle, speed, shotData, way, 0F);
+				}
+			}
 			
 			if(level < 4) {
 				for(int i = 0; i < num; i++)
@@ -239,7 +230,7 @@ public class EntityHellRaven extends EntityTHFairy  {
     @Override
     public int getMaxSpawnedInChunk()
     {
-        return 5;
+        return 3;
     }
     
     @Override
@@ -270,18 +261,21 @@ public class EntityHellRaven extends EntityTHFairy  {
 		}
     }
     
-    //自然スポーンするときに呼ばれ、trueならスポーンする
     @Override
     public boolean getCanSpawnHere()
     {
-    	//ゾンビなどと同じ湧き条件
+    	if(rand.nextInt(100) < THKaguyaConfig.fairySpawnRate)
+    	{
+    		return false;
+    	}
+    	
         return this.worldObj.difficultySetting != EnumDifficulty.PEACEFUL;
     }
     
-    public static void Init() {
+    public static void postInit() {
     	
     	EntityRegistry.registerGlobalEntityID(EntityHellRaven.class, "HellRaven", ConfigHandler.entityIdHellRaven, 0x2D2727, 0xFF2700);
-    	EntityRegistry.registerModEntity(EntityHellRaven.class, "HellRaven",  3, JourneyToGensokyo.instance, 80, 1, true);
+    	EntityRegistry.registerModEntity(EntityHellRaven.class, "HellRaven",  MobModID.HELL_RAVEN, JourneyToGensokyo.instance, 80, 1, true);
 		
 		List<BiomeGenBase> spawnbiomes = new ArrayList<BiomeGenBase>(Arrays.asList(BiomeDictionary.getBiomesForType(Type.NETHER)));
 		

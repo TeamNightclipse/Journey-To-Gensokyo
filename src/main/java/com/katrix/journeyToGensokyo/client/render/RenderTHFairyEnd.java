@@ -9,46 +9,47 @@
 
 package com.katrix.journeyToGensokyo.client.render;
 
-import com.katrix.journeyToGensokyo.client.model.ModelTenguCrow;
-import com.katrix.journeyToGensokyo.thsc.entity.EntityTenguCrow;
+import com.katrix.journeyToGensokyo.client.model.ModelTHFairyJTG;
 
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
+import thKaguyaMod.entity.living.EntityTHFairy;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class RenderTenguCrow extends RenderLiving
-{
+public class RenderTHFairyEnd extends RenderLiving
+{	
 	
-	ResourceLocation texture = new ResourceLocation("journeytogensokyo", "textures/entity/mob/tenguCrow.png");
-
-    public RenderTenguCrow()
+    public RenderTHFairyEnd()
     {
-        super(new ModelTenguCrow(), 0.25F);
+        super(new ModelTHFairyJTG(), 0.25F);
     }
     
     @Override
     public void doRender(Entity entity, double x, double y, double z, float yaw, float pitch)
     {
     	super.doRender(entity, x, y, z, yaw, pitch);
-    	this.render((EntityTenguCrow)entity, x, y, z, yaw, pitch);
+    	this.render((EntityTHFairy)entity, x, y, z, yaw, pitch);
     	
     }
 
-	public void render(EntityTenguCrow entity, double x, double y, double z, float yaw, float pitch)
+	public void render(EntityTHFairy entity, double x, double y, double z, float yaw, float pitch)
 	{
 	}
-
+	
     @Override
     protected ResourceLocation getEntityTexture(Entity entity)
     {
-        return this.getEntityTexture((EntityTenguCrow)entity);
+        return this.getEntityTexture((EntityTHFairy)entity);
     }
     
-    protected ResourceLocation getEntityTexture(EntityTenguCrow entity)
+    protected ResourceLocation getEntityTexture(EntityTHFairy thFairy)
     {
-		return texture;
+    	ResourceLocation resourceLocation;
+    	resourceLocation = new ResourceLocation("journeytogensokyo", "textures/entity/mob/FairyTextureEnd_" + thFairy.getForm() % 3 + ".png");
+    	
+        return resourceLocation;
     }
 }
