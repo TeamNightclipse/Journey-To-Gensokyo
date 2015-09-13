@@ -15,7 +15,8 @@ import java.util.List;
 
 import com.katrix.journeyToGensokyo.JourneyToGensokyo;
 import com.katrix.journeyToGensokyo.handler.ConfigHandler;
-import com.katrix.journeyToGensokyo.reference.MobModID;
+import com.katrix.journeyToGensokyo.reference.EntityName;
+import com.katrix.journeyToGensokyo.reference.MobID;
 import com.katrix.journeyToGensokyo.reference.SpecialShotID;
 
 import cpw.mods.fml.common.registry.EntityRegistry;
@@ -51,18 +52,19 @@ public class EntitySunFlowerFairyEnd extends EntitySunFlowerFairy {
     {
     	Vec3 angle;
     	angle = THShotLib.angle(rotationYaw,  rotationPitch);
+    	angle = THShotLib.angle_LimitRandom(angle, THKaguyaConfig.danmakuAccuracy);
     	ShotData shotData;
     	
 		switch(getDanmakuPattern())
 		{
 			case NORMAL_ATTACK01:
-				danmakuSpan = 30;
-				shotForm = THShotLib.FORM_KUNAI;
-				shotColor = THShotLib.BLUE;
-				speedRate = 0.4F;
+				danmakuSpan = 10;
+				shotForm = THShotLib.FORM_STAR;
+				shotColor = THShotLib.RANDOM;
+				speedRate = 0.2F;
 		    	shotData = ShotData.shot(shotForm, shotColor, 0, 80, special);
 
-				danmaku01(angle, shotData, level);
+				danmaku01(angle, shotData, speedRate, level);
 				break;
 			case NORMAL_ATTACK02:
 				if(level == 1) danmakuSpan = 30;
@@ -91,58 +93,14 @@ public class EntitySunFlowerFairyEnd extends EntitySunFlowerFairy {
 		}
     }
     
-    public void danmaku01(Vec3 angle, ShotData shotData, int level)
+    public void danmaku01(Vec3 angle, ShotData shotData, float speedRate, int level)
     {  	
-		int num = 1;
-
-		if(level == 1 || level == 2)
-			num = 3;
-			
-			if(attackCounter == 0){
-			THShotLib.createWideShot(getShooter(), pos(), angle, (double)speedRate, shotData, num, 20.0f);
-			angle = THShotLib.angle(rotationYaw,  rotationPitch+5);
-			THShotLib.createWideShot(getShooter(), pos(), angle, (double)speedRate, shotData, num, 20.0f);
-			angle = THShotLib.angle(rotationYaw,  rotationPitch-5);
-			THShotLib.createWideShot(getShooter(), pos(), angle, (double)speedRate, shotData, num, 20.0f);
-
-	    	THShotLib.playShotSound(this);
-			}
-			
-		if(level == 3){
-			num = 5;
-					
-			if(attackCounter == 0 || attackCounter == 10 || attackCounter == 20){
-				THShotLib.createWideShot(getShooter(), pos(), angle, (double)speedRate, shotData, num, 20.0f);
-				angle = THShotLib.angle(rotationYaw,  rotationPitch+5);
-				THShotLib.createWideShot(getShooter(), pos(), angle, (double)speedRate, shotData, num, 20.0f);
-				angle = THShotLib.angle(rotationYaw,  rotationPitch+10);
-				THShotLib.createWideShot(getShooter(), pos(), angle, (double)speedRate, shotData, num, 20.0f);
-				angle = THShotLib.angle(rotationYaw,  rotationPitch-5);
-				THShotLib.createWideShot(getShooter(), pos(), angle, (double)speedRate, shotData, num, 20.0f);
-				angle = THShotLib.angle(rotationYaw,  rotationPitch-10);
-				THShotLib.createWideShot(getShooter(), pos(), angle, (double)speedRate, shotData, num, 20.0f);
-				
-		    	THShotLib.playShotSound(this);
-			}
-		}
+		int num = level;
 		
-		if(level == 4){
-			num = 7;
-					
-			if(attackCounter <= 4){
-				THShotLib.createWideShot(getShooter(), pos(), angle, (double)speedRate, shotData, num, 20.0f);
-				angle = THShotLib.angle(rotationYaw,  rotationPitch+5);
-				THShotLib.createWideShot(getShooter(), pos(), angle, (double)speedRate, shotData, num, 20.0f);
-				angle = THShotLib.angle(rotationYaw,  rotationPitch+10);
-				THShotLib.createWideShot(getShooter(), pos(), angle, (double)speedRate, shotData, num, 20.0f);
-				angle = THShotLib.angle(rotationYaw,  rotationPitch-5);
-				THShotLib.createWideShot(getShooter(), pos(), angle, (double)speedRate, shotData, num, 20.0f);
-				angle = THShotLib.angle(rotationYaw,  rotationPitch-10);
-				THShotLib.createWideShot(getShooter(), pos(), angle, (double)speedRate, shotData, num, 20.0f);
-				
-		    	THShotLib.playShotSound(this);
-			}
-		}
+    	if(attackCounter == 0){
+	    	THShotLib.playShotSound(this);
+    		THShotLib.createRandomRingShot(getShooter(), getShooter(), pos(), angle, 0.0f, 0, (double)speedRate, 0.4D, 0.05D, gravity_Zero(), shotData, num, 0.5D, 20.0F);
+    	}
 	}
     
     public void danmaku02(Vec3 angle, ShotData shotData, int level)
@@ -197,6 +155,12 @@ public class EntitySunFlowerFairyEnd extends EntitySunFlowerFairy {
     {
     	return 12.0D;
     }
+    
+    @Override
+    public int getMaxSpawnedInChunk()
+    {
+        return 2;
+    }
 	
     @Override
     public boolean getCanSpawnHere()
@@ -211,12 +175,13 @@ public class EntitySunFlowerFairyEnd extends EntitySunFlowerFairy {
 	
     public static void postInit() {
     	
-    	EntityRegistry.registerGlobalEntityID(EntitySunFlowerFairyEnd.class, "SunFlowerFairyEnd", ConfigHandler.entityIdSunFlowerFairyEnd, 0x1C1133, 0x828200);
-    	EntityRegistry.registerModEntity(EntitySunFlowerFairyEnd.class, "SunFlowerFairyEnd",  MobModID.SUNFLOWER_FAIRY_END, JourneyToGensokyo.instance, 80, 1, true);
+    	//EntityRegistry.registerGlobalEntityID(EntitySunFlowerFairyEnd.class, "SunFlowerFairyEnd", ConfigHandler.entityIdSunFlowerFairyEnd, 0x1C1133, 0x828200);
+    	EntityRegistry.registerModEntity(EntitySunFlowerFairyEnd.class, EntityName.FAIRY_SUNFLOWER_END,  MobID.FAIRY_SUNFLOWER_END, JourneyToGensokyo.instance, 80, 1, true);
 		
 		List<BiomeGenBase> spawnbiomes = new ArrayList<BiomeGenBase>(Arrays.asList(BiomeDictionary.getBiomesForType(Type.END)));
-		EntityRegistry.addSpawn(EntitySunFlowerFairyEnd.class, 5, 1, 3, EnumCreatureType.monster, spawnbiomes.toArray(new BiomeGenBase[0]));
-    	
+		
+		if(THKaguyaConfig.spawnDanmakuMob && ConfigHandler.newFariesSpawn){
+			EntityRegistry.addSpawn(EntitySunFlowerFairyEnd.class, 5, 1, 3, EnumCreatureType.monster, spawnbiomes.toArray(new BiomeGenBase[0]));	
+		}
     }
-
 }

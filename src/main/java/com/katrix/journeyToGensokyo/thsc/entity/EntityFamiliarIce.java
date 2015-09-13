@@ -9,7 +9,10 @@
 
 package com.katrix.journeyToGensokyo.thsc.entity;
 
+import com.katrix.journeyToGensokyo.JourneyToGensokyo;
 import com.katrix.journeyToGensokyo.handler.ConfigHandler;
+import com.katrix.journeyToGensokyo.reference.EntityName;
+import com.katrix.journeyToGensokyo.reference.MobID;
 
 import cpw.mods.fml.common.registry.EntityRegistry;
 import net.minecraft.world.World;
@@ -28,7 +31,8 @@ public class EntityFamiliarIce extends EntityFamiliar {
 	
     public static void postInit() {
     	
-    	EntityRegistry.registerGlobalEntityID(EntityFamiliarIce.class, "FamiliarIce", ConfigHandler.entityIdFamiliarIce);
+    	//EntityRegistry.registerGlobalEntityID(EntityFamiliarIce.class, "FamiliarIce", ConfigHandler.entityIdFamiliarIce);
+    	EntityRegistry.registerModEntity(EntityFamiliarIce.class, EntityName.FAMILIAR_ICE,  MobID.FAMILIAR_ICE, JourneyToGensokyo.instance, 80, 1, true);
     	
     }
 

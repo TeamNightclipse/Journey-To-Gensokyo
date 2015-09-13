@@ -9,6 +9,7 @@
 
 package com.katrix.journeyToGensokyo.thsc;
 
+import com.katrix.journeyToGensokyo.handler.ConfigHandler;
 import com.katrix.journeyToGensokyo.reference.ModInfo;
 import com.katrix.journeyToGensokyo.reference.SpecialShotID;
 import com.katrix.journeyToGensokyo.reference.SpellcardID;
@@ -49,7 +50,7 @@ public class JTG_THSC {
 		EntityTHFairyEnd.postInit();
 		EntitySunFlowerFairyEnd.postInit();
 		
-		if(THKaguyaConfig.spawnDanmakuMob) {
+		if(THKaguyaConfig.spawnDanmakuMob && ConfigHandler.fixTHKaguyaSpawn) {
 			
 			if(THKaguyaConfig.spawnFairy){
 				SpawnBiomeFixer.FairyFix();

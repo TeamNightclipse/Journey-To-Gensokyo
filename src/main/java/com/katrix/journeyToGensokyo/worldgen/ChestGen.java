@@ -18,10 +18,10 @@ public class ChestGen {
 	
 	public static void preInit(){
     
-    	ChestGenHooks.getInfo("dungeonChest").addItem(new WeightedRandomChestContent(JTGItem.gensokyoNotesRuinedItem, 0, 1, 1, 5));
+    	ChestGenHooks.getInfo("dungeonChest").addItem(new WeightedRandomChestContent(JTGItem.gensokyoNotesItem, 0, 1, 1, 5));
     	ChestGenHooks.getInfo("dungeonChest").addItem(new WeightedRandomChestContent(JTGItem.oldGensokyoSpellItem, 0, 1, 2, 10));
-    	ChestGenHooks.getInfo("dungeonChest").addItem(new WeightedRandomChestContent(JTGItem.oldCelestialSpellItem, 0, 1, 2, 10));
-    	ChestGenHooks.getInfo("dungeonChest").addItem(new WeightedRandomChestContent(JTGItem.oldDemonSpellItem, 0, 1, 2, 10));
+    	ChestGenHooks.getInfo("dungeonChest").addItem(new WeightedRandomChestContent(JTGItem.oldGensokyoSpellItem, 1, 1, 2, 10));
+    	ChestGenHooks.getInfo("dungeonChest").addItem(new WeightedRandomChestContent(JTGItem.oldGensokyoSpellItem, 2, 1, 2, 10));
 	}
 
 }

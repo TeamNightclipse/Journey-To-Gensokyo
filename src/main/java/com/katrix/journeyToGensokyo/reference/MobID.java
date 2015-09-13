@@ -9,13 +9,14 @@
 
 package com.katrix.journeyToGensokyo.reference;
 
-public class MobModID {
+public class MobID {
 	
-	public static final int ICE_FAIRY = 1;
+	public static final int FAIRY_ICE = 1;
 	public static final int FAIRY_NETHER = 2;
 	public static final int HELL_RAVEN = 3;
 	public static final int TENGU_CROW = 4;
 	public static final int FAIRY_END = 5;
-	public static final int SUNFLOWER_FAIRY_END = 6;
+	public static final int FAIRY_SUNFLOWER_END = 6;
+	public static final int FAMILIAR_ICE = 7;
 
 }

@@ -11,6 +11,7 @@ package com.katrix.journeyToGensokyo.worldgen;
 
 import com.katrix.journeyToGensokyo.handler.ConfigHandler;
 import com.katrix.journeyToGensokyo.util.LogHelper;
+import com.katrix.journeyToGensokyo.worldgen.OreGen;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 
@@ -20,10 +21,7 @@ public class JTGWorldGen {
 		
 		if(ConfigHandler.OresEnabled) {
 			LogHelper.warn("JTG Ores enabled, this is not a officialy suported feature");
-			GameRegistry.registerWorldGenerator(oreGen, 1);
+			GameRegistry.registerWorldGenerator(new OreGen(), 1);
 		}
 	}
-
-	static OreGen oreGen = new OreGen();
-	
 }

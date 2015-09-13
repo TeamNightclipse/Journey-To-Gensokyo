@@ -13,5 +13,6 @@ public class ConfigRef {
 	
 	public static final String CAT_RTY = "RTY";
 	public static final String CAT_ENTITYID = "entityID";
+	public static final String CAT_MOBS = "Mobs";
 
 }

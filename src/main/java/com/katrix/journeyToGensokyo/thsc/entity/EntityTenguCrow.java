@@ -15,7 +15,8 @@ import java.util.List;
 
 import com.katrix.journeyToGensokyo.JourneyToGensokyo;
 import com.katrix.journeyToGensokyo.handler.ConfigHandler;
-import com.katrix.journeyToGensokyo.reference.MobModID;
+import com.katrix.journeyToGensokyo.reference.EntityName;
+import com.katrix.journeyToGensokyo.reference.MobID;
 
 import cpw.mods.fml.common.registry.EntityRegistry;
 import thKaguyaMod.ShotData;
@@ -98,6 +99,8 @@ public class EntityTenguCrow extends EntityTHFairy {
     {
     	Vec3 angle;
     	angle = THShotLib.angle(rotationYaw,  rotationPitch);
+    	Vec3 accurateAngle = angle;
+    	angle = THShotLib.angle_LimitRandom(angle, THKaguyaConfig.danmakuAccuracy);
     	ShotData shotData;
     	int pattern;
     	//System.out.println("Danmaku pattern is:  " + getDanmakuPattern());
@@ -111,7 +114,7 @@ public class EntityTenguCrow extends EntityTHFairy {
 		    	shotData = ShotData.shot(shotForm, shotColor, 0, 80, special);
 		    	pattern = 10;
 
-				danmaku01(angle, shotData, level, pattern);
+				danmaku01(angle, accurateAngle, shotData, level, pattern);
 				break;
 			case NORMAL_ATTACK02:
 		    	danmakuSpan = 12;
@@ -120,14 +123,14 @@ public class EntityTenguCrow extends EntityTHFairy {
 		    	shotData = ShotData.shot(shotForm, shotColor, 0, 80, special);
 		    	pattern = 1;
 		    	
-				danmaku02(angle, shotData, level, pattern);
+				danmaku02(angle, accurateAngle, shotData, level, pattern);
 				break;
 			default:
 				break;
 		}
     }
     
-    public void danmaku01(Vec3 angle, ShotData shotData, int level, int d)
+    public void danmaku01(Vec3 angle, Vec3 accurateAngle, ShotData shotData, int level, int d)
     {  	
 		float shotSpan = (d + 1F) * (level/2);
 		int num = (d / 100 + 1) * (level/2);
@@ -158,7 +161,7 @@ public class EntityTenguCrow extends EntityTHFairy {
 		    else if(randMov == 3)
 		    {
 		    	if(rand.nextInt(2) == 0){
-			    	THShotLib.createShot(getShooter(), pos(), angle, 0.9F, ShotData.shot(THShotLib.FORM_WIND, THShotLib.RED, 0.8F, 1.0F, 0, 25));
+			    	THShotLib.createShot(getShooter(), pos(), accurateAngle, 0.9F, ShotData.shot(THShotLib.FORM_WIND, THShotLib.RED, 0.8F, 1.0F, 0, 25));
 			    	this.moveForward(rand.nextDouble() * 0.2D + 3.0D, 20);
 			    	
 			    	THShotLib.playShotSound(this);
@@ -167,7 +170,7 @@ public class EntityTenguCrow extends EntityTHFairy {
 		}
 	}
     
-    public void danmaku02(Vec3 angle, ShotData shotData, int level, int d)
+    public void danmaku02(Vec3 angle, Vec3 accurateAngle, ShotData shotData, int level, int d)
     {  	
 		int num = d + 1*level;
 		if (attackCounter % 8 == 0){
@@ -195,7 +198,7 @@ public class EntityTenguCrow extends EntityTHFairy {
 		    else if(randMov == 3)
 		    {
 		    	if(rand.nextInt(2) == 0){
-			    	THShotLib.createShot(getShooter(), pos(), angle, 0.9F, ShotData.shot(THShotLib.FORM_WIND, THShotLib.RED, 0.8F, 1.0F, 0, 25));
+			    	THShotLib.createShot(getShooter(), pos(), accurateAngle, 0.9F, ShotData.shot(THShotLib.FORM_WIND, THShotLib.RED, 0.8F, 1.0F, 0, 25));
 			    	this.moveForward(rand.nextDouble() * 0.2D + 3.0D, 20);
 			    	
 			    	THShotLib.playShotSound(this);
@@ -219,7 +222,7 @@ public class EntityTenguCrow extends EntityTHFairy {
     @Override
     public int getMaxSpawnedInChunk()
     {
-        return 3;
+        return 2;
     }
     
 	@Override
@@ -251,13 +254,13 @@ public class EntityTenguCrow extends EntityTHFairy {
 	
 	public static void postInit() {
     	
-    	EntityRegistry.registerGlobalEntityID(EntityTenguCrow.class, "TenguCrow", ConfigHandler.entityIdTenguCrow, 0x191616, 0x593A30);
-    	EntityRegistry.registerModEntity(EntityTenguCrow.class, "TenguCrow",  MobModID.TENGU_CROW, JourneyToGensokyo.instance, 80, 1, true);
+    	//EntityRegistry.registerGlobalEntityID(EntityTenguCrow.class, "TenguCrow", ConfigHandler.entityIdTenguCrow, 0x191616, 0x593A30);
+    	EntityRegistry.registerModEntity(EntityTenguCrow.class, EntityName.TENGU_CROW,  MobID.TENGU_CROW, JourneyToGensokyo.instance, 80, 1, true);
 		
 		List<BiomeGenBase> spawnbiomes = new ArrayList<BiomeGenBase>(Arrays.asList(BiomeDictionary.getBiomesForType(Type.MOUNTAIN)));
 		
-		EntityRegistry.addSpawn(EntityTenguCrow.class, 15, 1, 3, EnumCreatureType.monster, spawnbiomes.toArray(new BiomeGenBase[0]));
-    	
+		if(THKaguyaConfig.spawnDanmakuMob && ConfigHandler.newMobsSpawn){
+			EntityRegistry.addSpawn(EntityTenguCrow.class, 15, 1, 3, EnumCreatureType.monster, spawnbiomes.toArray(new BiomeGenBase[0]));
+		}
     }
-
 }

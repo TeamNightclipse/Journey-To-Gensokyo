@@ -20,9 +20,9 @@ public class TEOreCrafting {
 	
 	public static void init() {
 		
-    	ThermalExpansionHelper.addPulverizerRecipe(4000, new ItemStack(JTGBlock.gensokyoOreBlock), new ItemStack(JTGItem.gensokyoDustItem, 2));
-    	ThermalExpansionHelper.addPulverizerRecipe(4000, new ItemStack(JTGBlock.demonOreBlock), new ItemStack(JTGItem.demonDustItem, 2), new ItemStack(JTGItem.gensokyoDustItem), 5);
-    	ThermalExpansionHelper.addPulverizerRecipe(4000, new ItemStack(JTGBlock.celestialOreBlock), new ItemStack(JTGItem.celestialDustItem, 2), new ItemStack(JTGItem.gensokyoDustItem), 5);
+    	ThermalExpansionHelper.addPulverizerRecipe(4000, new ItemStack(JTGBlock.gensokyoOreBlock, 1, 0), new ItemStack(JTGItem.gensokyoDustItem, 2, 0));
+    	ThermalExpansionHelper.addPulverizerRecipe(4000, new ItemStack(JTGBlock.gensokyoOreBlock, 1, 1), new ItemStack(JTGItem.gensokyoDustItem, 2, 1), new ItemStack(JTGItem.gensokyoDustItem, 1, 0), 5);
+    	ThermalExpansionHelper.addPulverizerRecipe(4000, new ItemStack(JTGBlock.gensokyoOreBlock, 1, 2), new ItemStack(JTGItem.gensokyoDustItem, 2, 2), new ItemStack(JTGItem.gensokyoDustItem, 1, 0), 5);
 	}
 
 }

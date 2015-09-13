@@ -9,11 +9,17 @@
 
 package com.katrix.journeyToGensokyo.block;
 
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.boss.EntityDragon;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 
 public class GensokyoOreBlock extends JTGBaseBlock{
@@ -33,10 +39,48 @@ public class GensokyoOreBlock extends JTGBaseBlock{
     {
     	if (entity instanceof EntityDragon)
         {
-            return this != JTGBlock.celestialOreBlock;
+            return this != JTGBlock.gensokyoOreBlock;
         }
 
         return true;
     }
+    
+    public IIcon[] icons = new IIcon[3];
+    
+    @Override
+    public void registerBlockIcons(IIconRegister reg) {
+        for (int i = 0; i < 3; i ++) {
+        	if(i == 0){
+                this.icons[i] = reg.registerIcon("journeytogensokyo:gensokyoOre");
+        	}
+        	
+        	if(i == 1){
+                this.icons[i] = reg.registerIcon("journeytogensokyo:demonOre");
+        	}
+        	
+        	if(i == 2){
+                this.icons[i] = reg.registerIcon("journeytogensokyo:celestialOre");
+        	}
+        }
+    }
+    
+    @Override
+    public IIcon getIcon(int side, int meta) {
+        if (meta > 2)
+            meta = 0;
 
+        return this.icons[meta];
+    }
+    
+    @Override
+    public int damageDropped(int meta) {
+        return meta;
+    }
+    
+    @Override
+    public void getSubBlocks(Item item, CreativeTabs tab, List list) {
+        for (int i = 0; i < 3; i ++) {
+            list.add(new ItemStack(item, 1, i));
+        }
+    }
 }

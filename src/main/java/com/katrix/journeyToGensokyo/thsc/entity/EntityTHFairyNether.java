@@ -15,7 +15,8 @@ import java.util.List;
 
 import com.katrix.journeyToGensokyo.JourneyToGensokyo;
 import com.katrix.journeyToGensokyo.handler.ConfigHandler;
-import com.katrix.journeyToGensokyo.reference.MobModID;
+import com.katrix.journeyToGensokyo.reference.EntityName;
+import com.katrix.journeyToGensokyo.reference.MobID;
 
 import cpw.mods.fml.common.registry.EntityRegistry;
 import net.minecraft.entity.EnumCreatureType;
@@ -55,6 +56,12 @@ public class EntityTHFairyNether extends EntityTHFairy {
 	}
 	
     @Override
+    public int getMaxSpawnedInChunk()
+    {
+        return 3;
+    }
+	
+    @Override
     public boolean getCanSpawnHere()
     {
     	//妖精のスポーンレートよりランダム値が低いならスポーンしない
@@ -68,13 +75,13 @@ public class EntityTHFairyNether extends EntityTHFairy {
     
     public static void postInit() {
     	
-    	EntityRegistry.registerGlobalEntityID(EntityTHFairyNether.class, "THFairyNether", ConfigHandler.entityIdTHFairyNether, 0x2D2727, 0xA0A000);
-    	EntityRegistry.registerModEntity(EntityTHFairyNether.class, "THFairyNether",  MobModID.FAIRY_NETHER, JourneyToGensokyo.instance, 80, 1, true);
+    	//EntityRegistry.registerGlobalEntityID(EntityTHFairyNether.class, "THFairyNether", ConfigHandler.entityIdTHFairyNether, 0x2D2727, 0xA0A000);
+    	EntityRegistry.registerModEntity(EntityTHFairyNether.class, EntityName.FAIRY_NETHER,  MobID.FAIRY_NETHER, JourneyToGensokyo.instance, 80, 1, true);
 		
 		List<BiomeGenBase> spawnbiomes = new ArrayList<BiomeGenBase>(Arrays.asList(BiomeDictionary.getBiomesForType(Type.NETHER)));
 		
-		EntityRegistry.addSpawn(EntityTHFairyNether.class, 20, 1, 3, EnumCreatureType.monster, spawnbiomes.toArray(new BiomeGenBase[0]));
-    	
+		if(THKaguyaConfig.spawnDanmakuMob && ConfigHandler.newFariesSpawn){
+			EntityRegistry.addSpawn(EntityTHFairyNether.class, 20, 1, 3, EnumCreatureType.monster, spawnbiomes.toArray(new BiomeGenBase[0]));	
+		}
     }
-
 }

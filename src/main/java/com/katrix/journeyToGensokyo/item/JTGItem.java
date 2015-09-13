@@ -9,6 +9,8 @@
 
 package com.katrix.journeyToGensokyo.item;
 
+import com.katrix.journeyToGensokyo.reference.EntityName;
+
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -17,99 +19,70 @@ public class JTGItem {
 	
 	public static void preInit(){
 		
-    	oldGensokyoSpellItem = new JTGBaseItem()
-							.setUnlocalizedName("oldGensokyoSpell")
-							.setTextureName("journeytogensokyo:oldGensokyoSpell");
-    	oldDemonSpellItem = new JTGBaseItem()
-							.setUnlocalizedName("oldDemonSpell")
-							.setTextureName("journeytogensokyo:oldDemonSpell");
-    	oldCelestialSpellItem = new JTGBaseItem()
-							.setUnlocalizedName("oldCelestialSpell")
-							.setTextureName("journeytogensokyo:oldCelestialSpell");
+    	oldGensokyoSpellItem = new OldSpellcardItem()
+							.setUnlocalizedName("oldGensokyoSpell");
 
-    	gensokyoIngotItem = new JTGBaseItem()
+    	gensokyoIngotItem = new GensokyoIngotItem()
 							.setUnlocalizedName("gensokyoIngot")
-							.setTextureName("journeytogensokyo:gensokyoIngot")
 							.setCreativeTab(CreativeTabs.tabMaterials);
-    	demonIngotItem = new JTGBaseItem()
-							.setUnlocalizedName("demonIngot")
-							.setTextureName("journeytogensokyo:demonIngot")
-							.setCreativeTab(CreativeTabs.tabMaterials);
-    	celestialIngotItem = new JTGBaseItem()
-							.setUnlocalizedName("celestialIngot")
-							.setTextureName("journeytogensokyo:celestialIngot")
-							.setCreativeTab(CreativeTabs.tabMaterials);
-
-    	gensokyoDustItem = new JTGBaseItem()
+    	gensokyoDustItem = new GensokyoDustItem()
 							.setUnlocalizedName("gensokyoDust")
-							.setTextureName("journeytogensokyo:gensokyoDust")
-							.setCreativeTab(CreativeTabs.tabMaterials);
-    	demonDustItem = new JTGBaseItem()
-							.setUnlocalizedName("demonDust")
-							.setTextureName("journeytogensokyo:demonDust")
-							.setCreativeTab(CreativeTabs.tabMaterials);
-    	celestialDustItem = new JTGBaseItem()
-							.setUnlocalizedName("celestialDust")
-							.setTextureName("journeytogensokyo:celestialDust")
 							.setCreativeTab(CreativeTabs.tabMaterials);
 
-    	gensokyoNotesRuinedItem = new JTGBaseItem()
-							.setUnlocalizedName("gensokyoNotesRuined")
-							.setTextureName("journeytogensokyo:gensokyoNotesRuined");
-    	gensokyoNotesPatItem = new JTGBaseItem()
-							.setUnlocalizedName("gensokyoNotesPat")
-							.setTextureName("journeytogensokyo:gensokyoNotesPat");
-    	gensokyoNotesDusItem = new JTGBaseItem()
-							.setUnlocalizedName("gensokyoNotesDus")
-							.setTextureName("journeytogensokyo:gensokyoNotesDus");
-    	gensokyoNotesItem = new JTGBaseItem()
-							.setUnlocalizedName("gensokyoNotes")
-							.setTextureName("journeytogensokyo:gensokyoNotes");
-    	gensokyoNotesImbItem = new JTGItemEffect()
-							.setUnlocalizedName("gensokyoNotesImb")
-							.setTextureName("journeytogensokyo:gensokyoNotes");
-    	gensokyoNotesArcItem = new JTGItemEffect()
-							.setUnlocalizedName("gensokyoNotesArc")
-							.setTextureName("journeytogensokyo:gensokyoNotesArc");
+    	gensokyoNotesItem = new GensokyoNoteItem()
+							.setUnlocalizedName("gensokyoNotes");
+    	gensokyoNotesEffectItem = new GensokyoNoteEffectItem()
+							.setUnlocalizedName("gensokyoNotesEffect");
+    	
+    	spawnEggHellRavenItem = new ItemSpawnEgg(EntityName.HELL_RAVEN, 0x2D2727, 0xFF2700)
+    						.setUnlocalizedName("spawnEgg_" + EntityName.HELL_RAVEN)
+    						.setTextureName("journeytogensokyo:spawn_egg");
+    	spawnEggTenguCrowItem = new ItemSpawnEgg(EntityName.TENGU_CROW, 0x191616, 0x593A30)
+							.setUnlocalizedName("spawnEgg_" + EntityName.TENGU_CROW)
+							.setTextureName("journeytogensokyo:spawn_egg");
+    	spawnEggTHFairyIceItem = new ItemSpawnEgg(EntityName.FAIRY_ICE, 0x3DFFEE, 0xA0A000)
+							.setUnlocalizedName("spawnEgg_" + EntityName.FAIRY_ICE)
+							.setTextureName("journeytogensokyo:spawn_egg");
+    	spawnEggFairyNetherItem = new ItemSpawnEgg(EntityName.FAIRY_NETHER, 0x2D2727, 0xA0A000)
+							.setUnlocalizedName("spawnEgg_" + EntityName.FAIRY_NETHER)
+							.setTextureName("journeytogensokyo:spawn_egg");
+    	spawnEggFairyEndItem = new ItemSpawnEgg(EntityName.FAIRY_END, 0x362060, 0xD3C95D)
+							.setUnlocalizedName("spawnEgg_" + EntityName.FAIRY_END)
+							.setTextureName("journeytogensokyo:spawn_egg");
+    	spawnEggSunFlowerFairyEndItem = new ItemSpawnEgg(EntityName.FAIRY_SUNFLOWER_END, 0x1C1133, 0x828200)
+							.setUnlocalizedName("spawnEgg_" + EntityName.FAIRY_SUNFLOWER_END)
+							.setTextureName("journeytogensokyo:spawn_egg");
     	
     	GameRegistry.registerItem(oldGensokyoSpellItem, "oldGensokyoSpellItem");
-    	GameRegistry.registerItem(oldDemonSpellItem, "oldDemonSpellItem");
-    	GameRegistry.registerItem(oldCelestialSpellItem, "oldCelestialSpellItem");
     	
     	GameRegistry.registerItem(gensokyoIngotItem, "gensokyoIngotItem");
-    	GameRegistry.registerItem(demonIngotItem, "demonIngotItem");
-    	GameRegistry.registerItem(celestialIngotItem, "celestialIngotItem");
-    	
     	GameRegistry.registerItem(gensokyoDustItem, "gensokyoDustItem");
-    	GameRegistry.registerItem(demonDustItem, "demonDustItem");
-    	GameRegistry.registerItem(celestialDustItem, "celestialDustItem");
     	
-    	GameRegistry.registerItem(gensokyoNotesRuinedItem, "gensokyoNotesRuinedItem");
-    	GameRegistry.registerItem(gensokyoNotesPatItem, "gensokyoNotesPatItem");
-    	GameRegistry.registerItem(gensokyoNotesDusItem, "gensokyoNotesDusItem");
     	GameRegistry.registerItem(gensokyoNotesItem, "gensokyoNotesItem");
-    	GameRegistry.registerItem(gensokyoNotesImbItem, "gensokyoNotesImbItem");
-    	GameRegistry.registerItem(gensokyoNotesArcItem, "gensokyoNotesArcItem");
+    	GameRegistry.registerItem(gensokyoNotesEffectItem, "gensokyoNotesEffectItem");
+    	
+    	GameRegistry.registerItem(spawnEggTHFairyIceItem, "spawnEgg" + EntityName.FAIRY_ICE);
+    	GameRegistry.registerItem(spawnEggHellRavenItem, "spawnEgg" + EntityName.HELL_RAVEN);
+    	GameRegistry.registerItem(spawnEggTenguCrowItem, "spawnEgg" + EntityName.TENGU_CROW);
+    	GameRegistry.registerItem(spawnEggFairyNetherItem, "spawnEgg" + EntityName.FAIRY_NETHER);
+    	GameRegistry.registerItem(spawnEggFairyEndItem, "spawnEgg" + EntityName.FAIRY_END);
+    	GameRegistry.registerItem(spawnEggSunFlowerFairyEndItem, "spawnEgg" + EntityName.FAIRY_SUNFLOWER_END);
 		
 	}
 	
     public static Item oldGensokyoSpellItem;
-    public static Item oldDemonSpellItem;
-    public static Item oldCelestialSpellItem;
     
     public static Item gensokyoIngotItem;
-    public static Item demonIngotItem;
-    public static Item celestialIngotItem;
-    
     public static Item gensokyoDustItem;
-    public static Item demonDustItem;
-    public static Item celestialDustItem;
     
-    public static Item gensokyoNotesRuinedItem;
-    public static Item gensokyoNotesPatItem;
-    public static Item gensokyoNotesDusItem;
     public static Item gensokyoNotesItem;
-    public static Item gensokyoNotesImbItem;
-    public static Item gensokyoNotesArcItem;
+    public static Item gensokyoNotesEffectItem;
+    
+    public static Item spawnEggTHFairyIceItem;
+    public static Item spawnEggHellRavenItem;
+    public static Item spawnEggTenguCrowItem;
+    public static Item spawnEggFairyNetherItem;
+    public static Item spawnEggFairyEndItem;
+    public static Item spawnEggSunFlowerFairyEndItem;
 
 }

@@ -29,6 +29,11 @@ public class ConfigHandler {
 	public static int entityIdHellRaven;
 	public static int entityIdTenguCrow;
 	
+	public static boolean newFariesSpawn;
+	public static boolean newMobsSpawn;
+	public static boolean newBossesSpawn;
+	public static boolean fixTHKaguyaSpawn;
+	
 	public static boolean OresEnabled;
 	public static boolean NotesEnabled;
 	public static boolean rtyMode;
@@ -51,6 +56,11 @@ public class ConfigHandler {
 	public static void loadConfig(){
 		
 		cfg.addCustomCategoryComment(ConfigRef.CAT_RTY, "Don't change this if you don't know what you are doing");
+		
+		newFariesSpawn = cfg.get(ConfigRef.CAT_MOBS, "New faries spawn", true, "Can new faries added by JTG spawn?").getBoolean();
+		newMobsSpawn = cfg.get(ConfigRef.CAT_MOBS, "New mobs spawn", true, "Can new mobs(mobs that are not faries) added by JTG spawn?").getBoolean();
+		newBossesSpawn = cfg.get(ConfigRef.CAT_MOBS, "New bosses spawn", true, "Can new bosses added by JTG spawn?").getBoolean();
+		fixTHKaguyaSpawn = cfg.get(ConfigRef.CAT_MOBS, "Spawn biome fixer enabled", true, "Allow Touhou Items Mod bobs to spawn in mod added biomes?").getBoolean();
 		
 		OresEnabled = cfg.get(ConfigRef.CAT_RTY, "Ore gen enabled", false, "should JTG ores generate?").getBoolean();
 		NotesEnabled = cfg.get(ConfigRef.CAT_RTY, "Notes and old spellcards enabled", false, "should gensokyo notes and old spellcards be enabled").getBoolean();

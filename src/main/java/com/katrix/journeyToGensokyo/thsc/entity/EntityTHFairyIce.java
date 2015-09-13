@@ -15,7 +15,8 @@ import java.util.List;
 
 import com.katrix.journeyToGensokyo.JourneyToGensokyo;
 import com.katrix.journeyToGensokyo.handler.ConfigHandler;
-import com.katrix.journeyToGensokyo.reference.MobModID;
+import com.katrix.journeyToGensokyo.reference.EntityName;
+import com.katrix.journeyToGensokyo.reference.MobID;
 
 import cpw.mods.fml.common.registry.EntityRegistry;
 import net.minecraft.entity.EnumCreatureType;
@@ -26,6 +27,7 @@ import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
 import thKaguyaMod.THShotLib;
 import thKaguyaMod.entity.living.EntityTHFairy;
+import thKaguyaMod.init.THKaguyaConfig;
 import thKaguyaMod.registry.DanmakuPatternRegistry;
 
 public class EntityTHFairyIce extends EntityTHFairy
@@ -82,8 +84,8 @@ public class EntityTHFairyIce extends EntityTHFairy
     
     public static void postInit() {
     	
-    	EntityRegistry.registerGlobalEntityID(EntityTHFairyIce.class, "THFairyIce", ConfigHandler.entityIdTHFairyIce, 0x3DFFEE, 0xA0A000);
-    	EntityRegistry.registerModEntity(EntityTHFairyIce.class, "THFairyIce",  MobModID.ICE_FAIRY, JourneyToGensokyo.instance, 80, 1, true);
+    	//EntityRegistry.registerGlobalEntityID(EntityTHFairyIce.class, "THFairyIce", ConfigHandler.entityIdTHFairyIce, 0x3DFFEE, 0xA0A000);
+    	EntityRegistry.registerModEntity(EntityTHFairyIce.class, EntityName.FAIRY_ICE,  MobID.FAIRY_ICE, JourneyToGensokyo.instance, 80, 1, true);
 		
 		List<BiomeGenBase> spawnbiomes = new ArrayList<BiomeGenBase>(Arrays.asList(BiomeDictionary.getBiomesForType(Type.COLD)));
 		for (BiomeGenBase biome : BiomeDictionary.getBiomesForType(Type.SNOWY)) {
@@ -96,9 +98,8 @@ public class EntityTHFairyIce extends EntityTHFairy
 				spawnbiomes.remove(biome);
 			}
 		}
-		
-		EntityRegistry.addSpawn(EntityTHFairyIce.class, 20, 1, 3, EnumCreatureType.monster, spawnbiomes.toArray(new BiomeGenBase[0]));
-    	
+		if(THKaguyaConfig.spawnDanmakuMob && ConfigHandler.newFariesSpawn){
+			EntityRegistry.addSpawn(EntityTHFairyIce.class, 20, 1, 3, EnumCreatureType.monster, spawnbiomes.toArray(new BiomeGenBase[0]));
+		}
     }
-
 }

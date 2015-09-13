@@ -1,25 +1,25 @@
-item.oldGensokyoSpell.name=Old Gensokyo Spellcard
-item.oldDemonSpell.name=Old Demon Spellcard
-item.oldCelestialSpell.name=Old Celestial Spellcard
+item.oldGensokyoSpell_0.name=Old Gensokyo Spellcard
+item.oldGensokyoSpell_1.name=Old Demon Spellcard
+item.oldGensokyoSpell_2.name=Old Celestial Spellcard
 
-item.gensokyoIngot.name=Gensokium
-item.demonIngot.name=Makaiium
-item.celestialIngot.name=Celestium
+item.gensokyoIngot_0.name=Gensokium
+item.gensokyoIngot_1.name=Makaiium
+item.gensokyoIngot_2.name=Celestium
 
-item.gensokyoDust.name=Gensokium Dust
-item.demonDust.name=Makaiium Dust
-item.celestialDust.name=Celestium Dust
+item.gensokyoDust_0.name=Gensokium Dust
+item.gensokyoDust_1.name=Makaiium Dust
+item.gensokyoDust_2.name=Celestium Dust
 
-item.gensokyoNotesRuined.name=Ruined Old Notebook
-item.gensokyoNotesPat.name=Patched Gensokyo Notes
-item.gensokyoNotesDus.name=Dusty Gensokyo Notes
-item.gensokyoNotes.name=Gensokyo Notes
-item.gensokyoNotesImb.name=Imbued Gensokyo Notes
-item.gensokyoNotesArc.name=Arcane Gensokyo Notes
+item.gensokyoNotes_0.name=Ruined Old Notebook
+item.gensokyoNotes_1.name=Patched Gensokyo Notes
+item.gensokyoNotes_2.name=Dusty Gensokyo Notes
+item.gensokyoNotes_3.name=Gensokyo Notes
+item.gensokyoNotesEffect_0.name=Imbued Gensokyo Notes
+item.gensokyoNotesEffect_1.name=Arcane Gensokyo Notes
 
-tile.gensokyoOreBlock.name=Gensokium Ore
-tile.demonOreBlock.name=Makaiium Ore
-tile.celestialOreBlock.name=Celestium Ore
+tile.gensokyoOreBlock_0.name=Gensokium Ore
+tile.gensokyoOreBlock_1.name=Makaiium Ore
+tile.gensokyoOreBlock_2.name=Celestium Ore
 
 tile.keyStoneBlock.name=Keystone
 
@@ -32,6 +32,13 @@ entity.HellRaven.name=Hell Raven
 entity.TenguCrow.name=Crow Tengu
 entity.THFairyEnd.name=Moon Fairy
 entity.SunFlowerFairyEnd.name=Moon Sunflower Fairy
+
+item.spawnEgg_THFairyIce.name=Spawn Ice Fairy
+item.spawnEgg_THFairyNether.name=Spawn Nether Fairy
+item.spawnEgg_THFairyEnd.name=Spawn Moon Fairy
+item.spawnEgg_SunFlowerFairyEnd.name=Spawn Moon Sunflower Fairy
+item.spawnEgg_TenguCrow.name=Spawn Crow Tengu
+item.spawnEgg_HellRaven.name=Spawn Hell Raven
 
 tc.research_category.JTG=Journey To Gensokyo
 jtg.research.name.RESEARCH_NOTES_DEC=Decrypted Research Notes

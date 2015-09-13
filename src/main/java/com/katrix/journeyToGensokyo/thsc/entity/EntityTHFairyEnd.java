@@ -15,7 +15,8 @@ import java.util.List;
 
 import com.katrix.journeyToGensokyo.JourneyToGensokyo;
 import com.katrix.journeyToGensokyo.handler.ConfigHandler;
-import com.katrix.journeyToGensokyo.reference.MobModID;
+import com.katrix.journeyToGensokyo.reference.EntityName;
+import com.katrix.journeyToGensokyo.reference.MobID;
 import com.katrix.journeyToGensokyo.reference.SpecialShotID;
 
 import cpw.mods.fml.common.registry.EntityRegistry;
@@ -58,6 +59,7 @@ public class EntityTHFairyEnd extends EntityTHFairy
     {
     	Vec3 angle;
     	angle = THShotLib.angle(rotationYaw,  rotationPitch);
+    	angle = THShotLib.angle_LimitRandom(angle, THKaguyaConfig.danmakuAccuracy);
     	ShotData shotData;
     	
 		switch(getForm())
@@ -225,11 +227,13 @@ public class EntityTHFairyEnd extends EntityTHFairy
     
     public static void postInit() {
     	
-    	EntityRegistry.registerGlobalEntityID(EntityTHFairyEnd.class, "THFairyEnd", ConfigHandler.entityIdTHFairyEnd, 0x362060, 0xD3C95D);
-    	EntityRegistry.registerModEntity(EntityTHFairyEnd.class, "THFairyEnd",  MobModID.FAIRY_END, JourneyToGensokyo.instance, 80, 1, true);
+    	//EntityRegistry.registerGlobalEntityID(EntityTHFairyEnd.class, "THFairyEnd", ConfigHandler.entityIdTHFairyEnd, 0x362060, 0xD3C95D);
+    	EntityRegistry.registerModEntity(EntityTHFairyEnd.class, EntityName.FAIRY_END,  MobID.FAIRY_END, JourneyToGensokyo.instance, 80, 1, true);
 		
 		List<BiomeGenBase> spawnbiomes = new ArrayList<BiomeGenBase>(Arrays.asList(BiomeDictionary.getBiomesForType(Type.END)));
-		EntityRegistry.addSpawn(EntityTHFairyEnd.class, 10, 1, 3, EnumCreatureType.monster, spawnbiomes.toArray(new BiomeGenBase[0]));
-    	
+		
+		if(THKaguyaConfig.spawnDanmakuMob && ConfigHandler.newFariesSpawn){
+			EntityRegistry.addSpawn(EntityTHFairyEnd.class, 10, 1, 3, EnumCreatureType.monster, spawnbiomes.toArray(new BiomeGenBase[0]));	
+		}
     }
 }

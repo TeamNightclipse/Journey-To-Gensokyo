@@ -23,14 +23,18 @@ public class VanillaCrafting {
 	public static void init() {
 		
     	if(ConfigHandler.OresEnabled) {
-    		GameRegistry.addSmelting(new ItemStack(JTGBlock.gensokyoOreBlock), new ItemStack(JTGItem.gensokyoIngotItem), 0.1f);
-            GameRegistry.addSmelting(new ItemStack(JTGBlock.demonOreBlock), new ItemStack(JTGItem.demonIngotItem), 0.1f);
-            GameRegistry.addSmelting(new ItemStack(JTGBlock.celestialOreBlock), new ItemStack(JTGItem.celestialIngotItem), 0.1f);
+    		GameRegistry.addSmelting(new ItemStack(JTGBlock.gensokyoOreBlock, 1, 0), new ItemStack(JTGItem.gensokyoIngotItem, 1, 0), 0.1f);
+            GameRegistry.addSmelting(new ItemStack(JTGBlock.gensokyoOreBlock, 1, 1), new ItemStack(JTGItem.gensokyoIngotItem, 1, 1), 0.1f);
+            GameRegistry.addSmelting(new ItemStack(JTGBlock.gensokyoOreBlock, 1, 2), new ItemStack(JTGItem.gensokyoIngotItem, 1, 2), 0.1f);
+            
+    		GameRegistry.addSmelting(new ItemStack(JTGItem.gensokyoDustItem, 1, 0), new ItemStack(JTGItem.gensokyoIngotItem, 1, 0), 0.1f);
+            GameRegistry.addSmelting(new ItemStack(JTGItem.gensokyoDustItem, 1, 1), new ItemStack(JTGItem.gensokyoIngotItem, 1, 1), 0.1f);
+            GameRegistry.addSmelting(new ItemStack(JTGItem.gensokyoDustItem, 1, 2), new ItemStack(JTGItem.gensokyoIngotItem, 1, 2), 0.1f);
     	}
 
     	if(ConfigHandler.NotesEnabled) {
             GameRegistry.addRecipe(new ItemStack(JTGBlock.keyStoneBlock), " r ", "sss", "nnn",
-                    's', Items.string, 'r', Blocks.stone, 'n', JTGItem.oldCelestialSpellItem);
+                    's', Items.string, 'r', Blocks.stone, 'n', new ItemStack(JTGItem.oldGensokyoSpellItem, 1, 2));
     	}
     	else{
             GameRegistry.addRecipe(new ItemStack(JTGBlock.keyStoneBlock), " r ", "sss", "nnn",
@@ -38,8 +42,8 @@ public class VanillaCrafting {
     	}
     	
     	if(ConfigHandler.NotesEnabled) {
-            GameRegistry.addRecipe(new ItemStack(JTGItem.gensokyoNotesPatItem), " n ", "nrn", " n ",
-            		'r', JTGItem.gensokyoNotesRuinedItem, 'n', JTGItem.oldGensokyoSpellItem);
+            GameRegistry.addRecipe(new ItemStack(JTGItem.gensokyoNotesItem, 1, 1), " n ", "nrn", " n ",
+            		'r', new ItemStack(JTGItem.gensokyoNotesItem, 1, 0), 'n', new ItemStack(JTGItem.oldGensokyoSpellItem, 1, 0));
     	}
 
 	}

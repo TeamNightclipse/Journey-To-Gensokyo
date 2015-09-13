@@ -15,7 +15,8 @@ import java.util.List;
 
 import com.katrix.journeyToGensokyo.JourneyToGensokyo;
 import com.katrix.journeyToGensokyo.handler.ConfigHandler;
-import com.katrix.journeyToGensokyo.reference.MobModID;
+import com.katrix.journeyToGensokyo.reference.EntityName;
+import com.katrix.journeyToGensokyo.reference.MobID;
 
 import cpw.mods.fml.common.registry.EntityRegistry;
 import net.minecraft.entity.EnumCreatureType;
@@ -147,6 +148,7 @@ public class EntityHellRaven extends EntityTHFairy  {
 		    	shotForm = THShotLib.FORM_SMALL;
 		    	speedRate = 0.5F;
 		    	shotData = ShotData.shot(shotForm, shotColor, 0, 80, special);
+		    	angle = THShotLib.angle_LimitRandom(angle, THKaguyaConfig.danmakuAccuracy);
 		    	
 				danmaku02(angle, shotData, level);
 				break;
@@ -230,7 +232,7 @@ public class EntityHellRaven extends EntityTHFairy  {
     @Override
     public int getMaxSpawnedInChunk()
     {
-        return 3;
+        return 2;
     }
     
     @Override
@@ -274,13 +276,13 @@ public class EntityHellRaven extends EntityTHFairy  {
     
     public static void postInit() {
     	
-    	EntityRegistry.registerGlobalEntityID(EntityHellRaven.class, "HellRaven", ConfigHandler.entityIdHellRaven, 0x2D2727, 0xFF2700);
-    	EntityRegistry.registerModEntity(EntityHellRaven.class, "HellRaven",  MobModID.HELL_RAVEN, JourneyToGensokyo.instance, 80, 1, true);
+    	//EntityRegistry.registerGlobalEntityID(EntityHellRaven.class, "HellRaven", ConfigHandler.entityIdHellRaven, 0x2D2727, 0xFF2700);
+    	EntityRegistry.registerModEntity(EntityHellRaven.class, EntityName.HELL_RAVEN,  MobID.HELL_RAVEN, JourneyToGensokyo.instance, 80, 1, true);
 		
 		List<BiomeGenBase> spawnbiomes = new ArrayList<BiomeGenBase>(Arrays.asList(BiomeDictionary.getBiomesForType(Type.NETHER)));
 		
-		EntityRegistry.addSpawn(EntityHellRaven.class, 20, 1, 3, EnumCreatureType.monster, spawnbiomes.toArray(new BiomeGenBase[0]));
-    	
+		if(THKaguyaConfig.spawnDanmakuMob && ConfigHandler.newMobsSpawn){
+			EntityRegistry.addSpawn(EntityHellRaven.class, 20, 1, 3, EnumCreatureType.monster, spawnbiomes.toArray(new BiomeGenBase[0]));
+		}
     }
-
 }

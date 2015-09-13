@@ -16,6 +16,7 @@ import com.katrix.journeyToGensokyo.crafting.IC2OreCrafting;
 import com.katrix.journeyToGensokyo.crafting.TEOreCrafting;
 import com.katrix.journeyToGensokyo.crafting.VanillaCrafting;
 import com.katrix.journeyToGensokyo.handler.ConfigHandler;
+import com.katrix.journeyToGensokyo.handler.MissingMappingHandler;
 import com.katrix.journeyToGensokyo.item.JTGItem;
 import com.katrix.journeyToGensokyo.thaumcraft.JTGThaumcraft;
 import com.katrix.journeyToGensokyo.thsc.JTG_THSC;
@@ -29,6 +30,7 @@ import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLMissingMappingsEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
@@ -73,7 +75,6 @@ public class JourneyToGensokyo {
         public void load(FMLInitializationEvent event) {
         	
             proxy.registerRenderers();
-            
         	if(Loader.isModLoaded("ThermalExpansion") && ConfigHandler.OresEnabled) {
         		LogHelper.info("JTG adding TE Ore recipes");
         		TEOreCrafting.init();
@@ -92,10 +93,14 @@ public class JourneyToGensokyo {
         public void postInit(FMLPostInitializationEvent event) {
     	
             JTG_THSC.postInit();
-        	
         	if(Loader.isModLoaded("Thaumcraft")) {
         		LogHelper.info("JTG adding Thaumcraft aspects");
             	JTGThaumcraft.postInit();
         	}
+        }
+        
+        @EventHandler
+        public void missingMappings(FMLMissingMappingsEvent event) {
+        	MissingMappingHandler.MissingMappings(event);
         }
 }

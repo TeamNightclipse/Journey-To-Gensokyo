@@ -21,9 +21,8 @@ public class IC2OreCrafting {
 	
 	public static void init() {
 		
-    	Recipes.macerator.addRecipe(new RecipeInputItemStack(new ItemStack(JTGBlock.gensokyoOreBlock), 1), null, new ItemStack(JTGItem.gensokyoDustItem, 2));
-    	Recipes.macerator.addRecipe(new RecipeInputItemStack(new ItemStack(JTGBlock.demonOreBlock), 1), null, new ItemStack(JTGItem.demonDustItem, 2));
-    	Recipes.macerator.addRecipe(new RecipeInputItemStack(new ItemStack(JTGBlock.celestialOreBlock), 1), null, new ItemStack(JTGItem.celestialDustItem, 2));
+    	Recipes.macerator.addRecipe(new RecipeInputItemStack(new ItemStack(JTGBlock.gensokyoOreBlock, 1, 0), 1), null, new ItemStack(JTGItem.gensokyoDustItem, 2, 0));
+    	Recipes.macerator.addRecipe(new RecipeInputItemStack(new ItemStack(JTGBlock.gensokyoOreBlock, 1, 1), 1), null, new ItemStack(JTGItem.gensokyoDustItem, 2, 1));
+    	Recipes.macerator.addRecipe(new RecipeInputItemStack(new ItemStack(JTGBlock.gensokyoOreBlock, 1, 2), 1), null, new ItemStack(JTGItem.gensokyoDustItem, 2, 2));
 	}
-
 }
