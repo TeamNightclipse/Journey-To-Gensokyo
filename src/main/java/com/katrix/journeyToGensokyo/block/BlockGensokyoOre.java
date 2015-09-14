@@ -22,9 +22,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 
-public class GensokyoOreBlock extends JTGBaseBlock{
+public class BlockGensokyoOre extends BlockJTGBase{
 	
-	public GensokyoOreBlock (Material material){
+	public BlockGensokyoOre (Material material){
 
 		super(material);
 		setHardness(2.0F);

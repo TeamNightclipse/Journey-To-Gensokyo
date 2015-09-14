@@ -1,9 +1,18 @@
+/**
+ * This class was created by <Katrix>. It's distributed as
+ * part of the Journey To Gensokyo Mod. Get the Source Code in github:
+ * https://github.com/Katrix-/JTG
+ * 
+ * Journey To Gensokyo is Open Source and distributed under the
+ * a modifed Botania license: https://github.com/Katrix-/JTG/blob/master/LICENSE.md
+ */
+
 package com.katrix.journeyToGensokyo.handler;
 
 import java.util.List;
 
 import com.katrix.journeyToGensokyo.block.JTGBlock;
-import com.katrix.journeyToGensokyo.item.GensokyoOreBlockItem;
+import com.katrix.journeyToGensokyo.item.ItemGensokyoOreBlock;
 import com.katrix.journeyToGensokyo.item.JTGItem;
 import com.katrix.journeyToGensokyo.reference.ModInfo;
 import com.katrix.journeyToGensokyo.util.LogHelper;
@@ -21,103 +30,107 @@ public class MissingMappingHandler {
 		for(MissingMapping mapping : mappings){
 			if(mapping.type == Type.ITEM){
 				//remapItem(mapping, compareItem(mapping));
-				compareItem(mapping);
 			}
 			else{
 				//remapBlock(mapping, compareBlock(mapping));
-				compareBlock(mapping);
 			}
 		}
 	}
 	
 	public static void remapItem(MissingMapping mapping, Item target){
-		mapping.remap(target);
+		if(target != null){
+			mapping.remap(target);
+		}
 	}
 	
 	public static void remapBlock(MissingMapping mapping, Block target){
-		mapping.remap(target);
+		if(target != null){
+			mapping.remap(target);
+		}
 	}
 	
 	public static Item compareItem(MissingMapping mapping){
-		if(mapping.name.substring(ModInfo.MODID.length()+1) == "gensokyoNotesImbItem"){
-			LogHelper.info("Found: " + mapping.name);
-			return JTGItem.gensokyoNotesEffectItem;
-		}
-		if(mapping.name.substring(ModInfo.MODID.length()+1) == "gensokyoNotesArcItem"){
-			LogHelper.info("Found: " + mapping.name);
-			return JTGItem.gensokyoNotesEffectItem;
-		}
+		String Tester = mapping.name.substring(ModInfo.MODID.length()+1);
 		
 		
 		
-		if(mapping.name.substring(ModInfo.MODID.length()+1) == "gensokyoNotesRuinedItem"){
+		if(Tester.equals("gensokyoNotesRuinedItem")){
 			LogHelper.info("Found: " + mapping.name);
-			return JTGItem.gensokyoNotesItem;
+			return JTGItem.gensokyoNotesItem; //remap to damage 0
 		}
-		if(mapping.name.substring(ModInfo.MODID.length()+1) == "gensokyoNotesPatItem"){
+		else if(Tester.equals("gensokyoNotesPatItem")){
 			LogHelper.info("Found: " + mapping.name);
-			return JTGItem.gensokyoNotesItem;
+			return JTGItem.gensokyoNotesItem; //remap to damage 1
 		}
-		if(mapping.name.substring(ModInfo.MODID.length()+1) == "gensokyoNotesDusItem"){
+		else if(Tester.equals("gensokyoNotesDusItem")){
 			LogHelper.info("Found: " + mapping.name);
-			return JTGItem.gensokyoNotesItem;
+			return JTGItem.gensokyoNotesItem; //remap to damage 2
 		}
-		
-		
-		
-		if(mapping.name.substring(ModInfo.MODID.length()+1) == "oldDemonSpellItem"){
+		else if(Tester.equals("gensokyoNotesImbItem")){
 			LogHelper.info("Found: " + mapping.name);
-			return JTGItem.oldGensokyoSpellItem;
+			return JTGItem.gensokyoNotesItem; //remap to damage 4
 		}
-		if(mapping.name.substring(ModInfo.MODID.length()+1) == "oldCelestialSpellItem"){
+		else if(Tester.equals("gensokyoNotesArcItem")){
 			LogHelper.info("Found: " + mapping.name);
-			return JTGItem.oldGensokyoSpellItem;
+			return JTGItem.gensokyoNotesItem; //remap to damage 5
 		}
 		
 		
 		
-		if(mapping.name.substring(ModInfo.MODID.length()+1) == "demonDustItem"){
+		else if(Tester.equals("oldDemonSpellItem")){
 			LogHelper.info("Found: " + mapping.name);
-			return JTGItem.gensokyoDustItem;
+			return JTGItem.oldGensokyoSpellItem; //remap to damage 1
 		}
-		if(mapping.name.substring(ModInfo.MODID.length()+1) == "celestialDustItem"){
+		else if(Tester.equals("oldCelestialSpellItem")){
 			LogHelper.info("Found: " + mapping.name);
-			return JTGItem.gensokyoDustItem;
+			return JTGItem.oldGensokyoSpellItem; //remap to damage 2
+		}
+		
+		
+		
+		else if(Tester.equals("demonDustItem")){
+			LogHelper.info("Found: " + mapping.name);
+			return JTGItem.gensokyoDustItem; //remap to damage 1
+		}
+		else if(Tester.equals("celestialDustItem")){
+			LogHelper.info("Found: " + mapping.name);
+			return JTGItem.gensokyoDustItem; //remap to damage 2
 		}
 		
 		
 		
-		if(mapping.name.substring(ModInfo.MODID.length()+1) == "demonIngotItem"){
+		else if(Tester.equals("demonIngotItem")){
 			LogHelper.info("Found: " + mapping.name);
-			return JTGItem.gensokyoIngotItem;
+			return JTGItem.gensokyoIngotItem; //remap to damage 1
 		}
-		if(mapping.name.substring(ModInfo.MODID.length()+1) == "celestialIngotItem"){
+		else if(Tester.equals("celestialIngotItem")){
 			LogHelper.info("Found: " + mapping.name);
-			return JTGItem.gensokyoIngotItem;
+			return JTGItem.gensokyoIngotItem; //remap to damage 2
 		}
 		
-		if(mapping.name.substring(ModInfo.MODID.length()+1) == "demonOreBlock"){
+		else if(Tester.equals("demonOreBlock")){
 			LogHelper.info("Found: " + mapping.name);
-			return GensokyoOreBlockItem.getItemFromBlock(JTGBlock.gensokyoOreBlock);
+			return JTGBlock.gensokyoOreBlockItem; //remap to damage 1
 		}
-		if(mapping.name.substring(ModInfo.MODID.length()+1) == "celestialOreBlock"){
+		else if(Tester.equals("celestialOreBlock")){
 			LogHelper.info("Found: " + mapping.name);
-			return GensokyoOreBlockItem.getItemFromBlock(JTGBlock.gensokyoOreBlock);
+			return JTGBlock.gensokyoOreBlockItem; //remap to damage 2
 		}
-		LogHelper.info(mapping.name.substring(ModInfo.MODID.length()+1));
+		
 		return null;
 	}
 	
 	public static Block compareBlock(MissingMapping mapping){
-		if(mapping.name.substring(ModInfo.MODID.length()+1) == "celestialOreBlock"){
+		String Tester = mapping.name.substring(ModInfo.MODID.length()+1);
+		if(Tester.equals("celestialOreBlock")){
 			LogHelper.info("Found: " + mapping.name);
-			return JTGBlock.gensokyoOreBlock;
+			return JTGBlock.gensokyoOreBlock; //remap to damage 2
 		}
-		if(mapping.name.substring(ModInfo.MODID.length()+1) == "demonOreBlock"){
+		if(Tester.equals("demonOreBlock")){
 			LogHelper.info("Found: " + mapping.name);
-			return JTGBlock.gensokyoOreBlock;
+			return JTGBlock.gensokyoOreBlock; //remap to damage 1
 		}
-		LogHelper.info(mapping.name.substring(ModInfo.MODID.length()+1));
+		
 		return null;
 	}
 }

@@ -17,7 +17,7 @@ import com.katrix.journeyToGensokyo.item.JTGItem;
 import ic2.api.recipe.RecipeInputItemStack;
 import ic2.api.recipe.Recipes;
 
-public class IC2OreCrafting {
+public class CraftingIC2Ore {
 	
 	public static void init() {
 		

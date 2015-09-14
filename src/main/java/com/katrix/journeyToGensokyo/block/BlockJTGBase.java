@@ -7,17 +7,15 @@
  * a modifed Botania license: https://github.com/Katrix-/JTG/blob/master/LICENSE.md
  */
 
-package com.katrix.journeyToGensokyo.item;
+package com.katrix.journeyToGensokyo.block;
 
-import net.minecraft.item.ItemStack;
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 
-public class JTGItemEffect extends JTGBaseItem {
+public class BlockJTGBase extends Block{
 	
-	public JTGItemEffect() {}
-	
-	@Override
-	public boolean hasEffect(ItemStack par1ItemStack, int pass) {
-		return true;
+	public BlockJTGBase (Material material){
+
+		super(material);
 	}
-
 }

@@ -18,7 +18,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import cpw.mods.fml.common.registry.GameRegistry;
 
-public class VanillaCrafting {
+public class CraftingVanilla {
 	
 	public static void init() {
 		

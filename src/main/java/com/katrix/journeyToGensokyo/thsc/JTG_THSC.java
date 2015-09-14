@@ -20,7 +20,7 @@ import com.katrix.journeyToGensokyo.thsc.entity.EntityTHFairyEnd;
 import com.katrix.journeyToGensokyo.thsc.entity.EntityTHFairyIce;
 import com.katrix.journeyToGensokyo.thsc.entity.EntityTHFairyNether;
 import com.katrix.journeyToGensokyo.thsc.entity.EntityTenguCrow;
-import com.katrix.journeyToGensokyo.thsc.entity.shot.SeedShot;
+import com.katrix.journeyToGensokyo.thsc.entity.shot.ShotSeed;
 import com.katrix.journeyToGensokyo.thsc.entity.spellcard.THSC_DoubleSpark;
 import com.katrix.journeyToGensokyo.thsc.entity.spellcard.THSC_FinalSpark;
 
@@ -37,7 +37,7 @@ public class JTG_THSC {
 		SpellCardRegistry.registerSpellCard(THSC_FinalSpark.class, ModInfo.MODID, "FinalSpark", SpellcardID.FINAL_SPARK);
 		
 
-		SpecialShotRegistry.registerSpecialShot(SeedShot.class, SpecialShotID.SEED_LASER01);
+		SpecialShotRegistry.registerSpecialShot(ShotSeed.class, SpecialShotID.SEED_LASER01);
 	}
 		
 	public static void postInit() {

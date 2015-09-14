@@ -18,14 +18,14 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.IIcon;
 
-public class KeyStoneBlock extends JTGBaseBlock{
+public class BlockKeyStone extends BlockJTGBase{
 	
     @SideOnly(Side.CLIENT)
     private IIcon texTop;
     @SideOnly(Side.CLIENT)
     private IIcon texFront;
 	
-	public KeyStoneBlock (Material material){
+	public BlockKeyStone (Material material){
 
 		super(material);
 		setHardness(2.0F);

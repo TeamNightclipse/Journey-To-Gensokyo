@@ -16,7 +16,7 @@ import com.katrix.journeyToGensokyo.item.JTGItem;
 
 import net.minecraft.item.ItemStack;
 
-public class TEOreCrafting {
+public class CraftingTEOre {
 	
 	public static void init() {
 		

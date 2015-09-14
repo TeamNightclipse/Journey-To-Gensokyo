@@ -12,9 +12,9 @@ package com.katrix.journeyToGensokyo.item;
 import net.minecraft.item.Item;
 import net.minecraft.creativetab.CreativeTabs;
 
-public class JTGBaseItem extends Item {
+public class ItemJTGBase extends Item {
 	
-	public JTGBaseItem() {
+	public ItemJTGBase() {
 		
 		super();
 		setCreativeTab(CreativeTabs.tabMisc);

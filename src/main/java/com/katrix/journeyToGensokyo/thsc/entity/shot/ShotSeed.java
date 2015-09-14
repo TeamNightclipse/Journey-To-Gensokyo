@@ -21,7 +21,7 @@ import thKaguyaMod.THShotLib;
 import thKaguyaMod.entity.shot.EntityTHShot;
 import thKaguyaMod.entity.shot.ISpecialShot;
 
-public class SeedShot implements ISpecialShot {
+public class ShotSeed implements ISpecialShot {
 
 	@Override
 	public void specialShot_move(World world, int id, EntityTHShot shot) {

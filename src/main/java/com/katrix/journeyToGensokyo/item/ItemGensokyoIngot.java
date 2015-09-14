@@ -1,3 +1,12 @@
+/**
+ * This class was created by <Katrix>. It's distributed as
+ * part of the Journey To Gensokyo Mod. Get the Source Code in github:
+ * https://github.com/Katrix-/JTG
+ * 
+ * Journey To Gensokyo is Open Source and distributed under the
+ * a modifed Botania license: https://github.com/Katrix-/JTG/blob/master/LICENSE.md
+ */
+
 package com.katrix.journeyToGensokyo.item;
 
 import java.util.List;
@@ -8,9 +17,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Item;
 import net.minecraft.util.IIcon;
 
-public class GensokyoIngotItem extends JTGBaseItem {
+public class ItemGensokyoIngot extends ItemJTGBase {
 	
-	public GensokyoIngotItem() {
+	public ItemGensokyoIngot() {
 		super();
 		setHasSubtypes(true);
 	}

@@ -12,9 +12,9 @@ package com.katrix.journeyToGensokyo;
 import com.katrix.journeyToGensokyo.net.PacketHandler;
 import com.katrix.journeyToGensokyo.reference.ModInfo;
 import com.katrix.journeyToGensokyo.block.JTGBlock;
-import com.katrix.journeyToGensokyo.crafting.IC2OreCrafting;
-import com.katrix.journeyToGensokyo.crafting.TEOreCrafting;
-import com.katrix.journeyToGensokyo.crafting.VanillaCrafting;
+import com.katrix.journeyToGensokyo.crafting.CraftingIC2Ore;
+import com.katrix.journeyToGensokyo.crafting.CraftingTEOre;
+import com.katrix.journeyToGensokyo.crafting.CraftingVanilla;
 import com.katrix.journeyToGensokyo.handler.ConfigHandler;
 import com.katrix.journeyToGensokyo.handler.MissingMappingHandler;
 import com.katrix.journeyToGensokyo.item.JTGItem;
@@ -77,14 +77,14 @@ public class JourneyToGensokyo {
             proxy.registerRenderers();
         	if(Loader.isModLoaded("ThermalExpansion") && ConfigHandler.OresEnabled) {
         		LogHelper.info("JTG adding TE Ore recipes");
-        		TEOreCrafting.init();
+        		CraftingTEOre.init();
         	}
         	
         	if(Loader.isModLoaded("ThermalExpansion") && ConfigHandler.OresEnabled) {
         		LogHelper.info("JTG adding IC2 Ore recipes");
-                IC2OreCrafting.init();
+                CraftingIC2Ore.init();
         	}
-            VanillaCrafting.init();
+            CraftingVanilla.init();
             JTGWorldGen.init();
             
         }
