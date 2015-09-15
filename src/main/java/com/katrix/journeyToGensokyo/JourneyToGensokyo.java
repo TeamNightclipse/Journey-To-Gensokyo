@@ -17,6 +17,7 @@ import com.katrix.journeyToGensokyo.crafting.CraftingTEOre;
 import com.katrix.journeyToGensokyo.crafting.CraftingVanilla;
 import com.katrix.journeyToGensokyo.handler.ConfigHandler;
 import com.katrix.journeyToGensokyo.handler.MissingMappingHandler;
+import com.katrix.journeyToGensokyo.handler.OreDictionaryHandler;
 import com.katrix.journeyToGensokyo.item.JTGItem;
 import com.katrix.journeyToGensokyo.thaumcraft.JTGThaumcraft;
 import com.katrix.journeyToGensokyo.thsc.JTG_THSC;
@@ -74,11 +75,9 @@ public class JourneyToGensokyo {
         @EventHandler
         public void load(FMLInitializationEvent event) {
         	
+        	OreDictionaryHandler.init();
+        	
             proxy.registerRenderers();
-        	if(Loader.isModLoaded("ThermalExpansion") && ConfigHandler.OresEnabled) {
-        		LogHelper.info("JTG adding TE Ore recipes");
-        		CraftingTEOre.init();
-        	}
         	
         	if(Loader.isModLoaded("ThermalExpansion") && ConfigHandler.OresEnabled) {
         		LogHelper.info("JTG adding IC2 Ore recipes");

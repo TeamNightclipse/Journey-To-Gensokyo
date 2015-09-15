@@ -44,7 +44,16 @@ public class JTGItem {
     	GameRegistry.registerItem(gensokyoNotesItem, "gensokyoNotesItem");
     	
     	GameRegistry.registerItem(spawnEggItem, "spawnEggJTG");
-		
+    	
+    	compOldDemonSpellcardItem = new ItemJTGBase()
+							.setTextureName("journeytogensokyo:oldDemonSpell")
+							.setUnlocalizedName("oldDemonSpell");
+    	compOldCelestialSpellcardItem = new ItemJTGBase()
+							.setTextureName("journeytogensokyo:oldCelestialSpell")
+							.setUnlocalizedName("oldCelestialSpell");
+    	
+    	GameRegistry.registerItem(compOldDemonSpellcardItem, "oldDemonSpellItem");
+    	GameRegistry.registerItem(compOldCelestialSpellcardItem, "oldCelestialSpellItem");
 	}
 	
     public static Item oldGensokyoSpellItem;
@@ -55,5 +64,8 @@ public class JTGItem {
     public static Item gensokyoNotesItem;
     
     public static Item spawnEggItem;
+    
+    public static Item compOldDemonSpellcardItem;
+    public static Item compOldCelestialSpellcardItem;
 
 }

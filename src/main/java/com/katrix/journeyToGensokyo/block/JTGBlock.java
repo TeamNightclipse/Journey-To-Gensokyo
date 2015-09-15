@@ -13,7 +13,7 @@ import com.katrix.journeyToGensokyo.item.ItemGensokyoOreBlock;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.item.Item;
+import net.minecraftforge.oredict.OreDictionary;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class JTGBlock {
@@ -23,18 +23,28 @@ public class JTGBlock {
     	gensokyoOreBlock = new BlockGensokyoOre(Material.rock);
     	keyStoneBlock = new BlockKeyStone(Material.rock)
 							.setBlockName("keyStoneBlock")
-							.setBlockTextureName("journeytogensokyo:keyStone");  	
+							.setBlockTextureName("journeytogensokyo:keyStone");
     	
     	GameRegistry.registerBlock(gensokyoOreBlock, ItemGensokyoOreBlock.class, "gensokyoOreBlock");
     	
     	GameRegistry.registerBlock(keyStoneBlock, "keyStoneBlock");
+    	
+    	compDemonOreBlock = new BlockJTGBase(Material.rock)
+							.setBlockName("demonOreBlock")
+							.setBlockTextureName("journeytogensokyo:demonOre");  
+    	compCelestialOreBlock = new BlockJTGBase(Material.rock)
+							.setBlockName("celestialOreBlock")
+							.setBlockTextureName("journeytogensokyo:celestialOre");
+    	
+    	GameRegistry.registerBlock(compDemonOreBlock, "demonOreBlock");
+    	GameRegistry.registerBlock(compCelestialOreBlock, "celestialOreBlock");
 		
 	}
 	
     public static Block gensokyoOreBlock;
-    //TODO:Remove this?
-    public static Item gensokyoOreBlockItem;
 
     public static Block keyStoneBlock;
     
+    public static Block compDemonOreBlock;
+    public static Block compCelestialOreBlock;
 }

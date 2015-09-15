@@ -29,7 +29,7 @@ public class MissingMappingHandler {
 		List<MissingMapping> mappings = event.get();
 		for(MissingMapping mapping : mappings){
 			if(mapping.type == Type.ITEM){
-				//remapItem(mapping, compareItem(mapping));
+				remapItem(mapping, compareItem(mapping));
 			}
 			else{
 				//remapBlock(mapping, compareBlock(mapping));
@@ -58,7 +58,7 @@ public class MissingMappingHandler {
 			LogHelper.info("Found: " + mapping.name);
 			return JTGItem.gensokyoNotesItem; //remap to damage 0
 		}
-		else if(Tester.equals("gensokyoNotesPatItem")){
+		/*else if(Tester.equals("gensokyoNotesPatItem")){
 			LogHelper.info("Found: " + mapping.name);
 			return JTGItem.gensokyoNotesItem; //remap to damage 1
 		}
@@ -106,16 +106,7 @@ public class MissingMappingHandler {
 		else if(Tester.equals("celestialIngotItem")){
 			LogHelper.info("Found: " + mapping.name);
 			return JTGItem.gensokyoIngotItem; //remap to damage 2
-		}
-		
-		else if(Tester.equals("demonOreBlock")){
-			LogHelper.info("Found: " + mapping.name);
-			return JTGBlock.gensokyoOreBlockItem; //remap to damage 1
-		}
-		else if(Tester.equals("celestialOreBlock")){
-			LogHelper.info("Found: " + mapping.name);
-			return JTGBlock.gensokyoOreBlockItem; //remap to damage 2
-		}
+		}*/
 		
 		return null;
 	}

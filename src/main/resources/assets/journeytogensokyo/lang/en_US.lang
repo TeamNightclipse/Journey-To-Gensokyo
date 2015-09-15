@@ -2,6 +2,9 @@ item.oldGensokyoSpell_0.name=Old Gensokyo Spellcard
 item.oldGensokyoSpell_1.name=Old Demon Spellcard
 item.oldGensokyoSpell_2.name=Old Celestial Spellcard
 
+item.oldDemonSpell.name=Old Demon Spellcard
+item.oldCelestialSpell.name=Old Celestial Spellcard
+
 item.gensokyoIngot_0.name=Gensokium
 item.gensokyoIngot_1.name=Makaiium
 item.gensokyoIngot_2.name=Celestium
@@ -20,6 +23,9 @@ item.gensokyoNotes_5.name=Arcane Gensokyo Notes
 tile.gensokyoOreBlock_0.name=Gensokium Ore
 tile.gensokyoOreBlock_1.name=Makaiium Ore
 tile.gensokyoOreBlock_2.name=Celestium Ore
+
+tile.demonOreBlock.name=Makaiium Ore
+tile.celestialOreBlock.name=Celestium Ore
 
 tile.keyStoneBlock.name=Keystone
 
