@@ -32,7 +32,7 @@ public class MissingMappingHandler {
 				remapItem(mapping, compareItem(mapping));
 			}
 			else{
-				//remapBlock(mapping, compareBlock(mapping));
+				remapBlock(mapping, compareBlock(mapping));
 			}
 		}
 	}
@@ -58,7 +58,7 @@ public class MissingMappingHandler {
 			LogHelper.info("Found: " + mapping.name);
 			return JTGItem.gensokyoNotesItem; //remap to damage 0
 		}
-		/*else if(Tester.equals("gensokyoNotesPatItem")){
+		else if(Tester.equals("gensokyoNotesPatItem")){
 			LogHelper.info("Found: " + mapping.name);
 			return JTGItem.gensokyoNotesItem; //remap to damage 1
 		}
@@ -106,7 +106,7 @@ public class MissingMappingHandler {
 		else if(Tester.equals("celestialIngotItem")){
 			LogHelper.info("Found: " + mapping.name);
 			return JTGItem.gensokyoIngotItem; //remap to damage 2
-		}*/
+		}
 		
 		return null;
 	}

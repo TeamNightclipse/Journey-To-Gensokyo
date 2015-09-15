@@ -44,6 +44,12 @@ public class CraftingVanilla {
     	if(ConfigHandler.NotesEnabled) {
             GameRegistry.addRecipe(new ItemStack(JTGItem.gensokyoNotesItem, 1, 1), " n ", "nrn", " n ",
             		'r', new ItemStack(JTGItem.gensokyoNotesItem, 1, 0), 'n', new ItemStack(JTGItem.oldGensokyoSpellItem, 1, 0));
+            
+            GameRegistry.addShapelessRecipe(new ItemStack(JTGItem.gensokyoNotesItem, 1, 0), JTGItem.compRuinedOldNotebook);
+            GameRegistry.addShapelessRecipe(new ItemStack(JTGItem.oldGensokyoSpellItem, 1, 1), JTGItem.compOldDemonSpellcardItem);
+            GameRegistry.addShapelessRecipe(new ItemStack(JTGItem.oldGensokyoSpellItem, 1, 2), JTGItem.compOldCelestialSpellcardItem);
+            GameRegistry.addShapelessRecipe(new ItemStack(JTGBlock.gensokyoOreBlock, 1, 1), JTGBlock.compDemonOreBlock);
+            GameRegistry.addShapelessRecipe(new ItemStack(JTGBlock.gensokyoOreBlock, 1, 2), JTGBlock.compCelestialOreBlock);
     	}
 
 	}

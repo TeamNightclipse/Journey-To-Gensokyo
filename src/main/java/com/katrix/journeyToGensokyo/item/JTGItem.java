@@ -51,9 +51,13 @@ public class JTGItem {
     	compOldCelestialSpellcardItem = new ItemJTGBase()
 							.setTextureName("journeytogensokyo:oldCelestialSpell")
 							.setUnlocalizedName("oldCelestialSpell");
+    	compRuinedOldNotebook = new ItemJTGBase()
+							.setTextureName("journeytogensokyo:gensokyoNotesRuined")
+							.setUnlocalizedName("ruinedNotes");
     	
     	GameRegistry.registerItem(compOldDemonSpellcardItem, "oldDemonSpellItem");
     	GameRegistry.registerItem(compOldCelestialSpellcardItem, "oldCelestialSpellItem");
+    	GameRegistry.registerItem(compRuinedOldNotebook, "gensokyoNotesRuinedItem");
 	}
 	
     public static Item oldGensokyoSpellItem;
@@ -67,5 +71,6 @@ public class JTGItem {
     
     public static Item compOldDemonSpellcardItem;
     public static Item compOldCelestialSpellcardItem;
+    public static Item compRuinedOldNotebook;
 
 }

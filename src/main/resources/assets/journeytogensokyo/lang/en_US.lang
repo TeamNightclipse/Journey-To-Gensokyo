@@ -20,6 +20,8 @@ item.gensokyoNotes_3.name=Gensokyo Notes
 item.gensokyoNotes_4.name=Imbued Gensokyo Notes
 item.gensokyoNotes_5.name=Arcane Gensokyo Notes
 
+item.ruinedNotes.name=Ruined Old Notebook
+
 tile.gensokyoOreBlock_0.name=Gensokium Ore
 tile.gensokyoOreBlock_1.name=Makaiium Ore
 tile.gensokyoOreBlock_2.name=Celestium Ore

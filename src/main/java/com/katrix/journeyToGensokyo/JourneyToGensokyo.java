@@ -100,6 +100,6 @@ public class JourneyToGensokyo {
         
         @EventHandler
         public void missingMappings(FMLMissingMappingsEvent event) {
-        	MissingMappingHandler.MissingMappings(event);
+        	//MissingMappingHandler.MissingMappings(event);
         }
 }
