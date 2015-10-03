@@ -18,8 +18,8 @@ buildscript {
 apply plugin: 'forge'
 
 compileJava.options.encoding = 'UTF-8'
-version = "1.7.10-0.7.0"
-group= "com.katrix.journeyToGensokyo" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+version = "1.7.10-0.7.2"
+group= "katrix.journeyToGensokyo" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "journeyToGensokyo"
 
 minecraft {
@@ -33,7 +33,7 @@ minecraft {
 
 dependencies {
 	compile files (
-	"libs/Botania r1.4-172-deobf.jar", "libs/industrialcraft-2-2.2.706-experimental-dev.jar", "libs/Thaumcraft-deobf-1.7.10-4.2.3.5.zip", "libs/五つの難題MOD+ ver2.84-1.7.10.zip", "libs/AdvancedSolarPanel-1.7.10-3.5.1.jar", "libs/CoFHLib-[1.7.10]1.0.0RC7-127-dev.jar"
+	"libs/Botania r1.7-221-deobf.jar", "libs/industrialcraft-2-2.2.772-experimental-dev.jar", "libs/Thaumcraft-deobf-1.7.10-4.2.3.5.zip", "libs/五つの難題MOD+ ver2.90-1.7.10.zip", "libs/CoFHLib-[1.7.10]1.0.3-175-dev.jar"
 )
     // you may put jars on which you depend on in ./libs
     // or you may define them like so..
