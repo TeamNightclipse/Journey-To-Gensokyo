@@ -7,24 +7,24 @@
  * a modifed Botania license: https://github.com/Katrix-/JTG/blob/master/LICENSE.md
  */
 
-package katrix.journeyToGensokyo.thsc;
+package katrix.journeyToGensokyo.plugin.thsc;
 
 import katrix.journeyToGensokyo.handler.ConfigHandler;
+import katrix.journeyToGensokyo.plugin.thsc.entity.EntityFamiliarIce;
+import katrix.journeyToGensokyo.plugin.thsc.entity.EntityHellRaven;
+import katrix.journeyToGensokyo.plugin.thsc.entity.EntityReimuHostile;
+import katrix.journeyToGensokyo.plugin.thsc.entity.EntitySunFlowerFairyEnd;
+import katrix.journeyToGensokyo.plugin.thsc.entity.EntityTHFairyEnd;
+import katrix.journeyToGensokyo.plugin.thsc.entity.EntityTHFairyIce;
+import katrix.journeyToGensokyo.plugin.thsc.entity.EntityTHFairyNether;
+import katrix.journeyToGensokyo.plugin.thsc.entity.EntityTenguCrow;
+import katrix.journeyToGensokyo.plugin.thsc.entity.shot.ShotFantasySeal;
+import katrix.journeyToGensokyo.plugin.thsc.entity.shot.ShotSeed;
+import katrix.journeyToGensokyo.plugin.thsc.entity.spellcard.THSC_DoubleSpark;
+import katrix.journeyToGensokyo.plugin.thsc.entity.spellcard.THSC_FinalSpark;
 import katrix.journeyToGensokyo.reference.ModInfo;
 import katrix.journeyToGensokyo.reference.SpecialShotID;
 import katrix.journeyToGensokyo.reference.SpellcardID;
-import katrix.journeyToGensokyo.thsc.entity.EntityFamiliarIce;
-import katrix.journeyToGensokyo.thsc.entity.EntityHellRaven;
-import katrix.journeyToGensokyo.thsc.entity.EntityReimuHostile;
-import katrix.journeyToGensokyo.thsc.entity.EntitySunFlowerFairyEnd;
-import katrix.journeyToGensokyo.thsc.entity.EntityTHFairyEnd;
-import katrix.journeyToGensokyo.thsc.entity.EntityTHFairyIce;
-import katrix.journeyToGensokyo.thsc.entity.EntityTHFairyNether;
-import katrix.journeyToGensokyo.thsc.entity.EntityTenguCrow;
-import katrix.journeyToGensokyo.thsc.entity.shot.ShotFantasySeal;
-import katrix.journeyToGensokyo.thsc.entity.shot.ShotSeed;
-import katrix.journeyToGensokyo.thsc.entity.spellcard.THSC_DoubleSpark;
-import katrix.journeyToGensokyo.thsc.entity.spellcard.THSC_FinalSpark;
 import thKaguyaMod.init.THKaguyaConfig;
 import thKaguyaMod.registry.SpecialShotRegistry;
 import thKaguyaMod.registry.SpellCardRegistry;

@@ -12,7 +12,6 @@ package katrix.journeyToGensokyo.block;
 import katrix.journeyToGensokyo.item.ItemGensokyoOreBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraftforge.oredict.OreDictionary;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class JTGBlock {

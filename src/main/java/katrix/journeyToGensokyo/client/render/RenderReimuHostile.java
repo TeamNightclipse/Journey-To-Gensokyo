@@ -9,12 +9,11 @@
 
 package katrix.journeyToGensokyo.client.render;
 
-import katrix.journeyToGensokyo.thsc.entity.EntityReimuHostile;
+import katrix.journeyToGensokyo.plugin.thsc.entity.EntityReimuHostile;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import thKaguyaMod.client.model.living.ModelReimu;
 import thKaguyaMod.client.render.living.RenderTHBoss;
-import thKaguyaMod.entity.living.EntityReimu;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 

@@ -10,7 +10,7 @@
 package katrix.journeyToGensokyo.client.render;
 
 import katrix.journeyToGensokyo.client.model.ModelTenguCrow;
-import katrix.journeyToGensokyo.thsc.entity.EntityTenguCrow;
+import katrix.journeyToGensokyo.plugin.thsc.entity.EntityTenguCrow;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;

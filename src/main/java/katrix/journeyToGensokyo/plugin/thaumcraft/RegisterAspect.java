@@ -7,7 +7,7 @@
  * a modifed Botania license: https://github.com/Katrix-/JTG/blob/master/LICENSE.md
  */
 
-package katrix.journeyToGensokyo.thaumcraft;
+package katrix.journeyToGensokyo.plugin.thaumcraft;
 
 import katrix.journeyToGensokyo.block.JTGBlock;
 import katrix.journeyToGensokyo.item.JTGItem;

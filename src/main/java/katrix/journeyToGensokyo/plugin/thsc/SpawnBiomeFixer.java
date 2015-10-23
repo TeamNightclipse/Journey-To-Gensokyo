@@ -7,7 +7,7 @@
  * a modifed Botania license: https://github.com/Katrix-/JTG/blob/master/LICENSE.md
  */
 
-package katrix.journeyToGensokyo.thsc;
+package katrix.journeyToGensokyo.plugin.thsc;
 
 import java.util.ArrayList;
 import java.util.Arrays;

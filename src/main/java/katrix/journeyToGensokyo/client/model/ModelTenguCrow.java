@@ -9,7 +9,7 @@
 
 package katrix.journeyToGensokyo.client.model;
 
-import katrix.journeyToGensokyo.thsc.entity.EntityTenguCrow;
+import katrix.journeyToGensokyo.plugin.thsc.entity.EntityTenguCrow;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;

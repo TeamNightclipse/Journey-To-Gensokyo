@@ -12,7 +12,6 @@ package katrix.journeyToGensokyo.handler;
 import java.util.List;
 
 import katrix.journeyToGensokyo.block.JTGBlock;
-import katrix.journeyToGensokyo.item.ItemGensokyoOreBlock;
 import katrix.journeyToGensokyo.item.JTGItem;
 import katrix.journeyToGensokyo.reference.ModInfo;
 import katrix.journeyToGensokyo.util.LogHelper;

@@ -31,6 +31,14 @@ tile.celestialOreBlock.name=Celestium Ore
 
 tile.keyStoneBlock.name=Keystone
 
+tile.botania:flower.spiritflower.name=Spirit Flower
+tile.botania:flower.spiritflower.reference=Your greenest enemy
+
+botania.entry.spiritflower=Spirit Flower
+botania.tagline.spiritflower=Turn Magic into Mana
+botania.page.spiritflower0=The Spirit Flower is a special flower that allows you to turn Danmaku Bullets into raw mana. If any Danmaku shots come near it, it will absorb the magic in the Danmaku Shots, and turn it into &4Mana&0. However, do note that sometimes, the process goes in reverse.
+botania.page.spiritflower1=&oSo much color&r.
+
 item.thSpellCard.300.name=Loving Heart "Double Spark"
 item.thSpellCard.301.name=Magicannon "Final Spark" 
 
@@ -41,6 +49,7 @@ entity.HellRaven.name=Hell Raven
 entity.TenguCrow.name=Crow Tengu
 entity.THFairyEnd.name=Moon Fairy
 entity.SunFlowerFairyEnd.name=Moon Sunflower Fairy
+entity.Reimu.name=Reimu Hakurei
 
 entity.journeyToGensokyo.THFairyIce.name=Ice Fairy
 entity.journeyToGensokyo.THFairyNether.name=Nether Fairy
@@ -48,3 +57,4 @@ entity.journeyToGensokyo.HellRaven.name=Hell Raven
 entity.journeyToGensokyo.TenguCrow.name=Crow Tengu
 entity.journeyToGensokyo.THFairyEnd.name=Moon Fairy
 entity.journeyToGensokyo.SunFlowerFairyEnd.name=Moon Sunflower Fairy
+entity.journeyToGensokyo.Reimu.name=Reimu Hakurei

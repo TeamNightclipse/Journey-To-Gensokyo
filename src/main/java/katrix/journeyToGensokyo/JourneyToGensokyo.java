@@ -11,23 +11,18 @@ package katrix.journeyToGensokyo;
 
 import katrix.journeyToGensokyo.block.JTGBlock;
 import katrix.journeyToGensokyo.crafting.CraftingIC2Ore;
-import katrix.journeyToGensokyo.crafting.CraftingTEOre;
 import katrix.journeyToGensokyo.crafting.CraftingVanilla;
 import katrix.journeyToGensokyo.handler.ChestGenHandler;
 import katrix.journeyToGensokyo.handler.ConfigHandler;
-import katrix.journeyToGensokyo.handler.MissingMappingHandler;
 import katrix.journeyToGensokyo.handler.OreDictionaryHandler;
 import katrix.journeyToGensokyo.item.JTGItem;
 import katrix.journeyToGensokyo.net.PacketHandler;
+import katrix.journeyToGensokyo.plugin.botania.JTGBotania;
+import katrix.journeyToGensokyo.plugin.thaumcraft.JTGThaumcraft;
+import katrix.journeyToGensokyo.plugin.thsc.JTG_THSC;
 import katrix.journeyToGensokyo.reference.ModInfo;
-import katrix.journeyToGensokyo.thaumcraft.JTGThaumcraft;
-import katrix.journeyToGensokyo.thsc.JTG_THSC;
 import katrix.journeyToGensokyo.util.LogHelper;
 import katrix.journeyToGensokyo.worldgen.JTGWorldGen;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.projectile.EntityArrow;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.EntityDamageSourceIndirect;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -51,6 +46,10 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 				+ "after:AdvancedSolarPanel")
 
 public class JourneyToGensokyo {
+	
+		public static boolean thermalExpansionInstalled = Loader.isModLoaded("ThermalExpansion");
+		public static boolean thaumcraftInstalled = Loader.isModLoaded("Thaumcraft");
+		public static boolean botaniaInstalled = Loader.isModLoaded("Botania");
 
         @Instance(value = "journeyToGensokyo")
         public static JourneyToGensokyo instance;
@@ -79,7 +78,7 @@ public class JourneyToGensokyo {
         	
             proxy.registerRenderers();
         	
-        	if(Loader.isModLoaded("ThermalExpansion") && ConfigHandler.OresEnabled) {
+        	if(thermalExpansionInstalled && ConfigHandler.OresEnabled) {
         		LogHelper.info("JTG adding IC2 Ore recipes");
                 CraftingIC2Ore.init();
         	}
@@ -90,6 +89,10 @@ public class JourneyToGensokyo {
         		ChestGenHandler.init();
         	}
         	
+        	if(botaniaInstalled) {
+        		JTGBotania.init();
+        	}
+        	
             JTGWorldGen.init();
             
         }
@@ -98,7 +101,7 @@ public class JourneyToGensokyo {
         public void postInit(FMLPostInitializationEvent event) {
     	
             JTG_THSC.postInit();
-        	if(Loader.isModLoaded("Thaumcraft")) {
+        	if(thaumcraftInstalled) {
         		LogHelper.info("JTG adding Thaumcraft aspects");
             	JTGThaumcraft.postInit();
         	}

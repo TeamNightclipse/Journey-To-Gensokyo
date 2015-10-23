@@ -7,7 +7,7 @@
  * a modifed Botania license: https://github.com/Katrix-/JTG/blob/master/LICENSE.md
  */
 
-package katrix.journeyToGensokyo.thsc.entity;
+package katrix.journeyToGensokyo.plugin.thsc.entity;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.Vec3;

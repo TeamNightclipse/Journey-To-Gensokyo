@@ -7,10 +7,9 @@
  * a modifed Botania license: https://github.com/Katrix-/JTG/blob/master/LICENSE.md
  */
 
-package katrix.journeyToGensokyo.thsc.entity;
+package katrix.journeyToGensokyo.plugin.thsc.entity;
 
 import katrix.journeyToGensokyo.JourneyToGensokyo;
-import katrix.journeyToGensokyo.handler.ConfigHandler;
 import katrix.journeyToGensokyo.reference.EntityName;
 import katrix.journeyToGensokyo.reference.MobID;
 import cpw.mods.fml.common.registry.EntityRegistry;

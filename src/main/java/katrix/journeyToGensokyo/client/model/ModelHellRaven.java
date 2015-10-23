@@ -9,7 +9,7 @@
 
 package katrix.journeyToGensokyo.client.model;
 
-import katrix.journeyToGensokyo.thsc.entity.EntityHellRaven;
+import katrix.journeyToGensokyo.plugin.thsc.entity.EntityHellRaven;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.model.ModelBase;

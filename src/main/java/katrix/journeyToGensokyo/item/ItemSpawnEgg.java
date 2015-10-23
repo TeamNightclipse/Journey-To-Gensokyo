@@ -13,12 +13,9 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-import katrix.journeyToGensokyo.reference.EntityName;
 import katrix.journeyToGensokyo.reference.ModInfo;
-import katrix.journeyToGensokyo.util.LogHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.client.renderer.texture.IIconRegister;

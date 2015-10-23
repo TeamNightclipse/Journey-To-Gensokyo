@@ -7,16 +7,10 @@
  * a modifed Botania license: https://github.com/Katrix-/JTG/blob/master/LICENSE.md
  */
 
-package katrix.journeyToGensokyo.thsc.entity;
+package katrix.journeyToGensokyo.plugin.thsc.entity;
 
-import static thKaguyaMod.DanmakuConstants.AQUA;
 import static thKaguyaMod.DanmakuConstants.BOUND04;
-import static thKaguyaMod.DanmakuConstants.FORM_CRYSTAL;
-import static thKaguyaMod.DanmakuConstants.FORM_TINY;
-import static thKaguyaMod.DanmakuConstants.WHITE;
-import static thKaguyaMod.THShotLib.getPosYFromEye;
 import static thKaguyaMod.THShotLib.gravity_Default;
-import static thKaguyaMod.THShotLib.pos;
 import static thKaguyaMod.THShotLib.rotate_Default;
 
 import java.util.ArrayList;
@@ -30,11 +24,9 @@ import katrix.journeyToGensokyo.reference.MobID;
 import katrix.journeyToGensokyo.reference.SpecialShotID;
 import katrix.journeyToGensokyo.util.LogHelper;
 import cpw.mods.fml.common.registry.EntityRegistry;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.IMob;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
@@ -199,7 +191,7 @@ public class EntityReimuHostile extends EntityDanmakuMob implements IMob
     	double shotGap = 0.06D;
 		if(attackCounter == 1)
 		{
-			//this.useSpellCard(EntitySpellCard.SC_REIMU_MusouFuuin);
+			this.useSpellCard(EntitySpellCard.SC_REIMU_MusouFuuin);
 		}
 		
 		for(int k = 1; k<= 8; k++){
@@ -295,12 +287,20 @@ public class EntityReimuHostile extends EntityDanmakuMob implements IMob
 	@Override
     public boolean getCanSpawnHere()
     {
-    	if(rand.nextInt(100) < THKaguyaConfig.fairySpawnRate && rand.nextInt(4) < 3 || super.getCanSpawnHere() == false)
+    	if(rand.nextInt(100) < THKaguyaConfig.fairySpawnRate && rand.nextInt(100) < 90 || super.getCanSpawnHere() == false)
     	{
     		return false;
     	}
     	
-        return this.worldObj.difficultySetting != EnumDifficulty.PEACEFUL;
+    	int range = 64;
+		@SuppressWarnings("unchecked")
+		List<EntityReimuHostile> reimus = worldObj.getEntitiesWithinAABB(EntityReimuHostile.class, AxisAlignedBB.getBoundingBox(this.posX - range, this.posY - range, this.posZ - range, this.posX + range + 1, this.posY + range + 1, this.posZ + range + 1));
+		if (reimus.size() >= 1) 
+    	{
+    		return false;
+    	}
+    	
+    	return this.worldObj.difficultySetting != EnumDifficulty.PEACEFUL;
     }
 	
     public static void postInit() {
@@ -308,14 +308,9 @@ public class EntityReimuHostile extends EntityDanmakuMob implements IMob
     	EntityRegistry.registerModEntity(EntityReimuHostile.class, EntityName.REIMU_HOSTILE,  MobID.REIMU_HOSTILE, JourneyToGensokyo.instance, 80, 1, true);
 		
 		List<BiomeGenBase> spawnbiomes = new ArrayList<BiomeGenBase>(Arrays.asList(BiomeDictionary.getBiomesForType(Type.FOREST)));	
-		for (BiomeGenBase biome : BiomeDictionary.getBiomesForType(Type.MAGICAL)) {
-			if (!spawnbiomes.contains(biome)) {
-				spawnbiomes.add(biome);
-			}
-		}
 		
 		if(THKaguyaConfig.spawnBoss && ConfigHandler.newBossesSpawn){
-			EntityRegistry.addSpawn(EntityReimuHostile.class, 2, 1, 1, EnumCreatureType.monster, spawnbiomes.toArray(new BiomeGenBase[0]));
+			EntityRegistry.addSpawn(EntityReimuHostile.class, 1, 1, 1, EnumCreatureType.monster, spawnbiomes.toArray(new BiomeGenBase[0]));
 		}
     }
 }

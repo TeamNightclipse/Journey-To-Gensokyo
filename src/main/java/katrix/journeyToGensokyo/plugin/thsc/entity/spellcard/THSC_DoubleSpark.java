@@ -7,7 +7,7 @@
  * a modifed Botania license: https://github.com/Katrix-/JTG/blob/master/LICENSE.md
  */
 
-package katrix.journeyToGensokyo.thsc.entity.spellcard;
+package katrix.journeyToGensokyo.plugin.thsc.entity.spellcard;
 
 import static thKaguyaMod.DanmakuConstants.*;
 import static thKaguyaMod.THShotLib.*;
@@ -19,7 +19,7 @@ import thKaguyaMod.entity.spellcard.THSpellCard;
 
 import java.lang.Math;
 
-import katrix.journeyToGensokyo.thsc.entity.EntityMiniHakkeroDoubleJTG;
+import katrix.journeyToGensokyo.plugin.thsc.entity.EntityMiniHakkeroDoubleJTG;
 
 public class THSC_DoubleSpark extends THSpellCard
 {

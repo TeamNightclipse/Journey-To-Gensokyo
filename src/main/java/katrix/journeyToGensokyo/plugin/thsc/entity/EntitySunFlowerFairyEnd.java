@@ -7,7 +7,7 @@
  * a modifed Botania license: https://github.com/Katrix-/JTG/blob/master/LICENSE.md
  */
 
-package katrix.journeyToGensokyo.thsc.entity;
+package katrix.journeyToGensokyo.plugin.thsc.entity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,21 +29,15 @@ import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
 import thKaguyaMod.ShotData;
 import thKaguyaMod.THShotLib;
-import thKaguyaMod.entity.living.EntityTHFairy;
+import thKaguyaMod.entity.living.EntitySunFlowerFairy;
 import thKaguyaMod.init.THKaguyaConfig;
 
-public class EntityTHFairyEnd extends EntityTHFairy implements IMob {
+public class EntitySunFlowerFairyEnd extends EntitySunFlowerFairy implements IMob {
 
-    public EntityTHFairyEnd(World world)
-    {
-        super(world);
-    	
-    	experienceValue = 15;
-    	
-        this.setMaxHP(5.0F);
-        this.setHealth(5.0F);
-        
-    	setForm((byte) (rand.nextInt(3) + 1));
+	public EntitySunFlowerFairyEnd(World world) {
+		super(world);
+		
+    	setDanmakuPattern(rand.nextInt(3) + 1);
         
     	this.setSpeed(0.7D);
     	this.setSpecies(EntityTHFairyEnd.SPECIES_FAIRY);
@@ -51,8 +45,8 @@ public class EntityTHFairyEnd extends EntityTHFairy implements IMob {
     	this.setAttackDistance(16.0D);
     	this.setDetectionDistance(16.0D);
     	this.setFlyingHeight(4);
-    }
-
+	}
+	
     @Override
     public void danmakuPattern(int level)
     {
@@ -61,16 +55,16 @@ public class EntityTHFairyEnd extends EntityTHFairy implements IMob {
     	angle = THShotLib.angle_LimitRandom(angle, THKaguyaConfig.danmakuAccuracy);
     	ShotData shotData;
     	
-		switch(getForm())
+		switch(getDanmakuPattern())
 		{
 			case NORMAL_ATTACK01:
-				danmakuSpan = 30;
-				shotForm = THShotLib.FORM_KUNAI;
-				shotColor = THShotLib.BLUE;
-				speedRate = 0.4F;
+				danmakuSpan = 10;
+				shotForm = THShotLib.FORM_STAR;
+				shotColor = THShotLib.RANDOM;
+				speedRate = 0.2F;
 		    	shotData = ShotData.shot(shotForm, shotColor, 0, 80, special);
 
-				danmaku01(angle, shotData, level);
+				danmaku01(angle, shotData, speedRate, level);
 				break;
 			case NORMAL_ATTACK02:
 				if(level == 1) danmakuSpan = 30;
@@ -99,58 +93,14 @@ public class EntityTHFairyEnd extends EntityTHFairy implements IMob {
 		}
     }
     
-    public void danmaku01(Vec3 angle, ShotData shotData, int level)
+    public void danmaku01(Vec3 angle, ShotData shotData, float speedRate, int level)
     {  	
-		int num = 1;
-
-		if(level == 1 || level == 2)
-			num = 3;
-			
-			if(attackCounter == 0){
-			THShotLib.createWideShot(getShooter(), pos(), angle, (double)speedRate, shotData, num, 20.0f);
-			angle = THShotLib.angle(rotationYaw,  rotationPitch+5);
-			THShotLib.createWideShot(getShooter(), pos(), angle, (double)speedRate, shotData, num, 20.0f);
-			angle = THShotLib.angle(rotationYaw,  rotationPitch-5);
-			THShotLib.createWideShot(getShooter(), pos(), angle, (double)speedRate, shotData, num, 20.0f);
-			
-	    	THShotLib.playShotSound(this);
-			}
-			
-		if(level == 3){
-			num = 5;
-					
-			if(attackCounter == 0 || attackCounter == 10 || attackCounter == 20){
-				THShotLib.createWideShot(getShooter(), pos(), angle, (double)speedRate, shotData, num, 20.0f);
-				angle = THShotLib.angle(rotationYaw,  rotationPitch+5);
-				THShotLib.createWideShot(getShooter(), pos(), angle, (double)speedRate, shotData, num, 20.0f);
-				angle = THShotLib.angle(rotationYaw,  rotationPitch+10);
-				THShotLib.createWideShot(getShooter(), pos(), angle, (double)speedRate, shotData, num, 20.0f);
-				angle = THShotLib.angle(rotationYaw,  rotationPitch-5);
-				THShotLib.createWideShot(getShooter(), pos(), angle, (double)speedRate, shotData, num, 20.0f);
-				angle = THShotLib.angle(rotationYaw,  rotationPitch-10);
-				THShotLib.createWideShot(getShooter(), pos(), angle, (double)speedRate, shotData, num, 20.0f);
-				
-		    	THShotLib.playShotSound(this);
-			}
-		}
+		int num = level;
 		
-		if(level == 4){
-			num = 7;
-					
-			if(attackCounter <= 4){
-				THShotLib.createWideShot(getShooter(), pos(), angle, (double)speedRate, shotData, num, 20.0f);
-				angle = THShotLib.angle(rotationYaw,  rotationPitch+5);
-				THShotLib.createWideShot(getShooter(), pos(), angle, (double)speedRate, shotData, num, 20.0f);
-				angle = THShotLib.angle(rotationYaw,  rotationPitch+10);
-				THShotLib.createWideShot(getShooter(), pos(), angle, (double)speedRate, shotData, num, 20.0f);
-				angle = THShotLib.angle(rotationYaw,  rotationPitch-5);
-				THShotLib.createWideShot(getShooter(), pos(), angle, (double)speedRate, shotData, num, 20.0f);
-				angle = THShotLib.angle(rotationYaw,  rotationPitch-10);
-				THShotLib.createWideShot(getShooter(), pos(), angle, (double)speedRate, shotData, num, 20.0f);
-				
-		    	THShotLib.playShotSound(this);
-			}
-		}
+    	if(attackCounter == 0){
+	    	THShotLib.playShotSound(this);
+    		THShotLib.createRandomRingShot(getShooter(), getShooter(), pos(), angle, 0.0f, 0, (double)speedRate, 0.4D, 0.05D, gravity_Zero(), shotData, num, 0.5D, 20.0F);
+    	}
 	}
     
     public void danmaku02(Vec3 angle, ShotData shotData, int level)
@@ -193,7 +143,7 @@ public class EntityTHFairyEnd extends EntityTHFairy implements IMob {
 	    	THShotLib.playShotSound(this);
 		}
 	}
-    
+	
     @Override
     protected boolean canFairyCall()
     {
@@ -209,9 +159,9 @@ public class EntityTHFairyEnd extends EntityTHFairy implements IMob {
     @Override
     public int getMaxSpawnedInChunk()
     {
-        return 3;
+        return 2;
     }
-    
+	
     @Override
     public boolean getCanSpawnHere()
     {
@@ -222,16 +172,15 @@ public class EntityTHFairyEnd extends EntityTHFairy implements IMob {
     	
         return this.worldObj.difficultySetting != EnumDifficulty.PEACEFUL;
     }
-    
-    
+	
     public static void postInit() {
     	
-    	EntityRegistry.registerModEntity(EntityTHFairyEnd.class, EntityName.FAIRY_END,  MobID.FAIRY_END, JourneyToGensokyo.instance, 80, 1, true);
+    	EntityRegistry.registerModEntity(EntitySunFlowerFairyEnd.class, EntityName.FAIRY_SUNFLOWER_END,  MobID.FAIRY_SUNFLOWER_END, JourneyToGensokyo.instance, 80, 1, true);
 		
 		List<BiomeGenBase> spawnbiomes = new ArrayList<BiomeGenBase>(Arrays.asList(BiomeDictionary.getBiomesForType(Type.END)));
 		
 		if(THKaguyaConfig.spawnDanmakuMob && ConfigHandler.newFariesSpawn){
-			EntityRegistry.addSpawn(EntityTHFairyEnd.class, 10, 1, 3, EnumCreatureType.monster, spawnbiomes.toArray(new BiomeGenBase[0]));	
+			EntityRegistry.addSpawn(EntitySunFlowerFairyEnd.class, 5, 1, 3, EnumCreatureType.monster, spawnbiomes.toArray(new BiomeGenBase[0]));	
 		}
     }
 }
