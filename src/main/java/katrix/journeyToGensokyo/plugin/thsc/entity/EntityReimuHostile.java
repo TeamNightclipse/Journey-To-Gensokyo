@@ -24,6 +24,8 @@ import katrix.journeyToGensokyo.reference.MobID;
 import katrix.journeyToGensokyo.reference.SpecialShotID;
 import katrix.journeyToGensokyo.util.LogHelper;
 import cpw.mods.fml.common.registry.EntityRegistry;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.util.AxisAlignedBB;
@@ -48,6 +50,8 @@ import thKaguyaMod.item.ItemTHShot;
 public class EntityReimuHostile extends EntityDanmakuMob implements IMob
 {
 	
+	public double shotGap = 0.06D;
+	
 	public EntityReimuHostile(World world)
     {
         super(world);
@@ -64,7 +68,7 @@ public class EntityReimuHostile extends EntityDanmakuMob implements IMob
         this.setHealth(74.0F);
         this.setSpeed(0.4F);
         this.setAttackDistance(50.0D);
-    	this.setDetectionDistance(24.0D);
+    	this.setDetectionDistance(0.0D);
     	this.setFlyingHeight(4);
     	this.isFlyingMode = true;
     	
@@ -134,14 +138,14 @@ public class EntityReimuHostile extends EntityDanmakuMob implements IMob
     {
 		if(attackCounter == 2 || attackCounter == 4 || attackCounter == 6)
 		{
-			THShotLib.createCircleShot(this, pos(), angle, 0.3D, ShotData.shot(THShotLib.FORM_AMULET, THShotLib.WHITE, 0.2f, 0.5f), 16*level);
-			THShotLib.createCircleShot(this, pos(), THShotLib.angle(rotationYaw+attackCounter, rotationPitch), 0.12D, ShotData.shot(THShotLib.FORM_AMULET, THShotLib.RED, 0.2f, 0.5f), 16*level);
-			for(int i = 2; i <= 6; i++){
+			THShotLib.createCircleShot(this, pos(), angle, 0.3D, ShotData.shot(THShotLib.FORM_AMULET, THShotLib.WHITE, 0.2f, 0.5f), 8*level);
+			THShotLib.createCircleShot(this, pos(), THShotLib.angle(rotationYaw+attackCounter, rotationPitch), 0.12D, ShotData.shot(THShotLib.FORM_AMULET, THShotLib.RED, 0.2f, 0.5f), 8*level);
+			for(int i = 4; i <= 6; i++){
 				THShotLib.createShot(this, pos(), THShotLib.angle(rotationYaw+attackCounter*2, rotationPitch), 0.05D*i, ShotData.shot(THShotLib.FORM_AMULET, THShotLib.WHITE, 0.3f, 0.5f));
 			}
 		}
 		
-		if(attackCounter < 30) {
+		if(attackCounter < 30 && attackCounter % 2 == 0) {
 			if(!worldObj.isRemote)
 			{
 				worldObj.spawnEntityInWorld(new EntityOnmyoudama(worldObj, this, this, THShotLib.pos_Distance(pos(), THShotLib.angle(rotationYaw+attackCounter*12, rotationPitch), 2.0D), THShotLib.angle(rotationYaw+attackCounter*12, rotationPitch), 0F, rotate_Default(), 0F, 9999, 0.5D, 1.8D, 0.0D, gravity_Default(), THShotLib.RED, 1.2F, 2.0F, 0, 180, BOUND04));//陰陽玉を出現させる
@@ -155,20 +159,20 @@ public class EntityReimuHostile extends EntityDanmakuMob implements IMob
 		
 		if(attackCounter == 42 || attackCounter == 44 || attackCounter == 46)
 		{
-			THShotLib.createCircleShot(this, pos(), angle, 0.15D, ShotData.shot(THShotLib.FORM_AMULET, THShotLib.WHITE, 0.2f, 0.5f), 16*level);
-			THShotLib.createCircleShot(this, pos(), THShotLib.angle(rotationYaw+(attackCounter-40), rotationPitch), 0.25D, ShotData.shot(THShotLib.FORM_AMULET, THShotLib.RED, 0.2f, 0.5f), 16*level);
-			for(int i = 2; i <= 6; i++){
+			THShotLib.createCircleShot(this, pos(), angle, 0.15D, ShotData.shot(THShotLib.FORM_AMULET, THShotLib.WHITE, 0.2f, 0.5f), 8*level);
+			THShotLib.createCircleShot(this, pos(), THShotLib.angle(rotationYaw+(attackCounter-40), rotationPitch), 0.25D, ShotData.shot(THShotLib.FORM_AMULET, THShotLib.RED, 0.2f, 0.5f), 8*level);
+			for(int i = 4; i <= 6; i++){
 				THShotLib.createShot(this, pos(), THShotLib.angle(rotationYaw+(attackCounter-40)*2, rotationPitch), 0.05D*i, ShotData.shot(THShotLib.FORM_AMULET, THShotLib.RED, 0.3f, 0.5f));
 			}
 		}
 		
 		if(attackCounter == 48 || attackCounter == 50 || attackCounter == 52)
 		{
-			THShotLib.createCircleShot(this, pos(), angle, 0.3D, ShotData.shot(THShotLib.FORM_AMULET, THShotLib.WHITE, 0.15f, 0.5f), 16*level);
-			THShotLib.createCircleShot(this, pos(), THShotLib.angle(rotationYaw+(attackCounter-48), rotationPitch), 0.12D, ShotData.shot(THShotLib.FORM_AMULET, THShotLib.RED, 0.2f, 0.5f), 16*level);
+			THShotLib.createCircleShot(this, pos(), angle, 0.3D, ShotData.shot(THShotLib.FORM_AMULET, THShotLib.WHITE, 0.15f, 0.5f), 8*level);
+			THShotLib.createCircleShot(this, pos(), THShotLib.angle(rotationYaw+(attackCounter-48), rotationPitch), 0.12D, ShotData.shot(THShotLib.FORM_AMULET, THShotLib.RED, 0.2f, 0.5f), 8*level);
 		}
 		
-		if(attackCounter < 70 && attackCounter > 40) {
+		if(attackCounter < 70 && attackCounter > 40 && attackCounter % 2 == 0) {
 			if(!worldObj.isRemote)
 			{
 				worldObj.spawnEntityInWorld(new EntityOnmyoudama(worldObj, this, this, THShotLib.pos_Distance(pos(), THShotLib.angle(rotationYaw-attackCounter*12, rotationPitch), 2.0D), THShotLib.angle(rotationYaw-attackCounter*12, rotationPitch), 0F, rotate_Default(), 0F, 9999, 0.5D, 1.8D, 0.0D, gravity_Default(), THShotLib.RED, 1.2F, 2.0F, 0, 180, BOUND04));//陰陽玉を出現させる
@@ -188,7 +192,7 @@ public class EntityReimuHostile extends EntityDanmakuMob implements IMob
     
     private void spellcard01(Vec3 angle, int level)
     {
-    	double shotGap = 0.06D;
+    	
 		if(attackCounter == 1)
 		{
 			this.useSpellCard(EntitySpellCard.SC_REIMU_MusouFuuin);
@@ -198,15 +202,15 @@ public class EntityReimuHostile extends EntityDanmakuMob implements IMob
 			if(attackCounter == 20+k*(level/2))
 			{
 				for(int i = 1; i<=5; i++){
-					for(int j = -2; j<=2; j++){
+					for(int j = -1; j<=1; j++){
 						THShotLib.playShotSound(this);
-						THShotLib.createShot(this, pos(), THShotLib.angle(rotationYaw+(j*2.5f)+(360/8)*k, rotationPitch), shotGap*i, ShotData.shot(THShotLib.FORM_AMULET, THShotLib.WHITE, 0.2f, 0.5f, 0, 20, SpecialShotID.FANTASY_SEAL01));
+						THShotLib.createShot(this, pos(), THShotLib.angle(rotationYaw+(j*6.0f)+(360/8)*k, rotationPitch), shotGap*i, ShotData.shot(THShotLib.FORM_AMULET, THShotLib.WHITE, 0.2f, 0.5f, 0, 20, SpecialShotID.FANTASY_SEAL01));
 					}
 				}
 			}
 		}
 		
-		if(attackCounter >= 70)
+		if(attackCounter >= 100)
 		{
 			attackCounter = 0;
 		}
