@@ -26,6 +26,7 @@ import vazkii.botania.common.Botania;
 public class SubTileSpiritFlower extends SubTileGenerating {
 
 	private static final int RANGE = 3;
+	private int cooldown = 0;
 
 	@Override
 	public void onUpdate() {
@@ -34,10 +35,11 @@ public class SubTileSpiritFlower extends SubTileGenerating {
 		if(mana != getMaxMana()) {
 			List<EntityTHShot> shots = supertile.getWorldObj().getEntitiesWithinAABB(EntityTHShot.class, AxisAlignedBB.getBoundingBox(supertile.xCoord - RANGE, supertile.yCoord - RANGE, supertile.zCoord - RANGE, supertile.xCoord + RANGE + 1, supertile.yCoord + RANGE + 1, supertile.zCoord + RANGE + 1));
 			for(EntityTHShot shot : shots) {
-				if(!shot.isDead && !(shot.user instanceof EntityFamiliar)) {
+				if(!shot.isDead && !(shot.user instanceof EntityFamiliar) && cooldown == 0) {
 					if(!supertile.getWorldObj().isRemote) {
 						shot.setDead();
 						mana += 50;
+						cooldown = 3;
 						sync();
 					}
 
@@ -52,6 +54,10 @@ public class SubTileSpiritFlower extends SubTileGenerating {
 			EntityFamiliar living = new EntityFamiliar(supertile.getWorldObj());
 			THShotLib.createSphereShot(living, Vec3.createVectorHelper(supertile.xCoord, supertile.yCoord+1, supertile.zCoord), THShotLib.angle_Random(), 0.4D, new ShotData(THShotLib.FORM_BIG, THShotLib.RANDOM, THShotLib.SIZE[THShotLib.FORM_BIG], 0.5f, 0, 60, 0), 8, 0.0f);
 			mana -= getMaxMana();
+			cooldown = 80;
+		}
+		if(cooldown != 0){
+			cooldown--;
 		}
 	}
 

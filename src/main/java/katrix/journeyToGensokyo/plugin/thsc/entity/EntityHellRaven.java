@@ -21,8 +21,8 @@ import cpw.mods.fml.common.registry.EntityRegistry;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.item.EntityXPOrb;
-import net.minecraft.entity.monster.IMob;
 import net.minecraft.item.Item;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
@@ -35,7 +35,7 @@ import thKaguyaMod.entity.living.EntityTHFairy;
 import thKaguyaMod.init.THKaguyaConfig;
 import thKaguyaMod.init.THKaguyaItems;
 
-public class EntityHellRaven extends EntityTHFairy implements IMob  {
+public class EntityHellRaven extends EntityTHFairy {
 
 	public EntityHellRaven(World world) {
 		super(world);
@@ -69,29 +69,6 @@ public class EntityHellRaven extends EntityTHFairy implements IMob  {
         return (IEntityLivingData)p_110161_1_1;
     }
     
-    public void onUpdate()
-    {	
-    	if(this.getHealth() <= 0)
-    	{
-    		motionX = 0.0D;
-    		motionY = 0.0D;
-    		motionZ = 0.0D;
-    	}
-    	
-    	if(ticksExisted <= lastTime)
-    	{
-    		return;
-    	}
-    	else
-    	{
-    		super.onUpdate();
-    		if(this.attackCounter > danmakuSpan)
-    		{
-    			attackCounter = 0;
-    		}
-    	}
-    }
-    
     @Override
     protected void onDeathUpdate()
     {
@@ -123,6 +100,12 @@ public class EntityHellRaven extends EntityTHFairy implements IMob  {
                 this.worldObj.spawnParticle("explode", this.posX + (double)(this.rand.nextFloat() * this.width * 2.0F) - (double)this.width, this.posY + (double)(this.rand.nextFloat() * this.height), this.posZ + (double)(this.rand.nextFloat() * this.width * 2.0F) - (double)this.width, d2, d0, d1);
             }
         }
+        
+    	if(this.deathTime == 7)
+    	{
+    		THShotLib.explosionEffect2(worldObj, posX, posY, posZ, 1.0F + deathTime * 0.1F);
+    		THShotLib.banishExplosion(this, 5.0F, 5.0F);
+    	}
     }
     
     @Override
@@ -228,6 +211,14 @@ public class EntityHellRaven extends EntityTHFairy implements IMob  {
 		    }
 		}
 	}
+    
+    public boolean attackEntityFrom(DamageSource damageSource, float amount)
+    {
+    	if(!damageSource.isMagicDamage()){
+    		amount *= 0.5F;
+    	}
+        return super.attackEntityFrom(damageSource, amount);
+    }
 	
     @Override
     public int getMaxSpawnedInChunk()

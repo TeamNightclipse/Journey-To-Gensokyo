@@ -13,11 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import katrix.journeyToGensokyo.handler.ConfigHandler;
-import katrix.journeyToGensokyo.reference.ConfigRef;
 import katrix.journeyToGensokyo.reference.ModInfo;
 import katrix.journeyToGensokyo.util.LogHelper;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraftforge.common.config.ConfigElement;
 import cpw.mods.fml.client.config.ConfigGuiType;
 import cpw.mods.fml.client.config.DummyConfigElement;
 import cpw.mods.fml.client.config.GuiConfig;
@@ -39,8 +37,9 @@ public class JTGGuiConfig extends GuiConfig {
 	public static List<IConfigElement> getConfigList() {
 		
 		List<IConfigElement> list = new ArrayList();
-		list.addAll(new ConfigElement(ConfigHandler.cfg.getCategory(ConfigRef.CAT_ENTITYID)).getChildElements());
-		list.addAll(new ConfigElement(ConfigHandler.cfg.getCategory(ConfigRef.CAT_RTY)).getChildElements());
+		//list.addAll(new ConfigElement(ConfigHandler.cfg.getCategory(ConfigRef.MOBS)).getChildElements());
+		//list.addAll(new ConfigElement(ConfigHandler.cfg.getCategory(ConfigRef.MISC)).getChildElements())
+		//list.addAll(new ConfigElement(ConfigHandler.cfg.getCategory(ConfigRef.RTY)).getChildElements());
         list.add(new DummyConfigElement<String>("broken", "JTG in game config is currently broken", ConfigGuiType.STRING, "jtg.gui.config.is.broken"));
 		
 		LogHelper.info("Config Suff: " + list);

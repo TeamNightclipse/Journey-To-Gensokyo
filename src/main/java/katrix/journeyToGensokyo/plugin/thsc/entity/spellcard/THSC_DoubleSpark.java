@@ -32,7 +32,7 @@ public class THSC_DoubleSpark extends THSpellCard
 		//setSpellCardName("");
 		//setIconName("DoubleSparks");
 		this.setNeedLevel(7);
-		this.setRemoveTime(99);
+		this.setRemoveTime(70);
 		this.setEndTime(109);
 		this.setOriginalUserName(MARISA);
 	}

@@ -12,18 +12,22 @@ package katrix.journeyToGensokyo.client;
 import katrix.journeyToGensokyo.CommonProxy;
 import katrix.journeyToGensokyo.client.render.RenderHellRaven;
 import katrix.journeyToGensokyo.client.render.RenderReimuHostile;
+import katrix.journeyToGensokyo.client.render.RenderStandardShot;
 import katrix.journeyToGensokyo.client.render.RenderSunFlowerFairyEnd;
 import katrix.journeyToGensokyo.client.render.RenderTHFairyEnd;
 import katrix.journeyToGensokyo.client.render.RenderTHFairyIce;
 import katrix.journeyToGensokyo.client.render.RenderTHFairyNether;
 import katrix.journeyToGensokyo.client.render.RenderTenguCrow;
+import katrix.journeyToGensokyo.client.render.RenderYukari;
 import katrix.journeyToGensokyo.plugin.thsc.entity.EntityHellRaven;
 import katrix.journeyToGensokyo.plugin.thsc.entity.EntityReimuHostile;
+import katrix.journeyToGensokyo.plugin.thsc.entity.EntityStandardShot;
 import katrix.journeyToGensokyo.plugin.thsc.entity.EntitySunFlowerFairyEnd;
 import katrix.journeyToGensokyo.plugin.thsc.entity.EntityTHFairyEnd;
 import katrix.journeyToGensokyo.plugin.thsc.entity.EntityTHFairyIce;
 import katrix.journeyToGensokyo.plugin.thsc.entity.EntityTHFairyNether;
 import katrix.journeyToGensokyo.plugin.thsc.entity.EntityTenguCrow;
+import katrix.journeyToGensokyo.plugin.thsc.entity.EntityYukari;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -41,6 +45,8 @@ public class ClientProxy extends CommonProxy {
         	RenderingRegistry.registerEntityRenderingHandler(EntityTHFairyEnd.class, new RenderTHFairyEnd());
         	RenderingRegistry.registerEntityRenderingHandler(EntitySunFlowerFairyEnd.class, new RenderSunFlowerFairyEnd());
         	RenderingRegistry.registerEntityRenderingHandler(EntityReimuHostile.class, new RenderReimuHostile());
+        	RenderingRegistry.registerEntityRenderingHandler(EntityYukari.class, new RenderYukari());
+        	RenderingRegistry.registerEntityRenderingHandler(EntityStandardShot.class, new RenderStandardShot());
         }
        
 }

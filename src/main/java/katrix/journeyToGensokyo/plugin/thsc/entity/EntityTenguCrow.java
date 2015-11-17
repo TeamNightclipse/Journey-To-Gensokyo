@@ -25,8 +25,8 @@ import thKaguyaMod.init.THKaguyaConfig;
 import thKaguyaMod.init.THKaguyaItems;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.item.EntityXPOrb;
-import net.minecraft.entity.monster.IMob;
 import net.minecraft.item.Item;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
@@ -34,7 +34,7 @@ import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
 
-public class EntityTenguCrow extends EntityTHFairy implements IMob {
+public class EntityTenguCrow extends EntityTHFairy {
 
 	public EntityTenguCrow(World world) {
 		super(world);
@@ -92,6 +92,12 @@ public class EntityTenguCrow extends EntityTHFairy implements IMob {
                 this.worldObj.spawnParticle("explode", this.posX + (double)(this.rand.nextFloat() * this.width * 2.0F) - (double)this.width, this.posY + (double)(this.rand.nextFloat() * this.height), this.posZ + (double)(this.rand.nextFloat() * this.width * 2.0F) - (double)this.width, d2, d0, d1);
             }
         }
+        
+    	if(this.deathTime == 7)
+    	{
+    		THShotLib.explosionEffect2(worldObj, posX, posY, posZ, 1.0F + deathTime * 0.1F);
+    		THShotLib.banishExplosion(this, 5.0F, 5.0F);
+    	}
     }
 	
     @Override
@@ -206,6 +212,14 @@ public class EntityTenguCrow extends EntityTHFairy implements IMob {
 		    }
 		}
 	}
+    
+    public boolean attackEntityFrom(DamageSource damageSource, float amount)
+    {
+    	if(!damageSource.isMagicDamage()){
+    		amount *= 0.5F;
+    	}
+        return super.attackEntityFrom(damageSource, amount);
+    }
     
     @Override
     protected boolean canFairyCall()

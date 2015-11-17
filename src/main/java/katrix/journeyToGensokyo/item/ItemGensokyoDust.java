@@ -51,7 +51,7 @@ public class ItemGensokyoDust extends ItemJTGBase {
         return this.icons[meta];
     }
 
-    @Override
+	@Override
     public void getSubItems(Item item, CreativeTabs tab, List list) {
         for (int i = 0; i < 3; i ++) {
             list.add(new ItemStack(item, 1, i));

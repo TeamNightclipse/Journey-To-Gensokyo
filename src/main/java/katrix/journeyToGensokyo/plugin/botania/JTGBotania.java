@@ -22,7 +22,7 @@ public class JTGBotania {
 	
 	public static RecipePetals spiritFlowerRecipe;
 	public static LexiconEntry spiritFlowerLexicon;
-	public static String SPIRIT_FLOWER = "spiritflower";
+	public static String SPIRIT_FLOWER = "spiritulip";
 	
 	public static void init() {
 		

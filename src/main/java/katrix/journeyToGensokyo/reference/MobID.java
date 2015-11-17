@@ -19,5 +19,7 @@ public class MobID {
 	public static final int FAIRY_SUNFLOWER_END = 6;
 	public static final int FAMILIAR_ICE = 7;
 	public static final int REIMU_HOSTILE = 8;
+	public static final int YUKARI = 9;
+	public static final int STANDARD_SHOT = 10;
 
 }

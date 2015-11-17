@@ -19,5 +19,7 @@ public class EntityName {
 	public static final String FAIRY_SUNFLOWER_END = "SunFlowerFairyEnd";
 	public static final String FAMILIAR_ICE = "FamiliarIce";
 	public static final String REIMU_HOSTILE = "Reimu";
+	public static final String YUKARI = "Yukari";
+	public static final String STANDARD_SHOT = "StandardShot";
 
 }

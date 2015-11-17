@@ -31,16 +31,27 @@ tile.celestialOreBlock.name=Celestium Ore
 
 tile.keyStoneBlock.name=Keystone
 
-tile.botania:flower.spiritflower.name=Spirit Flower
-tile.botania:flower.spiritflower.reference=Your greenest enemy
+tile.botania:flower.spiritulip.name=Spiritulip
+tile.botania:flower.spiritulip.reference=Your greenest enemy
 
-botania.entry.spiritflower=Spirit Flower
-botania.tagline.spiritflower=Turn Magic into Mana
-botania.page.spiritflower0=The Spirit Flower is a special flower that allows you to turn Danmaku Bullets into raw mana. If any Danmaku shots come near it, it will absorb the magic in the Danmaku Shots, and turn it into &4Mana&0. However, do note that sometimes, the process goes in reverse.
-botania.page.spiritflower1=&oSo much color&r.
+botania.entry.spiritulip=Spiritulip
+botania.tagline.spiritulip=Turn Magic into Mana
+botania.page.spiritulip0=The Spiritulip is a special flower that allows you to turn Danmaku Bullets into raw mana. If any Danmaku shots come near it, it will absorb the magic in the Danmaku Shots, and turn it into &4Mana&0. However, do note that sometimes, the process goes in reverse.
+botania.page.spiritulip1=&oSo much color&r.
 
 item.thSpellCard.300.name=Loving Heart "Double Spark"
-item.thSpellCard.301.name=Magicannon "Final Spark" 
+item.thSpellCard.301.name=Magicannon "Final Spark"
+item.thSpellCard.302.name=Boundary "Curse of Dreams and Reality"
+item.thSpellCard.303.name=Boundary "Mesh of Light and Darkness"
+
+item.standardShot.needle.name=Standard Shot: Persuasion Needle
+item.standardShot.homing.name=Standard Shot: Homing Amulet
+item.standardShot.laser.name=Standard Shot: Illusion Laser
+item.standardShot.rocket.name=Standard Shot: Magic Missile
+standardShot.description.needle=The needle Shot!
+standardShot.description.homing=The homing Shot!
+standardShot.description.laser=The laser Shot!
+standardShot.description.rocket=The rocket Shot!
 
 item.spawnEggJTG.name=Spawn
 entity.THFairyIce.name=Ice Fairy

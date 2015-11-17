@@ -11,6 +11,7 @@ package katrix.journeyToGensokyo.plugin.thsc.entity.shot;
 
 import java.util.List;
 
+import katrix.journeyToGensokyo.plugin.thsc.ShotMovementHelper;
 import katrix.journeyToGensokyo.reference.SpecialShotID;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -20,6 +21,7 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import thKaguyaMod.THShotLib;
+import thKaguyaMod.entity.living.EntityDanmakuMob;
 import thKaguyaMod.entity.shot.EntityTHShot;
 import thKaguyaMod.entity.shot.ISpecialShot;
 
@@ -59,11 +61,15 @@ public class ShotFantasySeal implements ISpecialShot {
 				shot.shotSpecial = SpecialShotID.FANTASY_SEAL04;
 				shot.setShotEndTime(30);
 				
-				if(shot.user.getAITarget() == null){
-					homing(shot);
+				if(shot.user instanceof EntityDanmakuMob){
+					EntityDanmakuMob danmakuMob = (EntityDanmakuMob)shot.user;
+					
+					if(danmakuMob.getTarget() != null){
+						shot.angle = shot.angle_ToLiving(danmakuMob.getTarget());
+					}
 				}
 				else{
-					shot.angle = shot.angle_ToLiving(shot.user.getAITarget());
+					ShotMovementHelper.homing(shot, 24);
 				}
 				
 				shot.shotSpeed = 0.75;
@@ -98,11 +104,15 @@ public class ShotFantasySeal implements ISpecialShot {
 				shot.shotSpecial = 0;
 				shot.setShotEndTime(50);
 				
-				if(shot.user.getAITarget() == null){
-					homing(shot);
+				if(shot.user instanceof EntityDanmakuMob){
+					EntityDanmakuMob danmakuMob = (EntityDanmakuMob)shot.user;
+					
+					if(danmakuMob.getTarget() != null){
+						shot.angle = shot.angle_ToLiving(danmakuMob.getTarget());
+					}
 				}
 				else{
-					shot.angle = shot.angle_ToLiving(shot.user.getAITarget());
+					ShotMovementHelper.homing(shot, 24);
 				}
 				
 				shot.shotSpeed = 0.3;
@@ -114,64 +124,6 @@ public class ShotFantasySeal implements ISpecialShot {
 			break;
 		default:
 			break;
-		}
-	}
-	
-	public void homing(EntityTHShot shot)
-	{	
-        @SuppressWarnings("rawtypes")
-		List list = shot.worldObj.getEntitiesWithinAABBExcludingEntity(shot, shot.boundingBox.addCoord(shot.motionX, shot.motionY, shot.motionZ).expand(24.0D, 24.0D, 24.0D));//指定範囲内のEntityをリストに登録
-
-		EntityLivingBase nearEntity = null;
-		double nearDistance = 999.9D;
-		float nearAngle = 180F;
-		double nearValue = nearDistance * THShotLib.halfAbsSin(nearAngle / 180F * (float)Math.PI);
-		Vec3 shotVec = shot.getShotVector();
-		
-		for (int j = 0; j < list.size(); j++)
-        {
-        	Entity entitys = (Entity)list.get(j);
-        	if ( (entitys instanceof EntityLivingBase) == false || entitys instanceof EntityAnimal ||  entitys instanceof EntityVillager || entitys == shot.user)
-            {
-                continue;
-            }
-        	
-        	EntityLivingBase entity1 = (EntityLivingBase)entitys;
-        	
-        	if(entity1.isDead)
-        	{
-        		continue;
-        	}
-        	
-    		Vec3 shotPosVec = shot.pos();
-    		Vec3 entityPosVec = Vec3.createVectorHelper(entity1.posX, entity1.posY + entity1.getEyeHeight(), entity1.posZ);
-    		MovingObjectPosition movingObjectPosition = shot.worldObj.func_147447_a(shotPosVec, entityPosVec, false, true, false);
-    		shotPosVec = shot.pos();
-    		entityPosVec = Vec3.createVectorHelper(entity1.posX, entity1.posY + entity1.getEyeHeight(), entity1.posZ);
-    		
-        	if (movingObjectPosition != null && movingObjectPosition.entityHit == null)
-        	{
-        		continue;
-        	}
-        	
-        	Vec3 targetVec = THShotLib.angle_ToPos(shotPosVec, entityPosVec);
-        	float angleSpan = Math.abs(THShotLib.getVectorAndVectorAngle(shotVec, targetVec));
-        	double toEntity1Distance = shot.getDistance(entity1.posX, entity1.posY + entity1.getEyeHeight(), entity1.posZ);
-        	double value = toEntity1Distance * THShotLib.halfAbsSin(angleSpan / 180F * (float)Math.PI);
-        	if(nearValue > value)
-        	{
-            	{
-            		nearEntity = entity1;
-            		nearAngle = angleSpan;
-            		nearValue = value;
-            		nearDistance = toEntity1Distance;
-            	}
-        	}
-        }
-
-		if(nearEntity != null)
-		{
-			shot.angle = shot.angle_ToLiving(nearEntity);
 		}
 	}
 

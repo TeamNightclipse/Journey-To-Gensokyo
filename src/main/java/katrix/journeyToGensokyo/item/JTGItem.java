@@ -16,6 +16,21 @@ import net.minecraft.item.Item;
 
 public class JTGItem {
 	
+    public static Item oldGensokyoSpellItem;
+    
+    public static Item gensokyoIngotItem;
+    public static Item gensokyoDustItem;
+    
+    public static Item gensokyoNotesItem;
+    
+    public static Item spawnEggItem;
+    
+    public static Item compOldDemonSpellcardItem;
+    public static Item compOldCelestialSpellcardItem;
+    public static Item compRuinedOldNotebook;
+    
+    public static Item standardShot;
+	
 	public static void preInit(){
 		
     	oldGensokyoSpellItem = new ItemOldSpellcard();
@@ -35,6 +50,11 @@ public class JTGItem {
     						ItemSpawnEgg.addMapping(EntityName.FAIRY_END, 0x362060, 0xD3C95D);
     						ItemSpawnEgg.addMapping(EntityName.FAIRY_SUNFLOWER_END, 0x1C1133, 0x828200);
     						ItemSpawnEgg.addMapping(EntityName.REIMU_HOSTILE, 0xD10400, 0xFFFFFF);
+    						ItemSpawnEgg.addMapping(EntityName.YUKARI, 0x982D9F, 0x1A1956);
+    						
+    	standardShot = new ItemStandardShot()
+    						.setCreativeTab(CreativeTabs.tabMaterials)
+    						.setUnlocalizedName("standardShot");
     	
     	GameRegistry.registerItem(oldGensokyoSpellItem, "oldGensokyoSpellItem");
     	
@@ -44,6 +64,8 @@ public class JTGItem {
     	GameRegistry.registerItem(gensokyoNotesItem, "gensokyoNotesItem");
     	
     	GameRegistry.registerItem(spawnEggItem, "spawnEggJTG");
+    	
+    	GameRegistry.registerItem(standardShot, "standardShot");
     	
     	compOldDemonSpellcardItem = new ItemJTGBase()
 							.setTextureName("journeytogensokyo:oldDemonSpell")
@@ -59,18 +81,4 @@ public class JTGItem {
     	GameRegistry.registerItem(compOldCelestialSpellcardItem, "oldCelestialSpellItem");
     	GameRegistry.registerItem(compRuinedOldNotebook, "gensokyoNotesRuinedItem");
 	}
-	
-    public static Item oldGensokyoSpellItem;
-    
-    public static Item gensokyoIngotItem;
-    public static Item gensokyoDustItem;
-    
-    public static Item gensokyoNotesItem;
-    
-    public static Item spawnEggItem;
-    
-    public static Item compOldDemonSpellcardItem;
-    public static Item compOldCelestialSpellcardItem;
-    public static Item compRuinedOldNotebook;
-
 }

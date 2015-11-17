@@ -22,12 +22,8 @@ import katrix.journeyToGensokyo.handler.ConfigHandler;
 import katrix.journeyToGensokyo.reference.EntityName;
 import katrix.journeyToGensokyo.reference.MobID;
 import katrix.journeyToGensokyo.reference.SpecialShotID;
-import katrix.journeyToGensokyo.util.LogHelper;
 import cpw.mods.fml.common.registry.EntityRegistry;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.entity.monster.IMob;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
@@ -47,7 +43,7 @@ import thKaguyaMod.init.THKaguyaItems;
 import thKaguyaMod.item.ItemTHShot;
 
 /** 楽園の素敵な巫女　博麗 霊夢 */
-public class EntityReimuHostile extends EntityDanmakuMob implements IMob
+public class EntityReimuHostile extends EntityDanmakuMob
 {
 	
 	public double shotGap = 0.06D;
@@ -69,8 +65,8 @@ public class EntityReimuHostile extends EntityDanmakuMob implements IMob
         this.setSpeed(0.4F);
         this.setAttackDistance(50.0D);
     	this.setDetectionDistance(0.0D);
-    	this.setFlyingHeight(4);
-    	this.isFlyingMode = true;
+    	this.setFlyingHeight(0);
+    	this.isFlyingMode = false;
     	
     	this.isSpellCardMode = false;
     	this.attackInterval = 0;
@@ -107,13 +103,6 @@ public class EntityReimuHostile extends EntityDanmakuMob implements IMob
     			super.onDeathUpdate();
     			break;
     	}
-    }
-
-    
-    @Override
-    public void onUpdate()
-    {
-    	super.onUpdate();
     }
 
     
@@ -216,6 +205,16 @@ public class EntityReimuHostile extends EntityDanmakuMob implements IMob
 		}
     }
     
+    public boolean attackEntityFrom(DamageSource damageSource, float amount)
+    {
+    	if(!damageSource.isMagicDamage()){
+    		amount *= 0.5F;
+    	}
+    	this.isFlyingMode = true;
+    	this.setFlyingHeight(4);
+        return super.attackEntityFrom(damageSource, amount);
+    }
+    
     @Override
     protected boolean canFairyCall()
     {
@@ -236,12 +235,6 @@ public class EntityReimuHostile extends EntityDanmakuMob implements IMob
         }
 
         return damage;
-    }
-
-    @Override
-    protected void updateAITasks()
-    {
-        super.updateAITasks();
     }
 	
 	@Override

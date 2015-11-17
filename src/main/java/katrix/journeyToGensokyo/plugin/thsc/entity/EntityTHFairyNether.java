@@ -19,7 +19,7 @@ import katrix.journeyToGensokyo.reference.EntityName;
 import katrix.journeyToGensokyo.reference.MobID;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.entity.monster.IMob;
+import net.minecraft.util.DamageSource;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
@@ -29,7 +29,7 @@ import thKaguyaMod.THShotLib;
 import thKaguyaMod.entity.living.EntityTHFairy;
 import thKaguyaMod.init.THKaguyaConfig;
 
-public class EntityTHFairyNether extends EntityTHFairy implements IMob {
+public class EntityTHFairyNether extends EntityTHFairy {
 
 	public EntityTHFairyNether(World world) {
 		super(world);
@@ -58,6 +58,14 @@ public class EntityTHFairyNether extends EntityTHFairy implements IMob {
     public int getMaxSpawnedInChunk()
     {
         return 3;
+    }
+    
+    public boolean attackEntityFrom(DamageSource damageSource, float amount)
+    {
+    	if(!damageSource.isMagicDamage()){
+    		amount *= 0.5F;
+    	}
+        return super.attackEntityFrom(damageSource, amount);
     }
 	
     @Override

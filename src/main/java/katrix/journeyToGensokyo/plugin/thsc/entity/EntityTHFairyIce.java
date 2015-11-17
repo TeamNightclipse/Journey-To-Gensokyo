@@ -20,7 +20,7 @@ import katrix.journeyToGensokyo.reference.MobID;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.IEntityLivingData;
-import net.minecraft.entity.monster.IMob;
+import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.BiomeDictionary;
@@ -30,7 +30,7 @@ import thKaguyaMod.entity.living.EntityTHFairy;
 import thKaguyaMod.init.THKaguyaConfig;
 import thKaguyaMod.registry.DanmakuPatternRegistry;
 
-public class EntityTHFairyIce extends EntityTHFairy implements IMob {
+public class EntityTHFairyIce extends EntityTHFairy {
 
     public EntityTHFairyIce(World world)
     {
@@ -64,6 +64,29 @@ public class EntityTHFairyIce extends EntityTHFairy implements IMob {
 
         return (IEntityLivingData)p_110161_1_1;
     }
+    
+    public void onUpdate()
+    {	
+    	if(this.getHealth() <= 0)
+    	{
+    		motionX = 0.0D;
+    		motionY = 0.0D;
+    		motionZ = 0.0D;
+    	}
+    	
+    	if(ticksExisted <= lastTime)
+    	{
+    		return;
+    	}
+    	else
+    	{
+    		super.onUpdate();
+    		if(this.attackCounter > danmakuSpan)
+    		{
+    			attackCounter = 0;
+    		}
+    	}
+    }
 
     @Override
     protected void setPattern(int patternId)
@@ -73,6 +96,14 @@ public class EntityTHFairyIce extends EntityTHFairy implements IMob {
     	setDanmakuPattern(DanmakuPatternRegistry.danmaku.get(patternKey));
     	danmakuSpan = DanmakuPatternRegistry.span.get(patternKey);
     	speedRate = DanmakuPatternRegistry.speed.get(patternKey);
+    }
+    
+    public boolean attackEntityFrom(DamageSource damageSource, float amount)
+    {
+    	if(!damageSource.isMagicDamage()){
+    		amount *= 0.5F;
+    	}
+        return super.attackEntityFrom(damageSource, amount);
     }
     
     @Override

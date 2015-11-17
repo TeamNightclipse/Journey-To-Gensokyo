@@ -13,5 +13,7 @@ public class SpellcardID {
 	
 	public static final int DOUBLE_SPARK = 300;
 	public static final int FINAL_SPARK = 301;
+	public static final int DREAMS_AND_REALITY = 302;
+	public static final int MESH_LIGHT_DARKNESS = 303;
 
 }

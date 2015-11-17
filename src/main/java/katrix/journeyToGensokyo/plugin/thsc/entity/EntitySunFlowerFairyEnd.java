@@ -20,7 +20,7 @@ import katrix.journeyToGensokyo.reference.MobID;
 import katrix.journeyToGensokyo.reference.SpecialShotID;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.entity.monster.IMob;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
@@ -32,7 +32,7 @@ import thKaguyaMod.THShotLib;
 import thKaguyaMod.entity.living.EntitySunFlowerFairy;
 import thKaguyaMod.init.THKaguyaConfig;
 
-public class EntitySunFlowerFairyEnd extends EntitySunFlowerFairy implements IMob {
+public class EntitySunFlowerFairyEnd extends EntitySunFlowerFairy {
 
 	public EntitySunFlowerFairyEnd(World world) {
 		super(world);
@@ -143,6 +143,14 @@ public class EntitySunFlowerFairyEnd extends EntitySunFlowerFairy implements IMo
 	    	THShotLib.playShotSound(this);
 		}
 	}
+    
+    public boolean attackEntityFrom(DamageSource damageSource, float amount)
+    {
+    	if(!damageSource.isMagicDamage()){
+    		amount *= 0.5F;
+    	}
+        return super.attackEntityFrom(damageSource, amount);
+    }
 	
     @Override
     protected boolean canFairyCall()

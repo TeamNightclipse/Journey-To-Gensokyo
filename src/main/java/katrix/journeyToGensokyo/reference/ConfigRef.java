@@ -11,8 +11,9 @@ package katrix.journeyToGensokyo.reference;
 
 public class ConfigRef {
 	
-	public static final String CAT_RTY = "RTY";
-	public static final String CAT_ENTITYID = "entityID";
-	public static final String CAT_MOBS = "Mobs";
+	public static final String RTY = "RTY";
+	public static final String MOBS = "Mobs";
+	public static final String MISC = "misc";
+	public static final String MISC2 = "mist";
 
 }

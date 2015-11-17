@@ -13,15 +13,19 @@ import katrix.journeyToGensokyo.handler.ConfigHandler;
 import katrix.journeyToGensokyo.plugin.thsc.entity.EntityFamiliarIce;
 import katrix.journeyToGensokyo.plugin.thsc.entity.EntityHellRaven;
 import katrix.journeyToGensokyo.plugin.thsc.entity.EntityReimuHostile;
+import katrix.journeyToGensokyo.plugin.thsc.entity.EntityStandardShot;
 import katrix.journeyToGensokyo.plugin.thsc.entity.EntitySunFlowerFairyEnd;
 import katrix.journeyToGensokyo.plugin.thsc.entity.EntityTHFairyEnd;
 import katrix.journeyToGensokyo.plugin.thsc.entity.EntityTHFairyIce;
 import katrix.journeyToGensokyo.plugin.thsc.entity.EntityTHFairyNether;
 import katrix.journeyToGensokyo.plugin.thsc.entity.EntityTenguCrow;
+import katrix.journeyToGensokyo.plugin.thsc.entity.EntityYukari;
 import katrix.journeyToGensokyo.plugin.thsc.entity.shot.ShotFantasySeal;
 import katrix.journeyToGensokyo.plugin.thsc.entity.shot.ShotSeed;
+import katrix.journeyToGensokyo.plugin.thsc.entity.spellcard.THSC_CurseOfDreamsAndReality;
 import katrix.journeyToGensokyo.plugin.thsc.entity.spellcard.THSC_DoubleSpark;
 import katrix.journeyToGensokyo.plugin.thsc.entity.spellcard.THSC_FinalSpark;
+import katrix.journeyToGensokyo.plugin.thsc.entity.spellcard.THSC_MeshLightDarkness;
 import katrix.journeyToGensokyo.reference.ModInfo;
 import katrix.journeyToGensokyo.reference.SpecialShotID;
 import katrix.journeyToGensokyo.reference.SpellcardID;
@@ -33,11 +37,7 @@ public class JTG_THSC {
 	
 	public static void preInit() {
 		
-		//Spell Cards
-		SpellCardRegistry.registerSpellCard(THSC_DoubleSpark.class, ModInfo.MODID, "DoubleSpark", SpellcardID.DOUBLE_SPARK);
-		SpellCardRegistry.registerSpellCard(THSC_FinalSpark.class, ModInfo.MODID, "FinalSpark", SpellcardID.FINAL_SPARK);
-		
-
+		//Special Shots
 		SpecialShotRegistry.registerSpecialShot(ShotSeed.class, SpecialShotID.SEED_LASER01);
 		
 		SpecialShotRegistry.registerSpecialShot(ShotFantasySeal.class, SpecialShotID.FANTASY_SEAL01);
@@ -46,6 +46,19 @@ public class JTG_THSC {
 		SpecialShotRegistry.registerSpecialShot(ShotFantasySeal.class, SpecialShotID.FANTASY_SEAL04);
 		SpecialShotRegistry.registerSpecialShot(ShotFantasySeal.class, SpecialShotID.FANTASY_SEAL05);
 		SpecialShotRegistry.registerSpecialShot(ShotFantasySeal.class, SpecialShotID.FANTASY_SEAL06);
+		
+		SpecialShotRegistry.registerSpecialShot(THSC_CurseOfDreamsAndReality.class, SpecialShotID.DREAMS_AND_REALITY01);
+		SpecialShotRegistry.registerSpecialShot(THSC_CurseOfDreamsAndReality.class, SpecialShotID.DREAMS_AND_REALITY02);
+		SpecialShotRegistry.registerSpecialShot(THSC_CurseOfDreamsAndReality.class, SpecialShotID.DREAMS_AND_REALITY03);
+		SpecialShotRegistry.registerSpecialShot(THSC_CurseOfDreamsAndReality.class, SpecialShotID.DREAMS_AND_REALITY11);
+		
+		SpecialShotRegistry.registerSpecialShot(THSC_MeshLightDarkness.class, SpecialShotID.MESH_LASER01);
+		
+		//Spell Cards
+		SpellCardRegistry.registerSpellCard(THSC_DoubleSpark.class, ModInfo.MODID, "DoubleSpark", SpellcardID.DOUBLE_SPARK);
+		SpellCardRegistry.registerSpellCard(THSC_FinalSpark.class, ModInfo.MODID, "FinalSpark", SpellcardID.FINAL_SPARK);
+		SpellCardRegistry.registerSpellCard(THSC_CurseOfDreamsAndReality.class, ModInfo.MODID, "CurseOfDreamsAndReality", SpellcardID.DREAMS_AND_REALITY);
+		SpellCardRegistry.registerSpellCard(THSC_MeshLightDarkness.class, ModInfo.MODID, "MeshOfLightAndDarkness", SpellcardID.MESH_LIGHT_DARKNESS);
 	}
 		
 	public static void postInit() {
@@ -58,6 +71,8 @@ public class JTG_THSC {
 		EntityTHFairyEnd.postInit();
 		EntitySunFlowerFairyEnd.postInit();
 		EntityReimuHostile.postInit();
+		EntityYukari.postInit();
+		EntityStandardShot.postInit();
 		
 		if(THKaguyaConfig.spawnDanmakuMob && ConfigHandler.fixTHKaguyaSpawn) {
 			

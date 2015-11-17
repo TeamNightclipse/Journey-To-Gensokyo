@@ -20,7 +20,8 @@ import katrix.journeyToGensokyo.reference.MobID;
 import katrix.journeyToGensokyo.reference.SpecialShotID;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.entity.monster.IMob;
+import net.minecraft.entity.item.EntityXPOrb;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
@@ -32,7 +33,7 @@ import thKaguyaMod.THShotLib;
 import thKaguyaMod.entity.living.EntityTHFairy;
 import thKaguyaMod.init.THKaguyaConfig;
 
-public class EntityTHFairyEnd extends EntityTHFairy implements IMob {
+public class EntityTHFairyEnd extends EntityTHFairy {
 
     public EntityTHFairyEnd(World world)
     {
@@ -193,6 +194,53 @@ public class EntityTHFairyEnd extends EntityTHFairy implements IMob {
 	    	THShotLib.playShotSound(this);
 		}
 	}
+    
+    public boolean attackEntityFrom(DamageSource damageSource, float amount)
+    {
+    	if(!damageSource.isMagicDamage()){
+    		amount *= 0.5F;
+    	}
+        return super.attackEntityFrom(damageSource, amount);
+    }
+    
+    @Override
+    protected void onDeathUpdate()
+    {
+        ++this.deathTime;
+
+        if (this.deathTime == 20)
+        {
+            int i;
+
+            if (!this.worldObj.isRemote && (this.recentlyHit > 0 || this.isPlayer()) && this.func_146066_aG() && this.worldObj.getGameRules().getGameRuleBooleanValue("doMobLoot"))
+            {
+                i = this.getExperiencePoints(this.attackingPlayer);
+
+                while (i > 0)
+                {
+                    int j = EntityXPOrb.getXPSplit(i);
+                    i -= j;
+                    this.worldObj.spawnEntityInWorld(new EntityXPOrb(this.worldObj, this.posX, this.posY, this.posZ, j));
+                }
+            }
+
+            this.setDead();
+
+            for (i = 0; i < 20; ++i)
+            {
+                double d2 = this.rand.nextGaussian() * 0.02D;
+                double d0 = this.rand.nextGaussian() * 0.02D;
+                double d1 = this.rand.nextGaussian() * 0.02D;
+                this.worldObj.spawnParticle("explode", this.posX + (double)(this.rand.nextFloat() * this.width * 2.0F) - (double)this.width, this.posY + (double)(this.rand.nextFloat() * this.height), this.posZ + (double)(this.rand.nextFloat() * this.width * 2.0F) - (double)this.width, d2, d0, d1);
+            }
+        }
+        
+    	if(this.deathTime == 7)
+    	{
+    		THShotLib.explosionEffect2(worldObj, posX, posY, posZ, 1.0F + deathTime * 0.1F);
+    		THShotLib.banishExplosion(this, 5.0F, 5.0F);
+    	}
+    }
     
     @Override
     protected boolean canFairyCall()

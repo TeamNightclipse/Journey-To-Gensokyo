@@ -18,5 +18,10 @@ public class SpecialShotID {
 	public static final int FANTASY_SEAL04 = 11103;
 	public static final int FANTASY_SEAL05 = 11104;
 	public static final int FANTASY_SEAL06 = 11105;
+	public static final int DREAMS_AND_REALITY01 = 11200;
+	public static final int DREAMS_AND_REALITY02 = 11201;
+	public static final int DREAMS_AND_REALITY03 = 11202;
+	public static final int DREAMS_AND_REALITY11 = 11210;
+	public static final int MESH_LASER01 = 11300;
 
 }
