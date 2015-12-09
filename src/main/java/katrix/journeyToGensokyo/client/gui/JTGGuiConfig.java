@@ -42,8 +42,6 @@ public class JTGGuiConfig extends GuiConfig {
 		//list.addAll(new ConfigElement(ConfigHandler.cfg.getCategory(ConfigRef.RTY)).getChildElements());
         list.add(new DummyConfigElement<String>("broken", "JTG in game config is currently broken", ConfigGuiType.STRING, "jtg.gui.config.is.broken"));
 		
-		LogHelper.info("Config Suff: " + list);
-		
 		return list;
 	}
 }

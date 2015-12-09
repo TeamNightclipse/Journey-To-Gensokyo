@@ -37,14 +37,14 @@ public class THSC_CurseOfDreamsAndReality extends THSpellCard implements ISpecia
 		
 		if(time == 1){
 			THShotLib.playShotSound(card);
-			THShotLib.createShot(user, card, pos_User(), THShotLib.angle(user.rotationYaw+45, user.rotationPitch), 0F, 0.35D, 0.35D, 0.0D, THShotLib.gravity_Zero(), ShotData.shot(THShotLib.FORM_BIG, THShotLib.BLUE, 0, 15, SpecialShotID.DREAMS_AND_REALITY01));
-			THShotLib.createShot(user, card, pos_User(), THShotLib.angle(user.rotationYaw-45, user.rotationPitch), 0F, 0.35D, 0.35D, 0.0D, THShotLib.gravity_Zero(), ShotData.shot(THShotLib.FORM_BIG, THShotLib.BLUE, 0, 15, SpecialShotID.DREAMS_AND_REALITY11));
+			THShotLib.createShot(user, card, pos_User(), THShotLib.angle(user.rotationYaw+45, user.rotationPitch), 0F, 0.35D, 0.35D, 0.0D, THShotLib.gravity_Zero(), ShotData.shot(THShotLib.FORM_BIG, THShotLib.BLUE, THShotLib.SIZE[THShotLib.FORM_BIG], 3.0F, 0, 15, SpecialShotID.DREAMS_AND_REALITY01));
+			THShotLib.createShot(user, card, pos_User(), THShotLib.angle(user.rotationYaw-45, user.rotationPitch), 0F, 0.35D, 0.35D, 0.0D, THShotLib.gravity_Zero(), ShotData.shot(THShotLib.FORM_BIG, THShotLib.BLUE, THShotLib.SIZE[THShotLib.FORM_BIG], 3.0F, 0, 15, SpecialShotID.DREAMS_AND_REALITY11));
 		}
 		
 		if(time == 50){
 			THShotLib.playShotSound(card);
-			THShotLib.createShot(user, card, pos_User(), THShotLib.angle(user.rotationYaw-45, user.rotationPitch), 0F, 0.35D, 0.35D, 0.0D, THShotLib.gravity_Zero(), ShotData.shot(THShotLib.FORM_BIG, THShotLib.BLUE, 0, 15, SpecialShotID.DREAMS_AND_REALITY01));
-			THShotLib.createShot(user, card, pos_User(), THShotLib.angle(user.rotationYaw+45, user.rotationPitch), 0F, 0.35D, 0.35D, 0.0D, THShotLib.gravity_Zero(), ShotData.shot(THShotLib.FORM_BIG, THShotLib.BLUE, 0, 15, SpecialShotID.DREAMS_AND_REALITY11));
+			THShotLib.createShot(user, card, pos_User(), THShotLib.angle(user.rotationYaw-45, user.rotationPitch), 0F, 0.35D, 0.35D, 0.0D, THShotLib.gravity_Zero(), ShotData.shot(THShotLib.FORM_BIG, THShotLib.BLUE, THShotLib.SIZE[THShotLib.FORM_BIG], 3.0F, 0, 15, SpecialShotID.DREAMS_AND_REALITY01));
+			THShotLib.createShot(user, card, pos_User(), THShotLib.angle(user.rotationYaw+45, user.rotationPitch), 0F, 0.35D, 0.35D, 0.0D, THShotLib.gravity_Zero(), ShotData.shot(THShotLib.FORM_BIG, THShotLib.BLUE, THShotLib.SIZE[THShotLib.FORM_BIG], 3.0F, 0, 15, SpecialShotID.DREAMS_AND_REALITY11));
 		}
 	}
 
@@ -62,7 +62,7 @@ public class THSC_CurseOfDreamsAndReality extends THSpellCard implements ISpecia
 			case SpecialShotID.DREAMS_AND_REALITY02:
 				if(shot.ticksExisted % 2 == 0){
 					THShotLib.playShotSound(shot);
-					THShotLib.createSphereShot(shot.user, shot.source, shot.pos(), THShotLib.angle(shot.rotationYaw + shot.ticksExisted*5, shot.rotationPitch), 0f, 0.35D, 0.35D, 0.0D, THShotLib.gravity_Zero(), ShotData.shot(THShotLib.FORM_RICE, THShotLib.AQUA, 0, 5, SpecialShotID.DREAMS_AND_REALITY03), 4*danLevel, 0.1D, 0f);
+					THShotLib.createSphereShot(shot.user, shot.source, shot.pos(), THShotLib.angle(shot.rotationYaw + shot.ticksExisted*5, shot.rotationPitch), 0f, 0.35D, 0.35D, 0.0D, THShotLib.gravity_Zero(), ShotData.shot(THShotLib.FORM_RICE, THShotLib.AQUA, THShotLib.SIZE[THShotLib.FORM_RICE], 3.0F, 0, 5, SpecialShotID.DREAMS_AND_REALITY03), 4*danLevel, 0.1D, 0f);
 				}
 				break;
 			case SpecialShotID.DREAMS_AND_REALITY03:
@@ -78,7 +78,7 @@ public class THSC_CurseOfDreamsAndReality extends THSpellCard implements ISpecia
 						ShotMovementHelper.homing(shot, 24);
 					}
 					THShotLib.playShotSound(shot);
-					THShotLib.createShot(shot.user, shot.source, shot.pos(), shot.angle, 0F, 0.45D, 0.45D, 0.0D, THShotLib.gravity_Zero(), ShotData.shot(THShotLib.FORM_RICE, THShotLib.AQUA));
+					THShotLib.createShot(shot.user, shot.source, shot.pos(), shot.angle, 0F, 0.45D, 0.45D, 0.0D, THShotLib.gravity_Zero(), ShotData.shot(THShotLib.FORM_RICE, THShotLib.AQUA, THShotLib.SIZE[THShotLib.FORM_RICE], 4.0F));
 				}
 				break;
 			case SpecialShotID.DREAMS_AND_REALITY11:
@@ -89,7 +89,7 @@ public class THSC_CurseOfDreamsAndReality extends THSpellCard implements ISpecia
 					for(int i = -1; i < 3; i+=2){
 						for(int j = -1; j < 3; j+=2){
 							for(int k = -1; k < 3; k+=2){
-								THShotLib.createSphereShot(shot.user, shot.source, THShotLib.pos(shot.posX+i, shot.posY+j, shot.posZ+k), shot.angle, 0f, 0.2D, 0.2D, 0.0D, THShotLib.gravity_Zero(), ShotData.shot(THShotLib.FORM_SCALE, THShotLib.AQUA), 4*danLevel, 0.1D, 0F);
+								THShotLib.createSphereShot(shot.user, shot.source, THShotLib.pos(shot.posX+i, shot.posY+j, shot.posZ+k), shot.angle, 0f, 0.2D, 0.2D, 0.0D, THShotLib.gravity_Zero(), ShotData.shot(THShotLib.FORM_SCALE, THShotLib.AQUA, THShotLib.SIZE[THShotLib.FORM_SCALE]*1.5F, 4.0F), 4*danLevel, 0.1D, 0F);
 							}
 						}
 					}
@@ -98,7 +98,7 @@ public class THSC_CurseOfDreamsAndReality extends THSpellCard implements ISpecia
 					for(int i = -2; i < 4; i+=2){
 						for(int j = -2; j < 4; j+=2){
 							for(int k = -2; k < 4; k+=2){
-								THShotLib.createSphereShot(shot.user, shot.source, THShotLib.pos(shot.posX+i, shot.posY+j, shot.posZ+k), shot.angle, 0f, 0.2D, 0.2D, 0.0D, THShotLib.gravity_Zero(), ShotData.shot(THShotLib.FORM_SCALE, THShotLib.GREEN), 4*danLevel, 0.1D, 0F);
+								THShotLib.createSphereShot(shot.user, shot.source, THShotLib.pos(shot.posX+i, shot.posY+j, shot.posZ+k), shot.angle, 0f, 0.2D, 0.2D, 0.0D, THShotLib.gravity_Zero(), ShotData.shot(THShotLib.FORM_SCALE, THShotLib.GREEN, THShotLib.SIZE[THShotLib.FORM_SCALE]*1.5F, 4.0F), 4*danLevel, 0.1D, 0F);
 							}
 						}
 					}

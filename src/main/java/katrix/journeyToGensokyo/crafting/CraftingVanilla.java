@@ -15,6 +15,7 @@ import katrix.journeyToGensokyo.item.JTGItem;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import thKaguyaMod.init.THKaguyaItems;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class CraftingVanilla {
@@ -50,7 +51,31 @@ public class CraftingVanilla {
             GameRegistry.addShapelessRecipe(new ItemStack(JTGBlock.gensokyoOreBlock, 1, 1), JTGBlock.compDemonOreBlock);
             GameRegistry.addShapelessRecipe(new ItemStack(JTGBlock.gensokyoOreBlock, 1, 2), JTGBlock.compCelestialOreBlock);
     	}
-
+    	
+        GameRegistry.addRecipe(new ItemStack(JTGItem.standardShot, 1, 0), "sps", "yhy", "sps",
+        		'p', THKaguyaItems.red_pearl, 
+        		's', THKaguyaItems.arrow_shot, 
+        		'h', THKaguyaItems.hakurei_miko_stick, 
+        		'y', THKaguyaItems.yin_yang_orb);
+        
+        GameRegistry.addRecipe(new ItemStack(JTGItem.standardShot, 1, 1), "sps", "yhy", "sps",
+        		'p', THKaguyaItems.orange_pearl, 
+        		's', THKaguyaItems.homing_amulet, 
+        		'h', THKaguyaItems.hakurei_miko_stick, 
+        		'y', THKaguyaItems.yin_yang_orb);
+        
+        GameRegistry.addRecipe(new ItemStack(JTGItem.standardShot, 1, 2), "sps", "hmb", "sps",
+        		'p', THKaguyaItems.white_pearl, 
+        		's', THKaguyaItems.long_laser, 
+        		'm', THKaguyaItems.mini_hakkero, 
+        		'h', THKaguyaItems.marisa_hat,
+        		'b', THKaguyaItems.magic_bloom);
+        
+        GameRegistry.addRecipe(new ItemStack(JTGItem.standardShot, 1, 3), "sps", "hmb", "sps",
+        		'p', THKaguyaItems.aqua_pearl, 
+        		's', THKaguyaItems.star_shot, 
+        		'm', THKaguyaItems.mini_hakkero, 
+        		'h', THKaguyaItems.marisa_hat,
+        		'b', THKaguyaItems.magic_bloom);
 	}
-
 }

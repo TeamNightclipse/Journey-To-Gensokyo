@@ -13,11 +13,8 @@ import katrix.journeyToGensokyo.client.model.ModelYukari;
 import katrix.journeyToGensokyo.plugin.thsc.entity.EntityYukari;
 import katrix.journeyToGensokyo.util.LogHelper;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
-import thKaguyaMod.entity.living.EntityRumia;
-
 import org.lwjgl.opengl.GL11;
 
 import cpw.mods.fml.relauncher.Side;
@@ -44,7 +41,7 @@ public class RenderYukari extends RenderTHBoss
 	
 	public void renderYukari(EntityYukari yukari, double x, double y, double z, float yaw, float pitch)
 	{
-		if(yukari.invicibilityTimer > 0){
+		if(yukari.getInvicibilityTimer() > 0){
 			GL11.glPushMatrix();
         	GL11.glDisable(GL11.GL_CULL_FACE);
         	GL11.glTranslatef((float)x, (float)y, (float)z);
@@ -57,10 +54,10 @@ public class RenderYukari extends RenderTHBoss
     		GL11.glTranslatef(0.0F, 1.2F, 0.0F);
     		GL11.glRotatef(90F, 1F, 0F, 0F);
     		this.bindTexture(shieldTexture);
-    		renderDark(tessellator, 2.8F, 0.0D, yukari.invicibilityTimer, 0);
+    		renderDark(tessellator, 2.8F, 0.0D, yukari.getInvicibilityTimer(), 0);
     		GL11.glDisable(GL11.GL_BLEND);
     	
-    		GL11.glEnable(GL11.GL_CULL_FACE);//表綿描画
+    		GL11.glEnable(GL11.GL_CULL_FACE);
     		GL11.glDepthMask(true);
     		GL11.glPopMatrix();
 		}

@@ -10,6 +10,7 @@
 package katrix.journeyToGensokyo.client.render;
 
 import katrix.journeyToGensokyo.handler.ConfigHandler;
+import katrix.journeyToGensokyo.plugin.thsc.entity.EntityYukari;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.Tessellator;
@@ -42,19 +43,25 @@ public abstract class RenderTHBoss extends RenderLiving
     public void doRender(Entity entity, double x, double y, double z, float yaw, float pitch)
     {
     	super.doRender(entity, x, y, z, yaw, pitch);
-    	if(ConfigHandler.newHealthBar){
+    	if(entity instanceof EntityYukari){
+    		EntityYukari yukari = (EntityYukari)entity;
     		
-    		int divider = 8;
-    		int resolution = divider*2;
-        	
-    		for(int i = 0; i < resolution; i++) {
-        		this.renderCircleHealth((EntityDanmakuMob)entity, x, y, z, yaw, pitch, i, resolution);
-        	}
-        	
-        	this.renderName((EntityDanmakuMob)entity, x, y, z, yaw, pitch);
-    	}
-    	else{
-        	this.renderTHBossStatus((EntityDanmakuMob)entity, x, y, z, yaw, pitch);
+    		if(yukari.getIsAgressive() == 1) {
+    	    	if(ConfigHandler.newHealthBar){
+    	    		
+    	    		int divider = 8;
+    	    		int resolution = divider*2;
+    	        	
+    	    		for(int i = 0; i < resolution; i++) {
+    	        		this.renderCircleHealth((EntityDanmakuMob)entity, x, y, z, yaw, pitch, i, resolution);
+    	        	}
+    	        	
+    	        	this.renderName((EntityDanmakuMob)entity, x, y, z, yaw, pitch);
+    	    	}
+    	    	else{
+    	        	this.renderTHBossStatus((EntityDanmakuMob)entity, x, y, z, yaw, pitch);
+    	    	}
+    		}
     	}
     }
 

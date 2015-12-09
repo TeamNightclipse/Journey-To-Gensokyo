@@ -9,6 +9,7 @@
 
 package katrix.journeyToGensokyo.plugin.botania;
 
+import katrix.journeyToGensokyo.reference.OreDictionaryNames;
 import vazkii.botania.api.BotaniaAPI;
 import vazkii.botania.api.lexicon.LexiconEntry;
 import vazkii.botania.api.recipe.RecipePetals;
@@ -29,10 +30,13 @@ public class JTGBotania {
 		BotaniaAPI.registerSubTile(SPIRIT_FLOWER, SubTileSpiritFlower.class);
 		
 		spiritFlowerRecipe = BotaniaAPI.registerPetalRecipe(ItemBlockSpecialFlower.ofType(SPIRIT_FLOWER), 
-							ModPetalRecipes.redMana, ModPetalRecipes.runeMana, ModPetalRecipes.greenMana, ModPetalRecipes.runeWrath, ModPetalRecipes.blueMana, ModPetalRecipes.runeMana, ModPetalRecipes.yellowMana, ModPetalRecipes.runeFire);
+							ModPetalRecipes.red, ModPetalRecipes.runeMana, ModPetalRecipes.green, ModPetalRecipes.runeWrath, ModPetalRecipes.blue, ModPetalRecipes.runeMana, ModPetalRecipes.yellow, ModPetalRecipes.runeFire);
 		BotaniaAPI.subtilesForCreativeMenu.add(SPIRIT_FLOWER);
 		
 		spiritFlowerLexicon = new BLexiconEntry(SPIRIT_FLOWER, BotaniaAPI.categoryGenerationFlowers);
-		spiritFlowerLexicon.setLexiconPages(new PageText("0"), new PagePetalRecipe("1", spiritFlowerRecipe));
+		spiritFlowerLexicon.setLexiconPages(new PageText("0"), new PagePetalRecipe<RecipePetals>("1", spiritFlowerRecipe));
+		
+		BotaniaAPI.addOreWeight(OreDictionaryNames.ORE_GENSOKYO, 2500);
+		BotaniaAPI.addOreWeightNether(OreDictionaryNames.ORE_DEMON, 2500);
 	}
 }

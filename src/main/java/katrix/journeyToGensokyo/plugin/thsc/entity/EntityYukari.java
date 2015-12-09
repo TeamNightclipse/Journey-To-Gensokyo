@@ -15,8 +15,8 @@ import katrix.journeyToGensokyo.JourneyToGensokyo;
 import katrix.journeyToGensokyo.reference.EntityName;
 import katrix.journeyToGensokyo.reference.MobID;
 import katrix.journeyToGensokyo.reference.SpellcardID;
-import katrix.journeyToGensokyo.util.LogHelper;
 import cpw.mods.fml.common.registry.EntityRegistry;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
@@ -31,11 +31,8 @@ import thKaguyaMod.entity.spellcard.EntitySpellCard;
 import thKaguyaMod.init.THKaguyaItems;
 import thKaguyaMod.item.ItemTHShot;
 
-/** 楽園の素敵な巫女　博麗 霊夢 */
 public class EntityYukari extends EntityDanmakuMob
 {
-	
-	public int invicibilityTimer;
 	
 	public EntityYukari(World world)
     {
@@ -54,17 +51,15 @@ public class EntityYukari extends EntityDanmakuMob
         this.setSpeed(0.45F);
         this.setAttackDistance(20.0D);
     	this.setDetectionDistance(20.0D);
-    	this.setFlyingHeight(4);
+    	this.setFlyingHeight(2);
     	this.isFlyingMode = true;
     	
     	this.isSpellCardMode = false;
     	this.attackInterval = 0;
+    	
+    	this.setInvicibilityTimer(0);
     }
 	
-    /**
-     * 使用しているスペルカードNoを返す
-     * @return 使用しているスペルカードNo
-     */
     public int getUsingSpellCardNo()
     {
     	switch(this.getDanmakuPattern())
@@ -84,38 +79,37 @@ public class EntityYukari extends EntityDanmakuMob
     	}
     }
     
-    //死んでいるときに呼ばれる
     @Override
     protected void onDeathUpdate()
     {
     	switch(getDanmakuPattern())
     	{
     		case NORMAL_ATTACK01:
-    			moveDanmakuAttack(SPELLCARD_ATTACK01, 10, 40.0F, 160);
+    			moveDanmakuAttack(SPELLCARD_ATTACK01, 10, 100.0F, 160);
     			break;
     		case SPELLCARD_ATTACK01:
-    			moveDanmakuAttack(NORMAL_ATTACK02, 10, 40.0F, 160);
+    			moveDanmakuAttack(NORMAL_ATTACK02, 10, 100.0F, 160);
     			break;
     		case NORMAL_ATTACK02:
-    			moveDanmakuAttack(SPELLCARD_ATTACK02, 10, 60.0F, 160);
+    			moveDanmakuAttack(SPELLCARD_ATTACK02, 10, 100.0F, 160);
     			break;
     		case SPELLCARD_ATTACK02:
-    			moveDanmakuAttack(NORMAL_ATTACK03, 10, 40.0F, 160);
+    			moveDanmakuAttack(NORMAL_ATTACK03, 10, 100.0F, 160);
     			break;
     		case NORMAL_ATTACK03:
-    			moveDanmakuAttack(SPELLCARD_ATTACK03, 10, 100.0F, 160);
+    			moveDanmakuAttack(SPELLCARD_ATTACK03, 10, 300.0F, 160);
     			break;
     		case SPELLCARD_ATTACK03:
-    			moveDanmakuAttack(NORMAL_ATTACK04, 10, 40.0F, 160);
+    			moveDanmakuAttack(NORMAL_ATTACK04, 10, 100.0F, 160);
     			break;
     		case NORMAL_ATTACK04:
-    			moveDanmakuAttack(SPELLCARD_ATTACK04, 10, 40.0F, 160);
+    			moveDanmakuAttack(SPELLCARD_ATTACK04, 10, 100.0F, 160);
     			break;
     		case SPELLCARD_ATTACK04:
-    			moveDanmakuAttack(NORMAL_ATTACK05, 10, 40.0F, 160);
+    			moveDanmakuAttack(NORMAL_ATTACK05, 10, 100.0F, 160);
     			break;
     		case NORMAL_ATTACK05:
-    			moveDanmakuAttack(SPELLCARD_ATTACK05, 10, 40.0F, 160);
+    			moveDanmakuAttack(SPELLCARD_ATTACK05, 10, 300.0F, 160);
     			break;
     		case SPELLCARD_ATTACK05:
     			moveDanmakuAttack(ATTACK_END, 10, 0.0F, 160);
@@ -130,11 +124,6 @@ public class EntityYukari extends EntityDanmakuMob
     	}
     }
 
-    
-    /**
-     * 弾幕のパターンを記述
-     * @param level : EASY～LUNATICの難易度
-     */
     @Override
     public void danmakuPattern(int level)
     {
@@ -180,13 +169,13 @@ public class EntityYukari extends EntityDanmakuMob
     {
     	if(attackCounter == 1){
     		THShotLib.playShotSound(this);
-        	THShotLib.createCircleShot(this, pos(), angle, 0.3D, ShotData.shot(THShotLib.FORM_KUNAI, THShotLib.PURPLE, THShotLib.SIZE[THShotLib.FORM_KUNAI], 1.5f, 0, 60), 12*level);
+        	THShotLib.createCircleShot(this, pos(), angle, 0.3D, ShotData.shot(THShotLib.FORM_KUNAI, THShotLib.PURPLE, THShotLib.SIZE[THShotLib.FORM_KUNAI], 6.0f, 0, 60), 12*level);
     	}
     	
     	else if(attackCounter == 2){
     		THShotLib.playShotSound(this);
-        	THShotLib.createCircleShot(this, pos(), angle, 0.31D, ShotData.shot(THShotLib.FORM_KUNAI, THShotLib.PURPLE, THShotLib.SIZE[THShotLib.FORM_KUNAI], 1.5f, 0, 60), 12*level);
-        	THShotLib.createCircleShot(this, pos(), angle, 0.5D, ShotData.shot(THShotLib.FORM_KUNAI, THShotLib.PURPLE, THShotLib.SIZE[THShotLib.FORM_KUNAI], 1.5f, 0, 60), 12*level);
+        	THShotLib.createCircleShot(this, pos(), angle, 0.31D, ShotData.shot(THShotLib.FORM_KUNAI, THShotLib.PURPLE, THShotLib.SIZE[THShotLib.FORM_KUNAI], 6.0f, 0, 60), 12*level);
+        	THShotLib.createCircleShot(this, pos(), angle, 0.5D, ShotData.shot(THShotLib.FORM_KUNAI, THShotLib.PURPLE, THShotLib.SIZE[THShotLib.FORM_KUNAI], 6.0f, 0, 60), 12*level);
     	}
     	if(attackCounter >= 10){
     		attackCounter = 0;
@@ -209,13 +198,13 @@ public class EntityYukari extends EntityDanmakuMob
     {
     	if(attackCounter == 1){
     		THShotLib.playShotSound(this);
-        	THShotLib.createCircleShot(this, pos(), angle, 0.3D, ShotData.shot(THShotLib.FORM_KUNAI, THShotLib.PURPLE, THShotLib.SIZE[THShotLib.FORM_KUNAI], 1.5f, 0, 60), 12*level);
+        	THShotLib.createCircleShot(this, pos(), angle, 0.3D, ShotData.shot(THShotLib.FORM_KUNAI, THShotLib.PURPLE, THShotLib.SIZE[THShotLib.FORM_KUNAI], 6.0f, 0, 60), 12*level);
     	}
     	
     	else if(attackCounter == 2){
     		THShotLib.playShotSound(this);
-        	THShotLib.createCircleShot(this, pos(), angle, 0.4D, ShotData.shot(THShotLib.FORM_KUNAI, THShotLib.AQUA, THShotLib.SIZE[THShotLib.FORM_KUNAI], 1.5f, 0, 60), 12*level);
-        	THShotLib.createCircleShot(this, pos(), angle, 0.5D, ShotData.shot(THShotLib.FORM_KUNAI, THShotLib.AQUA, THShotLib.SIZE[THShotLib.FORM_KUNAI], 1.5f, 0, 60), 12*level);
+        	THShotLib.createCircleShot(this, pos(), angle, 0.4D, ShotData.shot(THShotLib.FORM_KUNAI, THShotLib.AQUA, THShotLib.SIZE[THShotLib.FORM_KUNAI], 6.0f, 0, 60), 12*level);
+        	THShotLib.createCircleShot(this, pos(), angle, 0.5D, ShotData.shot(THShotLib.FORM_KUNAI, THShotLib.AQUA, THShotLib.SIZE[THShotLib.FORM_KUNAI], 6.0f, 0, 60), 12*level);
     	}
     	
     	if(attackCounter >= 10){
@@ -239,8 +228,8 @@ public class EntityYukari extends EntityDanmakuMob
     {
     	if(attackCounter == 1){
     		THShotLib.playShotSound(this);
-        	THShotLib.createCircleShot(this, pos(), angle, 0.3D, ShotData.shot(THShotLib.FORM_KUNAI, THShotLib.AQUA, THShotLib.SIZE[THShotLib.FORM_KUNAI], 1.5f, 0, 60), 32*level);
-        	THShotLib.createCircleShot(this, pos(), angle, 0.6D, ShotData.shot(THShotLib.FORM_KUNAI, THShotLib.AQUA, THShotLib.SIZE[THShotLib.FORM_KUNAI], 1.5f, 0, 60), 32*level);
+        	THShotLib.createCircleShot(this, pos(), angle, 0.3D, ShotData.shot(THShotLib.FORM_KUNAI, THShotLib.AQUA, THShotLib.SIZE[THShotLib.FORM_KUNAI], 14.0f, 0, 60), 32*level);
+        	THShotLib.createCircleShot(this, pos(), angle, 0.6D, ShotData.shot(THShotLib.FORM_KUNAI, THShotLib.AQUA, THShotLib.SIZE[THShotLib.FORM_KUNAI], 14.0f, 0, 60), 32*level);
     	}
     	
     	if(attackCounter >= 20){
@@ -264,14 +253,14 @@ public class EntityYukari extends EntityDanmakuMob
     {
     	if(attackCounter % 2 == 0){
     		THShotLib.playShotSound(this);
-        	THShotLib.createCircleShot(this, pos(), THShotLib.angle(rotationYaw + attackCounter*5, rotationPitch), 0.3D, ShotData.shot(THShotLib.FORM_KUNAI, THShotLib.GREEN, THShotLib.SIZE[THShotLib.FORM_KUNAI], 1.5f, 0, 60), 2*level);
-        	THShotLib.createCircleShot(this, pos(), THShotLib.angle(rotationYaw + attackCounter*5, rotationPitch), 0.4D, ShotData.shot(THShotLib.FORM_KUNAI, THShotLib.GREEN, THShotLib.SIZE[THShotLib.FORM_KUNAI], 1.5f, 0, 60), 2*level);
+        	THShotLib.createCircleShot(this, pos(), THShotLib.angle(rotationYaw + attackCounter*5, rotationPitch), 0.3D, ShotData.shot(THShotLib.FORM_KUNAI, THShotLib.GREEN, THShotLib.SIZE[THShotLib.FORM_KUNAI], 6.0f, 0, 60), 2*level);
+        	THShotLib.createCircleShot(this, pos(), THShotLib.angle(rotationYaw + attackCounter*5, rotationPitch), 0.4D, ShotData.shot(THShotLib.FORM_KUNAI, THShotLib.GREEN, THShotLib.SIZE[THShotLib.FORM_KUNAI], 6.0f, 0, 60), 2*level);
     	}
     	
     	if(attackCounter % 2 == 1){
     		THShotLib.playShotSound(this);
-        	THShotLib.createCircleShot(this, pos(), THShotLib.angle(rotationYaw - attackCounter*5, rotationPitch), 0.3D, ShotData.shot(THShotLib.FORM_KUNAI, THShotLib.AQUA, THShotLib.SIZE[THShotLib.FORM_KUNAI], 1.5f, 0, 60), 2*level);
-        	THShotLib.createCircleShot(this, pos(), THShotLib.angle(rotationYaw - attackCounter*5, rotationPitch), 0.4D, ShotData.shot(THShotLib.FORM_KUNAI, THShotLib.AQUA, THShotLib.SIZE[THShotLib.FORM_KUNAI], 1.5f, 0, 60), 2*level);
+        	THShotLib.createCircleShot(this, pos(), THShotLib.angle(rotationYaw - attackCounter*5, rotationPitch), 0.3D, ShotData.shot(THShotLib.FORM_KUNAI, THShotLib.AQUA, THShotLib.SIZE[THShotLib.FORM_KUNAI], 6.0f, 0, 60), 2*level);
+        	THShotLib.createCircleShot(this, pos(), THShotLib.angle(rotationYaw - attackCounter*5, rotationPitch), 0.4D, ShotData.shot(THShotLib.FORM_KUNAI, THShotLib.AQUA, THShotLib.SIZE[THShotLib.FORM_KUNAI], 6.0f, 0, 60), 2*level);
     	}
     	
     	if(attackCounter >= 60){
@@ -295,9 +284,9 @@ public class EntityYukari extends EntityDanmakuMob
     {
     	if(attackCounter % 3 == 0){
     		THShotLib.playShotSound(this);
-        	THShotLib.createCircleShot(this, pos(), THShotLib.angle(rotationYaw + attackCounter*5, rotationPitch), 0.4D, ShotData.shot(THShotLib.FORM_KUNAI, THShotLib.AQUA, THShotLib.SIZE[THShotLib.FORM_KUNAI], 1.5f, 0, 50), 4*level);
-        	THShotLib.createCircleShot(this, pos(), THShotLib.angle(rotationYaw + attackCounter*5, rotationPitch), 0.5D, ShotData.shot(THShotLib.FORM_KUNAI, THShotLib.AQUA, THShotLib.SIZE[THShotLib.FORM_KUNAI], 1.5f, 0, 50), 4*level);
-        	THShotLib.createCircleShot(this, pos(), THShotLib.angle(rotationYaw + attackCounter*5, rotationPitch), 0.6D, ShotData.shot(THShotLib.FORM_KUNAI, THShotLib.AQUA, THShotLib.SIZE[THShotLib.FORM_KUNAI], 1.5f, 0, 50), 4*level);
+        	THShotLib.createCircleShot(this, pos(), THShotLib.angle(rotationYaw + attackCounter*5, rotationPitch), 0.4D, ShotData.shot(THShotLib.FORM_KUNAI, THShotLib.AQUA, THShotLib.SIZE[THShotLib.FORM_KUNAI], 9.0f, 0, 50), 4*level);
+        	THShotLib.createCircleShot(this, pos(), THShotLib.angle(rotationYaw + attackCounter*5, rotationPitch), 0.5D, ShotData.shot(THShotLib.FORM_KUNAI, THShotLib.AQUA, THShotLib.SIZE[THShotLib.FORM_KUNAI], 9.0f, 0, 50), 4*level);
+        	THShotLib.createCircleShot(this, pos(), THShotLib.angle(rotationYaw + attackCounter*5, rotationPitch), 0.6D, ShotData.shot(THShotLib.FORM_KUNAI, THShotLib.AQUA, THShotLib.SIZE[THShotLib.FORM_KUNAI], 9.0f, 0, 50), 4*level);
     	}
     	
     	if(attackCounter >= 60){
@@ -307,7 +296,6 @@ public class EntityYukari extends EntityDanmakuMob
     
     private void spellcard05(Vec3 angle, int level)
     {
-    	LogHelper.info(attackCounter);
 		if(attackCounter == 1)
 		{
 			this.useSpellCard(EntitySpellCard.SC_YUKARI_Nami_to_Tubu_no_Kyoukai);
@@ -322,51 +310,56 @@ public class EntityYukari extends EntityDanmakuMob
 	public void onUpdate()
     {
     	super.onUpdate();
-    	int range = 2;
-    	List<EntityTHShot> listShot = worldObj.getEntitiesWithinAABB(EntityTHShot.class, AxisAlignedBB.getBoundingBox(this.posX - range, this.posY - range, this.posZ - range, this.posX + range + 1, this.posY + range + 1, this.posZ + range + 1));
-    	
-    	for(int i = 0; i < listShot.size(); i++){
-    		EntityTHShot shots = listShot.get(i);
-    		if(shots.source instanceof EntitySpellCard && shots.user != this){
-    			shots.delete();
-    			invicibilityTimer += 3;
-    		}
-    	}
-    	
-    	List<EntityTHLaser> listLaser = worldObj.getEntitiesWithinAABB(EntityTHLaser.class, AxisAlignedBB.getBoundingBox(this.posX - range, this.posY - range, this.posZ - range, this.posX + range + 1, this.posY + range + 1, this.posZ + range + 1));
-    	
-    	for(int i = 0; i < listLaser.size(); i++){
-    		EntityTHLaser lasers = listLaser.get(i);
-    		if(lasers.source instanceof EntitySpellCard  && lasers.user != this){
-    			invicibilityTimer += 3;
-    		}
-    	}
-    	
-    	List<EntitySpellCard> listspellcard = worldObj.getEntitiesWithinAABB(EntitySpellCard.class, AxisAlignedBB.getBoundingBox(this.posX - range*12, this.posY - range*12, this.posZ - range*12, this.posX + range*12 + 1, this.posY + range*12 + 1, this.posZ + range*12 + 1));
-    	
-    	for(int i = 0; i < listspellcard.size(); i++){
-    		EntitySpellCard spellcards = listspellcard.get(i);
-    		if(spellcards.user != this){
-    			invicibilityTimer += 3;
-    		}
-    	}
-    	
-    	if(invicibilityTimer > 0)
-    	{
-    		LogHelper.info(invicibilityTimer);
-        	if(invicibilityTimer > 28)
-        	{
-        		LogHelper.info(invicibilityTimer);
-        		invicibilityTimer = 28;
+
+    	if(!worldObj.isRemote){
+        	int range = 4;
+        	int invicibilityTimer = getInvicibilityTimer();
+        	
+        	List<EntityTHShot> listShot = worldObj.getEntitiesWithinAABB(EntityTHShot.class, AxisAlignedBB.getBoundingBox(this.posX - range, this.posY - range, this.posZ - range, this.posX + range + 1, this.posY + range + 1, this.posZ + range + 1));
+        	
+        	for(int i = 0; i < listShot.size(); i++){
+        		EntityTHShot shots = listShot.get(i);
+        		if(shots.source instanceof EntitySpellCard && shots.user != this){
+        			invicibilityTimer += 3;
+        		}
         	}
-    		invicibilityTimer--;
+        	
+        	List<EntityTHLaser> listLaser = worldObj.getEntitiesWithinAABB(EntityTHLaser.class, AxisAlignedBB.getBoundingBox(this.posX - range, this.posY - range, this.posZ - range, this.posX + range + 1, this.posY + range + 1, this.posZ + range + 1));
+        	
+        	for(int i = 0; i < listLaser.size(); i++){
+        		EntityTHLaser lasers = listLaser.get(i);
+        		
+        		if(lasers.source instanceof EntitySpellCard  && lasers.user != this){
+        			invicibilityTimer += 3;
+        		}
+        	}
+        	
+        	List<EntitySpellCard> listspellcard = worldObj.getEntitiesWithinAABB(EntitySpellCard.class, AxisAlignedBB.getBoundingBox(this.posX - range*12, this.posY - range*12, this.posZ - range*12, this.posX + range*12 + 1, this.posY + range*12 + 1, this.posZ + range*12 + 1));
+        	
+        	for(int i = 0; i < listspellcard.size(); i++){
+        		EntitySpellCard spellcards = listspellcard.get(i);
+        		if(spellcards.user != this && spellcards.user != null){
+        			invicibilityTimer += 3;
+        		}
+        	}
+        	
+        	if(invicibilityTimer > 0)
+        	{
+            	if(invicibilityTimer > 28)
+            	{
+            		invicibilityTimer = 28;
+            	}
+        		invicibilityTimer--;
+        	}
+        	
+        	setInvicibilityTimer(invicibilityTimer);
     	}
     }
     
     @Override
     public boolean isEntityInvulnerable()
     {
-    	if(invicibilityTimer > 0)
+    	if(getInvicibilityTimer() > 0)
     	{
     		return true;
     	}
@@ -377,6 +370,46 @@ public class EntityYukari extends EntityDanmakuMob
     protected boolean canFairyCall()
     {
     	return false;
+    }
+    
+	@Override
+    protected void entityInit()
+    {
+		super.entityInit();
+        this.dataWatcher.addObject(20, new Integer(0)); //invicibilityTimer
+        this.dataWatcher.addObject(21, new Byte((byte) 0)); //isAgressive
+    }
+    
+    public void setInvicibilityTimer(int timer){
+    	dataWatcher.updateObject(20, timer);
+    }
+    
+    public int getInvicibilityTimer(){
+		return dataWatcher.getWatchableObjectInt(20);
+    }
+    
+    public void setIsAgressive(byte agressive){
+    	dataWatcher.updateObject(21, agressive);
+    }
+    
+    public byte getIsAgressive(){
+		return dataWatcher.getWatchableObjectByte(21);
+    }
+    
+    @Override
+    public void readEntityFromNBT(NBTTagCompound nbtTagCompound)
+    {
+        super.readEntityFromNBT(nbtTagCompound);
+        setInvicibilityTimer(nbtTagCompound.getInteger("InvicibilityTimer"));
+        setIsAgressive(nbtTagCompound.getByte("IsAgressive"));
+    }
+
+    @Override
+    public void writeEntityToNBT(NBTTagCompound nbtTagCompound)
+    {
+        super.writeEntityToNBT(nbtTagCompound);
+        nbtTagCompound.setInteger("InvicibilityTimer", getInvicibilityTimer());
+        nbtTagCompound.setByte("IsAgressive", getIsAgressive());
     }
     
     @Override
@@ -397,8 +430,14 @@ public class EntityYukari extends EntityDanmakuMob
     	if(!damageSource.isMagicDamage()){
     		amount *= 0.5F;
     	}
+    	
+    	if(amount > 6F){
+    		amount = 6F;
+    	}
+    	
     	this.isFlyingMode = true;
     	this.setFlyingHeight(4);
+    	this.setIsAgressive((byte) 1);
         return super.attackEntityFrom(damageSource, amount);
     }
 	

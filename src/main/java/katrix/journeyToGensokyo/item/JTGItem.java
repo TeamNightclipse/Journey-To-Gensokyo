@@ -50,7 +50,7 @@ public class JTGItem {
     						ItemSpawnEgg.addMapping(EntityName.FAIRY_END, 0x362060, 0xD3C95D);
     						ItemSpawnEgg.addMapping(EntityName.FAIRY_SUNFLOWER_END, 0x1C1133, 0x828200);
     						ItemSpawnEgg.addMapping(EntityName.REIMU_HOSTILE, 0xD10400, 0xFFFFFF);
-    						ItemSpawnEgg.addMapping(EntityName.YUKARI, 0x982D9F, 0x1A1956);
+    						//ItemSpawnEgg.addMapping(EntityName.YUKARI, 0x982D9F, 0x1A1956); //Hiding this for now
     						
     	standardShot = new ItemStandardShot()
     						.setCreativeTab(CreativeTabs.tabMaterials)

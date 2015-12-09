@@ -9,16 +9,10 @@
 
 package katrix.journeyToGensokyo.plugin.thsc.entity.shot;
 
-import java.util.List;
-
 import katrix.journeyToGensokyo.plugin.thsc.ShotMovementHelper;
 import katrix.journeyToGensokyo.reference.SpecialShotID;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.passive.EntityAnimal;
-import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import thKaguyaMod.THShotLib;
 import thKaguyaMod.entity.living.EntityDanmakuMob;

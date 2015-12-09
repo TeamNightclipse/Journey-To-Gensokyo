@@ -37,7 +37,7 @@ import net.minecraft.world.World;
 
 public class ItemSpawnEgg extends Item
 {
-	static ArrayList<EntityEggInfo> entityList = new ArrayList();
+	static ArrayList<EntityEggInfo> entityList = new ArrayList<EntityEggInfo>();
     @SideOnly(Side.CLIENT)
     private IIcon theIcon;
 
@@ -243,7 +243,7 @@ public class ItemSpawnEgg extends Item
      * returns a list of items with the same ID, but different meta (eg: dye returns 16 items)
      */
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item item, CreativeTabs p_150895_2_, List list)
+    public void getSubItems(Item item, CreativeTabs tab, List list)
     {
     	for(int i = 0; i < entityList.size(); i++){
             list.add(new ItemStack(item, 1, i));

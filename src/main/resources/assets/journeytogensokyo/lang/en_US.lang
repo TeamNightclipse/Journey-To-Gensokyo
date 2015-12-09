@@ -44,14 +44,14 @@ item.thSpellCard.301.name=Magicannon "Final Spark"
 item.thSpellCard.302.name=Boundary "Curse of Dreams and Reality"
 item.thSpellCard.303.name=Boundary "Mesh of Light and Darkness"
 
-item.standardShot.needle.name=Standard Shot: Persuasion Needle
-item.standardShot.homing.name=Standard Shot: Homing Amulet
-item.standardShot.laser.name=Standard Shot: Illusion Laser
-item.standardShot.rocket.name=Standard Shot: Magic Missile
-standardShot.description.needle=The needle Shot!
-standardShot.description.homing=The homing Shot!
-standardShot.description.laser=The laser Shot!
-standardShot.description.rocket=The rocket Shot!
+item.standardShot.needle.name=Shot Type: Persuasion Needle
+item.standardShot.homing.name=Shot Type: Homing Amulet
+item.standardShot.laser.name=Shot Type: Illusion Laser
+item.standardShot.rocket.name=Shot Type: Magic Missile
+standardShot.description.needle=The needle Shot! Fast, and good damage.
+standardShot.description.homing=The homing Shot! Homes in on enemies.
+standardShot.description.laser=The laser Shot! Instant movement, but limited range.
+standardShot.description.rocket=The missile Shot! Slow, but high splash damages.
 
 item.spawnEggJTG.name=Spawn
 entity.THFairyIce.name=Ice Fairy
@@ -61,6 +61,7 @@ entity.TenguCrow.name=Crow Tengu
 entity.THFairyEnd.name=Moon Fairy
 entity.SunFlowerFairyEnd.name=Moon Sunflower Fairy
 entity.Reimu.name=Reimu Hakurei
+entity.Yukari.name=Reimu Hakurei
 
 entity.journeyToGensokyo.THFairyIce.name=Ice Fairy
 entity.journeyToGensokyo.THFairyNether.name=Nether Fairy
@@ -69,3 +70,4 @@ entity.journeyToGensokyo.TenguCrow.name=Crow Tengu
 entity.journeyToGensokyo.THFairyEnd.name=Moon Fairy
 entity.journeyToGensokyo.SunFlowerFairyEnd.name=Moon Sunflower Fairy
 entity.journeyToGensokyo.Reimu.name=Reimu Hakurei
+entity.journeyToGensokyo.Yukari.name=Reimu Hakurei

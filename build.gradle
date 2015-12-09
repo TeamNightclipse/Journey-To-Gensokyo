@@ -18,12 +18,12 @@ buildscript {
 apply plugin: 'forge'
 
 compileJava.options.encoding = 'UTF-8'
-version = "1.7.10-0.7.4"
+version = "1.7.10-0.8.0"
 group= "katrix.journeyToGensokyo" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "journeyToGensokyo"
 
 minecraft {
-    version = "1.7.10-10.13.4.1448-1.7.10"
+    version = "1.7.10-10.13.4.1558-1.7.10"
 	if (file('../run').exists()) {
 		runDir = "../run"
 	} else {
@@ -31,9 +31,25 @@ minecraft {
 	}
 }
 
+repositories {
+    maven {
+        name = "ic2"
+        url = "http://maven.ic2.player.to/"
+    }
+    ivy {
+        name = 'ThaumCraft 4 API'
+        artifactPattern 'https://dl.dropboxusercontent.com/u/47135879/[module](-[classifier])-1.7.10-[revision](.[ext])'
+    }
+}
+
 dependencies {
+	compile 'net.industrial-craft:industrialcraft-2:2.2.796-experimental:dev'
+	compile 'Azanor:Thaumcraft:4.2.3.5:deobf@jar'
+
 	compile files (
-	"libs/Botania r1.7-221-deobf.jar", "libs/industrialcraft-2-2.2.772-experimental-dev.jar", "libs/Thaumcraft-deobf-1.7.10-4.2.3.5.zip", "libs/五つの難題MOD+ ver2.90-1.7.10.zip", "libs/CoFHLib-[1.7.10]1.0.3-175-dev.jar"
+		"libs/Botania r1.8-242-deobf.jar", 
+		"libs/五つの難題MOD+ ver2.90-1.7.10.zip", 
+		"libs/CoFHLib-[1.7.10]1.0.3-175-dev.jar"
 )
     // you may put jars on which you depend on in ./libs
     // or you may define them like so..

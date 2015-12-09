@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import katrix.journeyToGensokyo.plugin.thsc.entity.EntityStandardShot;
-import katrix.journeyToGensokyo.util.LogHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -30,9 +29,10 @@ import thKaguyaMod.THKaguyaLib;
 
 public class ItemStandardShot extends Item {
 	
-	public boolean canSpawn;
-	public int cooldown;
-	public int timeSinceUse = 0;
+	private boolean canSpawn;
+	private int cooldown;
+	private int power = 0;
+	private int prevPower = 0;
 	ArrayList<EntityStandardShot> listShotEntity = new ArrayList<EntityStandardShot>();
 	
 	public ItemStandardShot()
@@ -81,7 +81,7 @@ public class ItemStandardShot extends Item {
 		for(int i = 0; i < listShotEntity.size(); i++){
 			EntityStandardShot shotEntity = listShotEntity.get(i);
 			if(shotEntity != null){
-				shotEntity.setShotTimer(3);
+				shotEntity.shotTimer = 3;
 				
 				float power = THKaguyaLib.getPlayerPower(player)/100;
 				
@@ -94,36 +94,95 @@ public class ItemStandardShot extends Item {
 	
 	@Override
     public void onUpdate(ItemStack stack, World world, Entity entity, int pos, boolean equipped) {
-		if(entity instanceof EntityPlayer){
+			
+		if(!world.isRemote && entity instanceof EntityPlayer) {
+			
 			EntityPlayer player = (EntityPlayer)entity;
 			
-			if(!equipped && cooldown == 0 && timeSinceUse == 0){
+			if(!equipped && cooldown == 0) {
 				canSpawn = true;
 			}
 			
-			if(equipped && canSpawn && !world.isRemote) {
-				canSpawn = false;
-				cooldown = 5;
-				listShotEntity.clear();
+			//Drop item if more than one in inventory
+			int amount = 0;
+			for(int i = 0 ; i < player.inventory.mainInventory.length ; i++ ) {
 				
-				for(int i = 0; i < THKaguyaLib.getPlayerPower(player)/100; i++){
-					listShotEntity.add(i, new EntityStandardShot(world, player, stack.getItemDamage(), i, THKaguyaLib.getPlayerPower(player)/100));
-					world.spawnEntityInWorld(listShotEntity.get(i));
+				ItemStack[] inventory = player.inventory.mainInventory;
+				if(inventory[i] != null && inventory[i].getItem() == this)
+				{
+					amount++;
 				}
 				
+				if(amount > 1){
+					player.dropPlayerItemWithRandomChoice(inventory[i], true);
+					inventory[i] = null;
+					amount--;
+				}
 			}
 			
-			if(equipped){
-				timeSinceUse = 3;
+			if(equipped) {
+				
+				power = MathHelper.floor_float(THKaguyaLib.getPlayerPower(player)/100);
+				
+				//Spawn initial bunch
+				if(canSpawn) {
+					canSpawn = false;
+					cooldown = 5;
+					listShotEntity.clear();
+					
+					for(int i = 0; i < power; i++){
+						listShotEntity.add(i, new EntityStandardShot(world, player, stack.getItemDamage(), i, THKaguyaLib.getPlayerPower(player)/100));
+						world.spawnEntityInWorld(listShotEntity.get(i));
+					}
+				}
+				
+				int shotAmount = listShotEntity.size();
+				
+				//Spawn more if power increases
+				if(power > prevPower  && shotAmount + (power - prevPower) <= 4){
+					
+					for(int i = shotAmount;  i < shotAmount + (power - prevPower); i++) {
+						listShotEntity.add(i, new EntityStandardShot(world, player, stack.getItemDamage(), i, THKaguyaLib.getPlayerPower(player)/100));
+						world.spawnEntityInWorld(listShotEntity.get(i));
+					}
+					
+					for(int i = 0; i < listShotEntity.size(); i++){
+						EntityStandardShot shotEntity = listShotEntity.get(i);
+						if(shotEntity != null){
+							
+							float power = THKaguyaLib.getPlayerPower(player)/100;
+							shotEntity.setPower(power);
+						}
+					}
+				}
+				
+				//Kill if power decreases
+				else if(power < prevPower && shotAmount + (power - prevPower) >= -1){
+					
+					shotAmount -= 1;
+					for(int i = shotAmount;  i > shotAmount + (power - prevPower); i--) {
+						EntityStandardShot deadEntity = listShotEntity.get(i);
+						
+						deadEntity.setDead();
+						listShotEntity.remove(i);
+					}
+					
+					for(int i = 0; i < listShotEntity.size(); i++){
+						EntityStandardShot shotEntity = listShotEntity.get(i);
+						if(shotEntity != null){
+							
+							float power = THKaguyaLib.getPlayerPower(player)/100;
+							shotEntity.setPower(power);
+						}
+					}
+				}
 			}
 			
-			if(timeSinceUse != 0){
-				timeSinceUse--;
-			}
-			
-			if(cooldown != 0){
-				cooldown--;
-			}
+			prevPower = power;
+		}
+		
+		if(cooldown != 0){
+			cooldown--;
 		}
 	}
 

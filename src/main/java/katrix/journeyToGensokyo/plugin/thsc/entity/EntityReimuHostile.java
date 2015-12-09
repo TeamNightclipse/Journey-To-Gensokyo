@@ -266,6 +266,7 @@ public class EntityReimuHostile extends EntityDanmakuMob
         if( hasBeenAttackedByPlayer && getDanmakuPattern() == SPELLCARD_ATTACK01)
         {
         	this.dropItem(THKaguyaItems.hakurei_miko_stick, 1);
+        	this.dropItem(THKaguyaItems.yin_yang_orb, 1);
         }
     }
 	

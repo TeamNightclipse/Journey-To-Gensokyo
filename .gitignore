@@ -8,6 +8,8 @@ org.*
 bin
 libs
 assetsSource
+libsSource
+gradle.prefs
 
 #idea
 *.iml

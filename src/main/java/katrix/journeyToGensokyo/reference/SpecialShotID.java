@@ -23,5 +23,6 @@ public class SpecialShotID {
 	public static final int DREAMS_AND_REALITY03 = 11202;
 	public static final int DREAMS_AND_REALITY11 = 11210;
 	public static final int MESH_LASER01 = 11300;
+	public static final int MISSILE01 = 11400;
 
 }
