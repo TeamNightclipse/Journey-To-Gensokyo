@@ -17,18 +17,32 @@ buildscript {
 
 apply plugin: 'forge'
 
+ext.configFile = file('build.properties')
+ext.config = parseConfig(configFile)
+
 compileJava.options.encoding = 'UTF-8'
-version = "1.7.10-0.8.0"
+
+if(config.official_release == 'false') {
+    version = config.mc_version + "-" + config.version + "-" + config.build_number
+} else {
+    version = config.mc_version + "-" + config.version
+}
+
+//version = mc_version + "-" + version + "-" + build_number
 group= "katrix.journeyToGensokyo" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "journeyToGensokyo"
+archivesBaseName = "JourneyToGensokyo"
 
 minecraft {
-    version = "1.7.10-10.13.4.1558-1.7.10"
+    version = config.mc_version + "-" + config.forge_version
+    
 	if (file('../run').exists()) {
 		runDir = "../run"
 	} else {
 		runDir = "eclipse"
 	}
+	
+	replace '@VERSION@', project.version
+	replaceIn 'ModInfo.java'
 }
 
 repositories {
@@ -85,3 +99,23 @@ processResources
         exclude 'mcmod.info'
     }
 }
+
+//All config file stuff from Botania
+task incrementBuildNumber(dependsOn: 'reobf') << {
+    if(config.official_release == 'false') {
+	    config.build_number = (config.build_number.toString().toInteger()) + 1
+        configFile.withWriter {
+            config.toProperties().store(it, "")
+        }
+	}
+}
+
+def parseConfig(File config) {
+    config.withReader {
+        def prop = new Properties()
+        prop.load(it)
+        return (new ConfigSlurper().parse(prop))
+    }
+}
+
+defaultTasks 'build', 'incrementBuildNumber'
