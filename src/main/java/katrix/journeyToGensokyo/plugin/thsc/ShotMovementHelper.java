@@ -24,8 +24,43 @@ public class ShotMovementHelper {
 	
 	public static void homing(EntityTHShot shot, double range)
 	{	
+		EntityLivingBase nearEntity = getNearestEntity(shot, range);
+
+		if(nearEntity != null)
+		{
+			shot.angle = shot.angle_ToLiving(nearEntity);
+		}
+	}
+	
+	public static void homing(EntityTHShot shot, double range, float homingLevel)
+	{	
+		EntityLivingBase nearEntity = getNearestEntity(shot, range);
+
+		if(nearEntity != null)
+		{
+			Vec3 targetVec = THShotLib.angle_ToPos(shot.pos(), THShotLib.pos_Living(nearEntity));
+			Vec3 rotate = THShotLib.getOuterProduct(shot.getShotVector(), targetVec);
+			float rotateAngle = THShotLib.getVectorAndVectorAngle(shot.getShotVector(), targetVec);
+			if(rotateAngle > homingLevel)
+			{
+				rotateAngle = homingLevel;
+			}
+			else if(rotateAngle < -homingLevel)
+			{
+				rotateAngle = -homingLevel;
+			}
+			Vec3 newVec = THShotLib.getVectorFromRotation(rotate, shot.angle, rotateAngle);
+			shot.angle = newVec;
+			if(!shot.worldObj.isRemote)
+			{
+				shot.shotAcceleration();
+			}
+		}
+	}
+	
+	private static EntityLivingBase getNearestEntity(EntityTHShot shot, double range) {
         @SuppressWarnings("rawtypes")
-		List list = shot.worldObj.getEntitiesWithinAABBExcludingEntity(shot, shot.boundingBox.addCoord(shot.motionX, shot.motionY, shot.motionZ).expand(range, range, range));//指定範囲内のEntityをリストに登録
+		List list = shot.worldObj.getEntitiesWithinAABBExcludingEntity(shot, shot.boundingBox.addCoord(shot.motionX, shot.motionY, shot.motionZ).expand(range, range, range));
 
 		EntityLivingBase nearEntity = null;
 		double nearDistance = 999.9D;
@@ -49,10 +84,10 @@ public class ShotMovementHelper {
         	}
         	
     		Vec3 shotPosVec = shot.pos();
-    		Vec3 entityPosVec = Vec3.createVectorHelper(entity1.posX, entity1.posY + entity1.getEyeHeight(), entity1.posZ);
+    		Vec3 entityPosVec = THShotLib.pos_Living(entity1);
     		MovingObjectPosition movingObjectPosition = shot.worldObj.func_147447_a(shotPosVec, entityPosVec, false, true, false);
     		shotPosVec = shot.pos();
-    		entityPosVec = Vec3.createVectorHelper(entity1.posX, entity1.posY + entity1.getEyeHeight(), entity1.posZ);
+    		entityPosVec = THShotLib.pos_Living(entity1);
     		
         	if (movingObjectPosition != null && movingObjectPosition.entityHit == null)
         	{
@@ -73,10 +108,7 @@ public class ShotMovementHelper {
             	}
         	}
         }
-
-		if(nearEntity != null)
-		{
-			shot.angle = shot.angle_ToLiving(nearEntity);
-		}
+		
+		return nearEntity;
 	}
 }

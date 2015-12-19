@@ -21,6 +21,7 @@ import katrix.journeyToGensokyo.plugin.thsc.entity.EntityTHFairyNether;
 import katrix.journeyToGensokyo.plugin.thsc.entity.EntityTenguCrow;
 import katrix.journeyToGensokyo.plugin.thsc.entity.EntityYukari;
 import katrix.journeyToGensokyo.plugin.thsc.entity.shot.ShotFantasySeal;
+import katrix.journeyToGensokyo.plugin.thsc.entity.shot.ShotHoming;
 import katrix.journeyToGensokyo.plugin.thsc.entity.shot.ShotMissile;
 import katrix.journeyToGensokyo.plugin.thsc.entity.shot.ShotSeed;
 import katrix.journeyToGensokyo.plugin.thsc.entity.spellcard.THSC_CurseOfDreamsAndReality;
@@ -56,6 +57,9 @@ public class JTG_THSC {
 		SpecialShotRegistry.registerSpecialShot(THSC_MeshLightDarkness.class, SpecialShotID.MESH_LASER01);
 		
 		SpecialShotRegistry.registerSpecialShot(ShotMissile.class, SpecialShotID.MISSILE01);
+		
+		SpecialShotRegistry.registerSpecialShot(ShotHoming.class, SpecialShotID.JTG_HOMING01);
+		SpecialShotRegistry.registerSpecialShot(ShotHoming.class, SpecialShotID.JTG_HOMING02);
 		
 		//Spell Cards
 		SpellCardRegistry.registerSpellCard(THSC_DoubleSpark.class, ModInfo.MODID, "DoubleSpark", SpellcardID.DOUBLE_SPARK);

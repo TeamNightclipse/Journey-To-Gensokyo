@@ -35,18 +35,17 @@ import cpw.mods.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class ClientProxy extends CommonProxy {
        
-        @Override
-        public void registerRenderers() {
-
-        	RenderingRegistry.registerEntityRenderingHandler(EntityTHFairyIce.class, new RenderTHFairyIce());
-        	RenderingRegistry.registerEntityRenderingHandler(EntityHellRaven.class, new RenderHellRaven());
-        	RenderingRegistry.registerEntityRenderingHandler(EntityTenguCrow.class, new RenderTenguCrow());
-        	RenderingRegistry.registerEntityRenderingHandler(EntityTHFairyNether.class, new RenderTHFairyNether());
-        	RenderingRegistry.registerEntityRenderingHandler(EntityTHFairyEnd.class, new RenderTHFairyEnd());
-        	RenderingRegistry.registerEntityRenderingHandler(EntitySunFlowerFairyEnd.class, new RenderSunFlowerFairyEnd());
-        	RenderingRegistry.registerEntityRenderingHandler(EntityReimuHostile.class, new RenderReimuHostile());
-        	RenderingRegistry.registerEntityRenderingHandler(EntityYukari.class, new RenderYukari());
-        	RenderingRegistry.registerEntityRenderingHandler(EntityStandardShot.class, new RenderStandardShot());
-        }
-       
+	@Override
+    public void registerRenderers() {
+		
+        RenderingRegistry.registerEntityRenderingHandler(EntityTHFairyIce.class, new RenderTHFairyIce());
+        RenderingRegistry.registerEntityRenderingHandler(EntityHellRaven.class, new RenderHellRaven());
+        RenderingRegistry.registerEntityRenderingHandler(EntityTenguCrow.class, new RenderTenguCrow());
+        RenderingRegistry.registerEntityRenderingHandler(EntityTHFairyNether.class, new RenderTHFairyNether());
+        RenderingRegistry.registerEntityRenderingHandler(EntityTHFairyEnd.class, new RenderTHFairyEnd());
+        RenderingRegistry.registerEntityRenderingHandler(EntitySunFlowerFairyEnd.class, new RenderSunFlowerFairyEnd());
+        RenderingRegistry.registerEntityRenderingHandler(EntityReimuHostile.class, new RenderReimuHostile());
+        RenderingRegistry.registerEntityRenderingHandler(EntityYukari.class, new RenderYukari());
+        RenderingRegistry.registerEntityRenderingHandler(EntityStandardShot.class, new RenderStandardShot());
+    } 
 }

@@ -38,16 +38,14 @@ public class RenderStandardShot extends Render {
 	@Override
 	public void doRender(Entity entity, double x, double y, double z, float yaw,float pitch) {
 		
-		if(entity instanceof EntityStandardShot){
-			EntityStandardShot standardShot = (EntityStandardShot)entity;
+		EntityStandardShot standardShot = (EntityStandardShot)entity;
 			
-			if(standardShot.getType() <= 1) {
-				renderYingYangOrb(standardShot, x, y, z, yaw, pitch);
-			}
-			else{
-		        renderMiniHakkero(standardShot, x, y, z, yaw, pitch);
-		        renderMiniHakkero2(standardShot, x, y, z, yaw, pitch);
-			}
+		if(standardShot.getType() <= 1) {
+			renderYingYangOrb(standardShot, x, y, z, yaw, pitch);
+		}
+		else {
+		    renderMiniHakkero(standardShot, x, y, z, yaw, pitch);
+		    renderMiniHakkero2(standardShot, x, y, z, yaw, pitch);
 		}
 	}
 	

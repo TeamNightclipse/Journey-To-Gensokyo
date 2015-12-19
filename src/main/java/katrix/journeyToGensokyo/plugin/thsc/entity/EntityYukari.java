@@ -338,7 +338,7 @@ public class EntityYukari extends EntityDanmakuMob
         	
         	for(int i = 0; i < listspellcard.size(); i++){
         		EntitySpellCard spellcards = listspellcard.get(i);
-        		if(spellcards.user != this && spellcards.user != null){
+        		if(spellcards.user != this){
         			invicibilityTimer += 3;
         		}
         	}

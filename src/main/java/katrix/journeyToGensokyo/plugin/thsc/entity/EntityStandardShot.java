@@ -28,7 +28,10 @@ import net.minecraft.world.World;
 
 public class EntityStandardShot extends Entity {
 	
+	public EntityPlayer user;
 	private String userName;
+	public float power;
+	private int place;
 	public int shotTimer;
 
 	public EntityStandardShot(World world) {
@@ -39,9 +42,9 @@ public class EntityStandardShot extends Entity {
 	public EntityStandardShot(World world, EntityPlayer user, int type, int place, float power) {
 		this(world);
 		setType(type);
-		setUser(user);
-		setPlace(place);
-		setPower(power);
+		this.user = user;
+		this.place = place;
+		this.power = power;
 		Vec3 pos = getPos();
 		setPositionAndRotation(pos.xCoord, pos.yCoord, pos.zCoord, user.rotationYaw,  user.rotationPitch);
 	}
@@ -49,7 +52,6 @@ public class EntityStandardShot extends Entity {
 	@Override
     public void onUpdate()
     {
-		EntityPlayer user = getUser();
 		
 		if(!worldObj.isRemote){
 			if(user != null){
@@ -81,9 +83,6 @@ public class EntityStandardShot extends Entity {
 	
 	public void shootDanmaku(boolean isSlowMode)
 	{
-		EntityPlayer user = getUser();
-		float power = getPower();
-		int place = getPlace();
 		
 		double speed = 0.7D;
 		EntityFamiliar living = new EntityFamiliar(worldObj);
@@ -92,27 +91,27 @@ public class EntityStandardShot extends Entity {
 		{
 			case 0:
 				THShotLib.playShotSound(this);
-				ShotData shot0 = ShotData.shot(THShotLib.FORM_ARROW, THShotLib.PURPLE, 0.1F, 1.0F+power/2, 0, 40);
-				THShotLib.createShot(user, living, THShotLib.pos_Distance(THShotLib.pos_Entity(this), THShotLib.angle(rotationYaw+90, rotationPitch), 0.3D), THShotLib.angle(rotationYaw, rotationPitch), 0F, speed*3, speed*3, speed*3, THShotLib.gravity_Zero(), shot0);
-				THShotLib.createShot(user, living, THShotLib.pos_Distance(THShotLib.pos_Entity(this), THShotLib.angle(rotationYaw-90, rotationPitch), 0.3D), THShotLib.angle(rotationYaw, rotationPitch), 0F, speed*3, speed*3, speed*3, THShotLib.gravity_Zero(), shot0);
+				ShotData needle = ShotData.shot(THShotLib.FORM_ARROW, THShotLib.PURPLE, 0.1F, 1.0F+power/2, 0, 40);
+				THShotLib.createShot(user, living, THShotLib.pos_Distance(THShotLib.pos_Entity(this), THShotLib.angle(rotationYaw+90, rotationPitch), 0.3D), THShotLib.angle(rotationYaw, rotationPitch), 0F, speed*3, speed*3, speed*3, THShotLib.gravity_Zero(), needle);
+				THShotLib.createShot(user, living, THShotLib.pos_Distance(THShotLib.pos_Entity(this), THShotLib.angle(rotationYaw-90, rotationPitch), 0.3D), THShotLib.angle(rotationYaw, rotationPitch), 0F, speed*3, speed*3, speed*3, THShotLib.gravity_Zero(), needle);
 				break;
 			case 1:
 				THShotLib.playShotSound(this);
 	    		if(isSlowMode)
 	    		{
-	    			ShotData shot1 = ShotData.shot(THShotLib.FORM_AMULET, THShotLib.RED, 0.5F, 2.0F+power/2, 0, 60, THShotLib.HOMING01);
+	    			ShotData homing1 = ShotData.shot(THShotLib.FORM_AMULET, THShotLib.RED, 0.5F, 2.0F+power/2, 0, 60, SpecialShotID.JTG_HOMING01);
 	    			
 	    			if(power != 4F && place == 0){
-		    			THShotLib.createShot(living, user, THShotLib.pos_Distance(THShotLib.pos_Entity(this), THShotLib.angle(rotationYaw, rotationPitch), 0.3D), THShotLib.angle(rotationYaw, rotationPitch), 0F, speed*2, speed*2, speed*2, THShotLib.gravity_Zero(), shot1);
+		    			THShotLib.createShot(user, living, THShotLib.pos_Distance(THShotLib.pos_Entity(this), THShotLib.angle(rotationYaw, rotationPitch), 0.3D), THShotLib.angle(rotationYaw, rotationPitch), 0F, speed*2, speed*2, speed*2, THShotLib.gravity_Zero(), homing1);
 	    			}
 	    			else if(place == 0 || place == 1){
-		    			THShotLib.createShot(living, user, THShotLib.pos_Distance(THShotLib.pos_Entity(this), THShotLib.angle(rotationYaw, rotationPitch), 0.3D), THShotLib.angle(rotationYaw, rotationPitch), 0F, speed*2, speed*2, speed*2, THShotLib.gravity_Zero(), shot1);
+		    			THShotLib.createShot(user, living, THShotLib.pos_Distance(THShotLib.pos_Entity(this), THShotLib.angle(rotationYaw, rotationPitch), 0.3D), THShotLib.angle(rotationYaw, rotationPitch), 0F, speed*2, speed*2, speed*2, THShotLib.gravity_Zero(), homing1);
 	    			}
 		    	}
 		    	else
 		    	{
-		   			ShotData shot1 = ShotData.shot(THShotLib.FORM_AMULET, THShotLib.RED, 0.2F, 1.0F+power/4, 0, 60, THShotLib.HOMING01);
-	    			THShotLib.createShot(living, user, THShotLib.pos_Entity(this), THShotLib.angle(rotationYaw, rotationPitch), 0F, speed, speed, speed, THShotLib.gravity_Zero(), shot1);
+		   			ShotData homing2 = ShotData.shot(THShotLib.FORM_AMULET, THShotLib.RED, 0.2F, 1.0F+power/4, 0, 60, SpecialShotID.JTG_HOMING02);
+	    			THShotLib.createShot(user, living, THShotLib.pos_Entity(this), THShotLib.angle(rotationYaw, rotationPitch), 0F, speed, speed, speed, THShotLib.gravity_Zero(), homing2);
 		    	}
 				break;
 			case 2:
@@ -121,8 +120,8 @@ public class EntityStandardShot extends Entity {
 			case 3:
 				if(ticksExisted % 20 == 0){
 					THShotLib.playShotSound(this);
-		   			ShotData shot1 = ShotData.shot(THShotLib.FORM_SMALLSTAR, THShotLib.AQUA, 0.15F, 2.0F+power, 0, 60, SpecialShotID.MISSILE01);
-					THShotLib.createShot(user, living, THShotLib.pos_Entity(this), THShotLib.angle(rotationYaw, rotationPitch), 0F, speed, speed, speed, THShotLib.gravity_Zero(), shot1);
+		   			ShotData missile = ShotData.shot(THShotLib.FORM_SMALLSTAR, THShotLib.AQUA, 0.15F, 2.0F+power, 0, 60, SpecialShotID.MISSILE01);
+					THShotLib.createShot(user, living, THShotLib.pos_Entity(this), THShotLib.angle(rotationYaw, rotationPitch), 0F, speed, speed, speed, THShotLib.gravity_Zero(), missile);
 				}
 				break;
 			default:
@@ -138,47 +137,44 @@ public class EntityStandardShot extends Entity {
 	
 	public Vec3 getPos() {
 		
-		int place = getPlace();
-		
-		int intPower = MathHelper.floor_float(getPower());
-		EntityPlayer userPlayer = getUser();
-		boolean sneaking = userPlayer.isSneaking();
+		int intPower = MathHelper.floor_float(power);
+		boolean sneaking = user.isSneaking();
 		if(sneaking){
 			switch(intPower){
 				case 0:
-					return THShotLib.pos_Distance(THShotLib.pos_Entity(userPlayer, 1), userPlayer.getLookVec(), 0.75);
+					return THShotLib.pos_Distance(THShotLib.pos_Entity(user, 1), user.getLookVec(), 0.75);
 				case 1:
-					return THShotLib.pos_Distance(THShotLib.pos_Entity(userPlayer, 1), userPlayer.getLookVec(), 0.75);
+					return THShotLib.pos_Distance(THShotLib.pos_Entity(user, 1), user.getLookVec(), 0.75);
 				case 2:
 					switch(place){
 						case 0:
-							return THShotLib.pos_Distance(THShotLib.pos_Distance(THShotLib.pos_Entity(userPlayer, 1), userPlayer.getLookVec(), 0.75), THShotLib.angle(userPlayer.rotationYaw+90, userPlayer.rotationPitch), 0.5);
+							return THShotLib.pos_Distance(THShotLib.pos_Distance(THShotLib.pos_Entity(user, 1), user.getLookVec(), 0.75), THShotLib.angle(user.rotationYaw+90, user.rotationPitch), 0.5);
 						case 1:
-							return THShotLib.pos_Distance(THShotLib.pos_Distance(THShotLib.pos_Entity(userPlayer, 1), userPlayer.getLookVec(), 0.75), THShotLib.angle(userPlayer.rotationYaw-90, userPlayer.rotationPitch), 0.5);
+							return THShotLib.pos_Distance(THShotLib.pos_Distance(THShotLib.pos_Entity(user, 1), user.getLookVec(), 0.75), THShotLib.angle(user.rotationYaw-90, user.rotationPitch), 0.5);
 						default:
 							break;
 					}
 				case 3:
 					switch(place){
 						case 0:
-							return THShotLib.pos_Distance(THShotLib.pos_Entity(userPlayer, 1), userPlayer.getLookVec(), 0.75);
+							return THShotLib.pos_Distance(THShotLib.pos_Entity(user, 1), user.getLookVec(), 0.75);
 						case 1:
-							return THShotLib.pos_Distance(THShotLib.pos_Distance(THShotLib.pos_Entity(userPlayer, 1), userPlayer.getLookVec(), 0.75), THShotLib.angle(userPlayer.rotationYaw+90, userPlayer.rotationPitch), 0.75);
+							return THShotLib.pos_Distance(THShotLib.pos_Distance(THShotLib.pos_Entity(user, 1), user.getLookVec(), 0.75), THShotLib.angle(user.rotationYaw+90, user.rotationPitch), 0.75);
 						case 2:
-							return THShotLib.pos_Distance(THShotLib.pos_Distance(THShotLib.pos_Entity(userPlayer, 1), userPlayer.getLookVec(), 0.75), THShotLib.angle(userPlayer.rotationYaw-90, userPlayer.rotationPitch), 0.75);
+							return THShotLib.pos_Distance(THShotLib.pos_Distance(THShotLib.pos_Entity(user, 1), user.getLookVec(), 0.75), THShotLib.angle(user.rotationYaw-90, user.rotationPitch), 0.75);
 						default:
 							break;
 						}
 				case 4:
 					switch(place){
 						case 0:
-							return THShotLib.pos_Distance(THShotLib.pos_Distance(THShotLib.pos_Entity(userPlayer, 1), userPlayer.getLookVec(), 0.75), THShotLib.angle(userPlayer.rotationYaw+90, userPlayer.rotationPitch), 0.35);
+							return THShotLib.pos_Distance(THShotLib.pos_Distance(THShotLib.pos_Entity(user, 1), user.getLookVec(), 0.75), THShotLib.angle(user.rotationYaw+90, user.rotationPitch), 0.35);
 						case 1:
-							return THShotLib.pos_Distance(THShotLib.pos_Distance(THShotLib.pos_Entity(userPlayer, 1), userPlayer.getLookVec(), 0.75), THShotLib.angle(userPlayer.rotationYaw-90, userPlayer.rotationPitch), 0.35);
+							return THShotLib.pos_Distance(THShotLib.pos_Distance(THShotLib.pos_Entity(user, 1), user.getLookVec(), 0.75), THShotLib.angle(user.rotationYaw-90, user.rotationPitch), 0.35);
 						case 2:
-							return THShotLib.pos_Distance(THShotLib.pos_Entity(userPlayer, 1), THShotLib.angle(userPlayer.rotationYaw+90, userPlayer.rotationPitch), 0.75);
+							return THShotLib.pos_Distance(THShotLib.pos_Entity(user, 1), THShotLib.angle(user.rotationYaw+90, user.rotationPitch), 0.75);
 						case 3:
-							return THShotLib.pos_Distance(THShotLib.pos_Entity(userPlayer, 1), THShotLib.angle(userPlayer.rotationYaw-90, userPlayer.rotationPitch), 0.75);
+							return THShotLib.pos_Distance(THShotLib.pos_Entity(user, 1), THShotLib.angle(user.rotationYaw-90, user.rotationPitch), 0.75);
 						default:
 							break;
 						}
@@ -189,39 +185,39 @@ public class EntityStandardShot extends Entity {
 		else{
 			switch(intPower){
 				case 0:
-					return THShotLib.pos_Distance(THShotLib.pos_Entity(userPlayer, 1), userPlayer.getLookVec(), 1.5);
+					return THShotLib.pos_Distance(THShotLib.pos_Entity(user, 1), user.getLookVec(), 1.5);
 				case 1:
-					return THShotLib.pos_Distance(THShotLib.pos_Entity(userPlayer, 1), userPlayer.getLookVec(), 1.5);
+					return THShotLib.pos_Distance(THShotLib.pos_Entity(user, 1), user.getLookVec(), 1.5);
 				case 2:
 					switch(place){
 						case 0:
-							return THShotLib.pos_Distance(THShotLib.pos_Distance(THShotLib.pos_Entity(userPlayer, 1), userPlayer.getLookVec(), 1.5), THShotLib.angle(userPlayer.rotationYaw+90, userPlayer.rotationPitch), 0.75);
+							return THShotLib.pos_Distance(THShotLib.pos_Distance(THShotLib.pos_Entity(user, 1), user.getLookVec(), 1.5), THShotLib.angle(user.rotationYaw+90, user.rotationPitch), 0.75);
 						case 1:
-							return THShotLib.pos_Distance(THShotLib.pos_Distance(THShotLib.pos_Entity(userPlayer, 1), userPlayer.getLookVec(), 1.5), THShotLib.angle(userPlayer.rotationYaw-90, userPlayer.rotationPitch), 0.75);
+							return THShotLib.pos_Distance(THShotLib.pos_Distance(THShotLib.pos_Entity(user, 1), user.getLookVec(), 1.5), THShotLib.angle(user.rotationYaw-90, user.rotationPitch), 0.75);
 						default:
 							break;
 					}
 				case 3:
 					switch(place){
 						case 0:
-							return THShotLib.pos_Distance(THShotLib.pos_Entity(userPlayer, 1), userPlayer.getLookVec(), 1.5);
+							return THShotLib.pos_Distance(THShotLib.pos_Entity(user, 1), user.getLookVec(), 1.5);
 						case 1:
-							return THShotLib.pos_Distance(THShotLib.pos_Distance(THShotLib.pos_Entity(userPlayer, 1), userPlayer.getLookVec(), 1.5), THShotLib.angle(userPlayer.rotationYaw+90, userPlayer.rotationPitch), 1.0);
+							return THShotLib.pos_Distance(THShotLib.pos_Distance(THShotLib.pos_Entity(user, 1), user.getLookVec(), 1.5), THShotLib.angle(user.rotationYaw+90, user.rotationPitch), 1.0);
 						case 2:
-							return THShotLib.pos_Distance(THShotLib.pos_Distance(THShotLib.pos_Entity(userPlayer, 1), userPlayer.getLookVec(), 1.5), THShotLib.angle(userPlayer.rotationYaw-90, userPlayer.rotationPitch), 1.0);
+							return THShotLib.pos_Distance(THShotLib.pos_Distance(THShotLib.pos_Entity(user, 1), user.getLookVec(), 1.5), THShotLib.angle(user.rotationYaw-90, user.rotationPitch), 1.0);
 						default:
 							break;
 						}
 				case 4:
 					switch(place){
 						case 0:
-							return THShotLib.pos_Distance(THShotLib.pos_Distance(THShotLib.pos_Entity(userPlayer, 1), userPlayer.getLookVec(), 1.5), THShotLib.angle(userPlayer.rotationYaw+90, userPlayer.rotationPitch), 0.5);
+							return THShotLib.pos_Distance(THShotLib.pos_Distance(THShotLib.pos_Entity(user, 1), user.getLookVec(), 1.5), THShotLib.angle(user.rotationYaw+90, user.rotationPitch), 0.5);
 						case 1:
-							return THShotLib.pos_Distance(THShotLib.pos_Distance(THShotLib.pos_Entity(userPlayer, 1), userPlayer.getLookVec(), 1.5), THShotLib.angle(userPlayer.rotationYaw-90, userPlayer.rotationPitch), 0.5);
+							return THShotLib.pos_Distance(THShotLib.pos_Distance(THShotLib.pos_Entity(user, 1), user.getLookVec(), 1.5), THShotLib.angle(user.rotationYaw-90, user.rotationPitch), 0.5);
 						case 2:
-							return THShotLib.pos_Distance(THShotLib.pos_Entity(userPlayer, 1), THShotLib.angle(userPlayer.rotationYaw+90, userPlayer.rotationPitch), 1.25);
+							return THShotLib.pos_Distance(THShotLib.pos_Entity(user, 1), THShotLib.angle(user.rotationYaw+90, user.rotationPitch), 1.25);
 						case 3:
-							return THShotLib.pos_Distance(THShotLib.pos_Entity(userPlayer, 1), THShotLib.angle(userPlayer.rotationYaw-90, userPlayer.rotationPitch), 1.25);
+							return THShotLib.pos_Distance(THShotLib.pos_Entity(user, 1), THShotLib.angle(user.rotationYaw-90, user.rotationPitch), 1.25);
 						default:
 							break;
 					}
@@ -229,16 +225,13 @@ public class EntityStandardShot extends Entity {
 					break;
 			}
 		}
-		return THShotLib.pos_Distance(THShotLib.pos_Entity(userPlayer, 1), userPlayer.getLookVec(), 1.5);
+		return THShotLib.pos_Distance(THShotLib.pos_Entity(user, 1), user.getLookVec(), 1.5);
 	}
 	
 	@Override
     protected void entityInit()
     {
         this.dataWatcher.addObject(16, new Byte((byte)0)); //Type
-        this.dataWatcher.addObject(17, new Byte((byte)0)); //Place
-        this.dataWatcher.addObject(18, new Float((float)0.0F)); //Power
-        this.dataWatcher.addObject(19, new String("")); //UserName
     }
 	
     public void setType(int type)
@@ -250,57 +243,18 @@ public class EntityStandardShot extends Entity {
     {
     	return dataWatcher.getWatchableObjectByte(16);
     }
-    
-    public void setPlace(int place)
-    {
-    	dataWatcher.updateObject(17, Byte.valueOf((byte)place));
-    }
-    
-    public byte getPlace()
-    {
-    	return dataWatcher.getWatchableObjectByte(17);
-    }
-    
-    public void setPower(float power)
-    {
-    	dataWatcher.updateObject(18, Float.valueOf(power));
-    }
-    
-    public float getPower()
-    {
-    	return dataWatcher.getWatchableObjectFloat(18);
-    }
-    
-    public void setUser(EntityPlayer userPlayer)
-    {    	
-        userName = userPlayer.getCommandSenderName();
-    	dataWatcher.updateObject(19, String.valueOf(this.userName == null ? "" : this.userName));
-    }
-    
-    public EntityPlayer getUser()
-    {
-    	userName = dataWatcher.getWatchableObjectString(19);
-    	EntityPlayer userPlayer = null;
-    	
-        if (this.userName != null && this.userName.length() > 0)
-        {
-        	userPlayer = this.worldObj.getPlayerEntityByName(this.userName);
-        }
-
-        return userPlayer;
-    }
 
 	@Override
 	public void readEntityFromNBT(NBTTagCompound nbtTagCompound)
     {
 		setType(nbtTagCompound.getByte("Type"));
-		setPlace(nbtTagCompound.getByte("Place"));
-		setPower(nbtTagCompound.getFloat("Power"));
+		place = (nbtTagCompound.getByte("Place"));
+		power = (nbtTagCompound.getFloat("Power"));
 		userName = nbtTagCompound.getString("UserName");
 		
         if (this.userName != null && this.userName.length() == 0)
         {
-        	setUser(worldObj.getPlayerEntityByName(this.userName));
+        	user = worldObj.getPlayerEntityByName(this.userName);
             this.userName = null;
         }
     }
@@ -309,12 +263,12 @@ public class EntityStandardShot extends Entity {
 	public void writeEntityToNBT(NBTTagCompound nbtTagCompound) {
 		
         nbtTagCompound.setByte("Type", getType());
-        nbtTagCompound.setByte("Place", getPlace());
-        nbtTagCompound.setFloat("Power", getPower());
+        nbtTagCompound.setByte("Place", (byte) place);
+        nbtTagCompound.setFloat("Power", power);
         
-        if (getUser() != null)
+        if (user != null)
         {
-            this.userName = getUser().getCommandSenderName();
+            this.userName = user.getCommandSenderName();
         }
 
         nbtTagCompound.setString("UserName", this.userName == null ? "" : this.userName);

@@ -24,5 +24,6 @@ public class SpecialShotID {
 	public static final int DREAMS_AND_REALITY11 = 11210;
 	public static final int MESH_LASER01 = 11300;
 	public static final int MISSILE01 = 11400;
-
+	public static final int JTG_HOMING01 = 11500;
+	public static final int JTG_HOMING02 = 11501;
 }

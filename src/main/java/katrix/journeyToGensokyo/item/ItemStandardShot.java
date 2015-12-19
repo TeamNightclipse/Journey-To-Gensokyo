@@ -17,6 +17,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -26,6 +28,8 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import thKaguyaMod.THKaguyaLib;
+import thKaguyaMod.THShotLib;
+import thKaguyaMod.init.THKaguyaItems;
 
 public class ItemStandardShot extends Item {
 	
@@ -79,9 +83,9 @@ public class ItemStandardShot extends Item {
 			if(shotEntity != null){
 				shotEntity.shotTimer = 3;
 				
-				float shotPower = THKaguyaLib.getPlayerPower(player)/100;
+				float power = getPower(stack);
 				
-				shotEntity.setPower(shotPower);
+				shotEntity.power = power;
 			}
 		}
 		
@@ -97,20 +101,16 @@ public class ItemStandardShot extends Item {
 				stack.setTagCompound(new NBTTagCompound());
 			}
 			
-			int cooldown = getCooldown(stack);
-			float power = getPower(stack);
-			float prevPower = getPrevPower(stack);
-			ArrayList<EntityStandardShot> listShotEntity = getShotList(stack, entity);
-			
-			
-			
 			EntityPlayer player = (EntityPlayer)entity;
+			int cooldown = getCooldown(stack);
+			float power = THKaguyaLib.getPlayerPower(player)/100;
+			int intPower = MathHelper.floor_float(power);
+			int prevIntPower = getPrevIntPower(stack);
+			ArrayList<EntityStandardShot> listShotEntity = getShotList(stack, entity);
 			
 			if(!equipped && cooldown == 0) {
 				setCanSpawn(stack, true);
 			}
-			
-			
 			
 			//Drop item if more than one in inventory
 			int amount = 0;
@@ -131,15 +131,13 @@ public class ItemStandardShot extends Item {
 			
 			if(equipped) {
 				
-				power = MathHelper.floor_float(THKaguyaLib.getPlayerPower(player)/100);
-				
 				//Spawn initial bunch
 				if(getCanSpawn(stack)) {
 					setCanSpawn(stack, false);
 					cooldown = 5;
 					listShotEntity.clear();
 					
-					for(int i = 0; i < power; i++){
+					for(int i = 0; i < intPower; i++){
 						listShotEntity.add(i, new EntityStandardShot(world, player, stack.getItemDamage(), i, THKaguyaLib.getPlayerPower(player)/100));
 						world.spawnEntityInWorld(listShotEntity.get(i));
 					}
@@ -148,9 +146,9 @@ public class ItemStandardShot extends Item {
 				int shotAmount = listShotEntity.size();
 				
 				//Spawn more if power increases
-				if(power > prevPower  && shotAmount + (power - prevPower) <= 4){
+				if(intPower > prevIntPower  && shotAmount + (intPower - prevIntPower) <= 4){
 					
-					for(int i = shotAmount;  i < shotAmount + (power - prevPower); i++) {
+					for(int i = shotAmount;  i < shotAmount + (intPower - prevIntPower); i++) {
 						listShotEntity.add(i, new EntityStandardShot(world, player, stack.getItemDamage(), i, THKaguyaLib.getPlayerPower(player)/100));
 						world.spawnEntityInWorld(listShotEntity.get(i));
 					}
@@ -160,16 +158,16 @@ public class ItemStandardShot extends Item {
 						if(shotEntity != null){
 							
 							float shotPower = THKaguyaLib.getPlayerPower(player)/100;
-							shotEntity.setPower(shotPower);
+							shotEntity.power = shotPower;
 						}
 					}
 				}
 				
 				//Kill if power decreases
-				else if(power < prevPower && shotAmount + (power - prevPower) >= -1){
+				else if(intPower < prevIntPower && shotAmount + (intPower - prevIntPower) >= -1){
 					
 					shotAmount -= 1;
-					for(int i = shotAmount;  i > shotAmount + (power - prevPower); i--) {
+					for(int i = shotAmount;  i > shotAmount + (intPower - prevIntPower); i--) {
 						//TODO: some sanity check here
 						EntityStandardShot deadEntity = listShotEntity.get(i);
 						
@@ -182,13 +180,13 @@ public class ItemStandardShot extends Item {
 						if(shotEntity != null){
 							
 							float shotPower = THKaguyaLib.getPlayerPower(player)/100;
-							shotEntity.setPower(shotPower);
+							shotEntity.power = shotPower;
 						}
 					}
 				}
 			}
 			
-			prevPower = power;
+			prevIntPower = intPower;
 			
 			if(cooldown != 0){
 				cooldown--;
@@ -196,10 +194,51 @@ public class ItemStandardShot extends Item {
 			
 			setCooldown(stack, cooldown);
 			setPower(stack, power);
-			setPrevPower(stack, prevPower);
+			setPrevIntPower(stack, prevIntPower);
 			setShotList(stack, listShotEntity);
 		}
 	}
+	
+	@Override
+    public boolean onEntityItemUpdate(EntityItem entityItem)
+    {
+		if(entityItem.age == 1) {
+			setCanSpawn(entityItem.getEntityItem(), true);
+		}
+		
+        return false;
+    }
+	
+	@Override
+    public boolean onEntitySwing(EntityLivingBase entityLiving, ItemStack stack)
+    {
+		if(entityLiving instanceof EntityPlayer) {
+			EntityPlayer player = (EntityPlayer)entityLiving;
+			
+			for(int i = 0 ; i < player.inventory.mainInventory.length ; i++ ) {
+				
+				ItemStack[] inventory = player.inventory.mainInventory;
+				if(inventory[i] != null && inventory[i].getItem() == THKaguyaItems.spell_card)
+				{
+					ItemStack spellcard = inventory[i];
+					THKaguyaLib.checkSpellCardDeclaration(player.worldObj, spellcard, player, spellcard.getItemDamage(), THShotLib.NORMAL, true);
+				}
+			}
+		}
+        return false;
+    }
+	
+	@Override
+    public boolean showDurabilityBar(ItemStack stack)
+    {
+        return true;
+    }
+	
+	@Override
+    public double getDurabilityForDisplay(ItemStack stack)
+    {
+        return 1D - (double)getPower(stack)/4D;
+    }
 	
 	public float getPower(ItemStack stack) {
 		
@@ -219,21 +258,21 @@ public class ItemStandardShot extends Item {
 		}
 	}
 	
-	public float getPrevPower(ItemStack stack) {
+	public int getPrevIntPower(ItemStack stack) {
 		
 		if(stack.hasTagCompound()) {
 			NBTTagCompound tag = stack.getTagCompound();
-			if(tag.hasKey("prevPower")) {
-				return tag.getFloat("prevPower");
+			if(tag.hasKey("prevIntPower")) {
+				return tag.getInteger("prevIntPower");
 			}
 		}
-		return 0.0F;
+		return 0;
 	}
 	
-	public void setPrevPower(ItemStack stack, float prevPower) {
+	public void setPrevIntPower(ItemStack stack, int prevIntPower) {
 		
 		if(stack.hasTagCompound()) {
-			stack.getTagCompound().setFloat("prevPower", prevPower);
+			stack.getTagCompound().setInteger("prevIntPower", prevIntPower);
 		}
 	}
 	
@@ -263,7 +302,7 @@ public class ItemStandardShot extends Item {
 				return tag.getBoolean("canSpawn");
 			}
 		}
-		return false;
+		return true;
 	}
 	
 	public void setCanSpawn(ItemStack stack, boolean flag) {
@@ -299,10 +338,7 @@ public class ItemStandardShot extends Item {
 				
 				for(int i = 0; i < ids.length; i++){
 					
-					Entity entityID = entity.worldObj.getEntityByID(ids[i]);
-					if(entityID instanceof EntityStandardShot) {
-						shotList.add((EntityStandardShot) entityID);
-					}
+					shotList.add((EntityStandardShot) entity.worldObj.getEntityByID(ids[i]));
 				}
 				return shotList;
 			}
