@@ -2,7 +2,7 @@
  * This class was created by <Katrix>. It's distributed as
  * part of the Journey To Gensokyo Mod. Get the Source Code in github:
  * https://github.com/Katrix-/JTG
- * 
+ *
  * Journey To Gensokyo is Open Source and distributed under the
  * a modifed Botania license: https://github.com/Katrix-/JTG/blob/master/LICENSE.md
  */
@@ -36,38 +36,38 @@ import thKaguyaMod.registry.SpecialShotRegistry;
 import thKaguyaMod.registry.SpellCardRegistry;
 
 public class JTG_THSC {
-	
+
 	public static void preInit() {
-		
+
 		//Special Shots
 		SpecialShotRegistry.registerSpecialShot(ShotSeed.class, SpecialShotID.SEED_LASER01);
-		
+
 		SpecialShotRegistry.registerSpecialShot(ShotFantasySeal.class, SpecialShotID.FANTASY_SEAL01);
 		SpecialShotRegistry.registerSpecialShot(ShotFantasySeal.class, SpecialShotID.FANTASY_SEAL02);
 		SpecialShotRegistry.registerSpecialShot(ShotFantasySeal.class, SpecialShotID.FANTASY_SEAL03);
 		SpecialShotRegistry.registerSpecialShot(ShotFantasySeal.class, SpecialShotID.FANTASY_SEAL04);
 		SpecialShotRegistry.registerSpecialShot(ShotFantasySeal.class, SpecialShotID.FANTASY_SEAL05);
 		SpecialShotRegistry.registerSpecialShot(ShotFantasySeal.class, SpecialShotID.FANTASY_SEAL06);
-		
+
 		SpecialShotRegistry.registerSpecialShot(THSC_CurseOfDreamsAndReality.class, SpecialShotID.DREAMS_AND_REALITY01);
 		SpecialShotRegistry.registerSpecialShot(THSC_CurseOfDreamsAndReality.class, SpecialShotID.DREAMS_AND_REALITY02);
 		SpecialShotRegistry.registerSpecialShot(THSC_CurseOfDreamsAndReality.class, SpecialShotID.DREAMS_AND_REALITY03);
 		SpecialShotRegistry.registerSpecialShot(THSC_CurseOfDreamsAndReality.class, SpecialShotID.DREAMS_AND_REALITY11);
-		
+
 		SpecialShotRegistry.registerSpecialShot(THSC_MeshLightDarkness.class, SpecialShotID.MESH_LASER01);
-		
+
 		SpecialShotRegistry.registerSpecialShot(ShotMissile.class, SpecialShotID.MISSILE01);
-		
+
 		SpecialShotRegistry.registerSpecialShot(ShotHoming.class, SpecialShotID.JTG_HOMING01);
 		SpecialShotRegistry.registerSpecialShot(ShotHoming.class, SpecialShotID.JTG_HOMING02);
-		
+
 		//Spell Cards
 		SpellCardRegistry.registerSpellCard(THSC_DoubleSpark.class, ModInfo.MODID, "DoubleSpark", SpellcardID.DOUBLE_SPARK);
 		SpellCardRegistry.registerSpellCard(THSC_FinalSpark.class, ModInfo.MODID, "FinalSpark", SpellcardID.FINAL_SPARK);
 		SpellCardRegistry.registerSpellCard(THSC_CurseOfDreamsAndReality.class, ModInfo.MODID, "CurseOfDreamsAndReality", SpellcardID.DREAMS_AND_REALITY);
 		SpellCardRegistry.registerSpellCard(THSC_MeshLightDarkness.class, ModInfo.MODID, "MeshOfLightAndDarkness", SpellcardID.MESH_LIGHT_DARKNESS);
 	}
-		
+
 	public static void postInit() {
 		//Entities
 		EntityTHFairyIce.postInit();
@@ -80,28 +80,28 @@ public class JTG_THSC {
 		EntityReimuHostile.postInit();
 		EntityYukari.postInit();
 		EntityStandardShot.postInit();
-		
-		if(THKaguyaConfig.spawnDanmakuMob && ConfigHandler.fixTHKaguyaSpawn) {
-			
-			if(THKaguyaConfig.spawnFairy){
+
+		if (THKaguyaConfig.spawnDanmakuMob && ConfigHandler.fixTHKaguyaSpawn) {
+
+			if (THKaguyaConfig.spawnFairy) {
 				SpawnBiomeFixer.FairyFix();
 			}
-			
-			if(THKaguyaConfig.spawnPhantom){
+
+			if (THKaguyaConfig.spawnPhantom) {
 				SpawnBiomeFixer.PhantomFix();
 			}
-			
-			if(THKaguyaConfig.spawnHanabeeper){
+
+			if (THKaguyaConfig.spawnHanabeeper) {
 				SpawnBiomeFixer.HanabeeperFix();
 			}
-			
-			if(THKaguyaConfig.spawnBoss){
+
+			if (THKaguyaConfig.spawnBoss) {
 				SpawnBiomeFixer.CirnoFix();
 				SpawnBiomeFixer.RumiaFix();
 				SpawnBiomeFixer.TozikoFix();
 				SpawnBiomeFixer.WriggleFix();
 			}
-			
+
 			SpawnBiomeFixer.AmbientFix();
 		}
 	}

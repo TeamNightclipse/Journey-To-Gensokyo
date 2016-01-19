@@ -2,13 +2,16 @@
  * This class was created by <Katrix>. It's distributed as
  * part of the Journey To Gensokyo Mod. Get the Source Code in github:
  * https://github.com/Katrix-/JTG
- * 
+ *
  * Journey To Gensokyo is Open Source and distributed under the
  * a modifed Botania license: https://github.com/Katrix-/JTG/blob/master/LICENSE.md
  */
 
 package katrix.journeyToGensokyo.client;
 
+import cpw.mods.fml.client.registry.RenderingRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import katrix.journeyToGensokyo.CommonProxy;
 import katrix.journeyToGensokyo.client.render.RenderHellRaven;
 import katrix.journeyToGensokyo.client.render.RenderReimuHostile;
@@ -28,24 +31,21 @@ import katrix.journeyToGensokyo.plugin.thsc.entity.EntityTHFairyIce;
 import katrix.journeyToGensokyo.plugin.thsc.entity.EntityTHFairyNether;
 import katrix.journeyToGensokyo.plugin.thsc.entity.EntityTenguCrow;
 import katrix.journeyToGensokyo.plugin.thsc.entity.EntityYukari;
-import cpw.mods.fml.client.registry.RenderingRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class ClientProxy extends CommonProxy {
-       
+
 	@Override
-    public void registerRenderers() {
-		
-        RenderingRegistry.registerEntityRenderingHandler(EntityTHFairyIce.class, new RenderTHFairyIce());
-        RenderingRegistry.registerEntityRenderingHandler(EntityHellRaven.class, new RenderHellRaven());
-        RenderingRegistry.registerEntityRenderingHandler(EntityTenguCrow.class, new RenderTenguCrow());
-        RenderingRegistry.registerEntityRenderingHandler(EntityTHFairyNether.class, new RenderTHFairyNether());
-        RenderingRegistry.registerEntityRenderingHandler(EntityTHFairyEnd.class, new RenderTHFairyEnd());
-        RenderingRegistry.registerEntityRenderingHandler(EntitySunFlowerFairyEnd.class, new RenderSunFlowerFairyEnd());
-        RenderingRegistry.registerEntityRenderingHandler(EntityReimuHostile.class, new RenderReimuHostile());
-        RenderingRegistry.registerEntityRenderingHandler(EntityYukari.class, new RenderYukari());
-        RenderingRegistry.registerEntityRenderingHandler(EntityStandardShot.class, new RenderStandardShot());
-    } 
+	public void registerRenderers() {
+
+		RenderingRegistry.registerEntityRenderingHandler(EntityTHFairyIce.class, new RenderTHFairyIce());
+		RenderingRegistry.registerEntityRenderingHandler(EntityHellRaven.class, new RenderHellRaven());
+		RenderingRegistry.registerEntityRenderingHandler(EntityTenguCrow.class, new RenderTenguCrow());
+		RenderingRegistry.registerEntityRenderingHandler(EntityTHFairyNether.class, new RenderTHFairyNether());
+		RenderingRegistry.registerEntityRenderingHandler(EntityTHFairyEnd.class, new RenderTHFairyEnd());
+		RenderingRegistry.registerEntityRenderingHandler(EntitySunFlowerFairyEnd.class, new RenderSunFlowerFairyEnd());
+		RenderingRegistry.registerEntityRenderingHandler(EntityReimuHostile.class, new RenderReimuHostile());
+		RenderingRegistry.registerEntityRenderingHandler(EntityYukari.class, new RenderYukari());
+		RenderingRegistry.registerEntityRenderingHandler(EntityStandardShot.class, new RenderStandardShot());
+	}
 }
