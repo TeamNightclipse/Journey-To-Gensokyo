@@ -33,6 +33,7 @@ public class ShotMissile implements ISpecialShot {
 					world.playSoundEffect(shot.posX, shot.posY, shot.posZ, "random.explode", 4.0F,
 							(1.0F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.2F) * 0.7F);
 
+					@SuppressWarnings("unchecked")
 					List<EntityLivingBase> listEntity = world.getEntitiesWithinAABB(EntityLivingBase.class, AxisAlignedBB.getBoundingBox(shot.posX - range,
 							shot.posY - range, shot.posZ - range, shot.posX + range + 1, shot.posY + range + 1, shot.posZ + range + 1));
 
@@ -58,6 +59,7 @@ public class ShotMissile implements ISpecialShot {
 						(1.0F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.2F) * 0.7F);
 
 				if (!world.isRemote) {
+					@SuppressWarnings("unchecked")
 					List<EntityLivingBase> listEntity = world.getEntitiesWithinAABB(EntityLivingBase.class, AxisAlignedBB.getBoundingBox(shot.posX - range,
 							shot.posY - range, shot.posZ - range, shot.posX + range + 1, shot.posY + range + 1, shot.posZ + range + 1));
 

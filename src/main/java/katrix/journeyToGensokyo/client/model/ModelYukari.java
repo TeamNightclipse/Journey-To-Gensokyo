@@ -163,10 +163,10 @@ public class ModelYukari extends ModelBase {
 		bipedHead.rotateAngleX = pitch / (180F / (float)Math.PI);
 		bipedBody.rotateAngleY = MathHelper.sin(MathHelper.sqrt_float(onGround) * (float)Math.PI * 2.0F) * 0.2F;
 
-		bipedRightArm.rotateAngleX = MathHelper.cos(movement * 0.6662F + 3.141593F) * 2.0F * far * 0.5F;
+		bipedRightArm.rotateAngleX = MathHelper.cos((float)(movement * 0.6662F + Math.PI)) * 2.0F * far * 0.5F;
 		bipedLeftArm.rotateAngleX = MathHelper.cos(movement * 0.6662F) * 2.0F * far * 0.5F;
-		bipedRightArm.rotateAngleZ = 30F / 180F * 3.141593F;
-		bipedLeftArm.rotateAngleZ = -30F / 180F * 3.141593F;
+		bipedRightArm.rotateAngleZ = (float)(30F / 180F * Math.PI);
+		bipedLeftArm.rotateAngleZ = (float)(-30F / 180F * Math.PI);
 
 		skirtTop.rotateAngleX = 0F;
 

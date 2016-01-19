@@ -9,10 +9,6 @@
 
 package katrix.journeyToGensokyo.plugin.thsc.entity;
 
-import static thKaguyaMod.DanmakuConstants.BOUND04;
-import static thKaguyaMod.THShotLib.gravity_Default;
-import static thKaguyaMod.THShotLib.rotate_Default;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -43,7 +39,6 @@ import thKaguyaMod.init.THKaguyaConfig;
 import thKaguyaMod.init.THKaguyaItems;
 import thKaguyaMod.item.ItemTHShot;
 
-/** 楽園の素敵な巫女 博麗 霊夢 */
 public class EntityReimuHostile extends EntityDanmakuMob {
 
 	public double shotGap = 0.06D;
@@ -131,8 +126,8 @@ public class EntityReimuHostile extends EntityDanmakuMob {
 			if (!worldObj.isRemote) {
 				worldObj.spawnEntityInWorld(new EntityOnmyoudama(worldObj, this, this,
 						THShotLib.pos_Distance(pos(), THShotLib.angle(rotationYaw + attackCounter * 12, rotationPitch), 2.0D),
-						THShotLib.angle(rotationYaw + attackCounter * 12, rotationPitch), 0F, rotate_Default(), 0F, 9999, 0.5D, 1.8D, 0.0D, gravity_Default(),
-						DanmakuConstants.RED, 1.2F, 2.0F, 0, 180, BOUND04));//陰陽玉を出現させる
+						THShotLib.angle(rotationYaw + attackCounter * 12, rotationPitch), 0F, THShotLib.rotate_Default(), 0F, 9999, 0.5D, 1.8D, 0.0D,
+						THShotLib.gravity_Default(), DanmakuConstants.RED, 1.2F, 2.0F, 0, 180, DanmakuConstants.BOUND04));//陰陽玉を出現させる
 			}
 		}
 
@@ -160,8 +155,8 @@ public class EntityReimuHostile extends EntityDanmakuMob {
 			if (!worldObj.isRemote) {
 				worldObj.spawnEntityInWorld(new EntityOnmyoudama(worldObj, this, this,
 						THShotLib.pos_Distance(pos(), THShotLib.angle(rotationYaw - attackCounter * 12, rotationPitch), 2.0D),
-						THShotLib.angle(rotationYaw - attackCounter * 12, rotationPitch), 0F, rotate_Default(), 0F, 9999, 0.5D, 1.8D, 0.0D, gravity_Default(),
-						DanmakuConstants.RED, 1.2F, 2.0F, 0, 180, BOUND04));//陰陽玉を出現させる
+						THShotLib.angle(rotationYaw - attackCounter * 12, rotationPitch), 0F, THShotLib.rotate_Default(), 0F, 9999, 0.5D, 1.8D, 0.0D,
+						THShotLib.gravity_Default(), DanmakuConstants.RED, 1.2F, 2.0F, 0, 180, DanmakuConstants.BOUND04));//陰陽玉を出現させる
 			}
 		}
 
@@ -238,11 +233,11 @@ public class EntityReimuHostile extends EntityDanmakuMob {
 
 			for (k = 0; k < j; k += 2) {
 				yaw = 360F / j * k;
-				pitch = MathHelper.sin(yaw / 180F * 3.141593F * 4F) * 20F - 60F;
+				pitch = MathHelper.sin((float)(yaw / 180F * Math.PI * 4F)) * 20F - 60F;
 				vec3 = THShotLib.getVecFromAngle(yaw, pitch, 1.0F);
 				this.dropPointItem(this.pos(), vec3);
 				yaw = 360F / j * (k + 1);
-				pitch = MathHelper.cos(yaw / 180F * 3.141593F * 4F) * 20F - 60F;
+				pitch = MathHelper.cos((float)(yaw / 180F * Math.PI * 4F)) * 20F - 60F;
 				vec3 = THShotLib.getVecFromAngle(yaw, pitch, 1.0F);
 				this.dropPowerUpItem(this.pos(), vec3);
 			}

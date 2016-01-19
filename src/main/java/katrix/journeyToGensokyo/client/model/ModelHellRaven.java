@@ -95,7 +95,6 @@ public class ModelHellRaven extends ModelBase {
 		ravenHead.render(size);
 	}
 
-	@SuppressWarnings("unused")
 	@Override
 	public void setRotationAngles(float movement, float far, float tick, float yaw, float pitch, float size, Entity entity) {
 		super.setRotationAngles(movement, far, tick, yaw, pitch, size, entity);

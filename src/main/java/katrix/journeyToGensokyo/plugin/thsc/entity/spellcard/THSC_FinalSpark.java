@@ -72,17 +72,17 @@ public class THSC_FinalSpark extends THSpellCard {
 			}
 			double xVector1, yVector1, zVector1, xVectorG, yVectorG, zVectorG, gRate, angleXZ = 0, angleY = 0, X1, Z1, X2, Z2;
 			Vec3 lookAt = tgVec;
-			lookAt.xCoord = -MathHelper.sin(user.rotationYaw / 180F * 3.141593F) * MathHelper.cos((user.rotationPitch + 90F) / 180F * 3.141593F);
-			lookAt.yCoord = -MathHelper.sin((user.rotationPitch + 90F) / 180F * 3.141593F);
-			lookAt.zCoord = MathHelper.cos(user.rotationYaw / 180F * 3.141593F) * MathHelper.cos((user.rotationPitch + 90F) / 180F * 3.141593F);
+			lookAt.xCoord = -MathHelper.sin((float)(user.rotationYaw / 180F * Math.PI)) * MathHelper.cos((float)((user.rotationPitch + 90F) / 180F * Math.PI));
+			lookAt.yCoord = -MathHelper.sin((float)((user.rotationPitch + 90F) / 180F * Math.PI));
+			lookAt.zCoord = MathHelper.cos((float)(user.rotationYaw / 180F * Math.PI)) * MathHelper.cos((float)((user.rotationPitch + 90F) / 180F * Math.PI));
 			lookAt.rotateAroundY((float)Math.PI * 2);
 			float angle = time * 6F;
 			float angleSpan = 360F / 14F;
-			gRate = 0.034 + 0.03D * Math.sin(angle / 180F * 3.141593F);
+			gRate = 0.034 + 0.03D * Math.sin(angle / 180F * Math.PI);
 
-			xVectorG = -MathHelper.sin(user.rotationYaw / 180F * 3.141593F) * MathHelper.cos(user.rotationPitch / 180F * 3.141593F) * gRate;
-			yVectorG = -MathHelper.sin(user.rotationPitch / 180F * 3.141593F) * gRate;
-			zVectorG = MathHelper.cos(user.rotationYaw / 180F * 3.141593F) * MathHelper.cos(user.rotationPitch / 180F * 3.141593F) * gRate;
+			xVectorG = -MathHelper.sin((float)(user.rotationYaw / 180F * Math.PI)) * MathHelper.cos((float)(user.rotationPitch / 180F * Math.PI)) * gRate;
+			yVectorG = -MathHelper.sin((float)(user.rotationPitch / 180F * Math.PI)) * gRate;
+			zVectorG = MathHelper.cos((float)(user.rotationYaw / 180F * Math.PI)) * MathHelper.cos((float)(user.rotationPitch / 180F * Math.PI)) * gRate;
 
 			for (int i = 0; i < 14; i++) {
 				angleXZ = angle;

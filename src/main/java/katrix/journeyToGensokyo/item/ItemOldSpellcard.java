@@ -52,6 +52,7 @@ public class ItemOldSpellcard extends ItemJTGBase {
 		return icons[meta];
 	}
 
+	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
 	public void getSubItems(Item item, CreativeTabs tab, List list) {
 		for (int i = 0; i < 3; i++) {

@@ -71,7 +71,7 @@ public class EntityYukari extends EntityDanmakuMob {
 			case SPELLCARD_ATTACK04:
 				return SpellcardID.MESH_LIGHT_DARKNESS; //Boundary "Mesh of Light and Darkness"
 			case SPELLCARD_ATTACK05:
-				return EntitySpellCard.SC_YUKARI_Nami_to_Tubu_no_Kyoukai; //Boundary Sign "Boundary between Wave and Particle" 
+				return EntitySpellCard.SC_YUKARI_Nami_to_Tubu_no_Kyoukai; //Boundary Sign "Boundary between Wave and Particle"
 			default:
 				return -1;
 		}
@@ -250,7 +250,7 @@ public class EntityYukari extends EntityDanmakuMob {
 					ShotData.shot(DanmakuConstants.FORM_KUNAI, DanmakuConstants.GREEN, THShotLib.SIZE[DanmakuConstants.FORM_KUNAI], 6.0f, 0, 60), 2 * level);
 		}
 
-		if (attackCounter % 2 == 1) {
+		if (attackCounter % 2 != 0) {
 			THShotLib.playShotSound(this);
 			THShotLib.createCircleShot(this, pos(), THShotLib.angle(rotationYaw - attackCounter * 5, rotationPitch), 0.3D,
 					ShotData.shot(DanmakuConstants.FORM_KUNAI, DanmakuConstants.AQUA, THShotLib.SIZE[DanmakuConstants.FORM_KUNAI], 6.0f, 0, 60), 2 * level);
@@ -307,6 +307,7 @@ public class EntityYukari extends EntityDanmakuMob {
 			int range = 4;
 			int invicibilityTimer = getInvicibilityTimer();
 
+			@SuppressWarnings("unchecked")
 			List<EntityTHShot> listShot = worldObj.getEntitiesWithinAABB(EntityTHShot.class,
 					AxisAlignedBB.getBoundingBox(posX - range, posY - range, posZ - range, posX + range + 1, posY + range + 1, posZ + range + 1));
 
@@ -317,6 +318,7 @@ public class EntityYukari extends EntityDanmakuMob {
 				}
 			}
 
+			@SuppressWarnings("unchecked")
 			List<EntityTHLaser> listLaser = worldObj.getEntitiesWithinAABB(EntityTHLaser.class,
 					AxisAlignedBB.getBoundingBox(posX - range, posY - range, posZ - range, posX + range + 1, posY + range + 1, posZ + range + 1));
 
@@ -328,6 +330,7 @@ public class EntityYukari extends EntityDanmakuMob {
 				}
 			}
 
+			@SuppressWarnings("unchecked")
 			List<EntitySpellCard> listspellcard = worldObj.getEntitiesWithinAABB(EntitySpellCard.class, AxisAlignedBB.getBoundingBox(posX - range * 12,
 					posY - range * 12, posZ - range * 12, posX + range * 12 + 1, posY + range * 12 + 1, posZ + range * 12 + 1));
 
@@ -437,11 +440,11 @@ public class EntityYukari extends EntityDanmakuMob {
 
 			for (k = 0; k < j; k += 2) {
 				yaw = 360F / j * k;
-				pitch = MathHelper.sin(yaw / 180F * 3.141593F * 4F) * 20F - 60F;
+				pitch = MathHelper.sin((float)(yaw / 180F * Math.PI * 4F)) * 20F - 60F;
 				vec3 = THShotLib.getVecFromAngle(yaw, pitch, 1.0F);
 				this.dropPointItem(this.pos(), vec3);
 				yaw = 360F / j * (k + 1);
-				pitch = MathHelper.cos(yaw / 180F * 3.141593F * 4F) * 20F - 60F;
+				pitch = MathHelper.cos((float)(yaw / 180F * Math.PI * 4F)) * 20F - 60F;
 				vec3 = THShotLib.getVecFromAngle(yaw, pitch, 1.0F);
 				this.dropPowerUpItem(this.pos(), vec3);
 			}

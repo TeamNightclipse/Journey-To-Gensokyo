@@ -76,6 +76,7 @@ public class BlockGensokyoOre extends BlockJTGBase {
 		return meta;
 	}
 
+	@SuppressWarnings({"rawtypes", "unchecked"})
 	@Override
 	public void getSubBlocks(Item item, CreativeTabs tab, List list) {
 		for (int i = 0; i < 3; i++) {

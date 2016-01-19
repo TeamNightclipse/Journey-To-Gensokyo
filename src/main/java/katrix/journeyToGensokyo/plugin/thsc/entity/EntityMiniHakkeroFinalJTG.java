@@ -37,10 +37,10 @@ public class EntityMiniHakkeroFinalJTG extends EntityMiniHakkero {
 
 		this(world);
 
-		user = EntityLivingBase;//使用者をuserに保存
-		setPosition(user.posX - Math.sin(user.rotationYaw / 180F * 3.141593F) * Math.cos(user.rotationPitch / 180F * 3.141593F),
-				user.posY - Math.sin(user.rotationPitch / 180F * 3.141593F) + user.getEyeHeight() - 0.10000000149011612D,
-				user.posZ + Math.cos(user.rotationYaw / 180F * 3.141593F) * Math.cos(user.rotationPitch / 180F * 3.141593F));//初期位置を設定(x,y,z)
+		user = EntityLivingBase;
+		setPosition(user.posX - Math.sin(user.rotationYaw / 180F * Math.PI) * Math.cos(user.rotationPitch / 180F * Math.PI),
+				user.posY - Math.sin(user.rotationPitch / 180F * Math.PI) + user.getEyeHeight() - 0.1D,
+				user.posZ + Math.cos(user.rotationYaw / 180F * Math.PI) * Math.cos(user.rotationPitch / 180F * Math.PI));
 		rotationYaw = user.rotationYaw;
 		rotationPitch = user.rotationPitch;
 		count = 0;

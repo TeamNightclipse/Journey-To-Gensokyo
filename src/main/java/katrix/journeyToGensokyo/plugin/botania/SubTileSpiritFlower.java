@@ -34,6 +34,7 @@ public class SubTileSpiritFlower extends SubTileGenerating {
 		super.onUpdate();
 
 		if (mana != getMaxMana()) {
+			@SuppressWarnings("unchecked")
 			List<EntityTHShot> shots = supertile.getWorldObj().getEntitiesWithinAABB(EntityTHShot.class,
 					AxisAlignedBB.getBoundingBox(supertile.xCoord - RANGE, supertile.yCoord - RANGE, supertile.zCoord - RANGE, supertile.xCoord + RANGE + 1,
 							supertile.yCoord + RANGE + 1, supertile.zCoord + RANGE + 1));

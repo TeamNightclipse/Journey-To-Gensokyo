@@ -28,7 +28,7 @@ public class RenderStandardShot extends Render {
 	protected ModelBase modelMiniHakkero, modelMiniHakkero2, modelYingYangOrb;
 
 	public RenderStandardShot() {
-		shadowSize = 0.5F;//多分影のサイズ
+		shadowSize = 0.5F;
 		modelMiniHakkero = new ModelMiniHakkero();
 		modelMiniHakkero2 = new ModelMiniHakkero2();
 		modelYingYangOrb = new ModelYingYangOrb();
@@ -52,13 +52,14 @@ public class RenderStandardShot extends Render {
 		GL11.glPushMatrix();
 		bindTexture(getEntityTexture(yingYangOrb));
 		GL11.glTranslatef((float)x, (float)y, (float)z);
-		GL11.glRotatef(yingYangOrb.rotationPitch, -MathHelper.sin((yaw - 90F) / 180F * 3.141593F), 0.0F, MathHelper.cos((yaw - 90F) / 180F * 3.141593F));
+		GL11.glRotatef(yingYangOrb.rotationPitch, -MathHelper.sin((float)((yaw - 90F) / 180F * Math.PI)), 0.0F,
+				MathHelper.cos((float)((yaw - 90F) / 180F * Math.PI)));
 		GL11.glRotatef(180F - yaw, 0.0F, 1.0F, 0.0F);
 
-		GL11.glScalef(0.5F, 0.5F, 0.5F);//倍率　縦方向 高さ　幅
+		GL11.glScalef(0.5F, 0.5F, 0.5F);
 		modelYingYangOrb.render(yingYangOrb, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
 		float angle = 30F;
-		GL11.glRotatef(MathHelper.sin(angle) / 3.141593F * 180F, 0.0F, 0.0F, 1.0F);
+		GL11.glRotatef((float)(MathHelper.sin(angle) / Math.PI * 180F), 0.0F, 0.0F, 1.0F);
 
 
 		GL11.glPopMatrix();
@@ -68,13 +69,14 @@ public class RenderStandardShot extends Render {
 		GL11.glPushMatrix();
 		bindTexture(getEntityTexture(miniHakkero));
 		GL11.glTranslatef((float)x, (float)y, (float)z);
-		GL11.glRotatef(miniHakkero.rotationPitch, -MathHelper.sin((yaw - 90F) / 180F * 3.141593F), 0.0F, MathHelper.cos((yaw - 90F) / 180F * 3.141593F));
+		GL11.glRotatef(miniHakkero.rotationPitch, -MathHelper.sin((float)((yaw - 90F) / 180F * Math.PI)), 0.0F,
+				MathHelper.cos((float)((yaw - 90F) / 180F * Math.PI)));
 		GL11.glRotatef(180F - yaw, 0.0F, 1.0F, 0.0F);
 
-		GL11.glScalef(0.5F, 0.5F, 0.5F);//倍率　縦方向 高さ　幅
+		GL11.glScalef(0.5F, 0.5F, 0.5F);
 		modelMiniHakkero.render(miniHakkero, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
 		float angle = 30F;
-		GL11.glRotatef(MathHelper.sin(angle) / 3.141593F * 180F, 0.0F, 0.0F, 1.0F);
+		GL11.glRotatef((float)(MathHelper.sin(angle) / Math.PI * 180F), 0.0F, 0.0F, 1.0F);
 
 
 		GL11.glPopMatrix();
@@ -84,12 +86,11 @@ public class RenderStandardShot extends Render {
 	public void renderMiniHakkero2(EntityStandardShot miniHakkero, double x, double y, double z, float yaw, float pitch) {
 		GL11.glPushMatrix();
 		GL11.glTranslatef((float)x, (float)y, (float)z);
-		GL11.glRotatef(miniHakkero.rotationPitch, -MathHelper.sin((miniHakkero.rotationYaw - 90F) / 180F * 3.141593F), 0.0F,
-				MathHelper.cos((yaw - 90F) / 180F * 3.141593F));
+		GL11.glRotatef(miniHakkero.rotationPitch, -MathHelper.sin((float)((miniHakkero.rotationYaw - 90F) / 180F * Math.PI)), 0.0F,
+				MathHelper.cos((float)((yaw - 90F) / 180F * Math.PI)));
 		GL11.glRotatef(180F - yaw, 0.0F, 1.0F, 0.0F);
 
-		//ずらした部分はここの倍率を変えて補う
-		GL11.glScalef(0.501F, 0.501F, 0.501F);//倍率　縦方向 高さ　幅
+		GL11.glScalef(0.501F, 0.501F, 0.501F);
 
 		modelMiniHakkero2.render(miniHakkero, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
 		GL11.glDisable(GL11.GL_LIGHTING);

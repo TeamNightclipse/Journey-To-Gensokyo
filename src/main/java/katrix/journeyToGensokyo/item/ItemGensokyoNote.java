@@ -59,6 +59,7 @@ public class ItemGensokyoNote extends ItemJTGBase {
 		return icons[meta];
 	}
 
+	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
 	public void getSubItems(Item item, CreativeTabs tab, List list) {
 		for (int i = 0; i < 6; i++) {

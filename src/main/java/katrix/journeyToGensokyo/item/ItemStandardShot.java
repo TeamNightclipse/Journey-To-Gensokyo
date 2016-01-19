@@ -339,6 +339,7 @@ public class ItemStandardShot extends Item {
 		return ret;
 	}
 
+	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void getSubItems(Item item, CreativeTabs creativeTabs, List list) {
@@ -347,6 +348,7 @@ public class ItemStandardShot extends Item {
 		}
 	}
 
+	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
 	public void addInformation(ItemStack itemStack, EntityPlayer player, List list, boolean bool) {
 		super.addInformation(itemStack, player, list, bool);
