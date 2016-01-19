@@ -7,9 +7,9 @@
  * a modifed Botania license: https://github.com/Katrix-/JTG/blob/master/LICENSE.md
  */
 
-package katrix.journeyToGensokyo.reference;
+package katrix.journeyToGensokyo.lib;
 
-public class OreDictionaryNames {
+public class LibOreDictionary {
 
 	public static final String ORE_GENSOKYO = "oreGensokyo";
 	public static final String ORE_DEMON = "oreDemon";

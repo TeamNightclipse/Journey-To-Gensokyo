@@ -12,9 +12,9 @@ package katrix.journeyToGensokyo.plugin.thsc.entity;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import katrix.journeyToGensokyo.JourneyToGensokyo;
 import katrix.journeyToGensokyo.item.ItemStandardShot;
-import katrix.journeyToGensokyo.reference.EntityName;
-import katrix.journeyToGensokyo.reference.MobID;
-import katrix.journeyToGensokyo.reference.SpecialShotID;
+import katrix.journeyToGensokyo.lib.LibEntityName;
+import katrix.journeyToGensokyo.lib.LibMobID;
+import katrix.journeyToGensokyo.lib.LibSpecialShotId;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -99,7 +99,7 @@ public class EntityStandardShot extends Entity {
 				THShotLib.playShotSound(this);
 				if (isSlowMode) {
 					ShotData homing1 = ShotData.shot(DanmakuConstants.FORM_AMULET, DanmakuConstants.RED, 0.5F, 2.0F + power / 2, 0, 60,
-							SpecialShotID.JTG_HOMING01);
+							LibSpecialShotId.JTG_HOMING01);
 
 					if (power != 4F && place == 0) {
 						THShotLib.createShot(user, living,
@@ -114,7 +114,7 @@ public class EntityStandardShot extends Entity {
 				}
 				else {
 					ShotData homing2 = ShotData.shot(DanmakuConstants.FORM_AMULET, DanmakuConstants.RED, 0.2F, 1.0F + power / 4, 0, 60,
-							SpecialShotID.JTG_HOMING02);
+							LibSpecialShotId.JTG_HOMING02);
 					THShotLib.createShot(user, living, THShotLib.pos_Entity(this), THShotLib.angle(rotationYaw, rotationPitch), 0F, speed, speed, speed,
 							THShotLib.gravity_Zero(), homing2);
 				}
@@ -127,7 +127,7 @@ public class EntityStandardShot extends Entity {
 				if (ticksExisted % 20 == 0) {
 					THShotLib.playShotSound(this);
 					ShotData missile = ShotData.shot(DanmakuConstants.FORM_SMALLSTAR, DanmakuConstants.AQUA, 0.15F, 2.0F + power, 0, 60,
-							SpecialShotID.MISSILE01);
+							LibSpecialShotId.MISSILE01);
 					THShotLib.createShot(user, living, THShotLib.pos_Entity(this), THShotLib.angle(rotationYaw, rotationPitch), 0F, speed, speed, speed,
 							THShotLib.gravity_Zero(), missile);
 				}
@@ -288,7 +288,6 @@ public class EntityStandardShot extends Entity {
 	}
 
 	public static void postInit() {
-
-		EntityRegistry.registerModEntity(EntityStandardShot.class, EntityName.STANDARD_SHOT, MobID.STANDARD_SHOT, JourneyToGensokyo.instance, 40, 1, true);
+		EntityRegistry.registerModEntity(EntityStandardShot.class, LibEntityName.STANDARD_SHOT, LibMobID.STANDARD_SHOT, JourneyToGensokyo.instance, 40, 1, true);
 	}
 }

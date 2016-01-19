@@ -12,11 +12,11 @@ package katrix.journeyToGensokyo.net;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.relauncher.Side;
-import katrix.journeyToGensokyo.reference.ModInfo;
+import katrix.journeyToGensokyo.lib.LibMod;
 
 public class PacketHandler {
 
-	public static SimpleNetworkWrapper net = NetworkRegistry.INSTANCE.newSimpleChannel(ModInfo.MODID);
+	public static SimpleNetworkWrapper net = NetworkRegistry.INSTANCE.newSimpleChannel(LibMod.MODID);
 
 	public static void preInit() {
 

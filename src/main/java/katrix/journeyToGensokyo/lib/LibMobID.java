@@ -7,9 +7,9 @@
  * a modifed Botania license: https://github.com/Katrix-/JTG/blob/master/LICENSE.md
  */
 
-package katrix.journeyToGensokyo.reference;
+package katrix.journeyToGensokyo.lib;
 
-public class MobID {
+public class LibMobID {
 
 	public static final int FAIRY_ICE = 1;
 	public static final int FAIRY_NETHER = 2;

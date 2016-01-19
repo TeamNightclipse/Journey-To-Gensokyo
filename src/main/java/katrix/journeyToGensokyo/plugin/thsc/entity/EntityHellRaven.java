@@ -16,8 +16,8 @@ import java.util.List;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import katrix.journeyToGensokyo.JourneyToGensokyo;
 import katrix.journeyToGensokyo.handler.ConfigHandler;
-import katrix.journeyToGensokyo.reference.EntityName;
-import katrix.journeyToGensokyo.reference.MobID;
+import katrix.journeyToGensokyo.lib.LibEntityName;
+import katrix.journeyToGensokyo.lib.LibMobID;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.item.EntityXPOrb;
@@ -243,7 +243,7 @@ public class EntityHellRaven extends EntityTHFairy {
 
 	public static void postInit() {
 
-		EntityRegistry.registerModEntity(EntityHellRaven.class, EntityName.HELL_RAVEN, MobID.HELL_RAVEN, JourneyToGensokyo.instance, 80, 1, true);
+		EntityRegistry.registerModEntity(EntityHellRaven.class, LibEntityName.HELL_RAVEN, LibMobID.HELL_RAVEN, JourneyToGensokyo.instance, 80, 1, true);
 
 		List<BiomeGenBase> spawnbiomes = new ArrayList<BiomeGenBase>(Arrays.asList(BiomeDictionary.getBiomesForType(Type.NETHER)));
 

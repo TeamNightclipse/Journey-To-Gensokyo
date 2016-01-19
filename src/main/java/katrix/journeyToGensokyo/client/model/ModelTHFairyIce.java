@@ -279,36 +279,36 @@ public class ModelTHFairyIce extends ModelBase {
 		super.setRotationAngles(movement, far, tick, yaw, pitch, size, entity);
 		EntityTHFairy thFairy = (EntityTHFairy)entity;
 
-		head.rotateAngleY = yaw / (180F / (float)Math.PI);
-		head.rotateAngleX = pitch / (180F / (float)Math.PI);
+		head.rotateAngleY = (float)(yaw / (180F / Math.PI));
+		head.rotateAngleX = (float)(pitch / (180F / Math.PI));
 		body.rotateAngleY = (float)(MathHelperJTG.sin(MathHelper.sqrt_float(onGround) * (float)Math.PI * 2.0F) * 0.2F);
 		skirt.rotateAngleX = 0F;
 
 		if (isRiding) {
-			rightArm.rotateAngleX = -((float)Math.PI / 5F);
-			leftArm.rotateAngleX = -((float)Math.PI / 5F);
-			rightLeg.rotateAngleX = -((float)Math.PI * 2F / 5F);
-			leftLeg.rotateAngleX = -((float)Math.PI * 2F / 5F);
-			rightLeg.rotateAngleY = (float)Math.PI / 14F;
-			leftLeg.rotateAngleY = -((float)Math.PI / 14F);
-			rightLeg.rotateAngleZ = (float)Math.PI / 14F;
-			leftLeg.rotateAngleZ = -((float)Math.PI / 14F);
+			rightArm.rotateAngleX = (float)-(Math.PI / 5F);
+			leftArm.rotateAngleX = (float)-(Math.PI / 5F);
+			rightLeg.rotateAngleX = (float)-(Math.PI * 2F / 5F);
+			leftLeg.rotateAngleX = (float)-(Math.PI * 2F / 5F);
+			rightLeg.rotateAngleY = (float)(Math.PI / 14F);
+			leftLeg.rotateAngleY = (float)-(Math.PI / 14F);
+			rightLeg.rotateAngleZ = (float)(Math.PI / 14F);
+			leftLeg.rotateAngleZ = (float)-(Math.PI / 14F);
 
-			skirt.rotateAngleX += -((float)Math.PI / 5F);
+			skirt.rotateAngleX += -(Math.PI / 5F);
 		}
 		else {
 
 			if (thFairy.getFlyingHeight() == 0) {
 				rightLeg.rotateAngleX = (float)(MathHelperJTG.cos(movement) * 0.7F * far);
-				leftLeg.rotateAngleX = (float)(MathHelperJTG.cos(movement + (float)Math.PI) * 0.7F * far);
+				leftLeg.rotateAngleX = (float)(MathHelperJTG.cos(movement + Math.PI) * 0.7F * far);
 				rightLeg.rotateAngleZ = 0F;
 				leftLeg.rotateAngleZ = 0F;
 
 				if (movement > 0F) {
-					rightArm.rotateAngleX = (float)(MathHelperJTG.cos(movement + (float)Math.PI) * 2.0F * far * 0.5F);
+					rightArm.rotateAngleX = (float)(MathHelperJTG.cos(movement + Math.PI) * 2.0F * far * 0.5F);
 					leftArm.rotateAngleX = (float)(MathHelperJTG.cos(movement) * 2.0F * far * 0.5F);
-					rightArm.rotateAngleY = -10F / 180F * (float)Math.PI;
-					rightArm.rotateAngleZ = 20F / 180F * (float)Math.PI;
+					rightArm.rotateAngleY = (float)(-10F / 180F * Math.PI);
+					rightArm.rotateAngleZ = (float)(20F / 180F * Math.PI);
 					leftArm.rotateAngleY = -rightArm.rotateAngleY;
 					leftArm.rotateAngleZ = -rightArm.rotateAngleZ;
 				}
@@ -343,15 +343,15 @@ public class ModelTHFairyIce extends ModelBase {
 		if (thFairy.getHealth() > 0F) {
 			body.rotateAngleX = 0F;
 			if (thFairy.getFlyingHeight() > 0) {
-				rightWing.rotateAngleY = (float)(MathHelperJTG.cos(tick * 1.3F) * (float)Math.PI * 0.25F);
+				rightWing.rotateAngleY = (float)(MathHelperJTG.cos(tick * 1.3F) * Math.PI * 0.25F);
 				leftWing.rotateAngleY = -rightWing.rotateAngleY;
-				rightWing2.rotateAngleY = (float)(MathHelperJTG.cos(tick * 1.3F) * (float)Math.PI * 0.25F);
+				rightWing2.rotateAngleY = (float)(MathHelperJTG.cos(tick * 1.3F) * Math.PI * 0.25F);
 				leftWing2.rotateAngleY = -rightWing2.rotateAngleY;
 			}
 			else {
-				rightWing.rotateAngleY = (float)(MathHelperJTG.cos(tick * 0.5F) * (float)Math.PI * 0.1F + (float)Math.PI * 0.15F);
+				rightWing.rotateAngleY = (float)(MathHelperJTG.cos(tick * 0.5F) * Math.PI * 0.1F + Math.PI * 0.15F);
 				leftWing.rotateAngleY = -rightWing.rotateAngleY;
-				rightWing2.rotateAngleY = (float)(MathHelperJTG.cos(tick * 0.5F) * (float)Math.PI * 0.1F + (float)Math.PI * 0.15F);
+				rightWing2.rotateAngleY = (float)(MathHelperJTG.cos(tick * 0.5F) * Math.PI * 0.1F + Math.PI * 0.15F);
 				leftWing2.rotateAngleY = -rightWing2.rotateAngleY;
 			}
 		}
@@ -361,8 +361,6 @@ public class ModelTHFairyIce extends ModelBase {
 			leftWing.rotateAngleY = -rightWing.rotateAngleY;
 			rightWing2.rotateAngleY = -25F;
 			leftWing2.rotateAngleY = -rightWing2.rotateAngleY;
-			//this.head.rotateAngleX = MathHelper.cos(tick * 1.3F) * (float)Math.PI * 0.25F;
 		}
 	}
-
 }

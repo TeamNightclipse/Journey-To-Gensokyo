@@ -11,8 +11,8 @@ package katrix.journeyToGensokyo.plugin.thsc.entity;
 
 import cpw.mods.fml.common.registry.EntityRegistry;
 import katrix.journeyToGensokyo.JourneyToGensokyo;
-import katrix.journeyToGensokyo.reference.EntityName;
-import katrix.journeyToGensokyo.reference.MobID;
+import katrix.journeyToGensokyo.lib.LibEntityName;
+import katrix.journeyToGensokyo.lib.LibMobID;
 import net.minecraft.world.World;
 import thKaguyaMod.entity.living.EntityFamiliar;
 
@@ -20,7 +20,6 @@ public class EntityFamiliarIce extends EntityFamiliar {
 
 	public EntityFamiliarIce(World world) {
 		super(world);
-
 		setForm((byte)6);
 		setSpeed(0.6D);
 		setAttackDistance(12.0D);
@@ -28,9 +27,6 @@ public class EntityFamiliarIce extends EntityFamiliar {
 	}
 
 	public static void postInit() {
-
-		EntityRegistry.registerModEntity(EntityFamiliarIce.class, EntityName.FAMILIAR_ICE, MobID.FAMILIAR_ICE, JourneyToGensokyo.instance, 80, 1, true);
-
+		EntityRegistry.registerModEntity(EntityFamiliarIce.class, LibEntityName.FAMILIAR_ICE, LibMobID.FAMILIAR_ICE, JourneyToGensokyo.instance, 80, 1, true);
 	}
-
 }

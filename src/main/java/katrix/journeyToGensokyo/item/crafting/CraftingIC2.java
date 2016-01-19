@@ -7,7 +7,7 @@
  * a modifed Botania license: https://github.com/Katrix-/JTG/blob/master/LICENSE.md
  */
 
-package katrix.journeyToGensokyo.crafting;
+package katrix.journeyToGensokyo.item.crafting;
 
 import ic2.api.recipe.RecipeInputItemStack;
 import ic2.api.recipe.Recipes;
@@ -15,7 +15,7 @@ import katrix.journeyToGensokyo.block.JTGBlock;
 import katrix.journeyToGensokyo.item.JTGItem;
 import net.minecraft.item.ItemStack;
 
-public class CraftingIC2Ore {
+public class CraftingIC2 {
 
 	public static void init() {
 

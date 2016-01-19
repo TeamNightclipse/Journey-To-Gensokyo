@@ -11,6 +11,7 @@ package katrix.journeyToGensokyo.item;
 
 import java.util.List;
 
+import katrix.journeyToGensokyo.lib.LibMod;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -18,41 +19,26 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 
 public class ItemGensokyoNote extends ItemJTGBase {
+	
+	public static final String[] names = {"ruined", "patched", "dusty", "normal", "imbued", "arcane"};
 
 	public ItemGensokyoNote() {
 		super();
 		setHasSubtypes(true);
 	}
 
-	public IIcon[] icons = new IIcon[6];
+	public IIcon[] icons = new IIcon[names.length];
 
 	@Override
 	public void registerIcons(IIconRegister reg) {
-		for (int i = 0; i < 6; i++) {
-			if (i == 0) {
-				icons[i] = reg.registerIcon("journeytogensokyo:gensokyoNotesRuined");
-			}
-			if (i == 1) {
-				icons[i] = reg.registerIcon("journeytogensokyo:gensokyoNotesPat");
-			}
-			if (i == 2) {
-				icons[i] = reg.registerIcon("journeytogensokyo:gensokyoNotesDus");
-			}
-			if (i == 3) {
-				icons[i] = reg.registerIcon("journeytogensokyo:gensokyoNotes");
-			}
-			if (i == 4) {
-				icons[i] = reg.registerIcon("journeytogensokyo:gensokyoNotes");
-			}
-			if (i == 5) {
-				icons[i] = reg.registerIcon("journeytogensokyo:gensokyoNotesArc");
-			}
+		for (int i = 0; i < names.length; i++) {
+			icons[i] = reg.registerIcon(LibMod.MODID + ":gensokyoNotes" + names[i]);
 		}
 	}
 
 	@Override
 	public IIcon getIconFromDamage(int meta) {
-		if (meta > 5) {
+		if (meta > names.length - 1) {
 			meta = 0;
 		}
 
@@ -62,14 +48,13 @@ public class ItemGensokyoNote extends ItemJTGBase {
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
 	public void getSubItems(Item item, CreativeTabs tab, List list) {
-		for (int i = 0; i < 6; i++) {
+		for (int i = 0; i < names.length; i++) {
 			list.add(new ItemStack(item, 1, i));
 		}
 	}
 
 	@Override
 	public boolean hasEffect(ItemStack par1ItemStack, int pass) {
-
 		if (par1ItemStack.getItemDamage() >= 4)
 			return true;
 		return false;

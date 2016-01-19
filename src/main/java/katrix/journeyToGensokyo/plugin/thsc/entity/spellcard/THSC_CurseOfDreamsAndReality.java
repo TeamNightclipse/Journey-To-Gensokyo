@@ -9,8 +9,8 @@
 
 package katrix.journeyToGensokyo.plugin.thsc.entity.spellcard;
 
+import katrix.journeyToGensokyo.lib.LibSpecialShotId;
 import katrix.journeyToGensokyo.plugin.thsc.ShotMovementHelper;
-import katrix.journeyToGensokyo.reference.SpecialShotID;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
@@ -39,20 +39,20 @@ public class THSC_CurseOfDreamsAndReality extends THSpellCard implements ISpecia
 			THShotLib.playShotSound(card);
 			THShotLib.createShot(user, card, pos_User(), THShotLib.angle(user.rotationYaw + 45, user.rotationPitch), 0F, 0.35D, 0.35D, 0.0D,
 					THShotLib.gravity_Zero(), ShotData.shot(DanmakuConstants.FORM_BIG, DanmakuConstants.BLUE, THShotLib.SIZE[DanmakuConstants.FORM_BIG], 3.0F,
-							0, 15, SpecialShotID.DREAMS_AND_REALITY01));
+							0, 15, LibSpecialShotId.DREAMS_AND_REALITY01));
 			THShotLib.createShot(user, card, pos_User(), THShotLib.angle(user.rotationYaw - 45, user.rotationPitch), 0F, 0.35D, 0.35D, 0.0D,
 					THShotLib.gravity_Zero(), ShotData.shot(DanmakuConstants.FORM_BIG, DanmakuConstants.BLUE, THShotLib.SIZE[DanmakuConstants.FORM_BIG], 3.0F,
-							0, 15, SpecialShotID.DREAMS_AND_REALITY11));
+							0, 15, LibSpecialShotId.DREAMS_AND_REALITY11));
 		}
 
 		if (time == 50) {
 			THShotLib.playShotSound(card);
 			THShotLib.createShot(user, card, pos_User(), THShotLib.angle(user.rotationYaw - 45, user.rotationPitch), 0F, 0.35D, 0.35D, 0.0D,
 					THShotLib.gravity_Zero(), ShotData.shot(DanmakuConstants.FORM_BIG, DanmakuConstants.BLUE, THShotLib.SIZE[DanmakuConstants.FORM_BIG], 3.0F,
-							0, 15, SpecialShotID.DREAMS_AND_REALITY01));
+							0, 15, LibSpecialShotId.DREAMS_AND_REALITY01));
 			THShotLib.createShot(user, card, pos_User(), THShotLib.angle(user.rotationYaw + 45, user.rotationPitch), 0F, 0.35D, 0.35D, 0.0D,
 					THShotLib.gravity_Zero(), ShotData.shot(DanmakuConstants.FORM_BIG, DanmakuConstants.BLUE, THShotLib.SIZE[DanmakuConstants.FORM_BIG], 3.0F,
-							0, 15, SpecialShotID.DREAMS_AND_REALITY11));
+							0, 15, LibSpecialShotId.DREAMS_AND_REALITY11));
 		}
 	}
 
@@ -60,25 +60,25 @@ public class THSC_CurseOfDreamsAndReality extends THSpellCard implements ISpecia
 	public void specialShot_move(World world, int id, EntityTHShot shot) {
 		int danLevel = THKaguyaConfig.danmakuLevel;
 		switch (id) {
-			case SpecialShotID.DREAMS_AND_REALITY01:
+			case LibSpecialShotId.DREAMS_AND_REALITY01:
 				if (shot.isShotEndTime()) {
 					THShotLib.playShotSound(shot);
 					THShotLib.createShot(shot.user, shot.source, shot.pos(), shot.angle, 0F, 0.0D, 0.0D, 0.0D, THShotLib.gravity_Zero(),
-							ShotData.shot(DanmakuConstants.MASK_FORM, DanmakuConstants.MASK_COLOR, 0, 10, SpecialShotID.DREAMS_AND_REALITY02));
+							ShotData.shot(DanmakuConstants.MASK_FORM, DanmakuConstants.MASK_COLOR, 0, 10, LibSpecialShotId.DREAMS_AND_REALITY02));
 				}
 				break;
-			case SpecialShotID.DREAMS_AND_REALITY02:
+			case LibSpecialShotId.DREAMS_AND_REALITY02:
 				if (shot.ticksExisted % 2 == 0) {
 					THShotLib.playShotSound(shot);
 					THShotLib
 							.createSphereShot(shot.user, shot.source, shot.pos(), THShotLib.angle(shot.rotationYaw + shot.ticksExisted * 5, shot.rotationPitch),
 									0f, 0.35D, 0.35D, 0.0D,
 									THShotLib.gravity_Zero(), ShotData.shot(DanmakuConstants.FORM_RICE, DanmakuConstants.AQUA,
-											THShotLib.SIZE[DanmakuConstants.FORM_RICE], 3.0F, 0, 5, SpecialShotID.DREAMS_AND_REALITY03),
+											THShotLib.SIZE[DanmakuConstants.FORM_RICE], 3.0F, 0, 5, LibSpecialShotId.DREAMS_AND_REALITY03),
 									4 * danLevel, 0.1D, 0f);
 				}
 				break;
-			case SpecialShotID.DREAMS_AND_REALITY03:
+			case LibSpecialShotId.DREAMS_AND_REALITY03:
 				if (shot.isShotEndTime()) {
 					if (shot.user instanceof EntityDanmakuMob) {
 						EntityDanmakuMob danmakuMob = (EntityDanmakuMob)shot.user;
@@ -95,7 +95,7 @@ public class THSC_CurseOfDreamsAndReality extends THSpellCard implements ISpecia
 							ShotData.shot(DanmakuConstants.FORM_RICE, DanmakuConstants.AQUA, THShotLib.SIZE[DanmakuConstants.FORM_RICE], 4.0F));
 				}
 				break;
-			case SpecialShotID.DREAMS_AND_REALITY11:
+			case LibSpecialShotId.DREAMS_AND_REALITY11:
 				if (shot.isShotEndTime()) {
 					THShotLib.playShotSound(shot);
 

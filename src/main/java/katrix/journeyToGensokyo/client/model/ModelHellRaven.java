@@ -100,8 +100,8 @@ public class ModelHellRaven extends ModelBase {
 		super.setRotationAngles(movement, far, tick, yaw, pitch, size, entity);
 		ravenHead.rotateAngleY = yaw / (180F / (float)Math.PI);
 		ravenHead.rotateAngleX = pitch / (180F / (float)Math.PI);
-		ravenBody.rotateAngleX = (float)((float)Math.PI / 3F + MathHelperJTG.cos(tick * 0.1F) * 0.15F);
-		ravenWingRight.rotateAngleY = (float)(MathHelperJTG.cos(tick * 0.8F) * (float)Math.PI * 0.25F);
+		ravenBody.rotateAngleX = (float)(Math.PI / 3F + MathHelperJTG.cos(tick * 0.1F) * 0.15F);
+		ravenWingRight.rotateAngleY = (float)(MathHelperJTG.cos(tick * 0.8F) * Math.PI * 0.25F);
 		ravenWingLeft.rotateAngleY = -ravenWingRight.rotateAngleY;
 		ravenWingRight2.rotateAngleY = ravenWingRight.rotateAngleY * 0.5F;
 		ravenWingleft2.rotateAngleY = -ravenWingRight.rotateAngleY * 0.5F;

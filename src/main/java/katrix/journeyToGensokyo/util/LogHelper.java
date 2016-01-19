@@ -12,12 +12,12 @@ package katrix.journeyToGensokyo.util;
 import org.apache.logging.log4j.Level;
 
 import cpw.mods.fml.common.FMLLog;
-import katrix.journeyToGensokyo.reference.ModInfo;
+import katrix.journeyToGensokyo.lib.LibMod;
 
 public class LogHelper {
 
 	public static void log(Level logLevel, Object obj) {
-		FMLLog.log(ModInfo.NAME, logLevel, String.valueOf(obj));
+		FMLLog.log(LibMod.NAME, logLevel, String.valueOf(obj));
 	}
 
 	public static void all(Object obj) {

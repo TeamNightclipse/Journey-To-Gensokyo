@@ -9,8 +9,8 @@
 
 package katrix.journeyToGensokyo.plugin.thsc.entity.shot;
 
+import katrix.journeyToGensokyo.lib.LibSpecialShotId;
 import katrix.journeyToGensokyo.plugin.thsc.ShotMovementHelper;
-import katrix.journeyToGensokyo.reference.SpecialShotID;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
@@ -22,10 +22,10 @@ public class ShotHoming implements ISpecialShot {
 	@Override
 	public void specialShot_move(World world, int id, EntityTHShot shot) {
 		switch (id) {
-			case SpecialShotID.JTG_HOMING01:
+			case LibSpecialShotId.JTG_HOMING01:
 				ShotMovementHelper.homing(shot, 18);
 				break;
-			case SpecialShotID.JTG_HOMING02:
+			case LibSpecialShotId.JTG_HOMING02:
 				ShotMovementHelper.homing(shot, 18, 5.0F);
 				break;
 			default:

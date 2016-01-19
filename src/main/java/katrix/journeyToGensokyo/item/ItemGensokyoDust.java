@@ -11,6 +11,7 @@ package katrix.journeyToGensokyo.item;
 
 import java.util.List;
 
+import katrix.journeyToGensokyo.lib.LibMod;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -18,34 +19,26 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 
 public class ItemGensokyoDust extends ItemJTGBase {
+	
+	public final static String[] names = {"gensokyo", "demon", "celestial"};
 
 	public ItemGensokyoDust() {
 		super();
 		setHasSubtypes(true);
 	}
 
-	public IIcon[] icons = new IIcon[3];
+	public IIcon[] icons = new IIcon[names.length];
 
 	@Override
 	public void registerIcons(IIconRegister reg) {
-		for (int i = 0; i < 3; i++) {
-			if (i == 0) {
-				icons[i] = reg.registerIcon("journeytogensokyo:gensokyoDust");
-			}
-
-			if (i == 1) {
-				icons[i] = reg.registerIcon("journeytogensokyo:demonDust");
-			}
-
-			if (i == 2) {
-				icons[i] = reg.registerIcon("journeytogensokyo:celestialDust");
-			}
+		for (int i = 0; i < names.length; i++) {
+			icons[i] = reg.registerIcon(LibMod.MODID + ":" + names[i] + "Dust");
 		}
 	}
 
 	@Override
 	public IIcon getIconFromDamage(int meta) {
-		if (meta > 2) {
+		if (meta > names.length -1) {
 			meta = 0;
 		}
 

@@ -7,9 +7,9 @@
  * a modifed Botania license: https://github.com/Katrix-/JTG/blob/master/LICENSE.md
  */
 
-package katrix.journeyToGensokyo.reference;
+package katrix.journeyToGensokyo.lib;
 
-public class SpellcardID {
+public class LibSpellcardId {
 
 	public static final int DOUBLE_SPARK = 300;
 	public static final int FINAL_SPARK = 301;

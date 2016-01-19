@@ -7,9 +7,9 @@
  * a modifed Botania license: https://github.com/Katrix-/JTG/blob/master/LICENSE.md
  */
 
-package katrix.journeyToGensokyo.reference;
+package katrix.journeyToGensokyo.lib;
 
-public class SpecialShotID {
+public class LibSpecialShotId {
 
 	public static final int SEED_LASER01 = 11000;
 	public static final int FANTASY_SEAL01 = 11100;

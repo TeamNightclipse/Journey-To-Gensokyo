@@ -16,8 +16,8 @@ import java.util.List;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import katrix.journeyToGensokyo.JourneyToGensokyo;
 import katrix.journeyToGensokyo.handler.ConfigHandler;
-import katrix.journeyToGensokyo.reference.EntityName;
-import katrix.journeyToGensokyo.reference.MobID;
+import katrix.journeyToGensokyo.lib.LibEntityName;
+import katrix.journeyToGensokyo.lib.LibMobID;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.util.DamageSource;
@@ -105,8 +105,7 @@ public class EntityTHFairyIce extends EntityTHFairy {
 	}
 
 	public static void postInit() {
-
-		EntityRegistry.registerModEntity(EntityTHFairyIce.class, EntityName.FAIRY_ICE, MobID.FAIRY_ICE, JourneyToGensokyo.instance, 80, 1, true);
+		EntityRegistry.registerModEntity(EntityTHFairyIce.class, LibEntityName.FAIRY_ICE, LibMobID.FAIRY_ICE, JourneyToGensokyo.instance, 80, 1, true);
 
 		List<BiomeGenBase> spawnbiomes = new ArrayList<BiomeGenBase>(Arrays.asList(BiomeDictionary.getBiomesForType(Type.COLD)));
 		for (BiomeGenBase biome : BiomeDictionary.getBiomesForType(Type.SNOWY)) {

@@ -71,10 +71,6 @@ public class RenderYukari extends RenderTHBoss {
 
 	@Override
 	protected ResourceLocation getEntityTexture(Entity entity) {
-		return this.getEntityTexture((EntityYukari)entity);
-	}
-
-	protected ResourceLocation getEntityTexture(EntityYukari entity) {
 		return texture;
 	}
 }

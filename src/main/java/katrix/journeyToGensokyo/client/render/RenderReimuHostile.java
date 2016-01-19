@@ -11,7 +11,6 @@ package katrix.journeyToGensokyo.client.render;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import katrix.journeyToGensokyo.plugin.thsc.entity.EntityReimuHostile;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import thKaguyaMod.client.model.living.ModelReimu;
@@ -26,21 +25,7 @@ public class RenderReimuHostile extends RenderTHBoss {
 	}
 
 	@Override
-	public void doRender(Entity entity, double x, double y, double z, float yaw, float pitch) {
-		super.doRender(entity, x, y, z, yaw, pitch);
-		render((EntityReimuHostile)entity, x, y, z, yaw, pitch);
-
-	}
-
-	public void render(EntityReimuHostile entity, double x, double y, double z, float yaw, float pitch) {
-	}
-
-	@Override
 	protected ResourceLocation getEntityTexture(Entity entity) {
-		return this.getEntityTexture((EntityReimuHostile)entity);
-	}
-
-	protected ResourceLocation getEntityTexture(EntityReimuHostile entity) {
 		return texture;
 	}
 }

@@ -11,6 +11,7 @@ package katrix.journeyToGensokyo.item;
 
 import java.util.List;
 
+import katrix.journeyToGensokyo.lib.LibMod;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -18,34 +19,26 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 
 public class ItemOldSpellcard extends ItemJTGBase {
+	
+	public static final String[] names = {"gensokyo", "demom", "celestial"};
 
 	public ItemOldSpellcard() {
 		super();
 		setHasSubtypes(true);
 	}
 
-	public IIcon[] icons = new IIcon[3];
+	public IIcon[] icons = new IIcon[names.length];
 
 	@Override
 	public void registerIcons(IIconRegister reg) {
-		for (int i = 0; i < 3; i++) {
-			if (i == 0) {
-				icons[i] = reg.registerIcon("journeytogensokyo:oldGensokyoSpell");
-			}
-
-			if (i == 1) {
-				icons[i] = reg.registerIcon("journeytogensokyo:oldDemonSpell");
-			}
-
-			if (i == 2) {
-				icons[i] = reg.registerIcon("journeytogensokyo:oldCelestialSpell");
-			}
+		for (int i = 0; i < names.length; i++) {
+			icons[i] = reg.registerIcon(LibMod.MODID + ":old" + names[i] + "Spell");
 		}
 	}
 
 	@Override
 	public IIcon getIconFromDamage(int meta) {
-		if (meta > 2) {
+		if (meta > names.length - 1) {
 			meta = 0;
 		}
 
@@ -55,7 +48,7 @@ public class ItemOldSpellcard extends ItemJTGBase {
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
 	public void getSubItems(Item item, CreativeTabs tab, List list) {
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < names.length; i++) {
 			list.add(new ItemStack(item, 1, i));
 		}
 	}

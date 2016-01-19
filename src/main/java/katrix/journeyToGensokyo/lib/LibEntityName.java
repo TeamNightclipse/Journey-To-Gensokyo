@@ -7,9 +7,9 @@
  * a modifed Botania license: https://github.com/Katrix-/JTG/blob/master/LICENSE.md
  */
 
-package katrix.journeyToGensokyo.reference;
+package katrix.journeyToGensokyo.lib;
 
-public class EntityName {
+public class LibEntityName {
 
 	public static final String HELL_RAVEN = "HellRaven";
 	public static final String TENGU_CROW = "TenguCrow";

@@ -9,8 +9,8 @@
 
 package katrix.journeyToGensokyo.plugin.thsc.entity.shot;
 
+import katrix.journeyToGensokyo.lib.LibSpecialShotId;
 import katrix.journeyToGensokyo.plugin.thsc.ShotMovementHelper;
-import katrix.journeyToGensokyo.reference.SpecialShotID;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
@@ -24,10 +24,10 @@ public class ShotFantasySeal implements ISpecialShot {
 	@Override
 	public void specialShot_move(World world, int id, EntityTHShot shot) {
 		switch (id) {
-			case SpecialShotID.FANTASY_SEAL01:
+			case LibSpecialShotId.FANTASY_SEAL01:
 				if (shot.isShotEndTime()) {
 					shot.setShotForm(DanmakuConstants.FORM_CIRCLE);
-					shot.shotSpecial = SpecialShotID.FANTASY_SEAL02;
+					shot.shotSpecial = LibSpecialShotId.FANTASY_SEAL02;
 					shot.setShotEndTime(10);
 					shot.shotSpeed = 0.0;
 					shot.shotLimitSpeed = 0.0;
@@ -36,19 +36,19 @@ public class ShotFantasySeal implements ISpecialShot {
 					shot.delete();
 				}
 				break;
-			case SpecialShotID.FANTASY_SEAL02:
+			case LibSpecialShotId.FANTASY_SEAL02:
 				if (shot.isShotEndTime()) {
 					shot.setShotColor(DanmakuConstants.RED);
-					shot.shotSpecial = SpecialShotID.FANTASY_SEAL03;
+					shot.shotSpecial = LibSpecialShotId.FANTASY_SEAL03;
 					shot.setShotEndTime(10);
 					shot.reCreate();
 					shot.delete();
 				}
 				break;
-			case SpecialShotID.FANTASY_SEAL03:
+			case LibSpecialShotId.FANTASY_SEAL03:
 				if (shot.isShotEndTime()) {
 					shot.setShotForm(DanmakuConstants.FORM_AMULET);
-					shot.shotSpecial = SpecialShotID.FANTASY_SEAL04;
+					shot.shotSpecial = LibSpecialShotId.FANTASY_SEAL04;
 					shot.setShotEndTime(30);
 
 					if (shot.user instanceof EntityDanmakuMob) {
@@ -68,25 +68,25 @@ public class ShotFantasySeal implements ISpecialShot {
 					shot.reCreate();
 					shot.delete();
 				}
-			case SpecialShotID.FANTASY_SEAL04:
+			case LibSpecialShotId.FANTASY_SEAL04:
 				if (shot.isShotEndTime()) {
 					shot.setShotForm(DanmakuConstants.FORM_CIRCLE);
-					shot.shotSpecial = SpecialShotID.FANTASY_SEAL05;
+					shot.shotSpecial = LibSpecialShotId.FANTASY_SEAL05;
 					shot.setShotEndTime(10);
 					shot.reCreate();
 					shot.delete();
 				}
 				break;
-			case SpecialShotID.FANTASY_SEAL05:
+			case LibSpecialShotId.FANTASY_SEAL05:
 				if (shot.isShotEndTime()) {
 					shot.setShotColor(DanmakuConstants.PURPLE);
 					;
-					shot.shotSpecial = SpecialShotID.FANTASY_SEAL06;
+					shot.shotSpecial = LibSpecialShotId.FANTASY_SEAL06;
 					shot.setShotEndTime(10);
 					shot.reCreate();
 					shot.delete();
 				}
-			case SpecialShotID.FANTASY_SEAL06:
+			case LibSpecialShotId.FANTASY_SEAL06:
 				if (shot.isShotEndTime()) {
 					shot.setShotForm(DanmakuConstants.FORM_AMULET);
 					shot.shotSpecial = 0;

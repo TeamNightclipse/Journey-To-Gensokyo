@@ -7,13 +7,14 @@
  * a modifed Botania license: https://github.com/Katrix-/JTG/blob/master/LICENSE.md
  */
 
-package katrix.journeyToGensokyo.reference;
+package katrix.journeyToGensokyo.lib;
 
-public class ConfigRef {
 
-	public static final String RTY = "RTY";
-	public static final String MOBS = "Mobs";
-	public static final String MISC = "misc";
-	public static final String MISC2 = "mist";
+public class LibBlockName {
+	
+	public final static String ORE_GENSOKYO = "gensokyoOreBlock";
+	public final static String KEYSTONE = "keyStoneBlock";
 
+	public final static String COMP_ORE_DEMON = "demonOreBlock";
+	public final static String COMP_ORE_CELESTIAL = "celestialOreBlock";
 }

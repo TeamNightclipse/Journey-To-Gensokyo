@@ -12,29 +12,27 @@ package katrix.journeyToGensokyo.client.gui;
 import java.util.ArrayList;
 import java.util.List;
 
-import cpw.mods.fml.client.config.ConfigGuiType;
-import cpw.mods.fml.client.config.DummyConfigElement;
 import cpw.mods.fml.client.config.GuiConfig;
 import cpw.mods.fml.client.config.IConfigElement;
 import katrix.journeyToGensokyo.handler.ConfigHandler;
-import katrix.journeyToGensokyo.reference.ModInfo;
+import katrix.journeyToGensokyo.lib.LibMod;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraftforge.common.config.ConfigElement;
 
 public class JTGGuiConfig extends GuiConfig {
 
 	public JTGGuiConfig(GuiScreen parentScreen) {
 
-		super(parentScreen, getConfigList(), ModInfo.MODID, false, false, GuiConfig.getAbridgedConfigPath(ConfigHandler.cfg.toString()));
+		super(parentScreen, getConfigList(), LibMod.MODID, false, false, GuiConfig.getAbridgedConfigPath(ConfigHandler.cfg.toString()));
 	}
 
-	@SuppressWarnings({"rawtypes", "unchecked"})
+	@SuppressWarnings("rawtypes")
 	public static List<IConfigElement> getConfigList() {
 
-		List<IConfigElement> list = new ArrayList();
-		//list.addAll(new ConfigElement(ConfigHandler.cfg.getCategory(ConfigRef.MOBS)).getChildElements());
-		//list.addAll(new ConfigElement(ConfigHandler.cfg.getCategory(ConfigRef.MISC)).getChildElements())
-		//list.addAll(new ConfigElement(ConfigHandler.cfg.getCategory(ConfigRef.RTY)).getChildElements());
-		list.add(new DummyConfigElement<String>("broken", "JTG in game config is currently broken", ConfigGuiType.STRING, "jtg.gui.config.is.broken"));
+		List<IConfigElement> list = new ArrayList<IConfigElement>();
+		list.add(new ConfigElement(ConfigHandler.cfg.getCategory(ConfigHandler.MOBS.toLowerCase())));
+		list.add(new ConfigElement(ConfigHandler.cfg.getCategory(ConfigHandler.MISC.toLowerCase())));
+		list.add(new ConfigElement(ConfigHandler.cfg.getCategory(ConfigHandler.RTY.toLowerCase())));
 
 		return list;
 	}

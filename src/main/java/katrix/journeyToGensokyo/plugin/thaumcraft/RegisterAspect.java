@@ -11,6 +11,7 @@ package katrix.journeyToGensokyo.plugin.thaumcraft;
 
 import katrix.journeyToGensokyo.block.JTGBlock;
 import katrix.journeyToGensokyo.item.JTGItem;
+import katrix.journeyToGensokyo.lib.LibEntityName;
 import net.minecraft.item.ItemStack;
 import thKaguyaMod.init.THKaguyaItems;
 import thaumcraft.api.ThaumcraftApi;
@@ -45,7 +46,7 @@ public class RegisterAspect {
 		ThaumcraftApi.registerObjectTag(new ItemStack(THKaguyaItems.point_item), AspectListJTG.itemPointItem);
 		ThaumcraftApi.registerObjectTag(new ItemStack(THKaguyaItems.power_item), AspectListJTG.itemPowerItem);
 
-		ThaumcraftApi.registerEntityTag("THFairyIce", AspectListJTG.entityTHFairyIce);
+		ThaumcraftApi.registerEntityTag(LibEntityName.FAIRY_ICE, AspectListJTG.entityTHFairyIce);
 		ThaumcraftApi.registerEntityTag("THFairy", AspectListJTG.entityTHFairy);
 		ThaumcraftApi.registerEntityTag("SunflowerFairy", AspectListJTG.entitySunflowerFairy);
 		ThaumcraftApi.registerEntityTag("THPhantom", AspectListJTG.entityTHPhantom);
@@ -55,7 +56,5 @@ public class RegisterAspect {
 		ThaumcraftApi.registerEntityTag("Sanae", AspectListJTG.entitySanae);
 		ThaumcraftApi.registerEntityTag("Hanabeeper", AspectListJTG.entityHanabeeper);
 		ThaumcraftApi.registerEntityTag("Rinnosuke", AspectListJTG.entityRinnosuke);
-
 	}
-
 }

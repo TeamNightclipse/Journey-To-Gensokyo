@@ -7,9 +7,9 @@
  * a modifed Botania license: https://github.com/Katrix-/JTG/blob/master/LICENSE.md
  */
 
-package katrix.journeyToGensokyo.reference;
+package katrix.journeyToGensokyo.lib;
 
-public class ModInfo {
+public class LibMod {
 
 	public static final String MODID = "journeyToGensokyo";
 	public static final String NAME = "Journey To Gensokyo";

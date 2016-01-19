@@ -14,6 +14,7 @@ import java.util.List;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import katrix.journeyToGensokyo.lib.LibMod;
 import katrix.journeyToGensokyo.plugin.thsc.entity.EntityStandardShot;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -47,14 +48,12 @@ public class ItemStandardShot extends Item {
 
 	@Override
 	public String getUnlocalizedName(ItemStack stack) {
-		int i = MathHelper.clamp_int(stack.getItemDamage(), 0, shotNames.length);
-		return super.getUnlocalizedName() + "." + shotNames[i];
+		return super.getUnlocalizedName() + "." + shotNames[stack.getItemDamage()];
 	}
 
 	@Override
 	public IIcon getIconFromDamage(int damage) {
-		int i = MathHelper.clamp_int(damage, 0, shotNames.length);
-		return icon[i];
+		return icon[damage];
 	}
 
 	@Override
@@ -63,7 +62,7 @@ public class ItemStandardShot extends Item {
 		icon = new IIcon[shotNames.length];
 
 		for (int i = 0; i < shotNames.length; ++i) {
-			icon[i] = iconRegister.registerIcon("journeytogensokyo:shot/" + shotNames[i]);
+			icon[i] = iconRegister.registerIcon(LibMod.MODID + ":shot/" + shotNames[i]);
 		}
 	}
 
@@ -197,7 +196,6 @@ public class ItemStandardShot extends Item {
 		if (entityItem.age == 1) {
 			setCanSpawn(entityItem.getEntityItem(), true);
 		}
-
 		return false;
 	}
 

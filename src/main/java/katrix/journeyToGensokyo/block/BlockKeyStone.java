@@ -26,14 +26,12 @@ public class BlockKeyStone extends BlockJTGBase {
 	private IIcon texFront;
 
 	public BlockKeyStone(Material material) {
-
 		super(material);
 		setHardness(2.0F);
 		setStepSound(Block.soundTypePiston);
 		setCreativeTab(CreativeTabs.tabBlock);
 		setHarvestLevel("pickaxe", 1);
 		setResistance(15.0F);
-
 	}
 
 	/**
@@ -41,14 +39,14 @@ public class BlockKeyStone extends BlockJTGBase {
 	 */
 	@Override
 	@SideOnly(Side.CLIENT)
-	public IIcon getIcon(int p_149691_1_, int p_149691_2_) {
-		return p_149691_1_ == 1 ? Blocks.stone.getBlockTextureFromSide(p_149691_1_)
-				: p_149691_1_ == 0 ? Blocks.stone.getBlockTextureFromSide(p_149691_1_) : blockIcon;
+	public IIcon getIcon(int side, int meta) {
+		return side == 1 ? Blocks.stone.getBlockTextureFromSide(side)
+				: side == 0 ? Blocks.stone.getBlockTextureFromSide(side) : blockIcon;
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void registerBlockIcons(IIconRegister p_149651_1_) {
-		blockIcon = p_149651_1_.registerIcon(getTextureName() + "_side");
+	public void registerBlockIcons(IIconRegister icon) {
+		blockIcon = icon.registerIcon(getTextureName() + "_side");
 	}
 }

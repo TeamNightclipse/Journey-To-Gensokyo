@@ -51,15 +51,15 @@ public class RenderStandardShot extends Render {
 	public void renderYingYangOrb(EntityStandardShot yingYangOrb, double x, double y, double z, float yaw, float pitch) {
 		GL11.glPushMatrix();
 		bindTexture(getEntityTexture(yingYangOrb));
-		GL11.glTranslatef((float)x, (float)y, (float)z);
-		GL11.glRotatef(yingYangOrb.rotationPitch, (float)-MathHelperJTG.sin((float)((yaw - 90F) / 180F * Math.PI)), 0.0F,
-				(float)MathHelperJTG.cos((float)((yaw - 90F) / 180F * Math.PI)));
+		GL11.glTranslated(x, y, z);
+		GL11.glRotated(yingYangOrb.rotationPitch, -MathHelperJTG.sin(((yaw - 90F) / 180F * Math.PI)), 0.0F,
+				MathHelperJTG.cos(((yaw - 90F) / 180F * Math.PI)));
 		GL11.glRotatef(180F - yaw, 0.0F, 1.0F, 0.0F);
 
 		GL11.glScalef(0.5F, 0.5F, 0.5F);
 		modelYingYangOrb.render(yingYangOrb, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
 		float angle = 30F;
-		GL11.glRotatef((float)(MathHelperJTG.sin(angle) / Math.PI * 180F), 0.0F, 0.0F, 1.0F);
+		GL11.glRotated((MathHelperJTG.sin(angle) / Math.PI * 180F), 0.0F, 0.0F, 1.0F);
 
 
 		GL11.glPopMatrix();

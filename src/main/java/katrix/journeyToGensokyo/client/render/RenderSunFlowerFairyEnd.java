@@ -12,37 +12,22 @@ package katrix.journeyToGensokyo.client.render;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import katrix.journeyToGensokyo.client.model.ModelSunFlowerFairyJTG;
+import katrix.journeyToGensokyo.lib.LibMod;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
-import thKaguyaMod.entity.living.EntityTHFairy;
 
 @SideOnly(Side.CLIENT)
 public class RenderSunFlowerFairyEnd extends RenderLiving {
+	
+	ResourceLocation texture = new ResourceLocation(LibMod.MODID, "textures/entity/mob/FairyTextureSunflowerEnd.png");
 
 	public RenderSunFlowerFairyEnd() {
 		super(new ModelSunFlowerFairyJTG(), 0.25F);
 	}
 
 	@Override
-	public void doRender(Entity entity, double x, double y, double z, float yaw, float pitch) {
-		super.doRender(entity, x, y, z, yaw, pitch);
-		render((EntityTHFairy)entity, x, y, z, yaw, pitch);
-
-	}
-
-	public void render(EntityTHFairy entity, double x, double y, double z, float yaw, float pitch) {
-	}
-
-	@Override
 	protected ResourceLocation getEntityTexture(Entity entity) {
-		return this.getEntityTexture((EntityTHFairy)entity);
-	}
-
-	protected ResourceLocation getEntityTexture(EntityTHFairy thFairy) {
-		ResourceLocation resourceLocation;
-		resourceLocation = new ResourceLocation("journeytogensokyo", "textures/entity/mob/FairyTextureSunflowerEnd.png");
-
-		return resourceLocation;
+		return texture;
 	}
 }

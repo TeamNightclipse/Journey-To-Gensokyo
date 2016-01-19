@@ -9,7 +9,7 @@
 
 package katrix.journeyToGensokyo.plugin.thsc.entity.spellcard;
 
-import katrix.journeyToGensokyo.reference.SpecialShotID;
+import katrix.journeyToGensokyo.lib.LibSpecialShotId;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
@@ -60,19 +60,19 @@ public class THSC_MeshLightDarkness extends THSpellCard implements ISpecialShot 
 			THShotLib.playShotSound(card);
 			THShotLib.createShot(user, card, THShotLib.pos_Distance(pos_User(), THShotLib.angle(user.rotationYaw + 45, user.rotationPitch), 2.0D * time),
 					THShotLib.angle_LimitRandom(THShotLib.angle(user.rotationYaw + (45 + 90), user.rotationPitch), 30F), 0F, 0.0D, 0.0D, 0.0D,
-					THShotLib.gravity_Zero(), ShotData.shot(DanmakuConstants.FORM_MEDIUM, DanmakuConstants.RED, 0.5F, 8.0F, 0, 60, SpecialShotID.MESH_LASER01));
+					THShotLib.gravity_Zero(), ShotData.shot(DanmakuConstants.FORM_MEDIUM, DanmakuConstants.RED, 0.5F, 8.0F, 0, 60, LibSpecialShotId.MESH_LASER01));
 			THShotLib.createShot(user, card, THShotLib.pos_Distance(pos_User(), THShotLib.angle(user.rotationYaw + 45, user.rotationPitch), 2.0D * time),
 					THShotLib.angle_LimitRandom(THShotLib.angle(user.rotationYaw - 45, user.rotationPitch), 30F), 0F, 0.0D, 0.0D, 0.0D,
-					THShotLib.gravity_Zero(), ShotData.shot(DanmakuConstants.FORM_MEDIUM, DanmakuConstants.RED, 0.5F, 8.0F, 0, 60, SpecialShotID.MESH_LASER01));
+					THShotLib.gravity_Zero(), ShotData.shot(DanmakuConstants.FORM_MEDIUM, DanmakuConstants.RED, 0.5F, 8.0F, 0, 60, LibSpecialShotId.MESH_LASER01));
 
 			THShotLib.createShot(user, card, THShotLib.pos_Distance(pos_User(), THShotLib.angle(user.rotationYaw - 45, user.rotationPitch), 2.0D * time),
 					THShotLib.angle_LimitRandom(THShotLib.angle(user.rotationYaw - (45 + 90), user.rotationPitch), 30F), 0F, 0.0D, 0.0D, 0.0D,
 					THShotLib.gravity_Zero(),
-					ShotData.shot(DanmakuConstants.FORM_MEDIUM, DanmakuConstants.BLUE, 0.5F, 8.0F, 0, 60, SpecialShotID.MESH_LASER01));
+					ShotData.shot(DanmakuConstants.FORM_MEDIUM, DanmakuConstants.BLUE, 0.5F, 8.0F, 0, 60, LibSpecialShotId.MESH_LASER01));
 			THShotLib.createShot(user, card, THShotLib.pos_Distance(pos_User(), THShotLib.angle(user.rotationYaw - 45, user.rotationPitch), 2.0D * time),
 					THShotLib.angle_LimitRandom(THShotLib.angle(user.rotationYaw + 45, user.rotationPitch), 30F), 0F, 0.0D, 0.0D, 0.0D,
 					THShotLib.gravity_Zero(),
-					ShotData.shot(DanmakuConstants.FORM_MEDIUM, DanmakuConstants.BLUE, 0.5F, 8.0F, 0, 60, SpecialShotID.MESH_LASER01));
+					ShotData.shot(DanmakuConstants.FORM_MEDIUM, DanmakuConstants.BLUE, 0.5F, 8.0F, 0, 60, LibSpecialShotId.MESH_LASER01));
 
 		}
 
@@ -105,25 +105,25 @@ public class THSC_MeshLightDarkness extends THSpellCard implements ISpecialShot 
 			THShotLib.createShot(user, card, THShotLib.pos_Distance(pos_User(), THShotLib.angle(user.rotationYaw + 45, user.rotationPitch), 2.0D * (time - 50)),
 					THShotLib.angle_LimitRandom(THShotLib.angle(user.rotationYaw + (45 + 90), user.rotationPitch), 30F), 0F, 0.0D, 0.0D, 0.0D,
 					THShotLib.gravity_Zero(),
-					ShotData.shot(DanmakuConstants.FORM_MEDIUM, DanmakuConstants.BLUE, 0.5F, 8.0F, 0, 60, SpecialShotID.MESH_LASER01));
+					ShotData.shot(DanmakuConstants.FORM_MEDIUM, DanmakuConstants.BLUE, 0.5F, 8.0F, 0, 60, LibSpecialShotId.MESH_LASER01));
 			THShotLib.createShot(user, card, THShotLib.pos_Distance(pos_User(), THShotLib.angle(user.rotationYaw + 45, user.rotationPitch), 2.0D * (time - 50)),
 					THShotLib.angle_LimitRandom(THShotLib.angle(user.rotationYaw - 45, user.rotationPitch), 30F), 0F, 0.0D, 0.0D, 0.0D,
 					THShotLib.gravity_Zero(),
-					ShotData.shot(DanmakuConstants.FORM_MEDIUM, DanmakuConstants.BLUE, 0.5F, 8.0F, 0, 60, SpecialShotID.MESH_LASER01));
+					ShotData.shot(DanmakuConstants.FORM_MEDIUM, DanmakuConstants.BLUE, 0.5F, 8.0F, 0, 60, LibSpecialShotId.MESH_LASER01));
 
 			THShotLib.createShot(user, card, THShotLib.pos_Distance(pos_User(), THShotLib.angle(user.rotationYaw - 45, user.rotationPitch), 2.0D * (time - 50)),
 					THShotLib.angle_LimitRandom(THShotLib.angle(user.rotationYaw - (45 + 90), user.rotationPitch), 30F), 0F, 0.0D, 0.0D, 0.0D,
-					THShotLib.gravity_Zero(), ShotData.shot(DanmakuConstants.FORM_MEDIUM, DanmakuConstants.RED, 0.5F, 8.0F, 0, 60, SpecialShotID.MESH_LASER01));
+					THShotLib.gravity_Zero(), ShotData.shot(DanmakuConstants.FORM_MEDIUM, DanmakuConstants.RED, 0.5F, 8.0F, 0, 60, LibSpecialShotId.MESH_LASER01));
 			THShotLib.createShot(user, card, THShotLib.pos_Distance(pos_User(), THShotLib.angle(user.rotationYaw - 45, user.rotationPitch), 2.0D * (time - 50)),
 					THShotLib.angle_LimitRandom(THShotLib.angle(user.rotationYaw + 45, user.rotationPitch), 30F), 0F, 0.0D, 0.0D, 0.0D,
-					THShotLib.gravity_Zero(), ShotData.shot(DanmakuConstants.FORM_MEDIUM, DanmakuConstants.RED, 0.5F, 8.0F, 0, 60, SpecialShotID.MESH_LASER01));
+					THShotLib.gravity_Zero(), ShotData.shot(DanmakuConstants.FORM_MEDIUM, DanmakuConstants.RED, 0.5F, 8.0F, 0, 60, LibSpecialShotId.MESH_LASER01));
 		}
 	}
 
 	@Override
 	public void specialShot_move(World world, int id, EntityTHShot shot) {
 		switch (id) {
-			case SpecialShotID.MESH_LASER01:
+			case LibSpecialShotId.MESH_LASER01:
 				if (shot.ticksExisted == 1) {
 					THShotLib.createLaserB(shot.user, shot.source, shot.pos(), shot.angle, THShotLib.rotate_Default(), 0F, 9999,
 							LaserData.laser(shot.getShotColor(), 0.5F, 20F, shot.shotDamage, 20, shot.getShotEndTime()), shot, 1.0D, 0.0D);

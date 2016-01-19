@@ -283,10 +283,6 @@ public abstract class RenderTHBoss extends RenderLiving {
 
 	@Override
 	protected ResourceLocation getEntityTexture(Entity entity) {
-		return this.getEntityTexture((EntityDanmakuMob)entity);
-	}
-
-	protected ResourceLocation getEntityTexture(EntityDanmakuMob danmakuMob) {
 		return statusTexture;
 	}
 }

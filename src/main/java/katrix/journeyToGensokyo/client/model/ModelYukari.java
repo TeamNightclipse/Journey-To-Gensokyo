@@ -160,11 +160,11 @@ public class ModelYukari extends ModelBase {
 		super.setRotationAngles(movement, far, tick, yaw, pitch, size, entity);
 		EntityYukari yukari = (EntityYukari)entity;
 
-		bipedHead.rotateAngleY = yaw / (180F / (float)Math.PI);
-		bipedHead.rotateAngleX = pitch / (180F / (float)Math.PI);
-		bipedBody.rotateAngleY = (float)(MathHelperJTG.sin(MathHelper.sqrt_float(onGround) * (float)Math.PI * 2.0F) * 0.2F);
+		bipedHead.rotateAngleY = (float)(yaw / (180F / Math.PI));
+		bipedHead.rotateAngleX = (float)(pitch / (180F / Math.PI));
+		bipedBody.rotateAngleY = (float)(MathHelperJTG.sin(MathHelper.sqrt_float(onGround) * Math.PI * 2.0F) * 0.2F);
 
-		bipedRightArm.rotateAngleX = (float)(MathHelperJTG.cos((float)(movement * 0.6662F + Math.PI)) * 2.0F * far * 0.5F);
+		bipedRightArm.rotateAngleX = (float)(MathHelperJTG.cos((movement * 0.6662F + Math.PI)) * 2.0F * far * 0.5F);
 		bipedLeftArm.rotateAngleX = (float)(MathHelperJTG.cos(movement * 0.6662F) * 2.0F * far * 0.5F);
 		bipedRightArm.rotateAngleZ = (float)(30F / 180F * Math.PI);
 		bipedLeftArm.rotateAngleZ = (float)(-30F / 180F * Math.PI);
@@ -172,40 +172,40 @@ public class ModelYukari extends ModelBase {
 		skirtTop.rotateAngleX = 0F;
 
 		if (yukari.isSneaking()) {
-			bipedBody.rotateAngleY = (float)(MathHelperJTG.cos(movement * 0.6662F + (float)Math.PI) * 2.4F * far);
-			skirtTop.rotateAngleY = (float)(MathHelperJTG.cos(movement * 0.6662F + (float)Math.PI) * 2.4F * far);
-			bipedRightArm.rotateAngleX = (float)(MathHelperJTG.cos(movement * 0.6662F + (float)Math.PI) * 1.4F * far);
+			bipedBody.rotateAngleY = (float)(MathHelperJTG.cos(movement * 0.6662F + Math.PI) * 2.4F * far);
+			skirtTop.rotateAngleY = (float)(MathHelperJTG.cos(movement * 0.6662F + Math.PI) * 2.4F * far);
+			bipedRightArm.rotateAngleX = (float)(MathHelperJTG.cos(movement * 0.6662F + Math.PI) * 1.4F * far);
 			bipedLeftArm.rotateAngleX = (float)(MathHelperJTG.cos(movement * 0.6662F) * 1.4F * far);
 			bipedHead.rotateAngleX -= 0.5F;
 		}
 
 		else if (yukari.isRiding()) {
 
-			bipedRightArm.rotateAngleX += -((float)Math.PI / 5F);
-			bipedLeftArm.rotateAngleX += -((float)Math.PI / 5F);
-			bipedRightLeg.rotateAngleX = -((float)Math.PI * 2F / 5F);
-			bipedLeftLeg.rotateAngleX = -((float)Math.PI * 2F / 5F);
-			bipedRightLeg.rotateAngleY = (float)Math.PI / 14F;
-			bipedLeftLeg.rotateAngleY = -((float)Math.PI / 14F);
-			bipedRightLeg.rotateAngleZ = (float)Math.PI / 14F;
-			bipedLeftLeg.rotateAngleZ = -((float)Math.PI / 14F);
-			skirtTop.rotateAngleX = -((float)Math.PI / 5F);
-			skirtBottom.rotateAngleX = -((float)Math.PI / 4F);
+			bipedRightArm.rotateAngleX += -(Math.PI / 5F);
+			bipedLeftArm.rotateAngleX += -(Math.PI / 5F);
+			bipedRightLeg.rotateAngleX = (float)-(Math.PI * 2F / 5F);
+			bipedLeftLeg.rotateAngleX = (float)-(Math.PI * 2F / 5F);
+			bipedRightLeg.rotateAngleY = (float)(Math.PI / 14F);
+			bipedLeftLeg.rotateAngleY = (float)-(Math.PI / 14F);
+			bipedRightLeg.rotateAngleZ = (float)(Math.PI / 14F);
+			bipedLeftLeg.rotateAngleZ = (float)-(Math.PI / 14F);
+			skirtTop.rotateAngleX = (float)-(Math.PI / 5F);
+			skirtBottom.rotateAngleX = (float)-(Math.PI / 4F);
 		}
 
 		else {
 
 			if (yukari.getFlyingHeight() == 0) {
 				bipedRightLeg.rotateAngleX = (float)(MathHelperJTG.cos(movement) * 0.7F * far);
-				bipedLeftLeg.rotateAngleX = (float)(MathHelperJTG.cos(movement + (float)Math.PI) * 0.7F * far);
+				bipedLeftLeg.rotateAngleX = (float)(MathHelperJTG.cos(movement + Math.PI) * 0.7F * far);
 				bipedRightLeg.rotateAngleZ = 0F;
 				bipedLeftLeg.rotateAngleZ = 0F;
 
 				if (movement > 0F) {
-					bipedRightArm.rotateAngleX = (float)(MathHelperJTG.cos(movement + (float)Math.PI) * 2.0F * far * 0.5F);
+					bipedRightArm.rotateAngleX = (float)(MathHelperJTG.cos(movement + Math.PI) * 2.0F * far * 0.5F);
 					bipedLeftArm.rotateAngleX = (float)(MathHelperJTG.cos(movement) * 2.0F * far * 0.5F);
-					bipedRightArm.rotateAngleY = -10F / 180F * (float)Math.PI;
-					bipedRightArm.rotateAngleZ = 20F / 180F * (float)Math.PI;
+					bipedRightArm.rotateAngleY = (float)(-10F / 180F * Math.PI);
+					bipedRightArm.rotateAngleZ = (float)(20F / 180F * Math.PI);
 					bipedLeftArm.rotateAngleY = -bipedRightArm.rotateAngleY;
 					bipedLeftArm.rotateAngleZ = -bipedRightArm.rotateAngleZ;
 				}

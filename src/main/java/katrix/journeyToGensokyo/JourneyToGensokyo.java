@@ -15,51 +15,52 @@ import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLMissingMappingsEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import katrix.journeyToGensokyo.block.JTGBlock;
-import katrix.journeyToGensokyo.crafting.CraftingIC2Ore;
-import katrix.journeyToGensokyo.crafting.CraftingVanilla;
 import katrix.journeyToGensokyo.handler.ChestGenHandler;
 import katrix.journeyToGensokyo.handler.ConfigHandler;
 import katrix.journeyToGensokyo.handler.OreDictionaryHandler;
 import katrix.journeyToGensokyo.item.JTGItem;
+import katrix.journeyToGensokyo.item.crafting.CraftingIC2;
+import katrix.journeyToGensokyo.item.crafting.CraftingVanilla;
+import katrix.journeyToGensokyo.lib.LibMod;
 import katrix.journeyToGensokyo.net.PacketHandler;
 import katrix.journeyToGensokyo.plugin.botania.JTGBotania;
 import katrix.journeyToGensokyo.plugin.thaumcraft.JTGThaumcraft;
 import katrix.journeyToGensokyo.plugin.thsc.JTG_THSC;
-import katrix.journeyToGensokyo.reference.ModInfo;
 import katrix.journeyToGensokyo.util.LogHelper;
 import katrix.journeyToGensokyo.worldgen.JTGWorldGen;
 
-@Mod(modid = ModInfo.MODID, name = ModInfo.NAME, version = ModInfo.VERSION, guiFactory = ModInfo.GUI_FACTORY_CLASS, dependencies = "required-after:THKaguyaMod;"
+@Mod(modid = LibMod.MODID, name = LibMod.NAME, version = LibMod.VERSION, guiFactory = LibMod.GUI_FACTORY_CLASS, dependencies = "required-after:THKaguyaMod;"
 		+ "after:Thaumcraft;" + "after:IC2;" + "after:Botania;" + "after:ThermalExpansion;" + "after:AdvancedSolarPanel")
 
 public class JourneyToGensokyo {
 
-	public static boolean thermalExpansionInstalled = Loader.isModLoaded("ThermalExpansion");
-	public static boolean thaumcraftInstalled = Loader.isModLoaded("Thaumcraft");
-	public static boolean botaniaInstalled = Loader.isModLoaded("Botania");
+	public static boolean IC2Installed; 
+	public static boolean thaumcraftInstalled;
+	public static boolean botaniaInstalled;
 
-	@Instance(value = "journeyToGensokyo")
+	@Instance
 	public static JourneyToGensokyo instance;
 
-	@SidedProxy(clientSide = ModInfo.CLIENT_PROXY_CLASS, serverSide = ModInfo.SERVER_PROXY_CLASS)
+	@SidedProxy(clientSide = LibMod.CLIENT_PROXY_CLASS, serverSide = LibMod.SERVER_PROXY_CLASS)
 	public static CommonProxy proxy;
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 
 		ConfigHandler.setConfig(event.getSuggestedConfigurationFile());
+		
+		IC2Installed = Loader.isModLoaded("IC2");
+		thaumcraftInstalled = Loader.isModLoaded("Thaumcraft");
+		botaniaInstalled = Loader.isModLoaded("Botania");
 
 		PacketHandler.preInit();
 
 		JTGItem.preInit();
 		JTGBlock.preInit();
 		JTG_THSC.preInit();
-
-
 	}
 
 	@EventHandler
@@ -69,11 +70,14 @@ public class JourneyToGensokyo {
 
 		proxy.registerRenderers();
 
-		if (thermalExpansionInstalled && ConfigHandler.OresEnabled) {
+		if (IC2Installed && ConfigHandler.OresEnabled) {
 			LogHelper.info("JTG adding IC2 Ore recipes");
-			CraftingIC2Ore.init();
+			CraftingIC2.init();
 		}
-		CraftingVanilla.init();
+		
+		CraftingVanilla.misc();
+		CraftingVanilla.smelting();
+		CraftingVanilla.notes();
 
 		if (ConfigHandler.NotesEnabled) {
 			LogHelper.warn("JTG Notes enabled, this is not a officialy suported feature");
@@ -96,10 +100,5 @@ public class JourneyToGensokyo {
 			LogHelper.info("JTG adding Thaumcraft aspects");
 			JTGThaumcraft.postInit();
 		}
-	}
-
-	@EventHandler
-	public void missingMappings(FMLMissingMappingsEvent event) {
-		//MissingMappingHandler.MissingMappings(event);
 	}
 }

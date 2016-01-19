@@ -11,7 +11,7 @@ package katrix.journeyToGensokyo.plugin.thsc.entity.shot;
 
 import static thKaguyaMod.DanmakuConstants.FORM_LIGHT;
 
-import katrix.journeyToGensokyo.reference.SpecialShotID;
+import katrix.journeyToGensokyo.lib.LibSpecialShotId;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
@@ -25,7 +25,7 @@ public class ShotSeed implements ISpecialShot {
 	@Override
 	public void specialShot_move(World world, int id, EntityTHShot shot) {
 		switch (id) {
-			case SpecialShotID.SEED_LASER01:
+			case LibSpecialShotId.SEED_LASER01:
 				if (shot.ticksExisted == 20) {
 					shot.shotAcceleration = 0.05D;
 					shot.shotLimitSpeed = 10.0D;

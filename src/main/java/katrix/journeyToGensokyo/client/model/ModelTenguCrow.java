@@ -99,10 +99,10 @@ public class ModelTenguCrow extends ModelBase {
 	@Override
 	public void setRotationAngles(float movement, float far, float tick, float yaw, float pitch, float size, Entity entity) {
 		super.setRotationAngles(movement, far, tick, yaw, pitch, size, entity);
-		tenguHead.rotateAngleY = yaw / (180F / (float)Math.PI);
-		tenguHead.rotateAngleX = pitch / (180F / (float)Math.PI);
-		tenguBody.rotateAngleX = (float)((float)Math.PI / 3F + MathHelperJTG.cos(tick * 0.1F) * 0.15F);
-		tenguWingRight.rotateAngleY = (float)(MathHelperJTG.cos(tick * 0.8F) * (float)Math.PI * 0.25F);
+		tenguHead.rotateAngleY = (float)(yaw / (180F / Math.PI));
+		tenguHead.rotateAngleX = (float)(pitch / (180F / Math.PI));
+		tenguBody.rotateAngleX = (float)(Math.PI / 3F + MathHelperJTG.cos(tick * 0.1F) * 0.15F);
+		tenguWingRight.rotateAngleY = (float)(MathHelperJTG.cos(tick * 0.8F) * Math.PI * 0.25F);
 		tenguWingLeft.rotateAngleY = -tenguWingRight.rotateAngleY;
 		tenguWingRight2.rotateAngleY = tenguWingRight.rotateAngleY * 0.5F;
 		tenguWingLeft2.rotateAngleY = -tenguWingRight.rotateAngleY * 0.5F;

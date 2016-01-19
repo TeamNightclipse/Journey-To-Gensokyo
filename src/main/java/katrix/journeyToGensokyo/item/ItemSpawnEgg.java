@@ -14,7 +14,7 @@ import java.util.List;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import katrix.journeyToGensokyo.reference.ModInfo;
+import katrix.journeyToGensokyo.lib.LibMod;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -58,7 +58,7 @@ public class ItemSpawnEgg extends Item {
 			this.colorBase = colorBase;
 			this.colorSpots = colorSpots;
 			this.entityName = entityName;
-			entityNameFull = ModInfo.MODID + "." + entityName;
+			entityNameFull = LibMod.MODID + "." + entityName;
 		}
 	}
 

@@ -15,7 +15,6 @@ import net.minecraft.block.material.Material;
 public class BlockJTGBase extends Block {
 
 	public BlockJTGBase(Material material) {
-
 		super(material);
 	}
 }

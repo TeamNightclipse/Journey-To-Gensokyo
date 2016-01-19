@@ -13,9 +13,9 @@ import java.util.List;
 
 import cpw.mods.fml.common.registry.EntityRegistry;
 import katrix.journeyToGensokyo.JourneyToGensokyo;
-import katrix.journeyToGensokyo.reference.EntityName;
-import katrix.journeyToGensokyo.reference.MobID;
-import katrix.journeyToGensokyo.reference.SpellcardID;
+import katrix.journeyToGensokyo.lib.LibEntityName;
+import katrix.journeyToGensokyo.lib.LibMobID;
+import katrix.journeyToGensokyo.lib.LibSpellcardId;
 import katrix.journeyToGensokyo.util.MathHelperJTG;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
@@ -65,11 +65,11 @@ public class EntityYukari extends EntityDanmakuMob {
 			case SPELLCARD_ATTACK01:
 				return EntitySpellCard.SC_YUKARI_HikouchuuNest; //Fantasy Nest "Flying-glowworm Nest"
 			case SPELLCARD_ATTACK02:
-				return SpellcardID.DREAMS_AND_REALITY; //Boundary "Curse of Dreams and Reality"
+				return LibSpellcardId.DREAMS_AND_REALITY; //Boundary "Curse of Dreams and Reality"
 			case SPELLCARD_ATTACK03:
 				return EntitySpellCard.SC_YUKARI_NijuuKokushichou; //Sinister Spirits "Double Black Death Butterfly"
 			case SPELLCARD_ATTACK04:
-				return SpellcardID.MESH_LIGHT_DARKNESS; //Boundary "Mesh of Light and Darkness"
+				return LibSpellcardId.MESH_LIGHT_DARKNESS; //Boundary "Mesh of Light and Darkness"
 			case SPELLCARD_ATTACK05:
 				return EntitySpellCard.SC_YUKARI_Nami_to_Tubu_no_Kyoukai; //Boundary Sign "Boundary between Wave and Particle"
 			default:
@@ -209,7 +209,7 @@ public class EntityYukari extends EntityDanmakuMob {
 
 	private void spellcard02(Vec3 angle, int level) {
 		if (attackCounter == 1) {
-			useSpellCard(SpellcardID.DREAMS_AND_REALITY);
+			useSpellCard(LibSpellcardId.DREAMS_AND_REALITY);
 		}
 
 		if (attackCounter >= 130) {
@@ -265,7 +265,7 @@ public class EntityYukari extends EntityDanmakuMob {
 
 	private void spellcard04(Vec3 angle, int level) {
 		if (attackCounter == 1) {
-			useSpellCard(SpellcardID.MESH_LIGHT_DARKNESS);
+			useSpellCard(LibSpellcardId.MESH_LIGHT_DARKNESS);
 		}
 
 		if (attackCounter >= 100) {
@@ -468,6 +468,6 @@ public class EntityYukari extends EntityDanmakuMob {
 	}
 
 	public static void postInit() {
-		EntityRegistry.registerModEntity(EntityYukari.class, EntityName.YUKARI, MobID.YUKARI, JourneyToGensokyo.instance, 80, 1, true);
+		EntityRegistry.registerModEntity(EntityYukari.class, LibEntityName.YUKARI, LibMobID.YUKARI, JourneyToGensokyo.instance, 80, 1, true);
 	}
 }

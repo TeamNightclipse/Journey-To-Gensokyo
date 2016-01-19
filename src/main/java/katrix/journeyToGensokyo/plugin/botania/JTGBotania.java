@@ -9,7 +9,7 @@
 
 package katrix.journeyToGensokyo.plugin.botania;
 
-import katrix.journeyToGensokyo.reference.OreDictionaryNames;
+import katrix.journeyToGensokyo.lib.LibOreDictionary;
 import vazkii.botania.api.BotaniaAPI;
 import vazkii.botania.api.lexicon.LexiconEntry;
 import vazkii.botania.api.recipe.RecipePetals;
@@ -37,7 +37,7 @@ public class JTGBotania {
 		spiritFlowerLexicon = new BLexiconEntry(SPIRIT_FLOWER, BotaniaAPI.categoryGenerationFlowers);
 		spiritFlowerLexicon.setLexiconPages(new PageText("0"), new PagePetalRecipe<RecipePetals>("1", spiritFlowerRecipe));
 
-		BotaniaAPI.addOreWeight(OreDictionaryNames.ORE_GENSOKYO, 2500);
-		BotaniaAPI.addOreWeightNether(OreDictionaryNames.ORE_DEMON, 2500);
+		BotaniaAPI.addOreWeight(LibOreDictionary.ORE_GENSOKYO, 2500);
+		BotaniaAPI.addOreWeightNether(LibOreDictionary.ORE_DEMON, 2500);
 	}
 }

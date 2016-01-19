@@ -6,10 +6,6 @@ import net.minecraft.item.Item;
 public class BaseItem extends Item {
 
 	public BaseItem() {
-
-		setMaxStackSize(64);
 		setCreativeTab(CreativeTabs.tabMisc);
-
 	}
-
 }

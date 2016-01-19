@@ -7,9 +7,9 @@
  * a modifed Botania license: https://github.com/Katrix-/JTG/blob/master/LICENSE.md
  */
 
-package katrix.journeyToGensokyo.reference;
+package katrix.journeyToGensokyo.lib;
 
-public class DamageValueInfo {
+public class LibDamageValue {
 
 	//Ores and stuff
 	public static final int GENSOKYO = 0;

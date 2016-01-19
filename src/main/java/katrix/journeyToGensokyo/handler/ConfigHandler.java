@@ -12,14 +12,18 @@ package katrix.journeyToGensokyo.handler;
 import java.io.File;
 
 import cpw.mods.fml.client.event.ConfigChangedEvent;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import katrix.journeyToGensokyo.reference.ConfigRef;
-import katrix.journeyToGensokyo.reference.ModInfo;
+import katrix.journeyToGensokyo.lib.LibMod;
 import net.minecraftforge.common.config.Configuration;
 
 public class ConfigHandler {
 
 	public static Configuration cfg;
+
+	public static final String RTY = "RTY";
+	public static final String MOBS = "Mobs";
+	public static final String MISC = "misc";
 
 	public static boolean newFariesSpawn;
 	public static boolean newMobsSpawn;
@@ -36,33 +40,37 @@ public class ConfigHandler {
 
 		cfg = new Configuration(configFile);
 		loadConfig();
-	}
-
-	@SubscribeEvent
-	public void onConfigurationChangedEvent(ConfigChangedEvent.OnConfigChangedEvent event) {
-
-		if (event.modID.equalsIgnoreCase(ModInfo.MODID)) {
-			loadConfig();
-		}
+		FMLCommonHandler.instance().bus().register(new ChangeListener());
 	}
 
 	public static void loadConfig() {
 
-		cfg.addCustomCategoryComment(ConfigRef.RTY, "Don't change this if you don't know what you are doing");
+		cfg.addCustomCategoryComment(RTY, "Don't change this if you don't know what you are doing");
 
-		newFariesSpawn = cfg.get(ConfigRef.MOBS, "New faries spawn", true, "Can new faries added by JTG spawn?").getBoolean();
-		newMobsSpawn = cfg.get(ConfigRef.MOBS, "New mobs spawn", true, "Can new mobs(mobs that are not faries) added by JTG spawn?").getBoolean();
-		newBossesSpawn = cfg.get(ConfigRef.MOBS, "New bosses spawn", true, "Can new bosses added by JTG spawn?").getBoolean();
-		fixTHKaguyaSpawn = cfg.get(ConfigRef.MOBS, "Spawn biome fixer enabled", true, "Allow Touhou Items Mod bobs to spawn in mod added biomes?").getBoolean();
-		newHealthBar = cfg.get(ConfigRef.MISC, "New Healthbar", true, "Use the new health bar for bosses? Setting this to false will use the old health bar")
+		newFariesSpawn = cfg.get(MOBS, "New faries spawn", true, "Can new faries added by JTG spawn?").getBoolean();
+		newMobsSpawn = cfg.get(MOBS, "New mobs spawn", true, "Can new mobs(mobs that are not faries) added by JTG spawn?").getBoolean();
+		newBossesSpawn = cfg.get(MOBS, "New bosses spawn", true, "Can new bosses added by JTG spawn?").getBoolean();
+		fixTHKaguyaSpawn = cfg.get(MOBS, "Spawn biome fixer enabled", true, "Allow Touhou Items Mod bobs to spawn in mod added biomes?").getBoolean();
+		newHealthBar = cfg.get(MISC, "New Healthbar", true, "Use the new health bar for bosses? Setting this to false will use the old health bar")
 				.getBoolean();
 
-		OresEnabled = cfg.get(ConfigRef.RTY, "Ore gen enabled", false, "should JTG ores generate?").getBoolean();
-		NotesEnabled = cfg.get(ConfigRef.RTY, "Notes and old spellcards enabled", false, "should gensokyo notes and old spellcards be enabled").getBoolean();
-		rtyMode = cfg.get(ConfigRef.RTY, "RTY Mode", false, "should some RTY specific things be activated?").getBoolean();
+		OresEnabled = cfg.get(RTY, "Ore gen enabled", false, "should JTG ores generate?").getBoolean();
+		NotesEnabled = cfg.get(RTY, "Notes and old spellcards enabled", false, "should gensokyo notes and old spellcards be enabled").getBoolean();
+		rtyMode = cfg.get(RTY, "RTY Mode", false, "should some RTY specific things be activated?").getBoolean();
 
 		if (cfg.hasChanged()) {
 			cfg.save();
+		}
+	}
+	
+	public static class ChangeListener {
+		
+		@SubscribeEvent
+		public void onConfigurationChangedEvent(ConfigChangedEvent.OnConfigChangedEvent event) {
+
+			if (event.modID.equalsIgnoreCase(LibMod.MODID)) {
+				loadConfig();
+			}
 		}
 	}
 }

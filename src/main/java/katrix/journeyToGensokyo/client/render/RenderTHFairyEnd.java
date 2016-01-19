@@ -12,6 +12,7 @@ package katrix.journeyToGensokyo.client.render;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import katrix.journeyToGensokyo.client.model.ModelTHFairyJTG;
+import katrix.journeyToGensokyo.lib.LibMod;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
@@ -25,24 +26,13 @@ public class RenderTHFairyEnd extends RenderLiving {
 	}
 
 	@Override
-	public void doRender(Entity entity, double x, double y, double z, float yaw, float pitch) {
-		super.doRender(entity, x, y, z, yaw, pitch);
-		render((EntityTHFairy)entity, x, y, z, yaw, pitch);
-
-	}
-
-	public void render(EntityTHFairy entity, double x, double y, double z, float yaw, float pitch) {
-	}
-
-	@Override
 	protected ResourceLocation getEntityTexture(Entity entity) {
 		return this.getEntityTexture((EntityTHFairy)entity);
 	}
 
 	protected ResourceLocation getEntityTexture(EntityTHFairy thFairy) {
-		ResourceLocation resourceLocation;
-		resourceLocation = new ResourceLocation("journeytogensokyo", "textures/entity/mob/FairyTextureEnd_" + thFairy.getForm() % 3 + ".png");
+		ResourceLocation texture = new ResourceLocation(LibMod.MODID, "textures/entity/mob/FairyTextureEnd_" + thFairy.getForm() % 3 + ".png");
 
-		return resourceLocation;
+		return texture;
 	}
 }

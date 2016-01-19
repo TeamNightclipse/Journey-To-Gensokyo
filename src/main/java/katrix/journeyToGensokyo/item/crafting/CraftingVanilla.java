@@ -7,7 +7,7 @@
  * a modifed Botania license: https://github.com/Katrix-/JTG/blob/master/LICENSE.md
  */
 
-package katrix.journeyToGensokyo.crafting;
+package katrix.journeyToGensokyo.item.crafting;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import katrix.journeyToGensokyo.block.JTGBlock;
@@ -19,9 +19,8 @@ import net.minecraft.item.ItemStack;
 import thKaguyaMod.init.THKaguyaItems;
 
 public class CraftingVanilla {
-
-	public static void init() {
-
+	
+	public static void smelting() {
 		if (ConfigHandler.OresEnabled) {
 			GameRegistry.addSmelting(new ItemStack(JTGBlock.gensokyoOreBlock, 1, 0), new ItemStack(JTGItem.gensokyoIngotItem, 1, 0), 0.1f);
 			GameRegistry.addSmelting(new ItemStack(JTGBlock.gensokyoOreBlock, 1, 1), new ItemStack(JTGItem.gensokyoIngotItem, 1, 1), 0.1f);
@@ -31,15 +30,9 @@ public class CraftingVanilla {
 			GameRegistry.addSmelting(new ItemStack(JTGItem.gensokyoDustItem, 1, 1), new ItemStack(JTGItem.gensokyoIngotItem, 1, 1), 0.1f);
 			GameRegistry.addSmelting(new ItemStack(JTGItem.gensokyoDustItem, 1, 2), new ItemStack(JTGItem.gensokyoIngotItem, 1, 2), 0.1f);
 		}
-
-		if (ConfigHandler.NotesEnabled) {
-			GameRegistry.addRecipe(new ItemStack(JTGBlock.keyStoneBlock), " r ", "sss", "nnn", 's', Items.string, 'r', Blocks.stone, 'n',
-					new ItemStack(JTGItem.oldGensokyoSpellItem, 1, 2));
-		}
-		else {
-			GameRegistry.addRecipe(new ItemStack(JTGBlock.keyStoneBlock), " r ", "sss", "nnn", 's', Items.string, 'r', Blocks.stone, 'n', Items.paper);
-		}
-
+	}
+	
+	public static void notes() {
 		if (ConfigHandler.NotesEnabled) {
 			GameRegistry.addRecipe(new ItemStack(JTGItem.gensokyoNotesItem, 1, 1), " n ", "nrn", " n ", 'r', new ItemStack(JTGItem.gensokyoNotesItem, 1, 0),
 					'n', new ItemStack(JTGItem.oldGensokyoSpellItem, 1, 0));
@@ -49,6 +42,17 @@ public class CraftingVanilla {
 			GameRegistry.addShapelessRecipe(new ItemStack(JTGItem.oldGensokyoSpellItem, 1, 2), JTGItem.compOldCelestialSpellcardItem);
 			GameRegistry.addShapelessRecipe(new ItemStack(JTGBlock.gensokyoOreBlock, 1, 1), JTGBlock.compDemonOreBlock);
 			GameRegistry.addShapelessRecipe(new ItemStack(JTGBlock.gensokyoOreBlock, 1, 2), JTGBlock.compCelestialOreBlock);
+		}
+	}
+
+	public static void misc() {
+
+		if (ConfigHandler.NotesEnabled) {
+			GameRegistry.addRecipe(new ItemStack(JTGBlock.keyStoneBlock), " r ", "sss", "nnn", 's', Items.string, 'r', Blocks.stone, 'n',
+					new ItemStack(JTGItem.oldGensokyoSpellItem, 1, 2));
+		}
+		else {
+			GameRegistry.addRecipe(new ItemStack(JTGBlock.keyStoneBlock), " r ", "sss", "nnn", 's', Items.string, 'r', Blocks.stone, 'n', Items.paper);
 		}
 
 		GameRegistry.addRecipe(new ItemStack(JTGItem.standardShot, 1, 0), "sps", "yhy", "sps", 'p', THKaguyaItems.red_pearl, 's', THKaguyaItems.arrow_shot, 'h',

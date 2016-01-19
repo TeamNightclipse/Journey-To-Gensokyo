@@ -15,10 +15,7 @@ import net.minecraft.item.Item;
 public class ItemJTGBase extends Item {
 
 	public ItemJTGBase() {
-
 		super();
 		setCreativeTab(CreativeTabs.tabMisc);
-
 	}
-
 }

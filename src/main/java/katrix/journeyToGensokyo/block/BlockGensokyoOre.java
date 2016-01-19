@@ -11,6 +11,7 @@ package katrix.journeyToGensokyo.block;
 
 import java.util.List;
 
+import katrix.journeyToGensokyo.lib.LibMod;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -23,48 +24,38 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 
 public class BlockGensokyoOre extends BlockJTGBase {
+	
+	public static final String[] names = {"gensokyo", "demon", "celestial"};
 
 	public BlockGensokyoOre(Material material) {
-
 		super(material);
 		setHardness(2.0F);
 		setStepSound(Block.soundTypePiston);
 		setCreativeTab(CreativeTabs.tabBlock);
 		setHarvestLevel("pickaxe", 2);
 		setResistance(5.0F);
-
 	}
 
 	@Override
 	public boolean canEntityDestroy(IBlockAccess world, int x, int y, int z, Entity entity) {
-		if (entity instanceof EntityDragon)
-			return this != JTGBlock.gensokyoOreBlock;
-
+		if (entity instanceof EntityDragon && world.getBlockMetadata(x, y, z) == 1) {
+			return false;
+		}
 		return true;
 	}
 
-	public IIcon[] icons = new IIcon[3];
+	public IIcon[] icons = new IIcon[names.length];
 
 	@Override
 	public void registerBlockIcons(IIconRegister reg) {
-		for (int i = 0; i < 3; i++) {
-			if (i == 0) {
-				icons[i] = reg.registerIcon("journeytogensokyo:gensokyoOre");
-			}
-
-			if (i == 1) {
-				icons[i] = reg.registerIcon("journeytogensokyo:demonOre");
-			}
-
-			if (i == 2) {
-				icons[i] = reg.registerIcon("journeytogensokyo:celestialOre");
-			}
+		for (int i = 0; i < names.length; i++) {
+			icons[i] = reg.registerIcon(LibMod.MODID + ":" + names[i] + "Ore");
 		}
 	}
 
 	@Override
 	public IIcon getIcon(int side, int meta) {
-		if (meta > 2) {
+		if (meta > names.length -1) {
 			meta = 0;
 		}
 
@@ -79,7 +70,7 @@ public class BlockGensokyoOre extends BlockJTGBase {
 	@SuppressWarnings({"rawtypes", "unchecked"})
 	@Override
 	public void getSubBlocks(Item item, CreativeTabs tab, List list) {
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < names.length; i++) {
 			list.add(new ItemStack(item, 1, i));
 		}
 	}

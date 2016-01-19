@@ -16,9 +16,9 @@ import java.util.List;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import katrix.journeyToGensokyo.JourneyToGensokyo;
 import katrix.journeyToGensokyo.handler.ConfigHandler;
-import katrix.journeyToGensokyo.reference.EntityName;
-import katrix.journeyToGensokyo.reference.MobID;
-import katrix.journeyToGensokyo.reference.SpecialShotID;
+import katrix.journeyToGensokyo.lib.LibEntityName;
+import katrix.journeyToGensokyo.lib.LibMobID;
+import katrix.journeyToGensokyo.lib.LibSpecialShotId;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Vec3;
@@ -81,7 +81,7 @@ public class EntitySunFlowerFairyEnd extends EntitySunFlowerFairy {
 				}
 				shotForm = DanmakuConstants.FORM_CRYSTAL;
 				speedRate = 0.1F;
-				shotData = ShotData.shot(shotForm, shotColor, 0, 80, SpecialShotID.SEED_LASER01);
+				shotData = ShotData.shot(shotForm, shotColor, 0, 80, LibSpecialShotId.SEED_LASER01);
 
 				danmaku02(angle, shotData, level);
 				break;
@@ -100,7 +100,7 @@ public class EntitySunFlowerFairyEnd extends EntitySunFlowerFairy {
 				}
 				shotForm = DanmakuConstants.FORM_CRYSTAL;
 				speedRate = 0.1F;
-				shotData = ShotData.shot(shotForm, shotColor, 0, 80, SpecialShotID.SEED_LASER01);
+				shotData = ShotData.shot(shotForm, shotColor, 0, 80, LibSpecialShotId.SEED_LASER01);
 
 				danmaku03(angle, shotData, level);
 				break;
@@ -207,7 +207,7 @@ public class EntitySunFlowerFairyEnd extends EntitySunFlowerFairy {
 
 	public static void postInit() {
 
-		EntityRegistry.registerModEntity(EntitySunFlowerFairyEnd.class, EntityName.FAIRY_SUNFLOWER_END, MobID.FAIRY_SUNFLOWER_END, JourneyToGensokyo.instance,
+		EntityRegistry.registerModEntity(EntitySunFlowerFairyEnd.class, LibEntityName.FAIRY_SUNFLOWER_END, LibMobID.FAIRY_SUNFLOWER_END, JourneyToGensokyo.instance,
 				80, 1, true);
 
 		List<BiomeGenBase> spawnbiomes = new ArrayList<BiomeGenBase>(Arrays.asList(BiomeDictionary.getBiomesForType(Type.END)));

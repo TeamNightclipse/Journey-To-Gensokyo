@@ -25,16 +25,6 @@ public class RenderTHFairyNether extends RenderLiving {
 	}
 
 	@Override
-	public void doRender(Entity entity, double x, double y, double z, float yaw, float pitch) {
-		super.doRender(entity, x, y, z, yaw, pitch);
-		render((EntityTHFairy)entity, x, y, z, yaw, pitch);
-
-	}
-
-	public void render(EntityTHFairy entity, double x, double y, double z, float yaw, float pitch) {
-	}
-
-	@Override
 	protected ResourceLocation getEntityTexture(Entity entity) {
 		return this.getEntityTexture((EntityTHFairy)entity);
 	}

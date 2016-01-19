@@ -16,9 +16,9 @@ import java.util.List;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import katrix.journeyToGensokyo.JourneyToGensokyo;
 import katrix.journeyToGensokyo.handler.ConfigHandler;
-import katrix.journeyToGensokyo.reference.EntityName;
-import katrix.journeyToGensokyo.reference.MobID;
-import katrix.journeyToGensokyo.reference.SpecialShotID;
+import katrix.journeyToGensokyo.lib.LibEntityName;
+import katrix.journeyToGensokyo.lib.LibMobID;
+import katrix.journeyToGensokyo.lib.LibSpecialShotId;
 import katrix.journeyToGensokyo.util.MathHelperJTG;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.util.AxisAlignedBB;
@@ -181,7 +181,7 @@ public class EntityReimuHostile extends EntityDanmakuMob {
 					for (int j = -1; j <= 1; j++) {
 						THShotLib.playShotSound(this);
 						THShotLib.createShot(this, pos(), THShotLib.angle(rotationYaw + j * 6.0f + 360 / 8 * k, rotationPitch), shotGap * i,
-								ShotData.shot(DanmakuConstants.FORM_AMULET, DanmakuConstants.WHITE, 0.2f, 0.5f, 0, 20, SpecialShotID.FANTASY_SEAL01));
+								ShotData.shot(DanmakuConstants.FORM_AMULET, DanmakuConstants.WHITE, 0.2f, 0.5f, 0, 20, LibSpecialShotId.FANTASY_SEAL01));
 					}
 				}
 			}
@@ -277,7 +277,7 @@ public class EntityReimuHostile extends EntityDanmakuMob {
 
 	public static void postInit() {
 
-		EntityRegistry.registerModEntity(EntityReimuHostile.class, EntityName.REIMU_HOSTILE, MobID.REIMU_HOSTILE, JourneyToGensokyo.instance, 80, 1, true);
+		EntityRegistry.registerModEntity(EntityReimuHostile.class, LibEntityName.REIMU_HOSTILE, LibMobID.REIMU_HOSTILE, JourneyToGensokyo.instance, 80, 1, true);
 
 		List<BiomeGenBase> spawnbiomes = new ArrayList<BiomeGenBase>(Arrays.asList(BiomeDictionary.getBiomesForType(Type.FOREST)));
 

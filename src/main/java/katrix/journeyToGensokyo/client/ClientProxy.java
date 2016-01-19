@@ -37,7 +37,6 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	public void registerRenderers() {
-
 		RenderingRegistry.registerEntityRenderingHandler(EntityTHFairyIce.class, new RenderTHFairyIce());
 		RenderingRegistry.registerEntityRenderingHandler(EntityHellRaven.class, new RenderHellRaven());
 		RenderingRegistry.registerEntityRenderingHandler(EntityTenguCrow.class, new RenderTenguCrow());
