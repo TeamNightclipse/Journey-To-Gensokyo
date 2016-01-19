@@ -9,6 +9,7 @@
 
 package katrix.journeyToGensokyo.plugin.thsc.entity;
 
+import katrix.journeyToGensokyo.util.MathHelperJTG;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
@@ -33,9 +34,9 @@ public class EntityMiniHakkeroDoubleJTG extends EntityMiniHakkero {
 		this(world);
 
 		user = EntityLivingBase;
-		setPosition(user.posX - Math.sin(user.rotationYaw / 180F * Math.PI) * Math.cos(user.rotationPitch / 180F * Math.PI),
-				user.posY - Math.sin(user.rotationPitch / 180F * Math.PI) + user.getEyeHeight() - 0.1D,
-				user.posZ + Math.cos(user.rotationYaw / 180F * Math.PI) * Math.cos(user.rotationPitch / 180F * Math.PI));
+		setPosition(user.posX - MathHelperJTG.sin(user.rotationYaw / 180F * Math.PI) * MathHelperJTG.cos(user.rotationPitch / 180F * Math.PI),
+				user.posY - MathHelperJTG.sin(user.rotationPitch / 180F * Math.PI) + user.getEyeHeight() - 0.1D,
+				user.posZ + MathHelperJTG.cos(user.rotationYaw / 180F * Math.PI) * MathHelperJTG.cos(user.rotationPitch / 180F * Math.PI));
 		rotationYaw = user.rotationYaw;
 		rotationPitch = user.rotationPitch;
 		count = 0;

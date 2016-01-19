@@ -10,6 +10,7 @@
 package katrix.journeyToGensokyo.client.model;
 
 import katrix.journeyToGensokyo.plugin.thsc.entity.EntityYukari;
+import katrix.journeyToGensokyo.util.MathHelperJTG;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
@@ -161,20 +162,20 @@ public class ModelYukari extends ModelBase {
 
 		bipedHead.rotateAngleY = yaw / (180F / (float)Math.PI);
 		bipedHead.rotateAngleX = pitch / (180F / (float)Math.PI);
-		bipedBody.rotateAngleY = MathHelper.sin(MathHelper.sqrt_float(onGround) * (float)Math.PI * 2.0F) * 0.2F;
+		bipedBody.rotateAngleY = (float)(MathHelperJTG.sin(MathHelper.sqrt_float(onGround) * (float)Math.PI * 2.0F) * 0.2F);
 
-		bipedRightArm.rotateAngleX = MathHelper.cos((float)(movement * 0.6662F + Math.PI)) * 2.0F * far * 0.5F;
-		bipedLeftArm.rotateAngleX = MathHelper.cos(movement * 0.6662F) * 2.0F * far * 0.5F;
+		bipedRightArm.rotateAngleX = (float)(MathHelperJTG.cos((float)(movement * 0.6662F + Math.PI)) * 2.0F * far * 0.5F);
+		bipedLeftArm.rotateAngleX = (float)(MathHelperJTG.cos(movement * 0.6662F) * 2.0F * far * 0.5F);
 		bipedRightArm.rotateAngleZ = (float)(30F / 180F * Math.PI);
 		bipedLeftArm.rotateAngleZ = (float)(-30F / 180F * Math.PI);
 
 		skirtTop.rotateAngleX = 0F;
 
 		if (yukari.isSneaking()) {
-			bipedBody.rotateAngleY = MathHelper.cos(movement * 0.6662F + (float)Math.PI) * 2.4F * far;
-			skirtTop.rotateAngleY = MathHelper.cos(movement * 0.6662F + (float)Math.PI) * 2.4F * far;
-			bipedRightArm.rotateAngleX = MathHelper.cos(movement * 0.6662F + (float)Math.PI) * 1.4F * far;
-			bipedLeftArm.rotateAngleX = MathHelper.cos(movement * 0.6662F) * 1.4F * far;
+			bipedBody.rotateAngleY = (float)(MathHelperJTG.cos(movement * 0.6662F + (float)Math.PI) * 2.4F * far);
+			skirtTop.rotateAngleY = (float)(MathHelperJTG.cos(movement * 0.6662F + (float)Math.PI) * 2.4F * far);
+			bipedRightArm.rotateAngleX = (float)(MathHelperJTG.cos(movement * 0.6662F + (float)Math.PI) * 1.4F * far);
+			bipedLeftArm.rotateAngleX = (float)(MathHelperJTG.cos(movement * 0.6662F) * 1.4F * far);
 			bipedHead.rotateAngleX -= 0.5F;
 		}
 
@@ -195,21 +196,21 @@ public class ModelYukari extends ModelBase {
 		else {
 
 			if (yukari.getFlyingHeight() == 0) {
-				bipedRightLeg.rotateAngleX = MathHelper.cos(movement) * 0.7F * far;
-				bipedLeftLeg.rotateAngleX = MathHelper.cos(movement + (float)Math.PI) * 0.7F * far;
+				bipedRightLeg.rotateAngleX = (float)(MathHelperJTG.cos(movement) * 0.7F * far);
+				bipedLeftLeg.rotateAngleX = (float)(MathHelperJTG.cos(movement + (float)Math.PI) * 0.7F * far);
 				bipedRightLeg.rotateAngleZ = 0F;
 				bipedLeftLeg.rotateAngleZ = 0F;
 
 				if (movement > 0F) {
-					bipedRightArm.rotateAngleX = MathHelper.cos(movement + (float)Math.PI) * 2.0F * far * 0.5F;
-					bipedLeftArm.rotateAngleX = MathHelper.cos(movement) * 2.0F * far * 0.5F;
+					bipedRightArm.rotateAngleX = (float)(MathHelperJTG.cos(movement + (float)Math.PI) * 2.0F * far * 0.5F);
+					bipedLeftArm.rotateAngleX = (float)(MathHelperJTG.cos(movement) * 2.0F * far * 0.5F);
 					bipedRightArm.rotateAngleY = -10F / 180F * (float)Math.PI;
 					bipedRightArm.rotateAngleZ = 20F / 180F * (float)Math.PI;
 					bipedLeftArm.rotateAngleY = -bipedRightArm.rotateAngleY;
 					bipedLeftArm.rotateAngleZ = -bipedRightArm.rotateAngleZ;
 				}
 				else {
-					bipedRightArm.rotateAngleX = -0.7F - MathHelper.sin(tick / 10F) * 0.1F;
+					bipedRightArm.rotateAngleX = (float)(-0.7F - MathHelperJTG.sin(tick / 10F) * 0.1F);
 					bipedRightArm.rotateAngleY = 0.0F;
 					bipedRightArm.rotateAngleZ = -0.6457718F;
 					bipedLeftArm.rotateAngleX = bipedRightArm.rotateAngleX;
@@ -220,12 +221,12 @@ public class ModelYukari extends ModelBase {
 			}
 			else {
 
-				bipedRightLeg.rotateAngleZ = Math.abs(MathHelper.sin(tick / 10F) * 0.1F);
+				bipedRightLeg.rotateAngleZ = (float)Math.abs(MathHelperJTG.sin(tick / 10F) * 0.1F);
 				bipedLeftLeg.rotateAngleZ = -bipedRightLeg.rotateAngleZ;
-				bipedRightLeg.rotateAngleX = Math.abs(MathHelper.sin(tick / 10F) * 0.2F);
+				bipedRightLeg.rotateAngleX = (float)Math.abs(MathHelperJTG.sin(tick / 10F) * 0.2F);
 				bipedLeftLeg.rotateAngleX = bipedRightLeg.rotateAngleZ;
 
-				bipedRightArm.rotateAngleX = -0.7F - MathHelper.sin(tick / 10F) * 0.1F;
+				bipedRightArm.rotateAngleX = (float)(-0.7F - MathHelperJTG.sin(tick / 10F) * 0.1F);
 				bipedRightArm.rotateAngleY = 0.0F;
 				bipedRightArm.rotateAngleZ = -0.6457718F;
 				bipedLeftArm.rotateAngleX = bipedRightArm.rotateAngleX;

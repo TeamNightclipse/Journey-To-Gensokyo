@@ -12,6 +12,7 @@ package katrix.journeyToGensokyo.plugin.thsc.entity.spellcard;
 import static thKaguyaMod.DanmakuConstants.FORM_STAR;
 
 import katrix.journeyToGensokyo.plugin.thsc.entity.EntityMiniHakkeroDoubleJTG;
+import katrix.journeyToGensokyo.util.MathHelperJTG;
 import net.minecraft.util.Vec3;
 import thKaguyaMod.ShotData;
 import thKaguyaMod.THShotLib;
@@ -45,7 +46,7 @@ public class THSC_DoubleSpark extends THSpellCard {
 			float angle = time * rand.nextInt(randHigh - randLow + 1) + randLow;
 			float angleSpan = 360F / 14F;
 
-			double gRate = 0.034 + 0.03D * Math.sin(angle / 180F * Math.PI);
+			double gRate = 0.034 + 0.03D * MathHelperJTG.sin(angle / 180F * Math.PI);
 			Vec3 vectorG = THShotLib.getVecFromAngle(card.rotationYaw, card.rotationPitch);
 			vectorG = THShotLib.getVectorMultiply(vectorG, gRate);
 
@@ -58,14 +59,14 @@ public class THSC_DoubleSpark extends THSpellCard {
 				float cardYaw = (float)(card.rotationYaw / 180.0F * Math.PI);
 				float cardPitch = (float)((card.rotationPitch + 90F) / 180.0F * Math.PI);
 
-				X1 = Math.sin(angleXZ) * Math.cos(cardYaw);
-				Z1 = Math.sin(angleXZ) * Math.sin(cardYaw);
-				X2 = Math.cos(angleXZ) * Math.sin(angleY) * Math.sin(cardPitch) * Math.sin(cardYaw);
-				Z2 = Math.cos(angleXZ) * Math.sin(angleY) * Math.sin(cardPitch) * Math.cos(cardYaw);
+				X1 = MathHelperJTG.sin(angleXZ) * MathHelperJTG.cos(cardYaw);
+				Z1 = MathHelperJTG.sin(angleXZ) * MathHelperJTG.sin(cardYaw);
+				X2 = MathHelperJTG.cos(angleXZ) * MathHelperJTG.sin(angleY) * MathHelperJTG.sin(cardPitch) * MathHelperJTG.sin(cardYaw);
+				Z2 = MathHelperJTG.cos(angleXZ) * MathHelperJTG.sin(angleY) * MathHelperJTG.sin(cardPitch) * MathHelperJTG.cos(cardYaw);
 
-				double yVector1 = -Math.cos(angleXZ) * Math.sin(cardPitch - angleY);
-				double xVector1 = Math.cos(angleXZ) * Math.cos(angleY) * tgVec.xCoord + X1 - X2;
-				double zVector1 = Math.cos(angleXZ) * Math.cos(angleY) * tgVec.zCoord + Z1 + Z2;
+				double yVector1 = -MathHelperJTG.cos(angleXZ) * MathHelperJTG.sin(cardPitch - angleY);
+				double xVector1 = MathHelperJTG.cos(angleXZ) * MathHelperJTG.cos(angleY) * tgVec.xCoord + X1 - X2;
+				double zVector1 = MathHelperJTG.cos(angleXZ) * MathHelperJTG.cos(angleY) * tgVec.zCoord + Z1 + Z2;
 
 				if (i % 2 == 0) {
 					ShotData shot1 = ShotData.shot(FORM_STAR, time % 7, 0.5F, 8.0F, 0, 55);

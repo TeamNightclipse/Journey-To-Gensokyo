@@ -13,10 +13,10 @@ import org.lwjgl.opengl.GL11;
 
 import katrix.journeyToGensokyo.client.model.ModelYingYangOrb;
 import katrix.journeyToGensokyo.plugin.thsc.entity.EntityStandardShot;
+import katrix.journeyToGensokyo.util.MathHelperJTG;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import thKaguyaMod.client.model.ModelMiniHakkero;
 import thKaguyaMod.client.model.ModelMiniHakkero2;
@@ -52,14 +52,14 @@ public class RenderStandardShot extends Render {
 		GL11.glPushMatrix();
 		bindTexture(getEntityTexture(yingYangOrb));
 		GL11.glTranslatef((float)x, (float)y, (float)z);
-		GL11.glRotatef(yingYangOrb.rotationPitch, -MathHelper.sin((float)((yaw - 90F) / 180F * Math.PI)), 0.0F,
-				MathHelper.cos((float)((yaw - 90F) / 180F * Math.PI)));
+		GL11.glRotatef(yingYangOrb.rotationPitch, (float)-MathHelperJTG.sin((float)((yaw - 90F) / 180F * Math.PI)), 0.0F,
+				(float)MathHelperJTG.cos((float)((yaw - 90F) / 180F * Math.PI)));
 		GL11.glRotatef(180F - yaw, 0.0F, 1.0F, 0.0F);
 
 		GL11.glScalef(0.5F, 0.5F, 0.5F);
 		modelYingYangOrb.render(yingYangOrb, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
 		float angle = 30F;
-		GL11.glRotatef((float)(MathHelper.sin(angle) / Math.PI * 180F), 0.0F, 0.0F, 1.0F);
+		GL11.glRotatef((float)(MathHelperJTG.sin(angle) / Math.PI * 180F), 0.0F, 0.0F, 1.0F);
 
 
 		GL11.glPopMatrix();
@@ -69,14 +69,14 @@ public class RenderStandardShot extends Render {
 		GL11.glPushMatrix();
 		bindTexture(getEntityTexture(miniHakkero));
 		GL11.glTranslatef((float)x, (float)y, (float)z);
-		GL11.glRotatef(miniHakkero.rotationPitch, -MathHelper.sin((float)((yaw - 90F) / 180F * Math.PI)), 0.0F,
-				MathHelper.cos((float)((yaw - 90F) / 180F * Math.PI)));
+		GL11.glRotatef(miniHakkero.rotationPitch, (float)-MathHelperJTG.sin((float)((yaw - 90F) / 180F * Math.PI)), 0.0F,
+				(float)MathHelperJTG.cos((float)((yaw - 90F) / 180F * Math.PI)));
 		GL11.glRotatef(180F - yaw, 0.0F, 1.0F, 0.0F);
 
 		GL11.glScalef(0.5F, 0.5F, 0.5F);
 		modelMiniHakkero.render(miniHakkero, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
 		float angle = 30F;
-		GL11.glRotatef((float)(MathHelper.sin(angle) / Math.PI * 180F), 0.0F, 0.0F, 1.0F);
+		GL11.glRotatef((float)(MathHelperJTG.sin(angle) / Math.PI * 180F), 0.0F, 0.0F, 1.0F);
 
 
 		GL11.glPopMatrix();
@@ -86,8 +86,8 @@ public class RenderStandardShot extends Render {
 	public void renderMiniHakkero2(EntityStandardShot miniHakkero, double x, double y, double z, float yaw, float pitch) {
 		GL11.glPushMatrix();
 		GL11.glTranslatef((float)x, (float)y, (float)z);
-		GL11.glRotatef(miniHakkero.rotationPitch, -MathHelper.sin((float)((miniHakkero.rotationYaw - 90F) / 180F * Math.PI)), 0.0F,
-				MathHelper.cos((float)((yaw - 90F) / 180F * Math.PI)));
+		GL11.glRotatef(miniHakkero.rotationPitch, (float)-MathHelperJTG.sin((float)((miniHakkero.rotationYaw - 90F) / 180F * Math.PI)), 0.0F,
+				(float)MathHelperJTG.cos((float)((yaw - 90F) / 180F * Math.PI)));
 		GL11.glRotatef(180F - yaw, 0.0F, 1.0F, 0.0F);
 
 		GL11.glScalef(0.501F, 0.501F, 0.501F);

@@ -16,9 +16,9 @@ import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import katrix.journeyToGensokyo.net.PacketHandler;
 import katrix.journeyToGensokyo.net.PacketSmoothCamera;
 import katrix.journeyToGensokyo.plugin.thsc.entity.EntityMiniHakkeroFinalJTG;
+import katrix.journeyToGensokyo.util.MathHelperJTG;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.play.server.S12PacketEntityVelocity;
-import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
 import thKaguyaMod.ShotData;
 import thKaguyaMod.THShotLib;
@@ -72,32 +72,34 @@ public class THSC_FinalSpark extends THSpellCard {
 			}
 			double xVector1, yVector1, zVector1, xVectorG, yVectorG, zVectorG, gRate, angleXZ = 0, angleY = 0, X1, Z1, X2, Z2;
 			Vec3 lookAt = tgVec;
-			lookAt.xCoord = -MathHelper.sin((float)(user.rotationYaw / 180F * Math.PI)) * MathHelper.cos((float)((user.rotationPitch + 90F) / 180F * Math.PI));
-			lookAt.yCoord = -MathHelper.sin((float)((user.rotationPitch + 90F) / 180F * Math.PI));
-			lookAt.zCoord = MathHelper.cos((float)(user.rotationYaw / 180F * Math.PI)) * MathHelper.cos((float)((user.rotationPitch + 90F) / 180F * Math.PI));
+			lookAt.xCoord = -MathHelperJTG.sin((float)(user.rotationYaw / 180F * Math.PI))
+					* MathHelperJTG.cos((float)((user.rotationPitch + 90F) / 180F * Math.PI));
+			lookAt.yCoord = -MathHelperJTG.sin((float)((user.rotationPitch + 90F) / 180F * Math.PI));
+			lookAt.zCoord = MathHelperJTG.cos((float)(user.rotationYaw / 180F * Math.PI))
+					* MathHelperJTG.cos((float)((user.rotationPitch + 90F) / 180F * Math.PI));
 			lookAt.rotateAroundY((float)Math.PI * 2);
 			float angle = time * 6F;
 			float angleSpan = 360F / 14F;
-			gRate = 0.034 + 0.03D * Math.sin(angle / 180F * Math.PI);
+			gRate = 0.034 + 0.03D * MathHelperJTG.sin(angle / 180F * Math.PI);
 
-			xVectorG = -MathHelper.sin((float)(user.rotationYaw / 180F * Math.PI)) * MathHelper.cos((float)(user.rotationPitch / 180F * Math.PI)) * gRate;
-			yVectorG = -MathHelper.sin((float)(user.rotationPitch / 180F * Math.PI)) * gRate;
-			zVectorG = MathHelper.cos((float)(user.rotationYaw / 180F * Math.PI)) * MathHelper.cos((float)(user.rotationPitch / 180F * Math.PI)) * gRate;
+			xVectorG = -MathHelperJTG.sin((float)(user.rotationYaw / 180F * Math.PI)) * MathHelperJTG.cos((float)(user.rotationPitch / 180F * Math.PI)) * gRate;
+			yVectorG = -MathHelperJTG.sin((float)(user.rotationPitch / 180F * Math.PI)) * gRate;
+			zVectorG = MathHelperJTG.cos((float)(user.rotationYaw / 180F * Math.PI)) * MathHelperJTG.cos((float)(user.rotationPitch / 180F * Math.PI)) * gRate;
 
 			for (int i = 0; i < 14; i++) {
 				angleXZ = angle;
 				angleY = 0;
 
-				X1 = Math.sin(angleXZ / 180.0F * Math.PI) * Math.cos(user.rotationYaw / 180.0F * Math.PI);
-				Z1 = Math.sin(angleXZ / 180.0F * Math.PI) * Math.sin(user.rotationYaw / 180.0F * Math.PI);
-				X2 = Math.cos(angleXZ / 180.0F * Math.PI) * Math.sin(angleY / 180.0F * Math.PI) * Math.sin((user.rotationPitch + 90F) / 180.0F * Math.PI)
-						* Math.sin(user.rotationYaw / 180.0F * Math.PI);
-				Z2 = Math.cos(angleXZ / 180.0F * Math.PI) * Math.sin(angleY / 180.0F * Math.PI) * Math.sin((user.rotationPitch + 90F) / 180.0F * Math.PI)
-						* Math.cos(user.rotationYaw / 180.0F * Math.PI);
+				X1 = MathHelperJTG.sin(angleXZ / 180.0F * Math.PI) * MathHelperJTG.cos(user.rotationYaw / 180.0F * Math.PI);
+				Z1 = MathHelperJTG.sin(angleXZ / 180.0F * Math.PI) * MathHelperJTG.sin(user.rotationYaw / 180.0F * Math.PI);
+				X2 = MathHelperJTG.cos(angleXZ / 180.0F * Math.PI) * MathHelperJTG.sin(angleY / 180.0F * Math.PI)
+						* MathHelperJTG.sin((user.rotationPitch + 90F) / 180.0F * Math.PI) * MathHelperJTG.sin(user.rotationYaw / 180.0F * Math.PI);
+				Z2 = MathHelperJTG.cos(angleXZ / 180.0F * Math.PI) * MathHelperJTG.sin(angleY / 180.0F * Math.PI)
+						* MathHelperJTG.sin((user.rotationPitch + 90F) / 180.0F * Math.PI) * MathHelperJTG.cos(user.rotationYaw / 180.0F * Math.PI);
 
-				yVector1 = -Math.cos(angleXZ / 180.0F * Math.PI) * Math.sin((user.rotationPitch + 90F - angleY) / 180.0F * Math.PI);
-				xVector1 = Math.cos(angleXZ / 180.0F * Math.PI) * Math.cos(angleY / 180.0F * Math.PI) * lookAt.xCoord + X1 - X2;
-				zVector1 = Math.cos(angleXZ / 180.0F * Math.PI) * Math.cos(angleY / 180.0F * Math.PI) * lookAt.zCoord + Z1 + Z2;
+				yVector1 = -MathHelperJTG.cos(angleXZ / 180.0F * Math.PI) * MathHelperJTG.sin((user.rotationPitch + 90F - angleY) / 180.0F * Math.PI);
+				xVector1 = MathHelperJTG.cos(angleXZ / 180.0F * Math.PI) * MathHelperJTG.cos(angleY / 180.0F * Math.PI) * lookAt.xCoord + X1 - X2;
+				zVector1 = MathHelperJTG.cos(angleXZ / 180.0F * Math.PI) * MathHelperJTG.cos(angleY / 180.0F * Math.PI) * lookAt.zCoord + Z1 + Z2;
 
 				ShotData shot = ShotData.shot(FORM_STAR, time % 7, 0.5F, 8.0F, 0, 55);
 				THShotLib.createShot(user, card, pos_User(user.getLookVec(), 0.7D), angle(xVector1, yVector1, zVector1), 0F, 0.1D, 0.5D, 0.15D,

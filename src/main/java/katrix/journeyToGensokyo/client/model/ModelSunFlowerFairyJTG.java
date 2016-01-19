@@ -11,6 +11,7 @@ package katrix.journeyToGensokyo.client.model;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import katrix.journeyToGensokyo.util.MathHelperJTG;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
@@ -192,7 +193,7 @@ public class ModelSunFlowerFairyJTG extends ModelBase {
 
 		bipedHead.rotateAngleY = yaw / (180F / (float)Math.PI);
 		bipedHead.rotateAngleX = pitch / (180F / (float)Math.PI);
-		bipedBody.rotateAngleY = MathHelper.sin(MathHelper.sqrt_float(onGround) * (float)Math.PI * 2.0F) * 0.2F;
+		bipedBody.rotateAngleY = (float)(MathHelperJTG.sin(MathHelper.sqrt_float(onGround) * (float)Math.PI * 2.0F) * 0.2F);
 		skirtTop.rotateAngleX = 0F;
 
 		if (isRiding) {
@@ -210,21 +211,21 @@ public class ModelSunFlowerFairyJTG extends ModelBase {
 		else {
 
 			if (thFairy.getFlyingHeight() == 0) {
-				bipedRightLeg.rotateAngleX = MathHelper.cos(movement) * 0.7F * far;
-				bipedLeftLeg.rotateAngleX = MathHelper.cos(movement + (float)Math.PI) * 0.7F * far;
+				bipedRightLeg.rotateAngleX = (float)(MathHelperJTG.cos(movement) * 0.7F * far);
+				bipedLeftLeg.rotateAngleX = (float)(MathHelperJTG.cos(movement + (float)Math.PI) * 0.7F * far);
 				bipedRightLeg.rotateAngleZ = 0F;
 				bipedLeftLeg.rotateAngleZ = 0F;
 
 				if (movement > 0F) {
-					bipedRightArm.rotateAngleX = MathHelper.cos(movement + (float)Math.PI) * 2.0F * far * 0.5F;
-					bipedLeftArm.rotateAngleX = MathHelper.cos(movement) * 2.0F * far * 0.5F;
+					bipedRightArm.rotateAngleX = (float)(MathHelperJTG.cos(movement + (float)Math.PI) * 2.0F * far * 0.5F);
+					bipedLeftArm.rotateAngleX = (float)(MathHelperJTG.cos(movement) * 2.0F * far * 0.5F);
 					bipedRightArm.rotateAngleY = -10F / 180F * (float)Math.PI;
 					bipedRightArm.rotateAngleZ = 20F / 180F * (float)Math.PI;
 					bipedLeftArm.rotateAngleY = -bipedRightArm.rotateAngleY;
 					bipedLeftArm.rotateAngleZ = -bipedRightArm.rotateAngleZ;
 				}
 				else {
-					bipedRightArm.rotateAngleX = -0.7F - MathHelper.sin(tick / 10F) * 0.1F;
+					bipedRightArm.rotateAngleX = (float)(-0.7F - MathHelperJTG.sin(tick / 10F) * 0.1F);
 					bipedRightArm.rotateAngleY = 0.0F;
 					bipedRightArm.rotateAngleZ = -0.6457718F;
 					bipedLeftArm.rotateAngleX = bipedRightArm.rotateAngleX;
@@ -235,12 +236,12 @@ public class ModelSunFlowerFairyJTG extends ModelBase {
 			}
 			else {
 
-				bipedRightLeg.rotateAngleZ = Math.abs(MathHelper.sin(tick / 10F) * 0.1F);
+				bipedRightLeg.rotateAngleZ = (float)Math.abs(MathHelperJTG.sin(tick / 10F) * 0.1F);
 				bipedLeftLeg.rotateAngleZ = -bipedRightLeg.rotateAngleZ;
-				bipedRightLeg.rotateAngleX = Math.abs(MathHelper.sin(tick / 10F) * 0.2F);
+				bipedRightLeg.rotateAngleX = (float)Math.abs(MathHelperJTG.sin(tick / 10F) * 0.2F);
 				bipedLeftLeg.rotateAngleX = bipedRightLeg.rotateAngleZ;
 
-				bipedRightArm.rotateAngleX = -0.7F - MathHelper.sin(tick / 10F) * 0.1F;
+				bipedRightArm.rotateAngleX = (float)(-0.7F - MathHelperJTG.sin(tick / 10F) * 0.1F);
 				bipedRightArm.rotateAngleY = 0.0F;
 				bipedRightArm.rotateAngleZ = -0.6457718F;
 				bipedLeftArm.rotateAngleX = bipedRightArm.rotateAngleX;
@@ -254,19 +255,18 @@ public class ModelSunFlowerFairyJTG extends ModelBase {
 		if (thFairy.getHealth() > 0F) {
 			bipedBody.rotateAngleX = 0F;
 			if (thFairy.getFlyingHeight() > 0) {
-				rightWing.rotateAngleY = MathHelper.cos(tick * 1.3F) * (float)Math.PI * 0.25F - (float)Math.PI;
-				leftWing.rotateAngleY = -MathHelper.cos(tick * 1.3F) * (float)Math.PI * 0.25F;
+				rightWing.rotateAngleY = (float)(MathHelperJTG.cos(tick * 1.3F) * (float)Math.PI * 0.25F - (float)Math.PI);
+				leftWing.rotateAngleY = (float)(-MathHelperJTG.cos(tick * 1.3F) * (float)Math.PI * 0.25F);
 			}
 			else {
-				rightWing.rotateAngleY = MathHelper.cos(tick * 0.5F) * (float)Math.PI * 0.1F - (float)Math.PI;
-				leftWing.rotateAngleY = -MathHelper.cos(tick * 0.5F) * (float)Math.PI * 0.1F;
+				rightWing.rotateAngleY = (float)(MathHelperJTG.cos(tick * 0.5F) * (float)Math.PI * 0.1F - (float)Math.PI);
+				leftWing.rotateAngleY = (float)(-MathHelperJTG.cos(tick * 0.5F) * (float)Math.PI * 0.1F);
 			}
 		}
 		else {
 			setRotation(bipedHead, 70F, 0F, 0F);
 			rightWing.rotateAngleY = -25F;
 			leftWing.rotateAngleY = -rightWing.rotateAngleY;
-			//this.bipedHead.rotateAngleX = MathHelper.cos(tick * 1.3F) * (float)Math.PI * 0.25F;
 		}
 	}
 

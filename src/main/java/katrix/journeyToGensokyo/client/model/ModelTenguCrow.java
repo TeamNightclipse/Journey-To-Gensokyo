@@ -9,10 +9,10 @@
 
 package katrix.journeyToGensokyo.client.model;
 
+import katrix.journeyToGensokyo.util.MathHelperJTG;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.MathHelper;
 
 /**
  * ModelTenguCrow - Katrix Created using Tabula 4.1.1
@@ -101,8 +101,8 @@ public class ModelTenguCrow extends ModelBase {
 		super.setRotationAngles(movement, far, tick, yaw, pitch, size, entity);
 		tenguHead.rotateAngleY = yaw / (180F / (float)Math.PI);
 		tenguHead.rotateAngleX = pitch / (180F / (float)Math.PI);
-		tenguBody.rotateAngleX = (float)Math.PI / 3F + MathHelper.cos(tick * 0.1F) * 0.15F;
-		tenguWingRight.rotateAngleY = MathHelper.cos(tick * 0.8F) * (float)Math.PI * 0.25F;
+		tenguBody.rotateAngleX = (float)((float)Math.PI / 3F + MathHelperJTG.cos(tick * 0.1F) * 0.15F);
+		tenguWingRight.rotateAngleY = (float)(MathHelperJTG.cos(tick * 0.8F) * (float)Math.PI * 0.25F);
 		tenguWingLeft.rotateAngleY = -tenguWingRight.rotateAngleY;
 		tenguWingRight2.rotateAngleY = tenguWingRight.rotateAngleY * 0.5F;
 		tenguWingLeft2.rotateAngleY = -tenguWingRight.rotateAngleY * 0.5F;
