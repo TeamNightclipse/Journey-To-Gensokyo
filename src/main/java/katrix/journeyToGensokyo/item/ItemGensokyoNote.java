@@ -20,7 +20,7 @@ import net.minecraft.util.IIcon;
 
 public class ItemGensokyoNote extends ItemJTGBase {
 	
-	public static final String[] names = {"ruined", "patched", "dusty", "normal", "imbued", "arcane"};
+	public static final String[] names = {"Ruined", "Patched", "Dusty", "Normal", "Imbued", "Arcane"};
 
 	public ItemGensokyoNote() {
 		super();

@@ -20,7 +20,7 @@ import net.minecraft.util.IIcon;
 
 public class ItemOldSpellcard extends ItemJTGBase {
 	
-	public static final String[] names = {"gensokyo", "demom", "celestial"};
+	public static final String[] names = {"Gensokyo", "Demon", "Celestial"};
 
 	public ItemOldSpellcard() {
 		super();
