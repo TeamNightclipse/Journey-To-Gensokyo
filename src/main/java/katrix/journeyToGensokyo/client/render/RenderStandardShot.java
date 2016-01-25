@@ -12,6 +12,7 @@ package katrix.journeyToGensokyo.client.render;
 import org.lwjgl.opengl.GL11;
 
 import katrix.journeyToGensokyo.client.model.ModelYingYangOrb;
+import katrix.journeyToGensokyo.lib.LibMod;
 import katrix.journeyToGensokyo.plugin.thsc.entity.EntityStandardShot;
 import katrix.journeyToGensokyo.util.MathHelperJTG;
 import net.minecraft.client.model.ModelBase;
@@ -24,7 +25,7 @@ import thKaguyaMod.client.model.ModelMiniHakkero2;
 public class RenderStandardShot extends Render {
 
 	private static final ResourceLocation miniHakkeroTexture = new ResourceLocation("thkaguyamod", "textures/MiniHakkeroTexture.png");
-	private static final ResourceLocation yingYangTexture = new ResourceLocation("journeytogensokyo", "textures/entity/YinYangOrb.png");
+	private static final ResourceLocation yingYangTexture = new ResourceLocation(LibMod.MODID.toLowerCase(), "textures/entity/YinYangOrb.png");
 	protected ModelBase modelMiniHakkero, modelMiniHakkero2, modelYingYangOrb;
 
 	public RenderStandardShot() {

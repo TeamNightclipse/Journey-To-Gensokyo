@@ -31,7 +31,7 @@ public class RenderTHFairyEnd extends RenderLiving {
 	}
 
 	protected ResourceLocation getEntityTexture(EntityTHFairy thFairy) {
-		ResourceLocation texture = new ResourceLocation(LibMod.MODID, "textures/entity/mob/FairyTextureEnd_" + thFairy.getForm() % 3 + ".png");
+		ResourceLocation texture = new ResourceLocation(LibMod.MODID.toLowerCase(), "textures/entity/mob/FairyTextureEnd_" + thFairy.getForm() % 3 + ".png");
 
 		return texture;
 	}

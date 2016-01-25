@@ -20,7 +20,7 @@ import net.minecraft.util.ResourceLocation;
 @SideOnly(Side.CLIENT)
 public class RenderSunFlowerFairyEnd extends RenderLiving {
 	
-	ResourceLocation texture = new ResourceLocation(LibMod.MODID, "textures/entity/mob/FairyTextureSunflowerEnd.png");
+	ResourceLocation texture = new ResourceLocation(LibMod.MODID.toLowerCase(), "textures/entity/mob/FairyTextureSunflowerEnd.png");
 
 	public RenderSunFlowerFairyEnd() {
 		super(new ModelSunFlowerFairyJTG(), 0.25F);

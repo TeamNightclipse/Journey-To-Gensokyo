@@ -20,7 +20,7 @@ import net.minecraft.util.ResourceLocation;
 @SideOnly(Side.CLIENT)
 public class RenderHellRaven extends RenderLiving {
 
-	ResourceLocation texture = new ResourceLocation(LibMod.MODID, "textures/entity/mob/hellRaven.png");
+	ResourceLocation texture = new ResourceLocation(LibMod.MODID.toLowerCase(), "textures/entity/mob/hellRaven.png");
 
 	public RenderHellRaven() {
 		super(new ModelHellRaven(), 0.25F);

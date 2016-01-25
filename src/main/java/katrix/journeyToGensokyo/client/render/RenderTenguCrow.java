@@ -12,7 +12,7 @@ package katrix.journeyToGensokyo.client.render;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import katrix.journeyToGensokyo.client.model.ModelTenguCrow;
-import katrix.journeyToGensokyo.plugin.thsc.entity.EntityTenguCrow;
+import katrix.journeyToGensokyo.lib.LibMod;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
@@ -20,28 +20,14 @@ import net.minecraft.util.ResourceLocation;
 @SideOnly(Side.CLIENT)
 public class RenderTenguCrow extends RenderLiving {
 
-	ResourceLocation texture = new ResourceLocation("journeytogensokyo", "textures/entity/mob/tenguCrow.png");
+	ResourceLocation texture = new ResourceLocation(LibMod.MODID.toLowerCase(), "textures/entity/mob/tenguCrow.png");
 
 	public RenderTenguCrow() {
 		super(new ModelTenguCrow(), 0.25F);
 	}
 
 	@Override
-	public void doRender(Entity entity, double x, double y, double z, float yaw, float pitch) {
-		super.doRender(entity, x, y, z, yaw, pitch);
-		render((EntityTenguCrow)entity, x, y, z, yaw, pitch);
-
-	}
-
-	public void render(EntityTenguCrow entity, double x, double y, double z, float yaw, float pitch) {
-	}
-
-	@Override
 	protected ResourceLocation getEntityTexture(Entity entity) {
-		return this.getEntityTexture((EntityTenguCrow)entity);
-	}
-
-	protected ResourceLocation getEntityTexture(EntityTenguCrow entity) {
 		return texture;
 	}
 }

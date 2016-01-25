@@ -21,7 +21,7 @@ import thKaguyaMod.entity.living.EntityTHFairy;
 @SideOnly(Side.CLIENT)
 public class RenderTHFairyIce extends RenderLiving {
 	
-	ResourceLocation texture = new ResourceLocation(LibMod.MODID, "textures/entity/mob/FairyTextureIce.png");
+	ResourceLocation texture = new ResourceLocation(LibMod.MODID.toLowerCase(), "textures/entity/mob/FairyTextureIce.png");
 
 	public RenderTHFairyIce() {
 		super(new ModelTHFairyIce(), 0.25F);
