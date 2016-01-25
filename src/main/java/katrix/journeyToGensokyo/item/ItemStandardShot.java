@@ -16,6 +16,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import katrix.journeyToGensokyo.lib.LibMod;
 import katrix.journeyToGensokyo.plugin.thsc.entity.EntityStandardShot;
+import katrix.journeyToGensokyo.util.ItemNBTHelper;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
@@ -24,7 +25,6 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.StatCollector;
@@ -34,6 +34,12 @@ import thKaguyaMod.THKaguyaLib;
 import thKaguyaMod.init.THKaguyaItems;
 
 public class ItemStandardShot extends Item {
+
+	public static final String NBT_POWER = "power";
+	public static final String NBT_COOLDOWN = "cooldown";
+	public static final String NBT_CANSPAWN = "canSpawn";
+	public static final String NBT_PREVPOWER = "prevIntPower";
+	public static final String NBT_SHOTLIST = "shotList";
 
 	public ItemStandardShot() {
 		super();
@@ -69,16 +75,14 @@ public class ItemStandardShot extends Item {
 	@Override
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
 
-		ArrayList<EntityStandardShot> listShotEntity = getShotList(stack, player);
+		List<EntityStandardShot> listShotEntity = getShotList(stack, player.worldObj);
+		EntityStandardShot shotEntity;
 
 		for (int i = 0; i < listShotEntity.size(); i++) {
-			EntityStandardShot shotEntity = listShotEntity.get(i);
+			shotEntity = listShotEntity.get(i);
 			if (shotEntity != null) {
 				shotEntity.shotTimer = 3;
-
-				float power = getPower(stack);
-
-				shotEntity.power = power;
+				shotEntity.power = ItemNBTHelper.getFloat(stack, NBT_POWER, 0F);
 			}
 		}
 
@@ -90,69 +94,53 @@ public class ItemStandardShot extends Item {
 
 		if (!world.isRemote && entity instanceof EntityPlayer) {
 
-			if (!stack.hasTagCompound()) {
-				stack.setTagCompound(new NBTTagCompound());
-			}
-
 			EntityPlayer player = (EntityPlayer)entity;
-			int cooldown = getCooldown(stack);
-			float power = THKaguyaLib.getPlayerPower(player) / 100;
-			int intPower = MathHelper.floor_float(power);
-			int prevIntPower = getPrevIntPower(stack);
-			ArrayList<EntityStandardShot> listShotEntity = getShotList(stack, entity);
+			int cooldown = ItemNBTHelper.getInt(stack, NBT_COOLDOWN, 0);
 
 			if (!equipped && cooldown == 0) {
-				setCanSpawn(stack, true);
+				ItemNBTHelper.setBoolean(stack, NBT_CANSPAWN, true);
 			}
 
 			//Drop item if more than one in inventory
-			int amount = 0;
-			for (int i = 0; i < player.inventory.mainInventory.length; i++) {
-
-				ItemStack[] inventory = player.inventory.mainInventory;
-				if (inventory[i] != null && inventory[i].getItem() == this) {
-					amount++;
-				}
-
-				if (amount > 1) {
+			ItemStack[] inventory = player.inventory.mainInventory;
+			for (int i = 0; i < inventory.length; i++) {
+				if (inventory[i] != null && inventory[i].getItem() == this && i != pos) {
 					player.dropPlayerItemWithRandomChoice(inventory[i], true);
 					inventory[i] = null;
-					amount--;
 				}
 			}
 
 			if (equipped) {
+				float power = THKaguyaLib.getPlayerPower(player) / 100;
+				int intPower = MathHelper.floor_float(power);
+				int prevIntPower = ItemNBTHelper.getInt(stack, NBT_PREVPOWER, 0);
+				List<EntityStandardShot> listShotEntity = getShotList(stack, entity.worldObj);
 
 				//Spawn initial bunch
-				if (getCanSpawn(stack)) {
-					setCanSpawn(stack, false);
+				if (ItemNBTHelper.getBoolean(stack, NBT_CANSPAWN, false)) {
+					ItemNBTHelper.setBoolean(stack, NBT_CANSPAWN, false);
 					cooldown = 5;
 					listShotEntity.clear();
 
 					for (int i = 0; i < intPower; i++) {
-						listShotEntity.add(i, new EntityStandardShot(world, player, stack.getItemDamage(), i, THKaguyaLib.getPlayerPower(player) / 100));
-						world.spawnEntityInWorld(listShotEntity.get(i));
+						EntityStandardShot shot = new EntityStandardShot(world, player, stack.getItemDamage(), i, power);
+						world.spawnEntityInWorld(shot);
+						listShotEntity.add(i, shot);
 					}
 				}
 
 				int shotAmount = listShotEntity.size();
 
+				boolean updatePower = false;
 				//Spawn more if power increases
 				if (intPower > prevIntPower && shotAmount + intPower - prevIntPower <= 4) {
 
 					for (int i = shotAmount; i < shotAmount + intPower - prevIntPower; i++) {
-						listShotEntity.add(i, new EntityStandardShot(world, player, stack.getItemDamage(), i, THKaguyaLib.getPlayerPower(player) / 100));
-						world.spawnEntityInWorld(listShotEntity.get(i));
+						EntityStandardShot shot = new EntityStandardShot(world, player, stack.getItemDamage(), i, power);
+						world.spawnEntityInWorld(shot);
+						listShotEntity.add(i, shot);
 					}
-
-					for (int i = 0; i < listShotEntity.size(); i++) {
-						EntityStandardShot shotEntity = listShotEntity.get(i);
-						if (shotEntity != null) {
-
-							float shotPower = THKaguyaLib.getPlayerPower(player) / 100;
-							shotEntity.power = shotPower;
-						}
-					}
+					updatePower = true;
 				}
 
 				//Kill if power decreases
@@ -160,41 +148,39 @@ public class ItemStandardShot extends Item {
 
 					shotAmount -= 1;
 					for (int i = shotAmount; i > shotAmount + intPower - prevIntPower; i--) {
-						//TODO: some sanity check here
-						EntityStandardShot deadEntity = listShotEntity.get(i);
 
+						EntityStandardShot deadEntity = listShotEntity.get(i);
 						deadEntity.setDead();
 						listShotEntity.remove(i);
 					}
+					updatePower = true;
+				}
 
-					for (int i = 0; i < listShotEntity.size(); i++) {
-						EntityStandardShot shotEntity = listShotEntity.get(i);
-						if (shotEntity != null) {
-
-							float shotPower = THKaguyaLib.getPlayerPower(player) / 100;
-							shotEntity.power = shotPower;
-						}
+				if (updatePower) {
+					for (EntityStandardShot shotEntity : listShotEntity) {
+						shotEntity.power = power;
 					}
 				}
+				
+				prevIntPower = intPower;
+				
+				ItemNBTHelper.setFloat(stack, NBT_POWER, power);
+				ItemNBTHelper.setInt(stack, NBT_PREVPOWER, prevIntPower);
+				setShotList(stack, listShotEntity);
 			}
-
-			prevIntPower = intPower;
 
 			if (cooldown != 0) {
 				cooldown--;
 			}
 
-			setCooldown(stack, cooldown);
-			setPower(stack, power);
-			setPrevIntPower(stack, prevIntPower);
-			setShotList(stack, listShotEntity);
+			ItemNBTHelper.setInt(stack, NBT_COOLDOWN, cooldown);
 		}
 	}
 
 	@Override
 	public boolean onEntityItemUpdate(EntityItem entityItem) {
 		if (entityItem.age == 1) {
-			setCanSpawn(entityItem.getEntityItem(), true);
+			ItemNBTHelper.setBoolean(entityItem.getEntityItem(), NBT_CANSPAWN, true);
 		}
 		return false;
 	}
@@ -203,12 +189,11 @@ public class ItemStandardShot extends Item {
 	public boolean onEntitySwing(EntityLivingBase entityLiving, ItemStack stack) {
 		if (entityLiving instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer)entityLiving;
+			ItemStack[] inventory = player.inventory.mainInventory;
 
-			for (int i = 0; i < player.inventory.mainInventory.length; i++) {
+			for (ItemStack spellcard : inventory) {
 
-				ItemStack[] inventory = player.inventory.mainInventory;
-				if (inventory[i] != null && inventory[i].getItem() == THKaguyaItems.spell_card) {
-					ItemStack spellcard = inventory[i];
+				if (spellcard != null && spellcard.getItem() == THKaguyaItems.spell_card) {
 					THKaguyaLib.checkSpellCardDeclaration(player.worldObj, spellcard, player, spellcard.getItemDamage(), DanmakuConstants.NORMAL, true);
 				}
 			}
@@ -223,113 +208,31 @@ public class ItemStandardShot extends Item {
 
 	@Override
 	public double getDurabilityForDisplay(ItemStack stack) {
-		return 1D - getPower(stack) / 4D;
+		return 1D - ItemNBTHelper.getFloat(stack, NBT_POWER, 0) / 4D;
 	}
 
-	public float getPower(ItemStack stack) {
-
-		if (stack.hasTagCompound()) {
-			NBTTagCompound tag = stack.getTagCompound();
-			if (tag.hasKey("power"))
-				return tag.getFloat("power");
-		}
-		return 0.0F;
-	}
-
-	public void setPower(ItemStack stack, float power) {
-
-		if (stack.hasTagCompound()) {
-			stack.getTagCompound().setFloat("power", power);
-		}
-	}
-
-	public int getPrevIntPower(ItemStack stack) {
-
-		if (stack.hasTagCompound()) {
-			NBTTagCompound tag = stack.getTagCompound();
-			if (tag.hasKey("prevIntPower"))
-				return tag.getInteger("prevIntPower");
-		}
-		return 0;
-	}
-
-	public void setPrevIntPower(ItemStack stack, int prevIntPower) {
-
-		if (stack.hasTagCompound()) {
-			stack.getTagCompound().setInteger("prevIntPower", prevIntPower);
-		}
-	}
-
-	public int getCooldown(ItemStack stack) {
-
-		if (stack.hasTagCompound()) {
-			NBTTagCompound tag = stack.getTagCompound();
-			if (tag.hasKey("cooldown"))
-				return tag.getInteger("cooldown");
-		}
-		return 10;
-	}
-
-	public void setCooldown(ItemStack stack, int cooldown) {
-
-		if (stack.hasTagCompound()) {
-			stack.getTagCompound().setInteger("cooldown", cooldown);
-		}
-	}
-
-	public boolean getCanSpawn(ItemStack stack) {
-
-		if (stack.hasTagCompound()) {
-			NBTTagCompound tag = stack.getTagCompound();
-			if (tag.hasKey("canSpawn"))
-				return tag.getBoolean("canSpawn");
-		}
-		return true;
-	}
-
-	public void setCanSpawn(ItemStack stack, boolean flag) {
-
-		if (stack.hasTagCompound()) {
-			stack.getTagCompound().setBoolean("canSpawn", flag);
-		}
-	}
-
-	public void setShotList(ItemStack stack, ArrayList<EntityStandardShot> list) {
-
-		if (stack.hasTagCompound()) {
-
-			ArrayList<Integer> ids = new ArrayList<Integer>();
-
-			for (int i = 0; i < list.size(); i++) {
-				EntityStandardShot shotEntity = list.get(i);
-				if (shotEntity != null) {
-					ids.add(shotEntity.getEntityId());
-				}
-			}
-			stack.getTagCompound().setIntArray("shotList", toIntArray(ids));
-		}
-	}
-
-	public ArrayList<EntityStandardShot> getShotList(ItemStack stack, Entity entity) {
-
-		if (stack.hasTagCompound()) {
-			NBTTagCompound tag = stack.getTagCompound();
-			if (tag.hasKey("canSpawn")) {
-				int ids[] = tag.getIntArray("shotList");
-				ArrayList<EntityStandardShot> shotList = new ArrayList<EntityStandardShot>();
-
-				for (int id : ids) {
-
-					shotList.add((EntityStandardShot)entity.worldObj.getEntityByID(id));
-				}
-				return shotList;
+	public void setShotList(ItemStack stack, List<EntityStandardShot> list) {
+		List<Integer> ids = new ArrayList<Integer>();
+		for (EntityStandardShot shotEntity : list) {
+			if(shotEntity != null) {
+				ids.add(shotEntity.getEntityId());
 			}
 		}
-		return new ArrayList<EntityStandardShot>();
+		ItemNBTHelper.setIntArray(stack, NBT_SHOTLIST, toIntArray(ids));
 	}
 
-	int[] toIntArray(List<Integer> list) {
+	public List<EntityStandardShot> getShotList(ItemStack stack, World world) {
+		int[] ids = ItemNBTHelper.getIntArray(stack, NBT_SHOTLIST, null);
+		List<EntityStandardShot> shotList = new ArrayList<EntityStandardShot>();
+		if (ids != null) {
+			for (int id : ids) {
+				shotList.add((EntityStandardShot)world.getEntityByID(id));
+			}
+		}
+		return shotList;
+	}
 
+	private int[] toIntArray(List<Integer> list) {
 		int[] ret = new int[list.size()];
 		for (int i = 0; i < ret.length; i++) {
 			ret[i] = list.get(i);
@@ -351,9 +254,7 @@ public class ItemStandardShot extends Item {
 	public void addInformation(ItemStack itemStack, EntityPlayer player, List list, boolean bool) {
 		super.addInformation(itemStack, player, list, bool);
 
-		int type = itemStack.getItemDamage();
-
-		switch (type) {
+		switch (itemStack.getItemDamage()) {
 			case 0:
 				list.add(StatCollector.translateToLocal("standardShot.description.needle"));
 				break;
