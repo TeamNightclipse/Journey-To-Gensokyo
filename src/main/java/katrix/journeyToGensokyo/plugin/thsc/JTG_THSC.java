@@ -15,6 +15,7 @@ import katrix.journeyToGensokyo.lib.LibSpecialShotId;
 import katrix.journeyToGensokyo.lib.LibSpellcardId;
 import katrix.journeyToGensokyo.plugin.thsc.entity.EntityFamiliarIce;
 import katrix.journeyToGensokyo.plugin.thsc.entity.EntityHellRaven;
+import katrix.journeyToGensokyo.plugin.thsc.entity.EntityMiniHakkeroJTG;
 import katrix.journeyToGensokyo.plugin.thsc.entity.EntityReimuHostile;
 import katrix.journeyToGensokyo.plugin.thsc.entity.EntityStandardShot;
 import katrix.journeyToGensokyo.plugin.thsc.entity.EntitySunFlowerFairyEnd;
@@ -80,6 +81,7 @@ public class JTG_THSC {
 		EntityReimuHostile.postInit();
 		EntityYukari.postInit();
 		EntityStandardShot.postInit();
+		EntityMiniHakkeroJTG.postInit();
 
 		if (THKaguyaConfig.spawnDanmakuMob && ConfigHandler.fixTHKaguyaSpawn) {
 

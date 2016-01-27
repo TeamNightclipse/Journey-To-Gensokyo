@@ -18,7 +18,6 @@ public class PacketSmoothCameraHandler implements IMessageHandler<PacketSmoothCa
 
 	@Override
 	public IMessage onMessage(PacketSmoothCamera message, MessageContext ctx) {
-		System.out.println(message.SmoothOn);
 		Minecraft.getMinecraft().gameSettings.smoothCamera = message.SmoothOn;
 		return null;
 	}

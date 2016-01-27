@@ -9,71 +9,82 @@
 
 package katrix.journeyToGensokyo.plugin.thsc.entity.spellcard;
 
-import static thKaguyaMod.DanmakuConstants.FORM_STAR;
-
-import katrix.journeyToGensokyo.plugin.thsc.entity.EntityMiniHakkeroDoubleJTG;
+import katrix.journeyToGensokyo.plugin.thsc.entity.EntityMiniHakkeroJTG;
 import katrix.journeyToGensokyo.util.MathHelperJTG;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.Vec3;
+import net.minecraft.world.World;
+import thKaguyaMod.DanmakuConstants;
 import thKaguyaMod.ShotData;
 import thKaguyaMod.THShotLib;
+import thKaguyaMod.entity.spellcard.EntitySpellCard;
 import thKaguyaMod.entity.spellcard.THSpellCard;
 
 public class THSC_DoubleSpark extends THSpellCard {
 
-	private Vec3 tgVec;
-
 	public THSC_DoubleSpark() {
 		setNeedLevel(7);
 		setRemoveTime(70);
-		setEndTime(109);
+		setEndTime(110);
 		setOriginalUserName(MARISA);
 	}
 
 	@Override
+	public void init(World worldObj, EntitySpellCard entitySpellCard, EntityLivingBase living_user, EntityLivingBase living_target, int spLevel) {
+		super.init(worldObj, entitySpellCard, living_user, living_target, spLevel);
+		EntityMiniHakkeroJTG miniHakkero = new EntityMiniHakkeroJTG(world, user, card, true, 30, 100, false, true);
+		world.spawnEntityInWorld(miniHakkero);
+	}
+
+	@Override
 	public void spellcard_main() {
-		if (time == 1) {
-			EntityMiniHakkeroDoubleJTG miniHakkero;
 
-			tgVec = THShotLib.getVecFromAngle(card.rotationYaw, card.rotationPitch + 90);
-			miniHakkero = new EntityMiniHakkeroDoubleJTG(world, user, target);
+		if (time >= 30 && time <= 100) {
+			double xVector, yVector, zVector, angleXZ, X1, Z1, X2, Z2;
+			int randLow = -2;
+			int randHigh = 2;
+			int pieces = 12;
+			double speed = rand.nextInt(randHigh - randLow + 1) + randLow;
 
-			if (!world.isRemote) {
-				world.spawnEntityInWorld(miniHakkero);
-			}
-		}
-		if (time >= 30 && time < 99) {
-			int randLow = -2, randHigh = 2;
-			float angle = time * rand.nextInt(randHigh - randLow + 1) + randLow;
-			float angleSpan = 360F / 14F;
+			Vec3 lookAt = THShotLib.angle(card.rotationYaw, card.rotationPitch + 90F);
+			double angle = time * speed;
+			double angleSpan = 360D / pieces;
+			double gRate = 0.034 + 0.03D * MathHelperJTG.sin(Math.toRadians(angle));
 
-			double gRate = 0.034 + 0.03D * MathHelperJTG.sin(angle / 180F * Math.PI);
-			Vec3 vectorG = THShotLib.getVecFromAngle(card.rotationYaw, card.rotationPitch);
-			vectorG = THShotLib.getVectorMultiply(vectorG, gRate);
+			Vec3 gravity = THShotLib.getVecFromAngle(card.rotationYaw, card.rotationPitch, gRate);
+			ShotData shot1 = ShotData.shot(DanmakuConstants.FORM_STAR, time % 7, 0.5F, 8.0F, 0, 55);
+			ShotData shot2 = ShotData.shot(DanmakuConstants.FORM_STAR, time % 7, 0.35F, 8.0F, 0, 100);
 
-			for (int i = 0; i < 14; i++) {
+			double cardYawRad = Math.toRadians(card.rotationYaw);
+			double cardPitchRad = Math.toRadians(card.rotationPitch + 90);
+			double cardYawSin = MathHelperJTG.sin(cardYawRad);
+			double cardYawCos = MathHelperJTG.cos(cardYawRad);
+			double cardPitchSin = MathHelperJTG.sin(cardPitchRad);
 
-				double X1, X2, Z1, Z2;
+			double angleY = 0;
+			double angleYRad = Math.toRadians(angleY);
+			double angleYSin = MathHelperJTG.sin(angleYRad);
+			double angleYCos = MathHelperJTG.cos(angleYRad);
 
-				double angleXZ = angle / 180.0F * Math.PI;
-				double angleY = 0 / 180.0F * Math.PI;
-				float cardYaw = (float)(card.rotationYaw / 180.0F * Math.PI);
-				float cardPitch = (float)((card.rotationPitch + 90F) / 180.0F * Math.PI);
+			for (int i = 0; i < pieces; i++) {
+				angleXZ = Math.toRadians(angle);
+				double angleXZSin = MathHelperJTG.sin(angleXZ);
+				double angleXZCos = MathHelperJTG.cos(angleXZ);
 
-				X1 = MathHelperJTG.sin(angleXZ) * MathHelperJTG.cos(cardYaw);
-				Z1 = MathHelperJTG.sin(angleXZ) * MathHelperJTG.sin(cardYaw);
-				X2 = MathHelperJTG.cos(angleXZ) * MathHelperJTG.sin(angleY) * MathHelperJTG.sin(cardPitch) * MathHelperJTG.sin(cardYaw);
-				Z2 = MathHelperJTG.cos(angleXZ) * MathHelperJTG.sin(angleY) * MathHelperJTG.sin(cardPitch) * MathHelperJTG.cos(cardYaw);
+				X1 = angleXZSin * cardYawCos;
+				Z1 = angleXZSin * cardYawSin;
+				X2 = angleXZCos * angleYSin * cardPitchSin * cardYawSin;
+				Z2 = angleXZCos * angleYSin * cardPitchSin * cardYawCos;
 
-				double yVector1 = -MathHelperJTG.cos(angleXZ) * MathHelperJTG.sin(cardPitch - angleY);
-				double xVector1 = MathHelperJTG.cos(angleXZ) * MathHelperJTG.cos(angleY) * tgVec.xCoord + X1 - X2;
-				double zVector1 = MathHelperJTG.cos(angleXZ) * MathHelperJTG.cos(angleY) * tgVec.zCoord + Z1 + Z2;
+				yVector = -angleXZCos * MathHelperJTG.sin(cardPitchRad - angleYRad);
+				xVector = angleXZCos * angleYCos * lookAt.xCoord + X1 - X2;
+				zVector = angleXZCos * angleYCos * lookAt.zCoord + Z1 + Z2;
+				Vec3 vecAngle = THShotLib.angle(xVector, yVector, zVector);
 
 				if (i % 2 == 0) {
-					ShotData shot1 = ShotData.shot(FORM_STAR, time % 7, 0.5F, 8.0F, 0, 55);
-					THShotLib.createShot(user, card, pos_Card(), angle(xVector1, yVector1, zVector1), 0F, 0.1D, 0.3D, 0.1D, vectorG, shot1);
+					THShotLib.createShot(user, card, pos_Card(), vecAngle, 0F, 0.1D, 0.5D, 0.15D, gravity, shot1);
 				}
-				ShotData shot2 = ShotData.shot(FORM_STAR, time % 7, 0.35F, 8.0F, 0, 100);
-				THShotLib.createShot(user, card, pos_Card(), angle(xVector1, yVector1, zVector1), 0F, 0.1D, 0.6D, 0.1D, vectorG, shot2);
+				THShotLib.createShot(user, card, pos_Card(), vecAngle, 0F, 0.1D, 0.6D, 0.1D, gravity, shot2);
 				angle += angleSpan;
 			}
 		}
