@@ -32,6 +32,7 @@ import katrix.journeyToGensokyo.plugin.thsc.entity.spellcard.THSC_CurseOfDreamsA
 import katrix.journeyToGensokyo.plugin.thsc.entity.spellcard.THSC_DoubleSpark;
 import katrix.journeyToGensokyo.plugin.thsc.entity.spellcard.THSC_FinalSpark;
 import katrix.journeyToGensokyo.plugin.thsc.entity.spellcard.THSC_MeshLightDarkness;
+import net.minecraftforge.common.MinecraftForge;
 import thKaguyaMod.init.THKaguyaConfig;
 import thKaguyaMod.registry.SpecialShotRegistry;
 import thKaguyaMod.registry.SpellCardRegistry;
@@ -67,6 +68,10 @@ public class JTG_THSC {
 		SpellCardRegistry.registerSpellCard(THSC_FinalSpark.class, LibMod.MODID, "FinalSpark", LibSpellcardId.FINAL_SPARK);
 		SpellCardRegistry.registerSpellCard(THSC_CurseOfDreamsAndReality.class, LibMod.MODID, "CurseOfDreamsAndReality", LibSpellcardId.DREAMS_AND_REALITY);
 		SpellCardRegistry.registerSpellCard(THSC_MeshLightDarkness.class, LibMod.MODID, "MeshOfLightAndDarkness", LibSpellcardId.MESH_LIGHT_DARKNESS);
+	}
+	
+	public static void init() {
+		MinecraftForge.EVENT_BUS.register(new EventDanmakuHit());
 	}
 
 	public static void postInit() {

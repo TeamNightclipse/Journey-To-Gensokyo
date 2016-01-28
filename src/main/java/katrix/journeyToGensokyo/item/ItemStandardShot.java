@@ -16,7 +16,9 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import katrix.journeyToGensokyo.lib.LibMod;
 import katrix.journeyToGensokyo.plugin.thsc.entity.EntityStandardShot;
+import katrix.journeyToGensokyo.util.DanmakuHelper;
 import katrix.journeyToGensokyo.util.ItemNBTHelper;
+import katrix.journeyToGensokyo.util.LogHelper;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
@@ -40,6 +42,7 @@ public class ItemStandardShot extends Item {
 	public static final String NBT_CANSPAWN = "canSpawn";
 	public static final String NBT_PREVPOWER = "prevIntPower";
 	public static final String NBT_SHOTLIST = "shotList";
+	public static final String NBT_USETIME = "useTime";
 
 	public ItemStandardShot() {
 		super();
@@ -74,6 +77,20 @@ public class ItemStandardShot extends Item {
 
 	@Override
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
+		
+		int useTime = ItemNBTHelper.getByte(stack, NBT_USETIME, (byte)0);
+		
+		if(useTime == 0) {
+			int reduce = 1;
+
+			//Remove all small ones first
+			reduce = DanmakuHelper.searchInventoryPowerItem(player, reduce, 0);
+
+			//Then remove the big ones
+			if (reduce > 0) {
+				DanmakuHelper.searchInventoryPowerItem(player, reduce, 1);
+			}
+		}
 
 		List<EntityStandardShot> listShotEntity = getShotList(stack, player.worldObj);
 		EntityStandardShot shotEntity;
@@ -84,6 +101,13 @@ public class ItemStandardShot extends Item {
 				shotEntity.shotTimer = 3;
 				shotEntity.power = ItemNBTHelper.getFloat(stack, NBT_POWER, 0F);
 			}
+		}
+		
+		if(useTime > 1) {
+			ItemNBTHelper.setByte(stack, NBT_USETIME, (byte)0);
+		}
+		else {
+			ItemNBTHelper.setByte(stack, NBT_USETIME, (byte)(useTime + 1));
 		}
 
 		return stack;
@@ -109,9 +133,10 @@ public class ItemStandardShot extends Item {
 					inventory[i] = null;
 				}
 			}
+			
+			float power = THKaguyaLib.getPlayerPower(player) / 100;
 
 			if (equipped) {
-				float power = THKaguyaLib.getPlayerPower(player) / 100;
 				int intPower = MathHelper.floor_float(power);
 				int prevIntPower = ItemNBTHelper.getInt(stack, NBT_PREVPOWER, 0);
 				List<EntityStandardShot> listShotEntity = getShotList(stack, entity.worldObj);
@@ -161,10 +186,9 @@ public class ItemStandardShot extends Item {
 						shotEntity.power = power;
 					}
 				}
-				
+
 				prevIntPower = intPower;
-				
-				ItemNBTHelper.setFloat(stack, NBT_POWER, power);
+
 				ItemNBTHelper.setInt(stack, NBT_PREVPOWER, prevIntPower);
 				setShotList(stack, listShotEntity);
 			}
@@ -173,6 +197,7 @@ public class ItemStandardShot extends Item {
 				cooldown--;
 			}
 
+			ItemNBTHelper.setFloat(stack, NBT_POWER, power);
 			ItemNBTHelper.setInt(stack, NBT_COOLDOWN, cooldown);
 		}
 	}
@@ -214,7 +239,7 @@ public class ItemStandardShot extends Item {
 	public void setShotList(ItemStack stack, List<EntityStandardShot> list) {
 		List<Integer> ids = new ArrayList<Integer>();
 		for (EntityStandardShot shotEntity : list) {
-			if(shotEntity != null) {
+			if (shotEntity != null) {
 				ids.add(shotEntity.getEntityId());
 			}
 		}

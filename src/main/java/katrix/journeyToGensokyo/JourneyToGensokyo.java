@@ -41,7 +41,7 @@ public class JourneyToGensokyo {
 	public static boolean thaumcraftInstalled;
 	public static boolean botaniaInstalled;
 
-	@Instance
+	@Instance(LibMod.MODID)
 	public static JourneyToGensokyo instance;
 
 	@SidedProxy(clientSide = LibMod.CLIENT_PROXY_CLASS, serverSide = LibMod.SERVER_PROXY_CLASS)
@@ -89,7 +89,7 @@ public class JourneyToGensokyo {
 		}
 
 		JTGWorldGen.init();
-
+		JTG_THSC.init();
 	}
 
 	@EventHandler
