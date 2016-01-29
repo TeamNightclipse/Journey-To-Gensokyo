@@ -11,19 +11,29 @@ package katrix.journeyToGensokyo.plugin.thsc.entity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
-
 import cpw.mods.fml.common.registry.EntityRegistry;
 import katrix.journeyToGensokyo.JourneyToGensokyo;
 import katrix.journeyToGensokyo.handler.ConfigHandler;
 import katrix.journeyToGensokyo.lib.LibEntityName;
 import katrix.journeyToGensokyo.lib.LibMobID;
+import katrix.journeyToGensokyo.lib.LibMod;
 import katrix.journeyToGensokyo.lib.LibSpecialShotId;
+import katrix.journeyToGensokyo.util.LogHelper;
 import katrix.journeyToGensokyo.util.MathHelperJTG;
 import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.entity.IMerchant;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.StatCollector;
 import net.minecraft.util.Vec3;
+import net.minecraft.village.MerchantRecipe;
+import net.minecraft.village.MerchantRecipeList;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
@@ -39,9 +49,11 @@ import thKaguyaMod.init.THKaguyaConfig;
 import thKaguyaMod.init.THKaguyaItems;
 import thKaguyaMod.item.ItemTHShot;
 
-public class EntityReimuHostile extends EntityDanmakuMob {
-
-	public double shotGap = 0.06D;
+public class EntityReimuHostile extends EntityDanmakuMob implements IMerchant {
+	
+    private EntityPlayer buyingPlayer;
+    private MerchantRecipeList buyingList;
+	//public static final Map merchantSellingList = new HashMap();
 
 	public EntityReimuHostile(World world) {
 		super(world);
@@ -174,6 +186,8 @@ public class EntityReimuHostile extends EntityDanmakuMob {
 		if (attackCounter == 1) {
 			useSpellCard(EntitySpellCard.SC_REIMU_MusouFuuin);
 		}
+		
+		double shotGap = 0.06D;
 
 		for (int k = 1; k <= 8; k++) {
 			if (attackCounter == 20 + k * (level / 2)) {
@@ -274,7 +288,87 @@ public class EntityReimuHostile extends EntityDanmakuMob {
 
 		return worldObj.difficultySetting != EnumDifficulty.PEACEFUL;
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	protected void entityInit() {
+		super.entityInit();
+        buyingList = new MerchantRecipeList();
+        buyingList.add(new MerchantRecipe(new ItemStack(THKaguyaItems.shot_material, 32), THKaguyaItems.red_pearl, THKaguyaItems.homing_amulet));
+        buyingList.add(new MerchantRecipe(new ItemStack(THKaguyaItems.shot_material, 32), THKaguyaItems.blue_pearl, THKaguyaItems.diffusion_amulet));
+        Collections.shuffle(buyingList);
+	}
+	
+    public boolean interact(EntityPlayer player)
+    {
+        ItemStack itemstack = player.inventory.getCurrentItem();
+        boolean flag = itemstack != null && itemstack.getItem() == Items.spawn_egg;
 
+        if (!flag && this.isEntityAlive() && !player.isSneaking() && !isFlyingMode)
+        {
+            if (!this.worldObj.isRemote)
+            {
+                this.setCustomer(player);
+                player.displayGUIMerchant(this, StatCollector.translateToLocal("entity." + LibMod.MODID + "." + LibEntityName.REIMU_HOSTILE +  ".name"));
+            }
+
+            return true;
+        }
+        else
+        {
+            return super.interact(player);
+        }
+    }
+    
+    public void writeEntityToNBT(NBTTagCompound tag)
+    {
+        super.writeEntityToNBT(tag);
+        if (this.buyingList != null)
+        {
+            tag.setTag("Offers", this.buyingList.getRecipiesAsTags());
+        }
+    }
+
+    /**
+     * (abstract) Protected helper method to read subclass entity data from NBT.
+     */
+    public void readEntityFromNBT(NBTTagCompound tag)
+    {
+        super.readEntityFromNBT(tag);
+        if (tag.hasKey("Offers", 10))
+        {
+            NBTTagCompound nbttagcompound1 = tag.getCompoundTag("Offers");
+            this.buyingList = new MerchantRecipeList(nbttagcompound1);
+        }
+    }
+
+	@Override
+	public void setCustomer(EntityPlayer player) {
+		this.buyingPlayer = player;		
+	}
+
+	@Override
+	public EntityPlayer getCustomer() {
+		return buyingPlayer;
+	}
+
+	@Override
+	public MerchantRecipeList getRecipes(EntityPlayer player) {
+		LogHelper.info(buyingList.get(1));
+		return this.buyingList;
+	}
+
+	@Override
+	public void setRecipes(MerchantRecipeList p_70930_1_) {}
+
+	@Override
+	public void useRecipe(MerchantRecipe recipe) {
+        recipe.incrementToolUses();
+	}
+
+	@Override
+	public void func_110297_a_(ItemStack stack) {}
+	
 	public static void postInit() {
 
 		EntityRegistry.registerModEntity(EntityReimuHostile.class, LibEntityName.REIMU_HOSTILE, LibMobID.REIMU_HOSTILE, JourneyToGensokyo.instance, 80, 1, true);
