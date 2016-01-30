@@ -48,7 +48,8 @@ public class JTGItem {
 		ItemSpawnEgg.addMapping(LibEntityName.FAIRY_END, 0x362060, 0xD3C95D);
 		ItemSpawnEgg.addMapping(LibEntityName.FAIRY_SUNFLOWER_END, 0x1C1133, 0x828200);
 		ItemSpawnEgg.addMapping(LibEntityName.REIMU_HOSTILE, 0xD10400, 0xFFFFFF);
-		//ItemSpawnEgg.addMapping(EntityName.YUKARI, 0x982D9F, 0x1A1956); //Hiding this for now
+		//ItemSpawnEgg.addMapping(LibEntityName.YUKARI, 0x982D9F, 0x1A1956); //Hiding this for now
+		ItemSpawnEgg.addMapping(LibEntityName.MARISA, 0xF0F0F0, 0x0F0F0F);
 
 		standardShot = new ItemStandardShot().setCreativeTab(CreativeTabs.tabMaterials).setUnlocalizedName("standardShot");
 

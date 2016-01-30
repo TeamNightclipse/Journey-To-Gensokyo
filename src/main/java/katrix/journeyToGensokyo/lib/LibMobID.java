@@ -22,5 +22,6 @@ public class LibMobID {
 	public static final int YUKARI = 9;
 	public static final int STANDARD_SHOT = 10;
 	public static final int MINI_HAKKERO_JTG = 11;
+	public static final int MARISA = 12;
 
 }

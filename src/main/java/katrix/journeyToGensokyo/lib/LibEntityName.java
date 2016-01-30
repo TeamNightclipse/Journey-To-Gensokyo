@@ -22,5 +22,6 @@ public class LibEntityName {
 	public static final String YUKARI = "Yukari";
 	public static final String STANDARD_SHOT = "StandardShot";
 	public static final String MINI_HAKKERO_JTG = "miniHakkeroJTG";
+	public static final String MARISA = "Marisa";
 
 }

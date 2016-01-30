@@ -15,6 +15,7 @@ import katrix.journeyToGensokyo.lib.LibSpecialShotId;
 import katrix.journeyToGensokyo.lib.LibSpellcardId;
 import katrix.journeyToGensokyo.plugin.thsc.entity.EntityFamiliarIce;
 import katrix.journeyToGensokyo.plugin.thsc.entity.EntityHellRaven;
+import katrix.journeyToGensokyo.plugin.thsc.entity.EntityMarisa;
 import katrix.journeyToGensokyo.plugin.thsc.entity.EntityMiniHakkeroJTG;
 import katrix.journeyToGensokyo.plugin.thsc.entity.EntityReimuHostile;
 import katrix.journeyToGensokyo.plugin.thsc.entity.EntityStandardShot;
@@ -28,6 +29,7 @@ import katrix.journeyToGensokyo.plugin.thsc.entity.shot.ShotFantasySeal;
 import katrix.journeyToGensokyo.plugin.thsc.entity.shot.ShotHoming;
 import katrix.journeyToGensokyo.plugin.thsc.entity.shot.ShotMissile;
 import katrix.journeyToGensokyo.plugin.thsc.entity.shot.ShotSeed;
+import katrix.journeyToGensokyo.plugin.thsc.entity.shot.ShotSlaveMarisa;
 import katrix.journeyToGensokyo.plugin.thsc.entity.spellcard.THSC_CurseOfDreamsAndReality;
 import katrix.journeyToGensokyo.plugin.thsc.entity.spellcard.THSC_DoubleSpark;
 import katrix.journeyToGensokyo.plugin.thsc.entity.spellcard.THSC_FinalSpark;
@@ -62,6 +64,10 @@ public class JTG_THSC {
 
 		SpecialShotRegistry.registerSpecialShot(ShotHoming.class, LibSpecialShotId.JTG_HOMING01);
 		SpecialShotRegistry.registerSpecialShot(ShotHoming.class, LibSpecialShotId.JTG_HOMING02);
+		
+		SpecialShotRegistry.registerSpecialShot(ShotSlaveMarisa.class, LibSpecialShotId.SLAVE_MARISA01);
+		SpecialShotRegistry.registerSpecialShot(ShotSlaveMarisa.class, LibSpecialShotId.SLAVE_MARISA02);
+		SpecialShotRegistry.registerSpecialShot(ShotSlaveMarisa.class, LibSpecialShotId.SLAVE_MARISA03);
 
 		//Spell Cards
 		SpellCardRegistry.registerSpellCard(THSC_DoubleSpark.class, LibMod.MODID, "DoubleSpark", LibSpellcardId.DOUBLE_SPARK);
@@ -87,6 +93,7 @@ public class JTG_THSC {
 		EntityYukari.postInit();
 		EntityStandardShot.postInit();
 		EntityMiniHakkeroJTG.postInit();
+		EntityMarisa.postInit();
 
 		if (THKaguyaConfig.spawnDanmakuMob && ConfigHandler.fixTHKaguyaSpawn) {
 

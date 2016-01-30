@@ -26,4 +26,8 @@ public class LibSpecialShotId {
 	public static final int MISSILE01 = 11400;
 	public static final int JTG_HOMING01 = 11500;
 	public static final int JTG_HOMING02 = 11501;
+	public static final int SLAVE_MARISA01 = 11600;
+	public static final int SLAVE_MARISA02 = 11601;
+	public static final int SLAVE_MARISA03 = 11602;
+	public static final int SLAVE_MARISA11 = 11610;
 }

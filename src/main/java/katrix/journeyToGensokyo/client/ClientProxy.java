@@ -14,6 +14,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import katrix.journeyToGensokyo.CommonProxy;
 import katrix.journeyToGensokyo.client.render.RenderHellRaven;
+import katrix.journeyToGensokyo.client.render.RenderMarisa;
 import katrix.journeyToGensokyo.client.render.RenderMiniHakkeroJTG;
 import katrix.journeyToGensokyo.client.render.RenderReimuHostile;
 import katrix.journeyToGensokyo.client.render.RenderStandardShot;
@@ -24,6 +25,7 @@ import katrix.journeyToGensokyo.client.render.RenderTHFairyNether;
 import katrix.journeyToGensokyo.client.render.RenderTenguCrow;
 import katrix.journeyToGensokyo.client.render.RenderYukari;
 import katrix.journeyToGensokyo.plugin.thsc.entity.EntityHellRaven;
+import katrix.journeyToGensokyo.plugin.thsc.entity.EntityMarisa;
 import katrix.journeyToGensokyo.plugin.thsc.entity.EntityMiniHakkeroJTG;
 import katrix.journeyToGensokyo.plugin.thsc.entity.EntityReimuHostile;
 import katrix.journeyToGensokyo.plugin.thsc.entity.EntityStandardShot;
@@ -49,5 +51,6 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityYukari.class, new RenderYukari());
 		RenderingRegistry.registerEntityRenderingHandler(EntityStandardShot.class, new RenderStandardShot());
 		RenderingRegistry.registerEntityRenderingHandler(EntityMiniHakkeroJTG.class, new RenderMiniHakkeroJTG());
+		RenderingRegistry.registerEntityRenderingHandler(EntityMarisa.class, new RenderMarisa());
 	}
 }
