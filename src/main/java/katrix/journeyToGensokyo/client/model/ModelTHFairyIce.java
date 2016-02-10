@@ -1,16 +1,13 @@
 /**
- * This class was created by <Katrix>, based on a class from Touhou Items Mod. It's distributed as
+ * This class was created by <Katrix>. It's distributed as
  * part of the Journey To Gensokyo Mod. Get the Source Code in github:
  * https://github.com/Katrix-/JTG
  *
  * Journey To Gensokyo is Open Source and distributed under the
  * a modifed Botania license: https://github.com/Katrix-/JTG/blob/master/LICENSE.md
  */
-
 package katrix.journeyToGensokyo.client.model;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import katrix.journeyToGensokyo.util.MathHelperJTG;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
@@ -18,11 +15,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.MathHelper;
 import thKaguyaMod.entity.living.EntityTHFairy;
 
-/**
- * ModelTHFairyIce - Katrix Created using Tabula 4.1.1
- */
-
-@SideOnly(Side.CLIENT)
 public class ModelTHFairyIce extends ModelBase {
 
 	public ModelRenderer skirt;
@@ -247,8 +239,6 @@ public class ModelTHFairyIce extends ModelBase {
 
 	@Override
 	public void render(Entity entity, float movement, float far, float tick, float yaw, float pitch, float size) {
-
-		super.render(entity, movement, far, tick, yaw, pitch, size);
 		setRotationAngles(movement, far, tick, yaw, pitch, size, entity);
 
 		head.render(size);
@@ -276,7 +266,6 @@ public class ModelTHFairyIce extends ModelBase {
 
 	@Override
 	public void setRotationAngles(float movement, float far, float tick, float yaw, float pitch, float size, Entity entity) {
-		super.setRotationAngles(movement, far, tick, yaw, pitch, size, entity);
 		EntityTHFairy thFairy = (EntityTHFairy)entity;
 
 		head.rotateAngleY = (float)(yaw / (180F / Math.PI));

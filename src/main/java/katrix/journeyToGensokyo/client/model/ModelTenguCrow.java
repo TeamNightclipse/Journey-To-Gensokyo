@@ -6,7 +6,6 @@
  * Journey To Gensokyo is Open Source and distributed under the
  * a modifed Botania license: https://github.com/Katrix-/JTG/blob/master/LICENSE.md
  */
-
 package katrix.journeyToGensokyo.client.model;
 
 import katrix.journeyToGensokyo.util.MathHelperJTG;
@@ -14,9 +13,6 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
-/**
- * ModelTenguCrow - Katrix Created using Tabula 4.1.1
- */
 public class ModelTenguCrow extends ModelBase {
 
 	public ModelRenderer tenguBody;
@@ -35,7 +31,6 @@ public class ModelTenguCrow extends ModelBase {
 		textureWidth = 64;
 		textureHeight = 64;
 		tenguFootLeft = new ModelRenderer(this, 32, 32);
-		tenguFootLeft.mirror = true;
 		tenguFootLeft.setRotationPoint(0.0F, 0.0F, 0.0F);
 		tenguFootLeft.addBox(1.0F, 16.0F, -5.5F, 2, 2, 3, 0.0F);
 		tenguWingRight = new ModelRenderer(this, 34, 13);
@@ -89,16 +84,13 @@ public class ModelTenguCrow extends ModelBase {
 
 	@Override
 	public void render(Entity entity, float movement, float far, float tick, float yaw, float pitch, float size) {
-		super.render(entity, movement, far, tick, yaw, pitch, size);
 		setRotationAngles(movement, far, tick, yaw, pitch, size, entity);
-
 		tenguBody.render(size);
 		tenguHead.render(size);
 	}
 
 	@Override
 	public void setRotationAngles(float movement, float far, float tick, float yaw, float pitch, float size, Entity entity) {
-		super.setRotationAngles(movement, far, tick, yaw, pitch, size, entity);
 		tenguHead.rotateAngleY = (float)(yaw / (180F / Math.PI));
 		tenguHead.rotateAngleX = (float)(pitch / (180F / Math.PI));
 		tenguBody.rotateAngleX = (float)(Math.PI / 3F + MathHelperJTG.cos(tick * 0.1F) * 0.15F);

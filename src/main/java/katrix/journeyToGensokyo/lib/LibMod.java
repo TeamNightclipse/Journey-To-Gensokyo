@@ -17,5 +17,6 @@ public class LibMod {
 	public static final String CLIENT_PROXY_CLASS = "katrix.journeyToGensokyo.client.ClientProxy";
 	public static final String SERVER_PROXY_CLASS = "katrix.journeyToGensokyo.CommonProxy";
 	public static final String GUI_FACTORY_CLASS = "katrix.journeyToGensokyo.client.gui.GuiFactory";
+	public static final String KAGUYAMOD = "thKaguyaMod";
 
 }

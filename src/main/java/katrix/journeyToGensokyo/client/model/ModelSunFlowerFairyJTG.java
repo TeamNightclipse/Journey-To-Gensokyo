@@ -1,16 +1,13 @@
 /**
- * This class was created by <Katrix>, based on a class from Touhou Items Mod. It's distributed as
+ * This class was created by <Katrix>. It's distributed as
  * part of the Journey To Gensokyo Mod. Get the Source Code in github:
  * https://github.com/Katrix-/JTG
  *
  * Journey To Gensokyo is Open Source and distributed under the
  * a modifed Botania license: https://github.com/Katrix-/JTG/blob/master/LICENSE.md
  */
-
 package katrix.journeyToGensokyo.client.model;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import katrix.journeyToGensokyo.util.MathHelperJTG;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
@@ -18,9 +15,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.MathHelper;
 import thKaguyaMod.entity.living.EntityTHFairy;
 
-@SideOnly(Side.CLIENT)
 public class ModelSunFlowerFairyJTG extends ModelBase {
-	
+
 	ModelRenderer bipedBody;
 	ModelRenderer bipedRightArm;
 	ModelRenderer bipedLeftArm;
@@ -47,104 +43,86 @@ public class ModelSunFlowerFairyJTG extends ModelBase {
 		bipedBody.addBox(-3F, 0F, -2F, 6, 7, 4);
 		bipedBody.setRotationPoint(0F, 5F, 0F);
 		bipedBody.setTextureSize(128, 64);
-		bipedBody.mirror = true;
 		setRotation(bipedBody, 0F, 0F, 0F);
 		bipedRightArm = new ModelRenderer(this, 48, 0);
 		bipedRightArm.addBox(-1F, -1F, -1F, 2, 8, 2);
 		bipedRightArm.setRotationPoint(-4F, 6F, 0F);
 		bipedRightArm.setTextureSize(128, 64);
-		bipedRightArm.mirror = true;
 		setRotation(bipedRightArm, -0.7679449F, 0F, -0.6457718F);
 		bipedLeftArm = new ModelRenderer(this, 56, 0);
 		bipedLeftArm.addBox(-1F, -1F, -1F, 2, 8, 2);
 		bipedLeftArm.setRotationPoint(4F, 6F, 0F);
 		bipedLeftArm.setTextureSize(128, 64);
-		bipedLeftArm.mirror = true;
 		setRotation(bipedLeftArm, -0.7679449F, 0F, 0.6457718F);
 		bipedRightLeg = new ModelRenderer(this, 50, 16);
 		bipedRightLeg.addBox(-1F, 0F, -2F, 3, 11, 4);
 		bipedRightLeg.setRotationPoint(-2F, 12F, 0F);
 		bipedRightLeg.setTextureSize(128, 64);
-		bipedRightLeg.mirror = true;
 		setRotation(bipedRightLeg, 0F, 0F, 0F);
 		bipedLeftLeg = new ModelRenderer(this, 50, 16);
 		bipedLeftLeg.addBox(-2F, 0F, -2F, 3, 11, 4);
 		bipedLeftLeg.setRotationPoint(2F, 12F, 0F);
 		bipedLeftLeg.setTextureSize(128, 64);
-		bipedLeftLeg.mirror = true;
 		setRotation(bipedLeftLeg, 0F, 0F, 0F);
 		skirtTop = new ModelRenderer(this, 0, 16);
 		skirtTop.addBox(-4F, 5F, -4F, 8, 4, 8);
 		skirtTop.setRotationPoint(0F, 0F, 0F);
 		skirtTop.setTextureSize(128, 64);
-		skirtTop.mirror = true;
 		setRotation(skirtTop, 0F, 0F, 0F);
 		skirtBottom = new ModelRenderer(this, 32, 32);
 		skirtBottom.addBox(-5F, 0F, -5F, 10, 6, 10);
 		skirtBottom.setRotationPoint(0F, 9F, 0F);
 		skirtBottom.setTextureSize(128, 64);
-		skirtBottom.mirror = true;
 		setRotation(skirtBottom, 0F, 0F, 0F);
 		leftWing = new ModelRenderer(this, 64, 0);
 		leftWing.addBox(-1F, -16F, 0F, 20, 26, 1);
 		leftWing.setRotationPoint(2F, 3F, 2F);
 		leftWing.setTextureSize(128, 64);
-		leftWing.mirror = false;
 		setRotation(leftWing, 0F, -0.4886922F, 0.0167304F);
-		leftWing.mirror = false;
 		rightWing = new ModelRenderer(this, 72, 32);
 		rightWing.addBox(-1F, -16F, 0F, 20, 26, 1);
 		rightWing.setRotationPoint(-2F, 3F, 2F);
 		rightWing.setTextureSize(128, 64);
-		rightWing.mirror = false;
 		setRotation(rightWing, 0F, -2.6529F, 0.0167304F);
 		himawari1 = new ModelRenderer(this, 0, 32);
 		himawari1.addBox(-7F, -20F, 0F, 12, 31, 1);
 		himawari1.setRotationPoint(0F, 6F, -2F);
 		himawari1.setTextureSize(128, 64);
-		himawari1.mirror = true;
 		setRotation(himawari1, 0.4089647F, -0.7435722F, 0.3666439F);
 		himawari2 = new ModelRenderer(this, 0, 32);
 		himawari2.addBox(-7F, -20F, 0F, 12, 31, 1);
 		himawari2.setRotationPoint(-1F, 6F, -2F);
 		himawari2.setTextureSize(128, 64);
-		himawari2.mirror = true;
 		setRotation(himawari2, 0.2230717F, -0.669215F, 0.2551081F);
 		bipedHead = new ModelRenderer(this, 0, 0);
 		bipedHead.addBox(-4F, -8F, -4F, 8, 8, 8);
 		bipedHead.setRotationPoint(0F, 5F, 0F);
 		bipedHead.setTextureSize(128, 64);
-		bipedHead.mirror = true;
 		setRotation(bipedHead, 0F, 0F, 0F);
 		longHair = new ModelRenderer(this, 24, 0);
 		longHair.addBox(-4F, 4F, -3F, 8, 5, 3);
 		longHair.setRotationPoint(0F, -5F, 4F);
 		longHair.setTextureSize(128, 64);
-		longHair.mirror = true;
 		setRotation(longHair, 0F, 0F, 0F);
 		rightRibbon = new ModelRenderer(this, 32, 19);
 		rightRibbon.addBox(-3F, -2F, -1F, 5, 4, 1);
 		rightRibbon.setRotationPoint(-4F, -7F, 0F);
 		rightRibbon.setTextureSize(128, 64);
-		rightRibbon.mirror = true;
 		setRotation(rightRibbon, -0.4712389F, (float)(Math.PI / 2), 0F);
 		rightTail = new ModelRenderer(this, 32, 24);
 		rightTail.addBox(-2F, -1F, -2F, 3, 8, 2);
 		rightTail.setRotationPoint(-5F, -7F, 0F);
 		rightTail.setTextureSize(128, 64);
-		rightTail.mirror = true;
 		setRotation(rightTail, -0.2617994F, (float)(Math.PI / 2), 0F);
 		leftRibbon = new ModelRenderer(this, 32, 19);
 		leftRibbon.addBox(-3F, -2F, 0F, 5, 4, 1);
 		leftRibbon.setRotationPoint(4F, -7F, 0F);
 		leftRibbon.setTextureSize(128, 64);
-		leftRibbon.mirror = true;
 		setRotation(leftRibbon, 0.4712389F, (float)(Math.PI / 2), 0F);
 		leftTail = new ModelRenderer(this, 32, 24);
 		leftTail.addBox(-2F, -1F, 0F, 3, 8, 2);
 		leftTail.setRotationPoint(5F, -7F, 0F);
 		leftTail.setTextureSize(128, 64);
-		leftTail.mirror = true;
 		setRotation(leftTail, 0.2617994F, (float)(Math.PI / 2), 0F);
 
 		bipedBody.addChild(rightWing);
@@ -182,7 +160,6 @@ public class ModelSunFlowerFairyJTG extends ModelBase {
 
 	@Override
 	public void setRotationAngles(float movement, float far, float tick, float yaw, float pitch, float size, Entity entity) {
-		super.setRotationAngles(movement, far, tick, yaw, pitch, size, entity);
 		EntityTHFairy thFairy = (EntityTHFairy)entity;
 
 		bipedHead.rotateAngleY = yaw / (180F / (float)Math.PI);

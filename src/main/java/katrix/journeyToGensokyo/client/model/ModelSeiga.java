@@ -1,23 +1,17 @@
+/**
+ * This class was created by <Katrix>. It's distributed as
+ * part of the Journey To Gensokyo Mod. Get the Source Code in github:
+ * https://github.com/Katrix-/JTG
+ *
+ * Journey To Gensokyo is Open Source and distributed under the
+ * a modifed Botania license: https://github.com/Katrix-/JTG/blob/master/LICENSE.md
+ */
 package katrix.journeyToGensokyo.client.model;
 
-import katrix.journeyToGensokyo.util.MathHelperJTG;
-import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.entity.Entity;
-import net.minecraft.util.MathHelper;
-import thKaguyaMod.entity.living.EntityDanmakuMob;
 
-public class ModelSeiga extends ModelBase {
+public class ModelSeiga extends ModelBipedDanmaku {
 
-	public ModelRenderer bipedBody;
-	public ModelRenderer skirtTop;
-	public ModelRenderer bipedHead;
-	public ModelRenderer bipedRightArm;
-	public ModelRenderer bipedLeftArm;
-	public ModelRenderer bipedRightLeg;
-	public ModelRenderer bipedLeftLeg;
-	public ModelRenderer skirtBottom;
-	public ModelRenderer longHair;
 	public ModelRenderer rightRingHair1;
 	public ModelRenderer leftRingHair1;
 	public ModelRenderer stick;
@@ -89,118 +83,20 @@ public class ModelSeiga extends ModelBase {
 		bipedHead = new ModelRenderer(this, 0, 0);
 		bipedHead.setRotationPoint(0.0F, 2.0F, 0.0F);
 		bipedHead.addBox(-4.0F, -8.0F, -4.0F, 8, 8, 8, 0.0F);
+		setChild();
+	}
+	
+	@Override
+	public void setChild() {
+		super.setChild();
+		
 		stick.addChild(chisel);
-		leftRingHair1.addChild(leftRingHair2);
-		bipedBody.addChild(bipedRightArm);
-		bipedBody.addChild(bipedRightLeg);
-		bipedBody.addChild(bipedLeftLeg);
-		rightRingHair2.addChild(rightRingHair3);
-		bipedBody.addChild(bipedLeftArm);
-		skirtTop.addChild(skirtBottom);
 		bipedHead.addChild(stick);
-		bipedHead.addChild(leftRingHair1);
-		bipedBody.addChild(skirtTop);
-		bipedHead.addChild(longHair);
 		bipedHead.addChild(rightRingHair1);
 		rightRingHair1.addChild(rightRingHair2);
+		rightRingHair2.addChild(rightRingHair3);
+		bipedHead.addChild(leftRingHair1);
+		leftRingHair1.addChild(leftRingHair2);
 		leftRingHair2.addChild(leftRingHair3);
-		bipedBody.addChild(bipedHead);
-	}
-
-	@Override
-	public void render(Entity entity, float movement, float far, float tick, float yaw, float pitch, float size) {
-		setRotationAngles(movement, far, tick, yaw, pitch, size, entity);
-		bipedBody.render(size);
-	}
-
-	@Override
-	public void setRotationAngles(float movement, float far, float tick, float yaw, float pitch, float size, Entity entity) {
-
-		super.setRotationAngles(movement, far, tick, yaw, pitch, size, entity);
-		EntityDanmakuMob danmakuMob = (EntityDanmakuMob)entity;
-
-		bipedHead.rotateAngleY = (float)(yaw / (180F / Math.PI));
-		bipedHead.rotateAngleX = (float)(pitch / (180F / Math.PI));
-		bipedBody.rotateAngleY = (float)(MathHelperJTG.sin(MathHelper.sqrt_float(onGround) * Math.PI * 2.0F) * 0.2F);
-
-		bipedRightArm.rotateAngleX = (float)(MathHelperJTG.cos(movement * 0.6662F + Math.PI) * 2.0F * far * 0.5F);
-		bipedLeftArm.rotateAngleX = (float)(MathHelperJTG.cos(movement * 0.6662F) * 2.0F * far * 0.5F);
-		bipedRightArm.rotateAngleZ = (float)(30F / 180F * Math.PI);
-		bipedLeftArm.rotateAngleZ = (float)(-30F / 180F * Math.PI);
-
-		skirtTop.rotateAngleX = 0F;
-
-		if (danmakuMob.isSneaking()) {
-			bipedBody.rotateAngleY = (float)(MathHelperJTG.cos(movement * 0.6662F + Math.PI) * 2.4F * far);
-			skirtTop.rotateAngleY = (float)(MathHelperJTG.cos(movement * 0.6662F + Math.PI) * 2.4F * far);
-			bipedRightArm.rotateAngleX = (float)(MathHelperJTG.cos(movement * 0.6662F + Math.PI) * 1.4F * far);
-			bipedLeftArm.rotateAngleX = (float)(MathHelperJTG.cos(movement * 0.6662F) * 1.4F * far);
-			bipedHead.rotateAngleX -= 0.5F;
-		}
-
-		else if (danmakuMob.isRiding()) {
-
-			bipedRightArm.rotateAngleX += -(Math.PI / 5F);
-			bipedLeftArm.rotateAngleX += -(Math.PI / 5F);
-			bipedRightLeg.rotateAngleX = (float)-(Math.PI * 2F / 5F);
-			bipedLeftLeg.rotateAngleX = (float)-(Math.PI * 2F / 5F);
-			bipedRightLeg.rotateAngleY = (float)(Math.PI / 14F);
-			bipedLeftLeg.rotateAngleY = (float)-(Math.PI / 14F);
-			bipedRightLeg.rotateAngleZ = (float)(Math.PI / 14F);
-			bipedLeftLeg.rotateAngleZ = (float)-(Math.PI / 14F);
-			skirtTop.rotateAngleX = (float)-(Math.PI / 5F);
-			skirtBottom.rotateAngleX = (float)-(Math.PI / 4F);
-		}
-
-		else {
-
-			if (danmakuMob.getFlyingHeight() == 0) {
-				bipedRightLeg.rotateAngleX = (float)(MathHelperJTG.cos(movement) * 0.7F * far);
-				bipedLeftLeg.rotateAngleX = (float)(MathHelperJTG.cos(movement + Math.PI) * 0.7F * far);
-				bipedRightLeg.rotateAngleZ = 0F;
-				bipedLeftLeg.rotateAngleZ = 0F;
-
-				if (movement > 0F) {
-					bipedRightArm.rotateAngleX = (float)(MathHelperJTG.cos(movement + Math.PI) * 2.0F * far * 0.5F);
-					bipedLeftArm.rotateAngleX = (float)(MathHelperJTG.cos(movement) * 2.0F * far * 0.5F);
-					bipedRightArm.rotateAngleY = (float)(-10F / 180F * Math.PI);
-					bipedRightArm.rotateAngleZ = (float)(20F / 180F * Math.PI);
-					bipedLeftArm.rotateAngleY = -bipedRightArm.rotateAngleY;
-					bipedLeftArm.rotateAngleZ = -bipedRightArm.rotateAngleZ;
-				}
-				else {
-					bipedRightArm.rotateAngleX = (float)(-0.7F - MathHelperJTG.sin(tick / 10F) * 0.1F);
-					bipedRightArm.rotateAngleY = 0.0F;
-					bipedRightArm.rotateAngleZ = -0.6457718F;
-					bipedLeftArm.rotateAngleX = bipedRightArm.rotateAngleX;
-					bipedLeftArm.rotateAngleY = 0.0F;
-					bipedLeftArm.rotateAngleZ = 0.6457718F;
-
-				}
-			}
-			else {
-
-				bipedRightLeg.rotateAngleZ = (float)Math.abs(MathHelperJTG.sin(tick / 10F) * 0.1F);
-				bipedLeftLeg.rotateAngleZ = -bipedRightLeg.rotateAngleZ;
-				bipedRightLeg.rotateAngleX = (float)Math.abs(MathHelperJTG.sin(tick / 10F) * 0.2F);
-				bipedLeftLeg.rotateAngleX = bipedRightLeg.rotateAngleZ;
-
-				bipedRightArm.rotateAngleX = (float)(-0.7F - MathHelperJTG.sin(tick / 10F) * 0.1F);
-				bipedRightArm.rotateAngleY = 0.0F;
-				bipedRightArm.rotateAngleZ = -0.6457718F;
-				bipedLeftArm.rotateAngleX = bipedRightArm.rotateAngleX;
-				bipedLeftArm.rotateAngleY = 0.0F;
-				bipedLeftArm.rotateAngleZ = 0.6457718F;
-			}
-		}
-	}
-
-	/**
-	 * This is a helper function from Tabula to set the rotation of model parts
-	 */
-	public void setRotateAngle(ModelRenderer modelRenderer, float x, float y, float z) {
-		modelRenderer.rotateAngleX = x;
-		modelRenderer.rotateAngleY = y;
-		modelRenderer.rotateAngleZ = z;
 	}
 }

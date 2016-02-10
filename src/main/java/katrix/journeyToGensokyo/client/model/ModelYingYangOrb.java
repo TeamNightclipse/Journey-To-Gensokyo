@@ -6,32 +6,27 @@
  * Journey To Gensokyo is Open Source and distributed under the
  * a modifed Botania license: https://github.com/Katrix-/JTG/blob/master/LICENSE.md
  */
-
-
 package katrix.journeyToGensokyo.client.model;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
-/**
- * YingYang - Katrix Created using Tabula 4.1.1
- */
 public class ModelYingYangOrb extends ModelBase {
 
-	public ModelRenderer YingYangOrb;
+	public ModelRenderer yinYangOrb;
 
 	public ModelYingYangOrb() {
 		textureWidth = 48;
 		textureHeight = 24;
-		YingYangOrb = new ModelRenderer(this, 0, 0);
-		YingYangOrb.setRotationPoint(0.0F, 0.0F, 0.0F);
-		YingYangOrb.addBox(-6.0F, -6.0F, -6.0F, 12, 12, 12, 0.0F);
+		yinYangOrb = new ModelRenderer(this, 0, 0);
+		yinYangOrb.setRotationPoint(0.0F, 0.0F, 0.0F);
+		yinYangOrb.addBox(-6.0F, -6.0F, -6.0F, 12, 12, 12, 0.0F);
 	}
 
 	@Override
-	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
-		YingYangOrb.render(f5);
+	public void render(Entity entity, float movement, float far, float tick, float yaw, float pitch, float size) {
+		yinYangOrb.render(size);
 	}
 
 	/**

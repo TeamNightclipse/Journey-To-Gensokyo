@@ -9,18 +9,11 @@
 
 package katrix.journeyToGensokyo.client.model;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import katrix.journeyToGensokyo.util.MathHelperJTG;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
-/**
- * ModelHellRaven - Katrix Created using Tabula 4.1.1
- */
-
-@SideOnly(Side.CLIENT)
 public class ModelHellRaven extends ModelBase {
 
 	public ModelRenderer ravenBody;
@@ -88,16 +81,13 @@ public class ModelHellRaven extends ModelBase {
 
 	@Override
 	public void render(Entity entity, float movement, float far, float tick, float yaw, float pitch, float size) {
-		super.render(entity, movement, far, tick, yaw, pitch, size);
 		setRotationAngles(movement, far, tick, yaw, pitch, size, entity);
-
 		ravenBody.render(size);
 		ravenHead.render(size);
 	}
 
 	@Override
 	public void setRotationAngles(float movement, float far, float tick, float yaw, float pitch, float size, Entity entity) {
-		super.setRotationAngles(movement, far, tick, yaw, pitch, size, entity);
 		ravenHead.rotateAngleY = yaw / (180F / (float)Math.PI);
 		ravenHead.rotateAngleX = pitch / (180F / (float)Math.PI);
 		ravenBody.rotateAngleX = (float)(Math.PI / 3F + MathHelperJTG.cos(tick * 0.1F) * 0.15F);
