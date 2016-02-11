@@ -30,6 +30,7 @@ import katrix.journeyToGensokyo.plugin.thsc.entity.shot.ShotHoming;
 import katrix.journeyToGensokyo.plugin.thsc.entity.shot.ShotMissile;
 import katrix.journeyToGensokyo.plugin.thsc.entity.shot.ShotSeed;
 import katrix.journeyToGensokyo.plugin.thsc.entity.shot.ShotSlaveMarisa;
+import katrix.journeyToGensokyo.plugin.thsc.entity.shot.ShotSpiritulip;
 import katrix.journeyToGensokyo.plugin.thsc.entity.spellcard.THSC_CurseOfDreamsAndReality;
 import katrix.journeyToGensokyo.plugin.thsc.entity.spellcard.THSC_DoubleSpark;
 import katrix.journeyToGensokyo.plugin.thsc.entity.spellcard.THSC_FinalSpark;
@@ -68,6 +69,8 @@ public class JTG_THSC {
 		SpecialShotRegistry.registerSpecialShot(ShotSlaveMarisa.class, LibSpecialShotId.SLAVE_MARISA01);
 		SpecialShotRegistry.registerSpecialShot(ShotSlaveMarisa.class, LibSpecialShotId.SLAVE_MARISA02);
 		SpecialShotRegistry.registerSpecialShot(ShotSlaveMarisa.class, LibSpecialShotId.SLAVE_MARISA03);
+		
+		SpecialShotRegistry.registerSpecialShot(ShotSpiritulip.class, LibSpecialShotId.SPIRITULIP01);
 
 		//Spell Cards
 		SpellCardRegistry.registerSpellCard(THSC_DoubleSpark.class, LibMod.MODID, "DoubleSpark", LibSpellcardId.DOUBLE_SPARK);

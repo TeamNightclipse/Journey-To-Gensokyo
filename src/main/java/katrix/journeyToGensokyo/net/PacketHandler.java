@@ -21,6 +21,7 @@ public class PacketHandler {
 	public static void preInit() {
 
 		registerMessage(PacketSmoothCameraHandler.class, PacketSmoothCamera.class);
+		registerMessage(PacketSparkleFXHandler.class, PacketSparkleFX.class);
 	}
 
 	private static int nextPacketId = 1;

@@ -30,4 +30,5 @@ public class LibSpecialShotId {
 	public static final int SLAVE_MARISA02 = 11601;
 	public static final int SLAVE_MARISA03 = 11602;
 	public static final int SLAVE_MARISA11 = 11610;
+	public static final int SPIRITULIP01 = 11700;
 }

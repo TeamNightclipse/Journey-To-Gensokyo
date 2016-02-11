@@ -25,7 +25,6 @@ import thKaguyaMod.DanmakuConstants;
 import thKaguyaMod.LaserData;
 import thKaguyaMod.ShotData;
 import thKaguyaMod.THShotLib;
-import thKaguyaMod.entity.living.EntityFamiliar;
 
 public class EntityStandardShot extends Entity {
 
@@ -84,15 +83,14 @@ public class EntityStandardShot extends Entity {
 	public void shootDanmaku(boolean isSlowMode) {
 
 		double speed = 0.7D;
-		EntityFamiliar living = new EntityFamiliar(worldObj);
 
 		switch (getType()) {
 			case 0:
 				THShotLib.playShotSound(this);
 				ShotData needle = ShotData.shot(DanmakuConstants.FORM_ARROW, DanmakuConstants.PURPLE, 0.1F, 1.0F + power / 2, 0, 40);
-				THShotLib.createShot(user, living, THShotLib.pos_Distance(THShotLib.pos_Entity(this), THShotLib.angle(rotationYaw + 90, rotationPitch), 0.3D),
+				THShotLib.createShot(user, this, THShotLib.pos_Distance(THShotLib.pos_Entity(this), THShotLib.angle(rotationYaw + 90, rotationPitch), 0.3D),
 						THShotLib.angle(rotationYaw, rotationPitch), 0F, speed * 3, speed * 3, speed * 3, THShotLib.gravity_Zero(), needle);
-				THShotLib.createShot(user, living, THShotLib.pos_Distance(THShotLib.pos_Entity(this), THShotLib.angle(rotationYaw - 90, rotationPitch), 0.3D),
+				THShotLib.createShot(user, this, THShotLib.pos_Distance(THShotLib.pos_Entity(this), THShotLib.angle(rotationYaw - 90, rotationPitch), 0.3D),
 						THShotLib.angle(rotationYaw, rotationPitch), 0F, speed * 3, speed * 3, speed * 3, THShotLib.gravity_Zero(), needle);
 				break;
 			case 1:
@@ -102,12 +100,12 @@ public class EntityStandardShot extends Entity {
 							LibSpecialShotId.JTG_HOMING01);
 
 					if (power != 4F && place == 0) {
-						THShotLib.createShot(user, living,
+						THShotLib.createShot(user, this,
 								THShotLib.pos_Distance(THShotLib.pos_Entity(this), THShotLib.angle(rotationYaw, rotationPitch), 0.3D),
 								THShotLib.angle(rotationYaw, rotationPitch), 0F, speed * 2, speed * 2, speed * 2, THShotLib.gravity_Zero(), homing1);
 					}
 					else if (place == 0 || place == 1) {
-						THShotLib.createShot(user, living,
+						THShotLib.createShot(user, this,
 								THShotLib.pos_Distance(THShotLib.pos_Entity(this), THShotLib.angle(rotationYaw, rotationPitch), 0.3D),
 								THShotLib.angle(rotationYaw, rotationPitch), 0F, speed * 2, speed * 2, speed * 2, THShotLib.gravity_Zero(), homing1);
 					}
@@ -115,7 +113,7 @@ public class EntityStandardShot extends Entity {
 				else {
 					ShotData homing2 = ShotData.shot(DanmakuConstants.FORM_AMULET, DanmakuConstants.RED, 0.2F, 1.0F + power / 4, 0, 60,
 							LibSpecialShotId.JTG_HOMING02);
-					THShotLib.createShot(user, living, THShotLib.pos_Entity(this), THShotLib.angle(rotationYaw, rotationPitch), 0F, speed, speed, speed,
+					THShotLib.createShot(user, this, THShotLib.pos_Entity(this), THShotLib.angle(rotationYaw, rotationPitch), 0F, speed, speed, speed,
 							THShotLib.gravity_Zero(), homing2);
 				}
 				break;
@@ -128,7 +126,7 @@ public class EntityStandardShot extends Entity {
 					THShotLib.playShotSound(this);
 					ShotData missile = ShotData.shot(DanmakuConstants.FORM_SMALLSTAR, DanmakuConstants.AQUA, 0.15F, 2.0F + power, 0, 60,
 							LibSpecialShotId.MISSILE01);
-					THShotLib.createShot(user, living, THShotLib.pos_Entity(this), THShotLib.angle(rotationYaw, rotationPitch), 0F, speed, speed, speed,
+					THShotLib.createShot(user, this, THShotLib.pos_Entity(this), THShotLib.angle(rotationYaw, rotationPitch), 0F, speed, speed, speed,
 							THShotLib.gravity_Zero(), missile);
 				}
 				break;
