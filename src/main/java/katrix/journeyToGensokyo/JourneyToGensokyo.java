@@ -61,6 +61,10 @@ public class JourneyToGensokyo {
 		JTGItem.preInit();
 		JTGBlock.preInit();
 		JTG_THSC.preInit();
+		
+		if(botaniaInstalled) {
+			JTGBotania.preInit();
+		}
 	}
 
 	@EventHandler

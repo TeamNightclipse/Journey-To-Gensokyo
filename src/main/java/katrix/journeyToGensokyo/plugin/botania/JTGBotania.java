@@ -9,7 +9,10 @@
 
 package katrix.journeyToGensokyo.plugin.botania;
 
+import katrix.journeyToGensokyo.handler.ConfigHandler;
+import katrix.journeyToGensokyo.item.JTGItem;
 import katrix.journeyToGensokyo.lib.LibOreDictionary;
+import net.minecraft.item.ItemStack;
 import vazkii.botania.api.BotaniaAPI;
 import vazkii.botania.api.lexicon.LexiconEntry;
 import vazkii.botania.api.recipe.RecipePetals;
@@ -24,6 +27,12 @@ public class JTGBotania {
 	public static RecipePetals spiritFlowerRecipe;
 	public static LexiconEntry spiritFlowerLexicon;
 	public static String SPIRIT_FLOWER = "spiritulip";
+	
+	public static void preInit() {
+		if(ConfigHandler.rtyMode) {
+			BotaniaAPI.registerManaInfusionRecipe(new ItemStack(JTGItem.gensokyoNotesItem, 1, 4), new ItemStack(JTGItem.gensokyoNotesItem, 1, 3), 100000);
+		}
+	}
 
 	public static void init() {
 
