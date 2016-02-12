@@ -8,7 +8,7 @@
  */
 package katrix.journeyToGensokyo.client.render;
 
-import katrix.journeyToGensokyo.client.model.ModelMomiji;
+import katrix.journeyToGensokyo.client.model.ModelMarisa;
 import katrix.journeyToGensokyo.lib.LibMod;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
@@ -16,10 +16,10 @@ import net.minecraft.util.ResourceLocation;
 public class RenderMarisa extends RenderTHBoss {
 	
 	//TODO: Proper texture and model
-	ResourceLocation texture = new ResourceLocation(LibMod.KAGUYAMOD.toLowerCase(), "textures/mob/MomiziTexture.png");
+	ResourceLocation texture = new ResourceLocation(LibMod.MODID.toLowerCase(), "textures/entity/mob/marisa.png");
 
 	public RenderMarisa() {
-		super(new ModelMomiji(), 0.25F);
+		super(new ModelMarisa(), 0.25F);
 	}
 	
 	@Override
