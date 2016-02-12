@@ -18,7 +18,6 @@ import katrix.journeyToGensokyo.lib.LibMod;
 import katrix.journeyToGensokyo.plugin.thsc.entity.EntityStandardShot;
 import katrix.journeyToGensokyo.util.DanmakuHelper;
 import katrix.journeyToGensokyo.util.ItemNBTHelper;
-import katrix.journeyToGensokyo.util.LogHelper;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;

@@ -42,7 +42,7 @@ minecraft {
 	}
 	
 	replace '@VERSION@', project.version
-	replaceIn 'ModInfo.java'
+	replaceIn 'LibMod.java'
 }
 
 repositories {
