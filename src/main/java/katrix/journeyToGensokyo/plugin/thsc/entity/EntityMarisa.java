@@ -2,7 +2,7 @@
  * This class was created by <Katrix>. It's distributed as
  * part of the Journey To Gensokyo Mod. Get the Source Code in github:
  * https://github.com/Katrix-/JTG
- * 
+ *
  * Journey To Gensokyo is Open Source and distributed under the
  * a modifed Botania license: https://github.com/Katrix-/JTG/blob/master/LICENSE.md
  */
@@ -21,9 +21,9 @@ import katrix.journeyToGensokyo.lib.LibSpecialShotId;
 import katrix.journeyToGensokyo.lib.LibSpellcardId;
 import katrix.journeyToGensokyo.util.MathHelperJTG;
 import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EntityDamageSourceIndirect;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
@@ -41,12 +41,12 @@ import thKaguyaMod.init.THKaguyaItems;
 import thKaguyaMod.item.ItemTHShot;
 
 public class EntityMarisa extends EntityDanmakuMob {
-	
+
 	public boolean perfect = true;
 
 	public EntityMarisa(World world) {
 		super(world);
-		
+
 		setSize(1.0F, 1.8F);
 
 		experienceValue = 250;
@@ -66,10 +66,10 @@ public class EntityMarisa extends EntityDanmakuMob {
 		isSpellCardMode = false;
 		attackInterval = 0;
 	}
-	
+
 	@Override
 	public int getUsingSpellCardNo() {
-		switch (getDanmakuPattern()) {
+		switch(getDanmakuPattern()) {
 			case SPELLCARD_ATTACK01:
 				return EntitySpellCard.SC_MARISA_StardustReverie;
 			case SPELLCARD_ATTACK02:
@@ -82,23 +82,21 @@ public class EntityMarisa extends EntityDanmakuMob {
 				return -1;
 		}
 	}
-	
+
 	@Override
 	public void onUpdate() {
 		super.onUpdate();
-		boolean lastWord = getDanmakuPattern() == SPELLCARD_ATTACK04;
-		
-		if(perfect || lastWord) {
-			int range = 4;
+
+		if(!worldObj.isRemote && perfect) {
+			int range = 3;
 			@SuppressWarnings("unchecked")
 			List<EntitySpellCard> listspellcard = worldObj.getEntitiesWithinAABB(EntitySpellCard.class, AxisAlignedBB.getBoundingBox(posX - range * 12,
 					posY - range * 12, posZ - range * 12, posX + range * 12 + 1, posY + range * 12 + 1, posZ + range * 12 + 1));
 
-			for (int i = 0; i < listspellcard.size(); i++) {
-				EntitySpellCard spellcards = listspellcard.get(i);
-				if (spellcards.user != this) {
+			for(EntitySpellCard spellcard : listspellcard) {
+				if(spellcard.user != this) {
 					perfect = false;
-					if(lastWord) {
+					if(getDanmakuPattern() == SPELLCARD_ATTACK04) {
 						moveDanmakuAttack(ATTACK_END, 90, 0F, 160);
 					}
 					break;
@@ -109,7 +107,7 @@ public class EntityMarisa extends EntityDanmakuMob {
 
 	@Override
 	protected void onDeathUpdate() {
-		switch (getDanmakuPattern()) {
+		switch(getDanmakuPattern()) {
 			case NORMAL_ATTACK01:
 				moveDanmakuAttack(SPELLCARD_ATTACK01, 40, 60.0F, 160);
 				break;
@@ -137,7 +135,7 @@ public class EntityMarisa extends EntityDanmakuMob {
 				moveDanmakuAttack(ATTACK_END, 90, 0F, 160);
 				break;
 			default:
-				if (deathTime % 6 == 0) {
+				if(deathTime % 6 == 0) {
 					THShotLib.explosionEffect(worldObj, posX, posY, posZ, 1.0F + deathTime * 0.1F);
 				}
 				super.onDeathUpdate();
@@ -149,7 +147,7 @@ public class EntityMarisa extends EntityDanmakuMob {
 	@Override
 	public void danmakuPattern(int level) {
 		Vec3 look = getLookVec();
-		switch (getDanmakuPattern()) {
+		switch(getDanmakuPattern()) {
 			case NORMAL_ATTACK01:
 				danmaku01(look, level);
 				break;
@@ -175,110 +173,136 @@ public class EntityMarisa extends EntityDanmakuMob {
 				break;
 		}
 	}
-	
+
 	private void danmaku01(Vec3 angle, int level) {
-		
+		playerNear();
+
 		if(attackCounter == 1) {
-			Vec3 look = this.getLookVec();
-			Vec3 rotate = THShotLib.getVecFromAngle(this.rotationYaw, this.rotationPitch - 90F);
+			Vec3 look = getLookVec();
+			Vec3 rotate = THShotLib.getVecFromAngle(rotationYaw, rotationPitch - 90F);
 			Vec3 move = THShotLib.getVectorFromRotation(rotate.xCoord, rotate.yCoord, rotate.zCoord, look.xCoord, look.yCoord, look.zCoord, 90F);
-			THShotLib.createShot(this, this, THShotLib.pos_Distance(this.pos(), this.getLookVec(), -5D), move, 0F, rotate, -7F, 9999, 0.5D, 0.5D, 0D, THShotLib.gravity_Zero(), ShotData.shot(THShotLib.FORM_FAMILIAR, THShotLib.RAINBOW, 0, 20*level, LibSpecialShotId.SLAVE_MARISA01));
+			THShotLib.createShot(this, this, THShotLib.pos_Distance(this.pos(), getLookVec(), -5D), move, 0F, rotate, -7F, 9999, 0.5D, 0.5D, 0D,
+					THShotLib.gravity_Zero(),
+					ShotData.shot(DanmakuConstants.FORM_FAMILIAR, DanmakuConstants.RAINBOW, 0, 20 * level, LibSpecialShotId.SLAVE_MARISA01));
 		}
 
-		if (attackCounter >= 20) {
+		if(attackCounter >= 20) {
 			attackCounter = 0;
 		}
 	}
 
 	private void spellcard01(Vec3 angle, int level) {
 
-		if (attackCounter == 1) {
+		if(attackCounter == 1) {
 			useSpellCard(EntitySpellCard.SC_MARISA_StardustReverie);
 		}
 
-		if (attackCounter >= 100) {
+		if(attackCounter >= 100) {
 			attackCounter = 0;
 		}
 	}
-	
+
 	private void danmaku02(Vec3 angle, int level) {
+		playerNear();
 
 		if(attackCounter == 1) {
-			Vec3 look = this.getLookVec();
-			Vec3 rotate = THShotLib.getVecFromAngle(this.rotationYaw, this.rotationPitch - 90F);
+			Vec3 look = getLookVec();
+			Vec3 rotate = THShotLib.getVecFromAngle(rotationYaw, rotationPitch - 90F);
 			Vec3 move = THShotLib.getVectorFromRotation(rotate.xCoord, rotate.yCoord, rotate.zCoord, look.xCoord, look.yCoord, look.zCoord, 90F);
-			THShotLib.createShot(this, this, THShotLib.pos_Distance(this.pos(), this.getLookVec(), -3D), move, 0F, rotate, -5F, 9999, 0.5D, 0.5D, 0D, THShotLib.gravity_Zero(), ShotData.shot(THShotLib.FORM_FAMILIAR, THShotLib.RAINBOW, 0, 20*level, LibSpecialShotId.SLAVE_MARISA02));
+			THShotLib.createShot(this, this, THShotLib.pos_Distance(this.pos(), getLookVec(), -3D), move, 0F, rotate, -5F, 9999, 0.5D, 0.5D, 0D,
+					THShotLib.gravity_Zero(),
+					ShotData.shot(DanmakuConstants.FORM_FAMILIAR, DanmakuConstants.RAINBOW, 0, 20 * level, LibSpecialShotId.SLAVE_MARISA02));
 		}
 		else if(attackCounter == 10) {
-			Vec3 look = this.getLookVec();
-			Vec3 rotate = THShotLib.getVecFromAngle(this.rotationYaw, this.rotationPitch - 90F);
+			Vec3 look = getLookVec();
+			Vec3 rotate = THShotLib.getVecFromAngle(rotationYaw, rotationPitch - 90F);
 			Vec3 move = THShotLib.getVectorFromRotation(rotate.xCoord, rotate.yCoord, rotate.zCoord, look.xCoord, look.yCoord, look.zCoord, 90F);
-			THShotLib.createShot(this, this, THShotLib.pos_Distance(this.pos(), this.getLookVec(), -5D), move, 0F, rotate, -8F, 9999, 0.5D, 0.5D, 0D, THShotLib.gravity_Zero(), ShotData.shot(THShotLib.FORM_FAMILIAR, THShotLib.RAINBOW, 0, 20*level, LibSpecialShotId.SLAVE_MARISA02));
+			THShotLib.createShot(this, this, THShotLib.pos_Distance(this.pos(), getLookVec(), -5D), move, 0F, rotate, -8F, 9999, 0.5D, 0.5D, 0D,
+					THShotLib.gravity_Zero(),
+					ShotData.shot(DanmakuConstants.FORM_FAMILIAR, DanmakuConstants.RAINBOW, 0, 20 * level, LibSpecialShotId.SLAVE_MARISA02));
 		}
 
-		if (attackCounter >= 20) {
+		if(attackCounter >= 20) {
 			attackCounter = 0;
 		}
 	}
 
 	private void spellcard02(Vec3 angle, int level) {
-		
-		if(this.ticksExisted % 3 == 0) {
-			Vec3 angle1 = THShotLib.angle((360F / 100F) * attackCounter, this.rotationPitch);
-			THShotLib.createCircleShot(this, this.pos(), angle1, 0.5D, ShotData.shot(THShotLib.FORM_STAR, THShotLib.RAINBOW, 0, 60), 4*level);
+
+		if(ticksExisted % 3 == 0) {
+			Vec3 angle1 = THShotLib.angle(360F / 100F * attackCounter, rotationPitch);
+			THShotLib.createCircleShot(this, this.pos(), angle1, 0.5D, ShotData.shot(DanmakuConstants.FORM_STAR, DanmakuConstants.RAINBOW, 0, 60), 4 * level);
 		}
 
-		if (attackCounter == 1) {
+		if(attackCounter == 1) {
 			useSpellCard(EntitySpellCard.SC_MARISA_NonDirectionalLaser);
 		}
 
-		if (attackCounter >= 110) {
+		if(attackCounter >= 110) {
 			attackCounter = 0;
 		}
 	}
-	
+
 	private void danmaku03(Vec3 angle, int level) {
+		playerNear();
 
 		if(attackCounter == 1) {
-			Vec3 look = this.getLookVec();
-			Vec3 rotate = THShotLib.getVecFromAngle(this.rotationYaw, this.rotationPitch - 90F);
+			Vec3 look = getLookVec();
+			Vec3 rotate = THShotLib.getVecFromAngle(rotationYaw, rotationPitch - 90F);
 			Vec3 move = THShotLib.getVectorFromRotation(rotate.xCoord, rotate.yCoord, rotate.zCoord, look.xCoord, look.yCoord, look.zCoord, 90F);
-			THShotLib.createShot(this, this, THShotLib.pos_Distance(this.pos(), this.getLookVec(), -5D), move, 0F, rotate, -7F, 9999, 0.5D, 0.5D, 0D, THShotLib.gravity_Zero(), ShotData.shot(THShotLib.FORM_FAMILIAR, THShotLib.YELLOW, 0, 20*level, LibSpecialShotId.SLAVE_MARISA03));
+			THShotLib.createShot(this, this, THShotLib.pos_Distance(this.pos(), getLookVec(), -5D), move, 0F, rotate, -7F, 9999, 0.5D, 0.5D, 0D,
+					THShotLib.gravity_Zero(),
+					ShotData.shot(DanmakuConstants.FORM_FAMILIAR, DanmakuConstants.YELLOW, 0, 20 * level, LibSpecialShotId.SLAVE_MARISA03));
 		}
 
-		if (attackCounter >= 10) {
+		if(attackCounter >= 10) {
 			attackCounter = 0;
 		}
 	}
 
 	private void spellcard03(Vec3 angle, int level) {
 
-		if (attackCounter == 1) {
+		if(attackCounter == 1) {
 			useSpellCard(EntitySpellCard.SC_MARISA_MasterSpark);
 		}
 
-		if (attackCounter >= 110) {
+		if(attackCounter >= 110) {
 			attackCounter = 0;
 		}
 	}
-	
+
 	private void finalWord(Vec3 angle, int level) {
 
-		if (attackCounter == 1) {
+		if(attackCounter == 1) {
 			useSpellCard(LibSpellcardId.DOUBLE_SPARK);
 		}
 
-		if (attackCounter >= 110) {
+		if(attackCounter >= 110) {
 			attackCounter = 0;
+		}
+	}
+
+	private void playerNear() {
+		int range = 4;
+		@SuppressWarnings("unchecked")
+		List<EntityPlayer> players = worldObj.getEntitiesWithinAABB(EntityPlayer.class,
+				AxisAlignedBB.getBoundingBox(posX - range, posY - range, posZ - range, posX + range + 1, posY + range + 1, posZ + range + 1));
+		for(EntityPlayer player : players) {
+			Vec3 vectorToPlayer = THShotLib.angle_ToPos(pos(), pos(player));
+			ShotData shot = ShotData.shot(DanmakuConstants.FORM_SMALLSTAR, DanmakuConstants.RED);
+			THShotLib.createWideShot(this, pos(), vectorToPlayer, 0.6D, shot, 5, 30F);
 		}
 	}
 
 	@Override
 	public boolean attackEntityFrom(DamageSource damageSource, float amount) {
-		if(damageSource instanceof EntityDamageSourceIndirect && !(damageSource.getSourceOfDamage() instanceof EntityTHShot)) {
+		if(!(damageSource.getSourceOfDamage() instanceof EntityTHShot)) {
 			perfect = false;
+			if(getDanmakuPattern() == SPELLCARD_ATTACK04) {
+				moveDanmakuAttack(ATTACK_END, 90, 0F, 160);
+			}
 		}
-		if (!damageSource.isMagicDamage()) {
+		if(!damageSource.isMagicDamage()) {
 			amount *= 0.5F;
 		}
 		isFlyingMode = true;
@@ -298,7 +322,7 @@ public class EntityMarisa extends EntityDanmakuMob {
 	protected float applyPotionDamageCalculations(DamageSource damageSource, float damage) {
 		damage = super.applyPotionDamageCalculations(damageSource, damage);
 
-		if (isEntityInvulnerable()) {
+		if(isEntityInvulnerable()) {
 			damage = (float)(damage * 0.05D);
 		}
 
@@ -309,19 +333,19 @@ public class EntityMarisa extends EntityDanmakuMob {
 	protected void dropFewItems(boolean hasBeenAttackedByPlayer, int lootingLevel) {
 		super.dropFewItems(hasBeenAttackedByPlayer, lootingLevel);
 
-		if (hasBeenAttackedByPlayer && isSpellCardAttack()) {
+		if(hasBeenAttackedByPlayer && isSpellCardAttack()) {
 			int j = 40;
 			int k;
 			Vec3 vec3;
 			float yaw;
 			float pitch;
 
-			for (k = 0; k < j; k += 2) {
+			for(k = 0; k < j; k += 2) {
 				yaw = 360F / j * k;
-				pitch = (float)(MathHelperJTG.sin((Math.toRadians(yaw) * 4F)) * 20F - 60F);
+				pitch = (float)(MathHelperJTG.sin(Math.toRadians(yaw) * 4F) * 20F - 60F);
 				vec3 = THShotLib.getVecFromAngle(yaw, pitch);
 				this.dropPointItem(this.pos(), vec3);
-				
+
 				yaw = 360F / j * (k + 1);
 				pitch = (float)(MathHelperJTG.cos(Math.toRadians(yaw) * 4F) * 20F - 60F);
 				vec3 = THShotLib.getVecFromAngle(yaw, pitch);
@@ -331,8 +355,8 @@ public class EntityMarisa extends EntityDanmakuMob {
 			dropShotItem(ItemTHShot.STAR, 8 + rand.nextInt(2) + lootingLevel, 5, 32, DanmakuConstants.BLUE, 0, 0, 2);
 			dropShotItem(ItemTHShot.SMALLSTAR, 9 + rand.nextInt(2) + lootingLevel, 5, 32, DanmakuConstants.RED, 0, 0, 2);
 		}
-		
-		if (hasBeenAttackedByPlayer && getDanmakuPattern() == SPELLCARD_ATTACK03) {
+
+		if(hasBeenAttackedByPlayer && getDanmakuPattern() == SPELLCARD_ATTACK03) {
 			this.dropItem(THKaguyaItems.marisa_hat, 1);
 		}
 	}
@@ -349,26 +373,24 @@ public class EntityMarisa extends EntityDanmakuMob {
 
 	@Override
 	public boolean getCanSpawnHere() {
-		if (rand.nextInt(100) < THKaguyaConfig.fairySpawnRate && rand.nextInt(100) < 90 || super.getCanSpawnHere() == false)
-			return false;
+		if(rand.nextInt(100) < THKaguyaConfig.fairySpawnRate && rand.nextInt(100) < 90 || super.getCanSpawnHere() == false) return false;
 
 		int range = 64;
 		@SuppressWarnings("unchecked")
-		List<EntityReimuHostile> reimus = worldObj.getEntitiesWithinAABB(EntityReimuHostile.class,
+		List<EntityMarisa> marisas = worldObj.getEntitiesWithinAABB(EntityReimuHostile.class,
 				AxisAlignedBB.getBoundingBox(posX - range, posY - range, posZ - range, posX + range + 1, posY + range + 1, posZ + range + 1));
-		if (reimus.size() >= 1)
-			return false;
+		if(marisas.size() >= 1) return false;
 
 		return worldObj.difficultySetting != EnumDifficulty.PEACEFUL;
 	}
-	
+
 	public static void postInit() {
 
 		EntityRegistry.registerModEntity(EntityMarisa.class, LibEntityName.MARISA, LibMobID.MARISA, JourneyToGensokyo.instance, 80, 1, true);
 
 		List<BiomeGenBase> spawnbiomes = new ArrayList<BiomeGenBase>(Arrays.asList(BiomeDictionary.getBiomesForType(Type.FOREST)));
 
-		if (THKaguyaConfig.spawnBoss && ConfigHandler.newBossesSpawn) {
+		if(THKaguyaConfig.spawnBoss && ConfigHandler.newBossesSpawn) {
 			EntityRegistry.addSpawn(EntityMarisa.class, 1, 1, 1, EnumCreatureType.monster, spawnbiomes.toArray(new BiomeGenBase[0]));
 		}
 	}

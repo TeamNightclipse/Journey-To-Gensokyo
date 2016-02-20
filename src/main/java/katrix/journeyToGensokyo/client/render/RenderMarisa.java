@@ -15,7 +15,6 @@ import net.minecraft.util.ResourceLocation;
 
 public class RenderMarisa extends RenderTHBoss {
 	
-	//TODO: Proper texture and model
 	ResourceLocation texture = new ResourceLocation(LibMod.MODID.toLowerCase(), "textures/entity/mob/marisa.png");
 
 	public RenderMarisa() {
