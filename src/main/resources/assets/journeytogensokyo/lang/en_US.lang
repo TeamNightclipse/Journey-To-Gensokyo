@@ -61,7 +61,8 @@ entity.TenguCrow.name=Crow Tengu
 entity.THFairyEnd.name=Moon Fairy
 entity.SunFlowerFairyEnd.name=Moon Sunflower Fairy
 entity.Reimu.name=Reimu Hakurei
-entity.Yukari.name=Reimu Hakurei
+entity.Yukari.name=Yukari Yakumo
+entity.Marisa.name=Marisa Kirisame
 
 entity.journeyToGensokyo.THFairyIce.name=Ice Fairy
 entity.journeyToGensokyo.THFairyNether.name=Nether Fairy
@@ -70,4 +71,5 @@ entity.journeyToGensokyo.TenguCrow.name=Crow Tengu
 entity.journeyToGensokyo.THFairyEnd.name=Moon Fairy
 entity.journeyToGensokyo.SunFlowerFairyEnd.name=Moon Sunflower Fairy
 entity.journeyToGensokyo.Reimu.name=Reimu Hakurei
-entity.journeyToGensokyo.Yukari.name=Reimu Hakurei
+entity.journeyToGensokyo.Yukari.name=Yukari Yakumo
+entity.journeyToGensokyo.Marisa.name=Marisa Kirisame
