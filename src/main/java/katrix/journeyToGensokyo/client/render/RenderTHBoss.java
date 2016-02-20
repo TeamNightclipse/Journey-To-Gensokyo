@@ -11,15 +11,13 @@ package katrix.journeyToGensokyo.client.render;
 
 import org.lwjgl.opengl.GL11;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import katrix.journeyToGensokyo.client.lib.LibResource;
 import katrix.journeyToGensokyo.handler.ConfigHandler;
 import katrix.journeyToGensokyo.plugin.thsc.entity.EntityYukari;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.entity.RenderLiving;
-import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
@@ -27,53 +25,45 @@ import net.minecraft.util.Vec3;
 import thKaguyaMod.THShotLib;
 import thKaguyaMod.entity.living.EntityDanmakuMob;
 
-@SideOnly(Side.CLIENT)
-public abstract class RenderTHBoss extends RenderLiving {
+public class RenderTHBoss extends RenderLivingJTG {
 
-	ResourceLocation statusTexture = new ResourceLocation("thkaguyamod", "textures/mob/Status.png");
-
-	public RenderTHBoss(ModelBase model, float size) {
-		super(model, size);
+	public RenderTHBoss(ModelBase model, ResourceLocation texture) {
+		super(model, texture);
 	}
 
 	@Override
-	public void doRender(Entity entity, double x, double y, double z, float yaw, float pitch) {
-		super.doRender(entity, x, y, z, yaw, pitch);
-		if (entity instanceof EntityYukari) {
-			EntityYukari yukari = (EntityYukari)entity;
+	protected void passSpecialRender(EntityLivingBase entity, double x, double y, double z) {
+		super.passSpecialRender(entity, x, y, z);
 
-			if (yukari.getIsAgressive() == 1) {
-				if (ConfigHandler.newHealthBar) {
+		//Still lazy
+		if(entity instanceof EntityYukari && ((EntityYukari)entity).getIsAgressive() != 1) return;
 
-					int divider = 8;
-					int resolution = divider * 2;
+		if(ConfigHandler.newHealthBar) {
+			int divider = 8;
+			int resolution = divider * 2;
 
-					for (int i = 0; i < resolution; i++) {
-						renderCircleHealth((EntityDanmakuMob)entity, x, y, z, yaw, pitch, i, resolution);
-					}
-
-					renderName((EntityDanmakuMob)entity, x, y, z, yaw, pitch);
-				}
-				else {
-					renderTHBossStatus((EntityDanmakuMob)entity, x, y, z, yaw, pitch);
-				}
+			for(int i = 0; i < resolution; i++) {
+				renderCircleHealth((EntityDanmakuMob)entity, x, y, z, i, resolution);
 			}
+			renderName((EntityDanmakuMob)entity, x, y, z);
+		}
+		else {
+			renderTHBossStatus((EntityDanmakuMob)entity, x, y, z);
 		}
 	}
 
-	public void renderTHBossStatus(EntityDanmakuMob danmakuMob, double x, double y, double z, float yaw, float pitch) {
-		if (danmakuMob.getDanmakuPattern() == EntityDanmakuMob.NOT_ATTACK)
-			return;
+	protected void renderTHBossStatus(EntityDanmakuMob danmakuMob, double x, double y, double z) {
+		if(danmakuMob.getDanmakuPattern() == EntityDanmakuMob.NOT_ATTACK) return;
 
 		GL11.glPushMatrix();
 		GL11.glDisable(GL11.GL_LIGHTING);
 
 		Tessellator tessellator = Tessellator.instance;
 		float viewY = renderManager.playerViewY % 360F;
-		if (viewY > 180F) {
+		if(viewY > 180F) {
 			viewY -= 360F;
 		}
-		else if (viewY <= -180) {
+		else if(viewY <= -180) {
 			viewY += 360F;
 		}
 		Vec3 look = THShotLib.getVecFromAngle(viewY, renderManager.playerViewX);
@@ -83,11 +73,11 @@ public abstract class RenderTHBoss extends RenderLiving {
 
 		double distance = renderManager.getDistanceToCamera(danmakuMob.posX, danmakuMob.posY, danmakuMob.posZ);
 		float size = 1.0F + (float)distance / 64F;
-		if (size > 5.0F) {
+		if(size > 5.0F) {
 			size = 5.0F;
 		}
 
-		if (Math.abs(span) <= 70F) {
+		if(Math.abs(span) <= 70F) {
 			GL11.glTranslatef((float)x, (float)y + danmakuMob.height + 1.5F, (float)z);
 			GL11.glScalef(1.0F * size, 1.0F * size, 1.0F * size);
 
@@ -96,7 +86,7 @@ public abstract class RenderTHBoss extends RenderLiving {
 			GL11.glRotatef(-renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
 			GL11.glRotatef(renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
 
-			bindTexture(statusTexture);
+			bindTexture(LibResource.STATUS);
 			int cardNo = danmakuMob.getUsingSpellCardNo();
 
 			float hp = danmakuMob.getHealth() / danmakuMob.getMaxHealth();
@@ -110,7 +100,7 @@ public abstract class RenderTHBoss extends RenderLiving {
 
 			tessellator.draw();
 
-			if (cardNo >= 0) {
+			if(cardNo >= 0) {
 				tessellator.startDrawingQuads();
 				tessellator.addVertexWithUV(-hp2, 0.05F, 0.0D, hp, 8F / 16F);
 				tessellator.addVertexWithUV(1.0F, 0.05F, 0.0D, 0.0F, 8F / 16F);
@@ -135,7 +125,7 @@ public abstract class RenderTHBoss extends RenderLiving {
 			FontRenderer font = getFontRendererFromRenderManager();
 			font.drawStringWithShadow(danmakuMob.getDanmakuMobName(), -50, 0, 0x00FF88);
 
-			if (cardNo >= 0) {
+			if(cardNo >= 0) {
 				tessellator.setColorRGBA_F(1.0F, 1.0F, 1.0F, alpha);
 				font.drawStringWithShadow(StatCollector.translateToLocal("item.thSpellCard." + cardNo + ".name"), -50, -12, 0xFFFFFF);
 			}
@@ -146,9 +136,8 @@ public abstract class RenderTHBoss extends RenderLiving {
 		GL11.glPopMatrix();
 	}
 
-	public void renderCircleHealth(EntityDanmakuMob danmakuMob, double x, double y, double z, float yaw, float pitch, int i, int resolution) {
-		if (danmakuMob.getDanmakuPattern() == EntityDanmakuMob.NOT_ATTACK)
-			return;
+	protected void renderCircleHealth(EntityDanmakuMob danmakuMob, double x, double y, double z, int i, int resolution) {
+		if(danmakuMob.getDanmakuPattern() == EntityDanmakuMob.NOT_ATTACK) return;
 
 		float size = 6F;
 		float length = size / resolution;
@@ -159,17 +148,17 @@ public abstract class RenderTHBoss extends RenderLiving {
 
 		Tessellator tessellator = Tessellator.instance;
 		float viewY = renderManager.playerViewY % 360F;
-		if (viewY > 180F) {
+		if(viewY > 180F) {
 			viewY -= 360F;
 		}
-		else if (viewY <= -180) {
+		else if(viewY <= -180) {
 			viewY += 360F;
 		}
 		Vec3 look = THShotLib.getVecFromAngle(viewY, renderManager.playerViewX);
 		Vec3 toEntity = Vec3.createVectorHelper(x, y, z);
 		float span = THShotLib.getVectorAndVectorAngle(look, toEntity);
 
-		if (Math.abs(span) <= 70F) {
+		if(Math.abs(span) <= 70F) {
 			GL11.glTranslatef((float)x, (float)y + danmakuMob.height - 0.5F, (float)z);
 
 			GL11.glRotatef(-renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
@@ -178,7 +167,7 @@ public abstract class RenderTHBoss extends RenderLiving {
 			GL11.glTranslatef(0F, size * 0.3F, 0F);
 			GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
 
-			bindTexture(statusTexture);
+			bindTexture(LibResource.STATUS);
 			int cardNo = danmakuMob.getUsingSpellCardNo();
 
 			float hp = danmakuMob.getHealth() / danmakuMob.getMaxHealth();
@@ -192,15 +181,15 @@ public abstract class RenderTHBoss extends RenderLiving {
 
 			tessellator.draw();
 
-			if (i < hp * resolution) {
-				if (i + 1 == MathHelper.ceiling_float_int(hp * resolution)) {
+			if(i < hp * resolution) {
+				if(i + 1 == MathHelper.ceiling_float_int(hp * resolution)) {
 					hp2 = (hp - 1F / resolution * i) * resolution * length * 2 - length;
 				}
 				else {
 					hp2 = length;
 				}
 
-				if (cardNo >= 0) {
+				if(cardNo >= 0) {
 					tessellator.startDrawingQuads();
 					tessellator.addVertexWithUV(-hp2, 0.12F, 0.0D, 0.0F, 8F / 16F);
 					tessellator.addVertexWithUV(length, 0.12F, 0.0D, 0.0F, 8F / 16F);
@@ -226,19 +215,18 @@ public abstract class RenderTHBoss extends RenderLiving {
 		GL11.glPopMatrix();
 	}
 
-	public void renderName(EntityDanmakuMob danmakuMob, double x, double y, double z, float yaw, float pitch) {
-		if (danmakuMob.getDanmakuPattern() == EntityDanmakuMob.NOT_ATTACK)
-			return;
+	protected void renderName(EntityDanmakuMob danmakuMob, double x, double y, double z) {
+		if(danmakuMob.getDanmakuPattern() == EntityDanmakuMob.NOT_ATTACK) return;
 
 		GL11.glPushMatrix();
 		GL11.glDisable(GL11.GL_LIGHTING);
 
 		Tessellator tessellator = Tessellator.instance;
 		float viewY = renderManager.playerViewY % 360F;
-		if (viewY > 180F) {
+		if(viewY > 180F) {
 			viewY -= 360F;
 		}
-		else if (viewY <= -180) {
+		else if(viewY <= -180) {
 			viewY += 360F;
 		}
 		Vec3 look = THShotLib.getVecFromAngle(viewY, renderManager.playerViewX);
@@ -248,11 +236,11 @@ public abstract class RenderTHBoss extends RenderLiving {
 
 		double distance = renderManager.getDistanceToCamera(danmakuMob.posX, danmakuMob.posY, danmakuMob.posZ);
 		float size = 1.0F + (float)distance / 64F;
-		if (size > 5.0F) {
+		if(size > 5.0F) {
 			size = 5.0F;
 		}
 
-		if (Math.abs(span) <= 70F) {
+		if(Math.abs(span) <= 70F) {
 			GL11.glTranslatef((float)x, (float)y + danmakuMob.height + 1.5F, (float)z);
 
 			GL11.glRotatef(-renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
@@ -269,7 +257,7 @@ public abstract class RenderTHBoss extends RenderLiving {
 			font.setBidiFlag(true);
 			font.drawStringWithShadow(danmakuMob.getDanmakuMobName(), 0, 25, 0x00FF88);
 
-			if (cardNo >= 0) {
+			if(cardNo >= 0) {
 				tessellator.setColorRGBA_F(1.0F, 1.0F, 1.0F, alpha);
 				font.drawStringWithShadow(StatCollector.translateToLocal("item.thSpellCard." + cardNo + ".name"),
 						-font.getStringWidth(StatCollector.translateToLocal("item.thSpellCard." + cardNo + ".name")) / 4, -8, 0xFFFFFF);
@@ -279,10 +267,5 @@ public abstract class RenderTHBoss extends RenderLiving {
 		GL11.glDisable(GL11.GL_BLEND);
 		GL11.glEnable(GL11.GL_LIGHTING);
 		GL11.glPopMatrix();
-	}
-
-	@Override
-	protected ResourceLocation getEntityTexture(Entity entity) {
-		return statusTexture;
 	}
 }
