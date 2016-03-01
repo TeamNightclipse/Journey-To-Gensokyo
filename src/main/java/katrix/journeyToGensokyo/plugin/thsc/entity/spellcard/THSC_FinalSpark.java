@@ -53,7 +53,7 @@ public class THSC_FinalSpark extends THSpellCard {
 		if (time == 30) {
 			if (user instanceof EntityPlayerMP) {
 				IMessage msg = new PacketSmoothCamera(true);
-				PacketHandler.net.sendTo(msg, (EntityPlayerMP)user);
+				PacketHandler.sendTo(msg, (EntityPlayerMP)user);
 			}
 		}
 
@@ -113,7 +113,7 @@ public class THSC_FinalSpark extends THSpellCard {
 		if (time == 100) {
 			if (user instanceof EntityPlayerMP) {
 				IMessage msg = new PacketSmoothCamera(false);
-				PacketHandler.net.sendTo(msg, (EntityPlayerMP)user);
+				PacketHandler.sendTo(msg, (EntityPlayerMP)user);
 			}
 		}
 	}

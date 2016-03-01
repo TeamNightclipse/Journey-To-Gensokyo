@@ -10,26 +10,37 @@
 package katrix.journeyToGensokyo.net;
 
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
+import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
+import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import io.netty.buffer.ByteBuf;
+import net.minecraft.client.Minecraft;
 
 public class PacketSmoothCamera implements IMessage {
 
-	public boolean SmoothOn;
+	public boolean flag;
 
-	public PacketSmoothCamera() {
-	}
+	public PacketSmoothCamera() {}
 
 	public PacketSmoothCamera(boolean SmoothOn) {
-		this.SmoothOn = SmoothOn;
+		this.flag = SmoothOn;
 	}
 
 	@Override
 	public void toBytes(ByteBuf buf) {
-		buf.writeBoolean(SmoothOn);
+		buf.writeBoolean(flag);
 	}
 
 	@Override
 	public void fromBytes(ByteBuf buf) {
-		SmoothOn = buf.readBoolean();
+		flag = buf.readBoolean();
+	}
+	
+	public static class Handler implements IMessageHandler<PacketSmoothCamera, IMessage> {
+
+		@Override
+		public IMessage onMessage(PacketSmoothCamera message, MessageContext ctx) {
+			Minecraft.getMinecraft().gameSettings.smoothCamera = message.flag;
+			return null;
+		}
 	}
 }

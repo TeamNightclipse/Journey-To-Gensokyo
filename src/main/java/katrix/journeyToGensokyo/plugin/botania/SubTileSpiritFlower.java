@@ -10,13 +10,8 @@ package katrix.journeyToGensokyo.plugin.botania;
 
 import java.util.List;
 
-import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import katrix.journeyToGensokyo.lib.LibSpecialShotId;
-import katrix.journeyToGensokyo.net.PacketHandler;
-import katrix.journeyToGensokyo.net.PacketSparkleFX;
 import katrix.journeyToGensokyo.plugin.thsc.entity.EntityStandardShot;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Vec3;
 import thKaguyaMod.DanmakuConstants;
@@ -24,6 +19,7 @@ import thKaguyaMod.ShotData;
 import thKaguyaMod.THShotLib;
 import thKaguyaMod.entity.living.EntityFamiliar;
 import thKaguyaMod.entity.shot.EntityTHShot;
+import vazkii.botania.api.BotaniaAPI;
 import vazkii.botania.api.lexicon.LexiconEntry;
 import vazkii.botania.api.subtile.RadiusDescriptor;
 import vazkii.botania.api.subtile.SubTileGenerating;
@@ -31,7 +27,6 @@ import vazkii.botania.api.subtile.SubTileGenerating;
 public class SubTileSpiritFlower extends SubTileGenerating {
 
 	private static final int RANGE = 3;
-	private static final int PACKET_RANGE = 20;
 	private int cooldown = 0;
 
 	@Override
@@ -43,26 +38,19 @@ public class SubTileSpiritFlower extends SubTileGenerating {
 			List<EntityTHShot> shots = supertile.getWorldObj().getEntitiesWithinAABB(EntityTHShot.class,
 					AxisAlignedBB.getBoundingBox(supertile.xCoord - RANGE, supertile.yCoord - RANGE, supertile.zCoord - RANGE, supertile.xCoord + RANGE + 1,
 							supertile.yCoord + RANGE + 1, supertile.zCoord + RANGE + 1));
-			@SuppressWarnings("unchecked")
-			List<EntityPlayer> players = supertile.getWorldObj().getEntitiesWithinAABB(EntityPlayer.class,
-					AxisAlignedBB.getBoundingBox(supertile.xCoord - PACKET_RANGE, supertile.yCoord - PACKET_RANGE, supertile.zCoord - PACKET_RANGE,
-							supertile.xCoord + PACKET_RANGE + 1, supertile.yCoord + PACKET_RANGE + 1, supertile.zCoord + PACKET_RANGE + 1));
 			for (EntityTHShot shot : shots) {
-				if (!supertile.getWorldObj().isRemote && !shot.isDead && !(shot.user instanceof EntityFamiliar) && !(shot.source instanceof EntityStandardShot) && cooldown == 0) {
-					shot.setDead();
-					mana += 50;
-					cooldown = 5;
-					sync();
+				if (!shot.isDead) {
+					if(!supertile.getWorldObj().isRemote && !(shot.user instanceof EntityFamiliar) && !(shot.source instanceof EntityStandardShot && cooldown == 0)) {
+						shot.setDead();
+						mana += 50;
+						cooldown = 5;
+						sync();
+					}
 
 					for (int i = 0; i < 50; i++) {
-						for (EntityPlayer player : players) {
-							if (player instanceof EntityPlayerMP) {
-								IMessage msg = new PacketSparkleFX(shot.posX + Math.random() * 4 - 2, shot.posY + Math.random() * 4 - 2,
+						BotaniaAPI.internalHandler.sparkleFX(supertile.getWorldObj(), shot.posX + Math.random() * 4 - 2, shot.posY + Math.random() * 4 - 2,
 										shot.posZ + Math.random() * 4 - 2, 1F, (float)Math.random() * 0.25F, (float)Math.random() * 0.25F,
 										(float)(Math.random() * 0.5F + 0.5F), 4);
-								PacketHandler.net.sendTo(msg, (EntityPlayerMP)player);
-							}
-						}
 					}
 
 					return;
