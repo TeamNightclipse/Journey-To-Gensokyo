@@ -12,9 +12,9 @@ package katrix.journeyToGensokyo.lib;
 
 public class LibBlockName {
 	
-	public final static String ORE_GENSOKYO = "gensokyoOreBlock";
-	public final static String KEYSTONE = "keyStoneBlock";
+	public static final String ORE_GENSOKYO = "gensokyoOreBlock";
+	public static final String KEYSTONE = "keyStoneBlock";
 
-	public final static String COMP_ORE_DEMON = "demonOreBlock";
-	public final static String COMP_ORE_CELESTIAL = "celestialOreBlock";
+	public static final String COMP_ORE_DEMON = "demonOreBlock";
+	public static final String COMP_ORE_CELESTIAL = "celestialOreBlock";
 }

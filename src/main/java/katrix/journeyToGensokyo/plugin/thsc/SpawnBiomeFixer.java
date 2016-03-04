@@ -33,7 +33,7 @@ import thKaguyaMod.entity.living.EntityWriggle;
 
 public class SpawnBiomeFixer {
 
-	public static void FairyFix() {
+	public static void fairyFix() {
 
 		List<BiomeGenBase> spawnbiomes = new ArrayList<BiomeGenBase>(Arrays.asList(BiomeDictionary.getBiomesForType(Type.PLAINS)));
 		for (BiomeGenBase biome : BiomeDictionary.getBiomesForType(Type.FOREST)) {
@@ -84,7 +84,7 @@ public class SpawnBiomeFixer {
 		EntityRegistry.addSpawn(EntitySunFlowerFairy.class, 30, 1, 6, EnumCreatureType.monster, spawnbiomes.toArray(new BiomeGenBase[0]));
 	}
 
-	public static void PhantomFix() {
+	public static void phantomFix() {
 
 		List<BiomeGenBase> spawnbiomes = new ArrayList<BiomeGenBase>(Arrays.asList(BiomeDictionary.getBiomesForType(Type.PLAINS)));
 		for (BiomeGenBase biome : BiomeDictionary.getBiomesForType(Type.FOREST)) {
@@ -147,7 +147,7 @@ public class SpawnBiomeFixer {
 		EntityRegistry.addSpawn(EntityTHPhantom.class, 20, 1, 3, EnumCreatureType.monster, spawnbiomes.toArray(new BiomeGenBase[0]));
 	}
 
-	public static void HanabeeperFix() {
+	public static void hanabeeperFix() {
 
 		List<BiomeGenBase> spawnbiomes = new ArrayList<BiomeGenBase>(Arrays.asList(BiomeDictionary.getBiomesForType(Type.SANDY)));
 
@@ -155,7 +155,7 @@ public class SpawnBiomeFixer {
 		EntityRegistry.addSpawn(EntityDanmakuCreeper.class, 2, 1, 4, EnumCreatureType.monster, spawnbiomes.toArray(new BiomeGenBase[0]));
 	}
 
-	public static void CirnoFix() {
+	public static void cirnoFix() {
 
 		List<BiomeGenBase> spawnbiomes = new ArrayList<BiomeGenBase>(Arrays.asList(BiomeDictionary.getBiomesForType(Type.COLD)));
 		for (BiomeGenBase biome : BiomeDictionary.getBiomesForType(Type.SNOWY)) {
@@ -178,7 +178,7 @@ public class SpawnBiomeFixer {
 		EntityRegistry.addSpawn(EntityCirno.class, 2, 1, 1, EnumCreatureType.monster, spawnbiomes.toArray(new BiomeGenBase[0]));
 	}
 
-	public static void RumiaFix() {
+	public static void rumiaFix() {
 
 		List<BiomeGenBase> spawnbiomes = new ArrayList<BiomeGenBase>(Arrays.asList(BiomeDictionary.getBiomesForType(Type.FOREST)));
 		for (BiomeGenBase biome : BiomeDictionary.getBiomesForType(Type.PLAINS)) {
@@ -191,7 +191,7 @@ public class SpawnBiomeFixer {
 		EntityRegistry.addSpawn(EntityRumia.class, 4, 1, 1, EnumCreatureType.monster, spawnbiomes.toArray(new BiomeGenBase[0]));
 	}
 
-	public static void TozikoFix() {
+	public static void tozikoFix() {
 
 		List<BiomeGenBase> spawnbiomes = new ArrayList<BiomeGenBase>(Arrays.asList(BiomeDictionary.getBiomesForType(Type.FOREST)));
 		for (BiomeGenBase biome : BiomeDictionary.getBiomesForType(Type.PLAINS)) {
@@ -209,7 +209,7 @@ public class SpawnBiomeFixer {
 		EntityRegistry.addSpawn(EntityToziko.class, 10, 1, 1, EnumCreatureType.monster, spawnbiomes.toArray(new BiomeGenBase[0]));
 	}
 
-	public static void WriggleFix() {
+	public static void wriggleFix() {
 
 		List<BiomeGenBase> spawnbiomes = new ArrayList<BiomeGenBase>(Arrays.asList(BiomeDictionary.getBiomesForType(Type.FOREST)));
 		for (BiomeGenBase biome : BiomeDictionary.getBiomesForType(Type.JUNGLE)) {
@@ -227,7 +227,7 @@ public class SpawnBiomeFixer {
 		EntityRegistry.addSpawn(EntityWriggle.class, 20, 1, 3, EnumCreatureType.monster, spawnbiomes.toArray(new BiomeGenBase[0]));
 	}
 
-	public static void AmbientFix() {
+	public static void ambientFix() {
 
 		List<BiomeGenBase> spawnbiomes = new ArrayList<BiomeGenBase>(Arrays.asList(BiomeDictionary.getBiomesForType(Type.PLAINS)));
 		for (BiomeGenBase biome : BiomeDictionary.getBiomesForType(Type.FOREST)) {

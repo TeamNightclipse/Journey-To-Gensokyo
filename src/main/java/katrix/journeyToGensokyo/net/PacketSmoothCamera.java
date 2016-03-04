@@ -21,8 +21,8 @@ public class PacketSmoothCamera implements IMessage {
 
 	public PacketSmoothCamera() {}
 
-	public PacketSmoothCamera(boolean SmoothOn) {
-		this.flag = SmoothOn;
+	public PacketSmoothCamera(boolean flag) {
+		this.flag = flag;
 	}
 
 	@Override

@@ -12,15 +12,15 @@ package katrix.journeyToGensokyo.lib;
 
 public class LibItemName {
 	
-	public final static String OLD_SPELLCARD  = "oldGensokyoSpellItem";
-	public final static String GENSOKYO_INGOT  = "gensokyoIngotItem";
-	public final static String GENSOKYO_DUST  = "gensokyoDustItem";
-	public final static String GENSOKYO_NOTE  = "gensokyoNotesItem";
+	public static final String OLD_SPELLCARD  = "oldGensokyoSpellItem";
+	public static final String GENSOKYO_INGOT  = "gensokyoIngotItem";
+	public static final String GENSOKYO_DUST  = "gensokyoDustItem";
+	public static final String GENSOKYO_NOTE  = "gensokyoNotesItem";
 	
-	public final static String SPAWN_EGG  = "spawnEggJTG";
-	public final static String STANDARD_SHOT  = "standardShot";
+	public static final String SPAWN_EGG  = "spawnEggJTG";
+	public static final String STANDARD_SHOT  = "standardShot";
 	
-	public final static String COMP_OLD_SPELLCARD_DEMON  = "oldDemonSpellItem";
-	public final static String COMP_OLD_SPELLCARD_CELESTIAL  = "oldCelestialSpellItem";
-	public final static String COMP_NOTE_RUINED  = "gensokyoNotesRuinedItem";
+	public static final String COMP_OLD_SPELLCARD_DEMON  = "oldDemonSpellItem";
+	public static final String COMP_OLD_SPELLCARD_CELESTIAL  = "oldCelestialSpellItem";
+	public static final String COMP_NOTE_RUINED  = "gensokyoNotesRuinedItem";
 }

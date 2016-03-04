@@ -24,9 +24,11 @@ import thKaguyaMod.client.model.ModelMiniHakkero2;
 
 public class RenderStandardShot extends Render {
 
-	private static final ResourceLocation miniHakkeroTexture = new ResourceLocation("thkaguyamod", "textures/MiniHakkeroTexture.png");
-	private static final ResourceLocation yingYangTexture = new ResourceLocation(LibMod.MODID.toLowerCase(), "textures/entity/YinYangOrb.png");
-	protected ModelBase modelMiniHakkero, modelMiniHakkero2, modelYingYangOrb;
+	private static final ResourceLocation TEXTURE_MINI_HAKKERO = new ResourceLocation(LibMod.KAGUYAMOD.toLowerCase(), "textures/MiniHakkeroTexture.png");
+	private static final ResourceLocation TEXTURE_YIN_YANG = new ResourceLocation(LibMod.MODID.toLowerCase(), "textures/entity/YinYangOrb.png");
+	private ModelBase modelMiniHakkero;
+	private ModelBase modelMiniHakkero2;
+	private ModelBase modelYingYangOrb;
 
 	public RenderStandardShot() {
 		shadowSize = 0.5F;
@@ -53,14 +55,14 @@ public class RenderStandardShot extends Render {
 		GL11.glPushMatrix();
 		bindTexture(getEntityTexture(yingYangOrb));
 		GL11.glTranslated(x, y, z);
-		GL11.glRotated(yingYangOrb.rotationPitch, -MathHelperJTG.sin(((yaw - 90F) / 180F * Math.PI)), 0.0F,
-				MathHelperJTG.cos(((yaw - 90F) / 180F * Math.PI)));
+		GL11.glRotated(yingYangOrb.rotationPitch, -MathHelperJTG.sin((yaw - 90F) / 180F * Math.PI), 0.0F,
+				MathHelperJTG.cos((yaw - 90F) / 180F * Math.PI));
 		GL11.glRotatef(180F - yaw, 0.0F, 1.0F, 0.0F);
 
 		GL11.glScalef(0.5F, 0.5F, 0.5F);
 		modelYingYangOrb.render(yingYangOrb, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
 		float angle = 30F;
-		GL11.glRotated((MathHelperJTG.sin(angle) / Math.PI * 180F), 0.0F, 0.0F, 1.0F);
+		GL11.glRotated(MathHelperJTG.sin(angle) / Math.PI * 180F, 0.0F, 0.0F, 1.0F);
 
 
 		GL11.glPopMatrix();
@@ -107,8 +109,8 @@ public class RenderStandardShot extends Render {
 		EntityStandardShot standardShot = (EntityStandardShot)entity;
 
 		if (standardShot.getType() <= 1)
-			return yingYangTexture;
+			return TEXTURE_YIN_YANG;
 		else
-			return miniHakkeroTexture;
+			return TEXTURE_MINI_HAKKERO;
 	}
 }

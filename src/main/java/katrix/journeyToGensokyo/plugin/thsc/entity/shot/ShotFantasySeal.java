@@ -68,6 +68,7 @@ public class ShotFantasySeal implements ISpecialShot {
 					shot.reCreate();
 					shot.delete();
 				}
+				break;
 			case LibSpecialShotId.FANTASY_SEAL04:
 				if (shot.isShotEndTime()) {
 					shot.setShotForm(DanmakuConstants.FORM_CIRCLE);
@@ -80,12 +81,12 @@ public class ShotFantasySeal implements ISpecialShot {
 			case LibSpecialShotId.FANTASY_SEAL05:
 				if (shot.isShotEndTime()) {
 					shot.setShotColor(DanmakuConstants.PURPLE);
-					;
 					shot.shotSpecial = LibSpecialShotId.FANTASY_SEAL06;
 					shot.setShotEndTime(10);
 					shot.reCreate();
 					shot.delete();
 				}
+				break;
 			case LibSpecialShotId.FANTASY_SEAL06:
 				if (shot.isShotEndTime()) {
 					shot.setShotForm(DanmakuConstants.FORM_AMULET);

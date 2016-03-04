@@ -43,6 +43,9 @@ public class ItemStandardShot extends Item {
 	public static final String NBT_SHOTLIST = "shotList";
 	public static final String NBT_USETIME = "useTime";
 
+	public static final String[] NAMES = {"needle", "homing", "laser", "rocket"};
+	private IIcon[] icon;
+
 	public ItemStandardShot() {
 		super();
 		setHasSubtypes(true);
@@ -50,13 +53,9 @@ public class ItemStandardShot extends Item {
 		setMaxStackSize(1);
 	}
 
-	private IIcon[] icon;
-
-	public static final String shotNames[] = {"needle", "homing", "laser", "rocket"};
-
 	@Override
 	public String getUnlocalizedName(ItemStack stack) {
-		return super.getUnlocalizedName() + "." + shotNames[stack.getItemDamage()];
+		return super.getUnlocalizedName() + "." + NAMES[stack.getItemDamage()];
 	}
 
 	@Override
@@ -67,10 +66,10 @@ public class ItemStandardShot extends Item {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister iconRegister) {
-		icon = new IIcon[shotNames.length];
+		icon = new IIcon[NAMES.length];
 
-		for (int i = 0; i < shotNames.length; ++i) {
-			icon[i] = iconRegister.registerIcon(LibMod.MODID + ":shot/" + shotNames[i]);
+		for (int i = 0; i < NAMES.length; ++i) {
+			icon[i] = iconRegister.registerIcon(LibMod.MODID + ":shot/" + NAMES[i]);
 		}
 	}
 
@@ -268,7 +267,7 @@ public class ItemStandardShot extends Item {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void getSubItems(Item item, CreativeTabs creativeTabs, List list) {
-		for (int i = 0; i < shotNames.length; i++) {
+		for (int i = 0; i < NAMES.length; i++) {
 			list.add(new ItemStack(item, 1, i));
 		}
 	}

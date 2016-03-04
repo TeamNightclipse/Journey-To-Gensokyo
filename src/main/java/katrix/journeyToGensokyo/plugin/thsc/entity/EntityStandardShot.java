@@ -29,10 +29,10 @@ import thKaguyaMod.THShotLib;
 public class EntityStandardShot extends Entity {
 
 	public EntityPlayer user;
-	private String userName;
 	public float power;
-	private int place;
 	public int shotTimer;
+	private String userName;
+	private int place;
 
 	public EntityStandardShot(World world) {
 		super(world);
@@ -161,6 +161,7 @@ public class EntityStandardShot extends Entity {
 						default:
 							break;
 					}
+					break;
 				case 3:
 					switch (place) {
 						case 0:
@@ -174,6 +175,7 @@ public class EntityStandardShot extends Entity {
 						default:
 							break;
 					}
+					break;
 				case 4:
 					switch (place) {
 						case 0:
@@ -189,6 +191,7 @@ public class EntityStandardShot extends Entity {
 						default:
 							break;
 					}
+					break;
 				default:
 					break;
 			}
@@ -210,6 +213,7 @@ public class EntityStandardShot extends Entity {
 						default:
 							break;
 					}
+					break;
 				case 3:
 					switch (place) {
 						case 0:
@@ -223,6 +227,7 @@ public class EntityStandardShot extends Entity {
 						default:
 							break;
 					}
+					break;
 				case 4:
 					switch (place) {
 						case 0:
@@ -238,6 +243,7 @@ public class EntityStandardShot extends Entity {
 						default:
 							break;
 					}
+					break;
 				default:
 					break;
 			}

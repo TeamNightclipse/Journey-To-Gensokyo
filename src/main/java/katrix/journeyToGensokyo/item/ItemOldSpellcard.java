@@ -20,25 +20,24 @@ import net.minecraft.util.IIcon;
 
 public class ItemOldSpellcard extends ItemJTGBase {
 	
-	public static final String[] names = {"Gensokyo", "Demon", "Celestial"};
-
+	public static final String[] NAMES = {"Gensokyo", "Demon", "Celestial"};
+	public IIcon[] icons = new IIcon[NAMES.length];
+	
 	public ItemOldSpellcard() {
 		super();
 		setHasSubtypes(true);
 	}
 
-	public IIcon[] icons = new IIcon[names.length];
-
 	@Override
 	public void registerIcons(IIconRegister reg) {
-		for (int i = 0; i < names.length; i++) {
-			icons[i] = reg.registerIcon(LibMod.MODID + ":old" + names[i] + "Spell");
+		for (int i = 0; i < NAMES.length; i++) {
+			icons[i] = reg.registerIcon(LibMod.MODID + ":old" + NAMES[i] + "Spell");
 		}
 	}
 
 	@Override
 	public IIcon getIconFromDamage(int meta) {
-		if (meta > names.length - 1) {
+		if (meta > NAMES.length - 1) {
 			meta = 0;
 		}
 
@@ -48,7 +47,7 @@ public class ItemOldSpellcard extends ItemJTGBase {
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
 	public void getSubItems(Item item, CreativeTabs tab, List list) {
-		for (int i = 0; i < names.length; i++) {
+		for (int i = 0; i < NAMES.length; i++) {
 			list.add(new ItemStack(item, 1, i));
 		}
 	}

@@ -373,7 +373,7 @@ public class EntityMarisa extends EntityDanmakuMob {
 
 	@Override
 	public boolean getCanSpawnHere() {
-		if(rand.nextInt(100) < THKaguyaConfig.fairySpawnRate && rand.nextInt(100) < 90 || super.getCanSpawnHere() == false) return false;
+		if(rand.nextInt(100) < THKaguyaConfig.fairySpawnRate && rand.nextInt(100) < 90 || !super.getCanSpawnHere()) return false;
 
 		int range = 64;
 		@SuppressWarnings("unchecked")

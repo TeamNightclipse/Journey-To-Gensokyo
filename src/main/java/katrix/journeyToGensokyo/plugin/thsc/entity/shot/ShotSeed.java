@@ -9,12 +9,11 @@
 
 package katrix.journeyToGensokyo.plugin.thsc.entity.shot;
 
-import static thKaguyaMod.DanmakuConstants.FORM_LIGHT;
-
 import katrix.journeyToGensokyo.lib.LibSpecialShotId;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
+import thKaguyaMod.DanmakuConstants;
 import thKaguyaMod.LaserData;
 import thKaguyaMod.THShotLib;
 import thKaguyaMod.entity.shot.EntityTHShot;
@@ -32,7 +31,7 @@ public class ShotSeed implements ISpecialShot {
 					shot.shotSpeed = 1.0D;
 					shot.setShotSize(0.1f);
 
-					shot.setShotForm(FORM_LIGHT);
+					shot.setShotForm(DanmakuConstants.FORM_LIGHT);
 					shot.updateMotion();
 				}
 

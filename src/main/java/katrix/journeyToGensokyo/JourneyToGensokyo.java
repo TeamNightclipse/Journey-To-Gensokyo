@@ -37,7 +37,7 @@ import katrix.journeyToGensokyo.worldgen.JTGWorldGen;
 
 public class JourneyToGensokyo {
 
-	public static boolean IC2Installed; 
+	public static boolean IC2Installed;
 	public static boolean thaumcraftInstalled;
 	public static boolean botaniaInstalled;
 
@@ -100,7 +100,7 @@ public class JourneyToGensokyo {
 	public void postInit(FMLPostInitializationEvent event) {
 
 		JTG_THSC.postInit();
-		if (thaumcraftInstalled) {
+		if(thaumcraftInstalled) {
 			LogHelper.info("JTG adding Thaumcraft aspects");
 			JTGThaumcraft.postInit();
 		}

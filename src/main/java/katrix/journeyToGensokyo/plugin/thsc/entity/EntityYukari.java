@@ -436,7 +436,8 @@ public class EntityYukari extends EntityDanmakuMob {
 			int j = 40;
 			int k;
 			Vec3 vec3;
-			float yaw, pitch;
+			float yaw;
+			float pitch;
 
 			for (k = 0; k < j; k += 2) {
 				yaw = 360F / j * k;

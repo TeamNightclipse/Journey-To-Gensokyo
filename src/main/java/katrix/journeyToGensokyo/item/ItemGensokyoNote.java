@@ -20,25 +20,24 @@ import net.minecraft.util.IIcon;
 
 public class ItemGensokyoNote extends ItemJTGBase {
 	
-	public static final String[] names = {"Ruined", "Patched", "Dusty", "Normal", "Imbued", "Arcane"};
-
+	public static final String[] NAMES = {"Ruined", "Patched", "Dusty", "Normal", "Imbued", "Arcane"};
+	public IIcon[] icons = new IIcon[NAMES.length];
+	
 	public ItemGensokyoNote() {
 		super();
 		setHasSubtypes(true);
 	}
 
-	public IIcon[] icons = new IIcon[names.length];
-
 	@Override
 	public void registerIcons(IIconRegister reg) {
-		for (int i = 0; i < names.length; i++) {
-			icons[i] = reg.registerIcon(LibMod.MODID + ":gensokyoNotes" + names[i]);
+		for (int i = 0; i < NAMES.length; i++) {
+			icons[i] = reg.registerIcon(LibMod.MODID + ":gensokyoNotes" + NAMES[i]);
 		}
 	}
 
 	@Override
 	public IIcon getIconFromDamage(int meta) {
-		if (meta > names.length - 1) {
+		if (meta > NAMES.length - 1) {
 			meta = 0;
 		}
 
@@ -48,7 +47,7 @@ public class ItemGensokyoNote extends ItemJTGBase {
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
 	public void getSubItems(Item item, CreativeTabs tab, List list) {
-		for (int i = 0; i < names.length; i++) {
+		for (int i = 0; i < NAMES.length; i++) {
 			list.add(new ItemStack(item, 1, i));
 		}
 	}

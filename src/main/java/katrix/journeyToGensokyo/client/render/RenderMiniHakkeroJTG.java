@@ -10,6 +10,7 @@ package katrix.journeyToGensokyo.client.render;
 
 import org.lwjgl.opengl.GL11;
 
+import katrix.journeyToGensokyo.lib.LibMod;
 import katrix.journeyToGensokyo.plugin.thsc.entity.EntityMiniHakkeroJTG;
 import katrix.journeyToGensokyo.util.MathHelperJTG;
 import net.minecraft.client.model.ModelBase;
@@ -23,9 +24,9 @@ import thKaguyaMod.client.model.ModelMiniHakkero2;
 
 public class RenderMiniHakkeroJTG extends Render {
 
-	private static final ResourceLocation texture = new ResourceLocation("thkaguyamod", "textures/MiniHakkeroTexture.png");
-	private static final ModelBase modelMiniHakkero = new ModelMiniHakkero();
-	private static final ModelBase modelMiniHakkero2 = new ModelMiniHakkero2();
+	private static final ResourceLocation TEXTURE = new ResourceLocation(LibMod.KAGUYAMOD.toLowerCase(), "textures/MiniHakkeroTexture.png");
+	private static final ModelBase MODEL_MINI_HAKKERO = new ModelMiniHakkero();
+	private static final ModelBase MODEL_MINI_HAKKERO2 = new ModelMiniHakkero2();
 
 	public RenderMiniHakkeroJTG() {
 		shadowSize = 0.5F; //TODO: Needed?
@@ -45,18 +46,18 @@ public class RenderMiniHakkeroJTG extends Render {
 		GL11.glRotatef(180F - yaw, 0.0F, 1.0F, 0.0F);
 
 		GL11.glScalef(0.5F, 0.5F, 0.5F);
-		modelMiniHakkero.render(miniHakkero, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
+		MODEL_MINI_HAKKERO.render(miniHakkero, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
 		GL11.glDisable(GL11.GL_LIGHTING);
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
 		Tessellator tessellator = Tessellator.instance;
-		float constR[] = {255F, 255F, 255F, 0F, 0F, 76F, 128F};
-		float constG[] = {0F, 165F, 255F, 128F, 0F, 0F, 0F};
-		float constB[] = {0F, 0F, 0F, 0F, 255F, 130F, 128F};
-		float u_min = 0F;
-		float v_min = 0F;
-		float u_max = 1F / 2F;
-		float v_max = 1F / 4F;
+		float[] constR = {255F, 255F, 255F, 0F, 0F, 76F, 128F};
+		float[] constG = {0F, 165F, 255F, 128F, 0F, 0F, 0F};
+		float[] constB = {0F, 0F, 0F, 0F, 255F, 130F, 128F};
+		float uMin = 0F;
+		float vMin = 0F;
+		float uMax = 1F / 2F;
+		float vMax = 1F / 4F;
 
 		float angle = miniHakkero.getCircleAngle();
 		float pi18 = (float)Math.PI / 9F;
@@ -67,31 +68,31 @@ public class RenderMiniHakkeroJTG extends Render {
 			GL11.glRotatef(MathHelper.sin(pi18) / 3.141593F * 180F, 0.0F, 0.0F, 1.0F);
 			tessellator.startDrawingQuads();
 			tessellator.setColorRGBA_F(constR[c % 7] / 255F * 0.5F, constG[c % 7] / 255F * 0.5F, constB[c % 7] / 255F * 0.5F, 0.8F);
-			tessellator.addVertexWithUV(0.77F, 4.5F, -6.0D, u_min, v_min);
-			tessellator.addVertexWithUV(-0.77F, 4.5F, -6.0D, u_max, v_min);
-			tessellator.addVertexWithUV(-0.77F, 4.5F, -4.0, u_max, v_max);
-			tessellator.addVertexWithUV(0.77F, 4.5F, -4.0D, u_min, v_max);
+			tessellator.addVertexWithUV(0.77F, 4.5F, -6.0D, uMin, vMin);
+			tessellator.addVertexWithUV(-0.77F, 4.5F, -6.0D, uMax, vMin);
+			tessellator.addVertexWithUV(-0.77F, 4.5F, -4.0, uMax, vMax);
+			tessellator.addVertexWithUV(0.77F, 4.5F, -4.0D, uMin, vMax);
 			tessellator.draw();
 			tessellator.startDrawingQuads();
 			tessellator.setColorRGBA_F(constR[c % 7] / 255F * 0.5F, constG[c % 7] / 255F * 0.5F, constB[c % 7] / 255F * 0.5F, 0.8F);
-			tessellator.addVertexWithUV(-0.77F, 4.5F, -6.0D, u_min, v_min);
-			tessellator.addVertexWithUV(0.77F, 4.5F, -6.0D, u_max, v_min);
-			tessellator.addVertexWithUV(0.77F, 4.5F, -4.0D, u_max, v_max);
-			tessellator.addVertexWithUV(-0.77F, 4.5F, -4.0D, u_min, v_max);
+			tessellator.addVertexWithUV(-0.77F, 4.5F, -6.0D, uMin, vMin);
+			tessellator.addVertexWithUV(0.77F, 4.5F, -6.0D, uMax, vMin);
+			tessellator.addVertexWithUV(0.77F, 4.5F, -4.0D, uMax, vMax);
+			tessellator.addVertexWithUV(-0.77F, 4.5F, -4.0D, uMin, vMax);
 			tessellator.draw();
 			tessellator.startDrawingQuads();
 			tessellator.setColorRGBA_F(constR[(c + 3) % 7] / 255F * 0.5F, constG[(c + 3) % 7] / 255F * 0.5F, constB[(c + 3) % 7] / 255F * 0.5F, 0.8F);
-			tessellator.addVertexWithUV(1.11F, 6.5F, -12.0D, u_min, v_min);
-			tessellator.addVertexWithUV(-1.11F, 6.5F, -12.0D, u_max, v_min);
-			tessellator.addVertexWithUV(-1.11F, 6.5F, -10.0D, u_max, v_max);
-			tessellator.addVertexWithUV(1.11F, 6.5F, -10.0D, u_min, v_max);
+			tessellator.addVertexWithUV(1.11F, 6.5F, -12.0D, uMin, vMin);
+			tessellator.addVertexWithUV(-1.11F, 6.5F, -12.0D, uMax, vMin);
+			tessellator.addVertexWithUV(-1.11F, 6.5F, -10.0D, uMax, vMax);
+			tessellator.addVertexWithUV(1.11F, 6.5F, -10.0D, uMin, vMax);
 			tessellator.draw();
 			tessellator.startDrawingQuads();
 			tessellator.setColorRGBA_F(constR[(c + 3) % 7] / 255F * 0.5F, constG[(c + 3) % 7] / 255F * 0.5F, constB[(c + 3) % 7] / 255F * 0.5F, 0.8F);
-			tessellator.addVertexWithUV(-1.11F, 6.5F, -12.0D, u_min, v_min);
-			tessellator.addVertexWithUV(1.11F, 6.5F, -12.0D, u_max, v_min);
-			tessellator.addVertexWithUV(1.11F, 6.5F, -10.0D, u_max, v_max);
-			tessellator.addVertexWithUV(-1.11F, 6.5F, -10.0D, u_min, v_max);
+			tessellator.addVertexWithUV(-1.11F, 6.5F, -12.0D, uMin, vMin);
+			tessellator.addVertexWithUV(1.11F, 6.5F, -12.0D, uMax, vMin);
+			tessellator.addVertexWithUV(1.11F, 6.5F, -10.0D, uMax, vMax);
+			tessellator.addVertexWithUV(-1.11F, 6.5F, -10.0D, uMin, vMax);
 			tessellator.draw();
 			angle += pi18;
 		}
@@ -110,7 +111,7 @@ public class RenderMiniHakkeroJTG extends Render {
 
 		GL11.glScalef(0.5F, 0.5F, 0.5F);
 
-		modelMiniHakkero2.render(miniHakkero, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
+		MODEL_MINI_HAKKERO2.render(miniHakkero, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
 		GL11.glDisable(GL11.GL_LIGHTING);
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
@@ -119,6 +120,6 @@ public class RenderMiniHakkeroJTG extends Render {
 
 	@Override
 	protected ResourceLocation getEntityTexture(Entity p_110775_1_) {
-		return texture;
+		return TEXTURE;
 	}
 }

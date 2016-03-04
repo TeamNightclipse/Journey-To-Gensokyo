@@ -101,25 +101,25 @@ public class JTG_THSC {
 		if (THKaguyaConfig.spawnDanmakuMob && ConfigHandler.fixTHKaguyaSpawn) {
 
 			if (THKaguyaConfig.spawnFairy) {
-				SpawnBiomeFixer.FairyFix();
+				SpawnBiomeFixer.fairyFix();
 			}
 
 			if (THKaguyaConfig.spawnPhantom) {
-				SpawnBiomeFixer.PhantomFix();
+				SpawnBiomeFixer.phantomFix();
 			}
 
 			if (THKaguyaConfig.spawnHanabeeper) {
-				SpawnBiomeFixer.HanabeeperFix();
+				SpawnBiomeFixer.hanabeeperFix();
 			}
 
 			if (THKaguyaConfig.spawnBoss) {
-				SpawnBiomeFixer.CirnoFix();
-				SpawnBiomeFixer.RumiaFix();
-				SpawnBiomeFixer.TozikoFix();
-				SpawnBiomeFixer.WriggleFix();
+				SpawnBiomeFixer.cirnoFix();
+				SpawnBiomeFixer.rumiaFix();
+				SpawnBiomeFixer.tozikoFix();
+				SpawnBiomeFixer.wriggleFix();
 			}
 
-			SpawnBiomeFixer.AmbientFix();
+			SpawnBiomeFixer.ambientFix();
 		}
 	}
 }

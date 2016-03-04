@@ -25,7 +25,8 @@ import net.minecraft.world.IBlockAccess;
 
 public class BlockGensokyoOre extends BlockJTGBase {
 	
-	public static final String[] names = {"gensokyo", "demon", "celestial"};
+	public static final String[] NAMES = {"gensokyo", "demon", "celestial"};
+	public IIcon[] icons = new IIcon[NAMES.length];
 
 	public BlockGensokyoOre(Material material) {
 		super(material);
@@ -44,18 +45,16 @@ public class BlockGensokyoOre extends BlockJTGBase {
 		return true;
 	}
 
-	public IIcon[] icons = new IIcon[names.length];
-
 	@Override
 	public void registerBlockIcons(IIconRegister reg) {
-		for (int i = 0; i < names.length; i++) {
-			icons[i] = reg.registerIcon(LibMod.MODID + ":" + names[i] + "Ore");
+		for (int i = 0; i < NAMES.length; i++) {
+			icons[i] = reg.registerIcon(LibMod.MODID + ":" + NAMES[i] + "Ore");
 		}
 	}
 
 	@Override
 	public IIcon getIcon(int side, int meta) {
-		if (meta > names.length -1) {
+		if (meta > NAMES.length -1) {
 			meta = 0;
 		}
 
@@ -70,7 +69,7 @@ public class BlockGensokyoOre extends BlockJTGBase {
 	@SuppressWarnings({"rawtypes", "unchecked"})
 	@Override
 	public void getSubBlocks(Item item, CreativeTabs tab, List list) {
-		for (int i = 0; i < names.length; i++) {
+		for (int i = 0; i < NAMES.length; i++) {
 			list.add(new ItemStack(item, 1, i));
 		}
 	}

@@ -64,7 +64,7 @@ public class ShotMovementHelper {
 
 		for (int j = 0; j < list.size(); j++) {
 			Entity entitys = (Entity)list.get(j);
-			if (entitys instanceof EntityLivingBase == false || entitys instanceof EntityAnimal || entitys instanceof EntityVillager || entitys == shot.user) {
+			if (!(entitys instanceof EntityLivingBase) || entitys instanceof EntityAnimal || entitys instanceof EntityVillager || entitys == shot.user) {
 				continue;
 			}
 

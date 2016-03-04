@@ -30,6 +30,8 @@ import thKaguyaMod.init.THKaguyaItems;
 
 public class EntityMiniHakkeroJTG extends Entity {
 
+	public static final String NBT_SPELLCARD = "isSpellcard";
+	
 	private EntityLivingBase user;
 	private Entity source;
 	private boolean isSpellcard;
@@ -40,8 +42,6 @@ public class EntityMiniHakkeroJTG extends Entity {
 
 	private float circleAngle = 0F;
 	private List<EntityTHSetLaser> listLaser = new ArrayList<EntityTHSetLaser>();
-
-	public static final String NBT_SPELLCARD = "isSpellcard";
 
 	public EntityMiniHakkeroJTG(World world) {
 		super(world);

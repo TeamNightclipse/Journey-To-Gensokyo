@@ -243,7 +243,8 @@ public class EntityReimuHostile extends EntityDanmakuMob implements IMerchant {
 			int j = 40;//this.rand.nextInt(15) + this.rand.nextInt(1 + par2);
 			int k;
 			Vec3 vec3;
-			float yaw, pitch;
+			float yaw;
+			float pitch;
 
 			for (k = 0; k < j; k += 2) {
 				yaw = 360F / j * k;
@@ -276,7 +277,7 @@ public class EntityReimuHostile extends EntityDanmakuMob implements IMerchant {
 
 	@Override
 	public boolean getCanSpawnHere() {
-		if (rand.nextInt(100) < THKaguyaConfig.fairySpawnRate && rand.nextInt(100) < 90 || super.getCanSpawnHere() == false)
+		if (rand.nextInt(100) < THKaguyaConfig.fairySpawnRate && rand.nextInt(100) < 90 || !super.getCanSpawnHere())
 			return false;
 
 		int range = 64;

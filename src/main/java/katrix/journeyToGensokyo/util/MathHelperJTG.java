@@ -14,22 +14,17 @@ import net.minecraft.entity.EntityLivingBase;
 public class MathHelperJTG {
 
 	//Thanks Mad for this Sin/Cos thingy
-	static double[] table = null;
-	static double[] table2 = null;
-	static double step;
-	static double invStep;
-	static int size = 0;
+	private static final double PI2 = Math.PI * 2;
+	private static final int SIZE = 5000;
+	private static final double[] SIN_TABLE = new double[SIZE];
+	private static final double[] COS_TABLE = new double[SIZE];
+	private static final double STEP = 2d * Math.PI / SIZE;
+	private static final double INV_STEP = 1.0f / STEP;
 
 	static {
-
-		size = 5000; //TODO: Try finding optimal size
-		table = new double[size];
-		table2 = new double[size];
-		step = 2d * Math.PI / size;
-		invStep = 1.0f / step;
-		for (int i = 0; i < size; ++i) {
-			table[i] = Math.sin(step * i);
-			table2[i] = Math.cos(step * i);
+		for (int i = 0; i < SIZE; ++i) {
+			SIN_TABLE[i] = Math.sin(STEP * i);
+			COS_TABLE[i] = Math.cos(STEP * i);
 		}
 	}
 
@@ -39,28 +34,26 @@ public class MathHelperJTG {
 	 * @param ang angle in radians
 	 * @return sin of angle a
 	 */
-	private final static double pi2 = Math.PI * 2;
-
-	final public static double sin(double ang) {
+	public static final double sin(double ang) {
 		double rev = ang < 0 ? -1 : 1;
-		double t = rev * ang % pi2;
-		int indexA = (int)(t / step);
+		double t = rev * ang % PI2;
+		int indexA = (int)(t / STEP);
 		int indexB = indexA + 1;
-		if (indexB >= size)
-			return table[indexA];
-		double a = table[indexA];
-		return rev * (a + (table[indexB] - a) * (t - indexA * step) * invStep);
+		if (indexB >= SIZE)
+			return SIN_TABLE[indexA];
+		double a = SIN_TABLE[indexA];
+		return rev * (a + (SIN_TABLE[indexB] - a) * (t - indexA * STEP) * INV_STEP);
 	}
 
-	final public static double cos(double ang) {
+	public static final double cos(double ang) {
 		double rev = ang < 0 ? -1 : 1;
-		double t = rev * ang % pi2;
-		int indexA = (int)(t / step);
+		double t = rev * ang % PI2;
+		int indexA = (int)(t / STEP);
 		int indexB = indexA + 1;
-		if (indexB >= size)
-			return table2[indexA];
-		double a = table2[indexA];
-		return a + (table2[indexB] - a) * (t - indexA * step) * invStep;
+		if (indexB >= SIZE)
+			return COS_TABLE[indexA];
+		double a = COS_TABLE[indexA];
+		return a + (COS_TABLE[indexB] - a) * (t - indexA * STEP) * INV_STEP;
 	}
 
 

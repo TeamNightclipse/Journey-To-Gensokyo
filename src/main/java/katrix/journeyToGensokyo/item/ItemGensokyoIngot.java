@@ -18,13 +18,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 
 public class ItemGensokyoIngot extends ItemJTGBase {
-
+	
+	public IIcon[] icons = new IIcon[3];
+	
 	public ItemGensokyoIngot() {
 		super();
 		setHasSubtypes(true);
 	}
-
-	public IIcon[] icons = new IIcon[3];
 
 	@Override
 	public void registerIcons(IIconRegister reg) {

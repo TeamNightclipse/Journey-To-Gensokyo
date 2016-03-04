@@ -20,25 +20,24 @@ import net.minecraft.util.IIcon;
 
 public class ItemGensokyoDust extends ItemJTGBase {
 	
-	public final static String[] names = {"gensokyo", "demon", "celestial"};
-
+	public static final String[] NAMES = {"gensokyo", "demon", "celestial"};
+	public IIcon[] icons = new IIcon[NAMES.length];
+	
 	public ItemGensokyoDust() {
 		super();
 		setHasSubtypes(true);
 	}
 
-	public IIcon[] icons = new IIcon[names.length];
-
 	@Override
 	public void registerIcons(IIconRegister reg) {
-		for (int i = 0; i < names.length; i++) {
-			icons[i] = reg.registerIcon(LibMod.MODID + ":" + names[i] + "Dust");
+		for (int i = 0; i < NAMES.length; i++) {
+			icons[i] = reg.registerIcon(LibMod.MODID + ":" + NAMES[i] + "Dust");
 		}
 	}
 
 	@Override
 	public IIcon getIconFromDamage(int meta) {
-		if (meta > names.length -1) {
+		if (meta > NAMES.length -1) {
 			meta = 0;
 		}
 
