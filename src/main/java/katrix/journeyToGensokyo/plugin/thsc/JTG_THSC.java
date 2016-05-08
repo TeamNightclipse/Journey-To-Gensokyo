@@ -98,28 +98,30 @@ public class JTG_THSC {
 		EntityMiniHakkeroJTG.postInit();
 		EntityMarisa.postInit();
 
-		if (THKaguyaConfig.spawnDanmakuMob && ConfigHandler.fixTHKaguyaSpawn) {
+		if(THKaguyaConfig.spawnDanmakuMob && ConfigHandler.fixTHKaguyaSpawn) {
 
-			if (THKaguyaConfig.spawnFairy) {
+			if(THKaguyaConfig.spawnFairy) {
 				SpawnBiomeFixer.fairyFix();
 			}
 
-			if (THKaguyaConfig.spawnPhantom) {
+			if(THKaguyaConfig.spawnPhantom) {
 				SpawnBiomeFixer.phantomFix();
 			}
 
-			if (THKaguyaConfig.spawnHanabeeper) {
+			if(THKaguyaConfig.spawnHanabeeper) {
 				SpawnBiomeFixer.hanabeeperFix();
 			}
 
-			if (THKaguyaConfig.spawnBoss) {
+			if(THKaguyaConfig.spawnBoss) {
 				SpawnBiomeFixer.cirnoFix();
 				SpawnBiomeFixer.rumiaFix();
 				SpawnBiomeFixer.tozikoFix();
 				SpawnBiomeFixer.wriggleFix();
 			}
 
-			SpawnBiomeFixer.ambientFix();
+			if(ConfigHandler.spawnAmbient) {
+				SpawnBiomeFixer.ambientFix();
+			}
 		}
 	}
 }

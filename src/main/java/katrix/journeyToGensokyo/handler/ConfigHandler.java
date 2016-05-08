@@ -29,6 +29,7 @@ public class ConfigHandler {
 	public static boolean newMobsSpawn;
 	public static boolean newBossesSpawn;
 	public static boolean fixTHKaguyaSpawn;
+	public static boolean spawnAmbient;
 
 	public static boolean OresEnabled;
 	public static boolean NotesEnabled;
@@ -42,7 +43,7 @@ public class ConfigHandler {
 		FMLCommonHandler.instance().bus().register(new ChangeListener());
 	}
 
-	public static void loadConfig() {
+	private static void loadConfig() {
 
 		cfg.addCustomCategoryComment(RTY, "Don't change this if you don't know what you are doing");
 
@@ -50,6 +51,7 @@ public class ConfigHandler {
 		newMobsSpawn = cfg.get(MOBS, "New mobs spawn", true, "Can new mobs(mobs that are not faries) added by JTG spawn?").getBoolean();
 		newBossesSpawn = cfg.get(MOBS, "New bosses spawn", true, "Can new bosses added by JTG spawn?").getBoolean();
 		fixTHKaguyaSpawn = cfg.get(MOBS, "Spawn biome fixer enabled", true, "Allow Touhou Items Mod bobs to spawn in mod added biomes?").getBoolean();
+		spawnAmbient = cfg.get(MOBS, "Spawn ambient spawnFixer", true, "Should spawnFixed add ambient spawns").getBoolean();
 		newHealthBar = cfg.get(MISC, "New Healthbar", true, "Use the new health bar for bosses? Setting this to false will use the old health bar")
 				.getBoolean();
 
@@ -57,7 +59,7 @@ public class ConfigHandler {
 		NotesEnabled = cfg.get(RTY, "Notes and old spellcards enabled", false, "should gensokyo notes and old spellcards be enabled").getBoolean();
 		rtyMode = cfg.get(RTY, "RTY Mode", false, "should some RTY specific things be activated?").getBoolean();
 
-		if (cfg.hasChanged()) {
+		if(cfg.hasChanged()) {
 			cfg.save();
 		}
 	}
