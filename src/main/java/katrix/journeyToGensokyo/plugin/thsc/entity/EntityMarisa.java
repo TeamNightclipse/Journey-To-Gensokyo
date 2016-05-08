@@ -8,8 +8,6 @@
  */
 package katrix.journeyToGensokyo.plugin.thsc.entity;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import cpw.mods.fml.common.registry.EntityRegistry;
@@ -27,7 +25,6 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
 import thKaguyaMod.DanmakuConstants;
@@ -376,22 +373,17 @@ public class EntityMarisa extends EntityDanmakuMob {
 		if(rand.nextInt(100) < THKaguyaConfig.fairySpawnRate && rand.nextInt(100) < 90 || !super.getCanSpawnHere()) return false;
 
 		int range = 64;
-		@SuppressWarnings("unchecked")
-		List<EntityMarisa> marisas = worldObj.getEntitiesWithinAABB(EntityReimuHostile.class,
+		@SuppressWarnings("unchecked") List<EntityMarisa> marisas = worldObj.getEntitiesWithinAABB(EntityReimuHostile.class,
 				AxisAlignedBB.getBoundingBox(posX - range, posY - range, posZ - range, posX + range + 1, posY + range + 1, posZ + range + 1));
-		if(marisas.size() >= 1) return false;
+		return marisas.size() < 1 && worldObj.difficultySetting != EnumDifficulty.PEACEFUL;
 
-		return worldObj.difficultySetting != EnumDifficulty.PEACEFUL;
 	}
 
 	public static void postInit() {
-
 		EntityRegistry.registerModEntity(EntityMarisa.class, LibEntityName.MARISA, LibMobID.MARISA, JourneyToGensokyo.instance, 80, 1, true);
 
-		List<BiomeGenBase> spawnbiomes = new ArrayList<BiomeGenBase>(Arrays.asList(BiomeDictionary.getBiomesForType(Type.FOREST)));
-
 		if(THKaguyaConfig.spawnBoss && ConfigHandler.newBossesSpawn) {
-			EntityRegistry.addSpawn(EntityMarisa.class, 1, 1, 1, EnumCreatureType.monster, spawnbiomes.toArray(new BiomeGenBase[0]));
+			EntityRegistry.addSpawn(EntityMarisa.class, 1, 1, 1, EnumCreatureType.monster, BiomeDictionary.getBiomesForType(Type.FOREST));
 		}
 	}
 }

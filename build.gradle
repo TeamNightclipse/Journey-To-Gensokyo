@@ -22,6 +22,9 @@ ext.config = parseConfig(configFile)
 
 compileJava.options.encoding = 'UTF-8'
 
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
 version = config.mc_version + "-" + config.version + "-" + config.build_number
 group = "katrix.journeyToGensokyo" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "JourneyToGensokyo"

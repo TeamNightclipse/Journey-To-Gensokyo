@@ -39,10 +39,7 @@ public class BlockGensokyoOre extends BlockJTGBase {
 
 	@Override
 	public boolean canEntityDestroy(IBlockAccess world, int x, int y, int z, Entity entity) {
-		if (entity instanceof EntityDragon && world.getBlockMetadata(x, y, z) == 1) {
-			return false;
-		}
-		return true;
+		return !(entity instanceof EntityDragon && world.getBlockMetadata(x, y, z) == 1);
 	}
 
 	@Override

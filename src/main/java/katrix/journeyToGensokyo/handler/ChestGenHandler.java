@@ -22,11 +22,9 @@ public class ChestGenHandler {
 	public static WeightedRandomChestContent ruinedNotebook = new WeightedRandomChestContent(new ItemStack(JTGItem.gensokyoNotesItem, 1, 0), 1, 1, 5);
 
 	public static void init() {
-
 		ChestGenHooks.getInfo(ChestGenHooks.DUNGEON_CHEST).addItem(gensokyoSpell);
 		ChestGenHooks.getInfo(ChestGenHooks.DUNGEON_CHEST).addItem(demonSpell);
 		ChestGenHooks.getInfo(ChestGenHooks.DUNGEON_CHEST).addItem(celestialSpell);
 		ChestGenHooks.getInfo(ChestGenHooks.DUNGEON_CHEST).addItem(ruinedNotebook);
 	}
-
 }

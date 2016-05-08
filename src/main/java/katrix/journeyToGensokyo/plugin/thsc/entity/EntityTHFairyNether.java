@@ -9,10 +9,6 @@
 
 package katrix.journeyToGensokyo.plugin.thsc.entity;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import cpw.mods.fml.common.registry.EntityRegistry;
 import katrix.journeyToGensokyo.JourneyToGensokyo;
 import katrix.journeyToGensokyo.handler.ConfigHandler;
@@ -22,7 +18,6 @@ import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
 import thKaguyaMod.DanmakuConstants;
@@ -68,20 +63,14 @@ public class EntityTHFairyNether extends EntityTHFairy {
 
 	@Override
 	public boolean getCanSpawnHere() {
-		if (rand.nextInt(100) < THKaguyaConfig.fairySpawnRate)
-			return false;
-
-		return worldObj.difficultySetting != EnumDifficulty.PEACEFUL;
+		return rand.nextInt(100) >= THKaguyaConfig.fairySpawnRate && worldObj.difficultySetting != EnumDifficulty.PEACEFUL;
 	}
 
 	public static void postInit() {
-
 		EntityRegistry.registerModEntity(EntityTHFairyNether.class, LibEntityName.FAIRY_NETHER, LibMobID.FAIRY_NETHER, JourneyToGensokyo.instance, 80, 1, true);
 
-		List<BiomeGenBase> spawnbiomes = new ArrayList<BiomeGenBase>(Arrays.asList(BiomeDictionary.getBiomesForType(Type.NETHER)));
-
 		if (THKaguyaConfig.spawnDanmakuMob && ConfigHandler.newFariesSpawn) {
-			EntityRegistry.addSpawn(EntityTHFairyNether.class, 20, 1, 3, EnumCreatureType.monster, spawnbiomes.toArray(new BiomeGenBase[0]));
+			EntityRegistry.addSpawn(EntityTHFairyNether.class, 20, 1, 3, EnumCreatureType.monster, BiomeDictionary.getBiomesForType(Type.NETHER));
 		}
 	}
 }

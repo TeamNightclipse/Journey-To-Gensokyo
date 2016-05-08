@@ -133,13 +133,11 @@ public class THSC_CurseOfDreamsAndReality extends THSpellCard implements ISpecia
 
 	@Override
 	public boolean specialShot_hitBlock(World world, int id, EntityTHShot shot, MovingObjectPosition movingObjectPosition) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean specialShot_hitEntity(World world, int id, EntityTHShot shot, Entity entity_Hit) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 }

@@ -44,7 +44,7 @@ public class JTGBotania {
 		BotaniaAPI.subtilesForCreativeMenu.add(SPIRIT_FLOWER);
 
 		spiritFlowerLexicon = new BLexiconEntry(SPIRIT_FLOWER, BotaniaAPI.categoryGenerationFlowers);
-		spiritFlowerLexicon.setLexiconPages(new PageText("0"), new PagePetalRecipe<RecipePetals>("1", spiritFlowerRecipe));
+		spiritFlowerLexicon.setLexiconPages(new PageText("0"), new PagePetalRecipe<>("1", spiritFlowerRecipe));
 
 		BotaniaAPI.addOreWeight(LibOreDictionary.ORE_GENSOKYO, 2500);
 		BotaniaAPI.addOreWeightNether(LibOreDictionary.ORE_DEMON, 2500);

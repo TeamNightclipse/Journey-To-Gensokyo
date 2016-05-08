@@ -20,41 +20,41 @@ public class RegisterAspect {
 
 	public static void postInit() {
 
-		ThaumcraftApi.registerObjectTag(new ItemStack(JTGBlock.gensokyoOreBlock, 1, 0), AspectListJTG.blockGensokyoOre);
-		ThaumcraftApi.registerObjectTag(new ItemStack(JTGBlock.gensokyoOreBlock, 1, 1), AspectListJTG.blockCelestialOre);
-		ThaumcraftApi.registerObjectTag(new ItemStack(JTGBlock.gensokyoOreBlock, 1, 2), AspectListJTG.blockDemonOre);
+		ThaumcraftApi.registerObjectTag(new ItemStack(JTGBlock.gensokyoOreBlock, 1, 0), AspectListJTG.BLOCK_GENSOKYO_ORE);
+		ThaumcraftApi.registerObjectTag(new ItemStack(JTGBlock.gensokyoOreBlock, 1, 1), AspectListJTG.BLOCK_CELESTIAL_ORE);
+		ThaumcraftApi.registerObjectTag(new ItemStack(JTGBlock.gensokyoOreBlock, 1, 2), AspectListJTG.BLOCK_DEMON_ORE);
 
-		ThaumcraftApi.registerObjectTag(new ItemStack(JTGItem.gensokyoDustItem, 1, 0), AspectListJTG.itemGensokyoDust);
-		ThaumcraftApi.registerObjectTag(new ItemStack(JTGItem.gensokyoDustItem, 1, 1), AspectListJTG.itemDemonDust);
-		ThaumcraftApi.registerObjectTag(new ItemStack(JTGItem.gensokyoDustItem, 1, 2), AspectListJTG.itemCelestialDust);
+		ThaumcraftApi.registerObjectTag(new ItemStack(JTGItem.gensokyoDustItem, 1, 0), AspectListJTG.ITEM_GENSOKYO_DUST);
+		ThaumcraftApi.registerObjectTag(new ItemStack(JTGItem.gensokyoDustItem, 1, 1), AspectListJTG.ITEM_DEMON_DUST);
+		ThaumcraftApi.registerObjectTag(new ItemStack(JTGItem.gensokyoDustItem, 1, 2), AspectListJTG.ITEM_CELESTIAL_DUST);
 
-		ThaumcraftApi.registerObjectTag(new ItemStack(JTGItem.gensokyoIngotItem, 1, 0), AspectListJTG.itemGensokyoIngot);
-		ThaumcraftApi.registerObjectTag(new ItemStack(JTGItem.gensokyoIngotItem, 1, 1), AspectListJTG.itemDemonIngot);
-		ThaumcraftApi.registerObjectTag(new ItemStack(JTGItem.gensokyoIngotItem, 1, 2), AspectListJTG.itemCelestialIngot);
+		ThaumcraftApi.registerObjectTag(new ItemStack(JTGItem.gensokyoIngotItem, 1, 0), AspectListJTG.ITEM_GENSOKYO_INGOT);
+		ThaumcraftApi.registerObjectTag(new ItemStack(JTGItem.gensokyoIngotItem, 1, 1), AspectListJTG.ITEM_DEMON_INGOT);
+		ThaumcraftApi.registerObjectTag(new ItemStack(JTGItem.gensokyoIngotItem, 1, 2), AspectListJTG.ITEM_CELESTIAL_INGOT);
 
-		ThaumcraftApi.registerObjectTag(new ItemStack(JTGItem.oldGensokyoSpellItem, 1, 0), AspectListJTG.itemGensokyoNote);
-		ThaumcraftApi.registerObjectTag(new ItemStack(JTGItem.oldGensokyoSpellItem, 1, 1), AspectListJTG.itemCelestialNote);
-		ThaumcraftApi.registerObjectTag(new ItemStack(JTGItem.oldGensokyoSpellItem, 1, 2), AspectListJTG.itemDemonNote);
+		ThaumcraftApi.registerObjectTag(new ItemStack(JTGItem.oldGensokyoSpellItem, 1, 0), AspectListJTG.ITEM_GENSOKYO_NOTE);
+		ThaumcraftApi.registerObjectTag(new ItemStack(JTGItem.oldGensokyoSpellItem, 1, 1), AspectListJTG.ITEM_CELESTIAL_NOTE);
+		ThaumcraftApi.registerObjectTag(new ItemStack(JTGItem.oldGensokyoSpellItem, 1, 2), AspectListJTG.ITEM_DEMON_NOTE);
 
-		ThaumcraftApi.registerObjectTag(new ItemStack(JTGItem.gensokyoNotesItem, 1, 0), AspectListJTG.itemRuinedGensokyoNotes);
-		ThaumcraftApi.registerObjectTag(new ItemStack(JTGItem.gensokyoNotesItem, 1, 1), AspectListJTG.itemGensokyoNotesPat);
-		ThaumcraftApi.registerObjectTag(new ItemStack(JTGItem.gensokyoNotesItem, 1, 2), AspectListJTG.itemGensokyoNotesDus);
-		ThaumcraftApi.registerObjectTag(new ItemStack(JTGItem.gensokyoNotesItem, 1, 3), AspectListJTG.itemGensokyoNotes);
-		ThaumcraftApi.registerObjectTag(new ItemStack(JTGItem.gensokyoNotesItem, 1, 4), AspectListJTG.itemGensokyoNotesImb);
-		ThaumcraftApi.registerObjectTag(new ItemStack(JTGItem.gensokyoNotesItem, 1, 5), AspectListJTG.itemGensokyoNotesArc);
+		ThaumcraftApi.registerObjectTag(new ItemStack(JTGItem.gensokyoNotesItem, 1, 0), AspectListJTG.ITEM_RUINED_GENSOKYO_NOTES);
+		ThaumcraftApi.registerObjectTag(new ItemStack(JTGItem.gensokyoNotesItem, 1, 1), AspectListJTG.ITEM_GENSOKYO_NOTES_PAT);
+		ThaumcraftApi.registerObjectTag(new ItemStack(JTGItem.gensokyoNotesItem, 1, 2), AspectListJTG.ITEM_GENSOKYO_NOTES_DUS);
+		ThaumcraftApi.registerObjectTag(new ItemStack(JTGItem.gensokyoNotesItem, 1, 3), AspectListJTG.ITEM_GENSOKYO_NOTES);
+		ThaumcraftApi.registerObjectTag(new ItemStack(JTGItem.gensokyoNotesItem, 1, 4), AspectListJTG.ITEM_GENSOKYO_NOTES_IMB);
+		ThaumcraftApi.registerObjectTag(new ItemStack(JTGItem.gensokyoNotesItem, 1, 5), AspectListJTG.ITEM_GENSOKYO_NOTES_ARC);
 
-		ThaumcraftApi.registerObjectTag(new ItemStack(THKaguyaItems.point_item), AspectListJTG.itemPointItem);
-		ThaumcraftApi.registerObjectTag(new ItemStack(THKaguyaItems.power_item), AspectListJTG.itemPowerItem);
+		ThaumcraftApi.registerObjectTag(new ItemStack(THKaguyaItems.point_item), AspectListJTG.ITEM_POINT_ITEM);
+		ThaumcraftApi.registerObjectTag(new ItemStack(THKaguyaItems.power_item), AspectListJTG.ITEM_POWER_ITEM);
 
-		ThaumcraftApi.registerEntityTag(LibEntityName.FAIRY_ICE, AspectListJTG.entityTHFairyIce);
-		ThaumcraftApi.registerEntityTag("THFairy", AspectListJTG.entityTHFairy);
-		ThaumcraftApi.registerEntityTag("SunflowerFairy", AspectListJTG.entitySunflowerFairy);
-		ThaumcraftApi.registerEntityTag("THPhantom", AspectListJTG.entityTHPhantom);
-		ThaumcraftApi.registerEntityTag("Cirno", AspectListJTG.entityCirno);
-		ThaumcraftApi.registerEntityTag("Rumia", AspectListJTG.entityRumia);
-		ThaumcraftApi.registerEntityTag("Toziko", AspectListJTG.entityToziko);
-		ThaumcraftApi.registerEntityTag("Sanae", AspectListJTG.entitySanae);
-		ThaumcraftApi.registerEntityTag("Hanabeeper", AspectListJTG.entityHanabeeper);
-		ThaumcraftApi.registerEntityTag("Rinnosuke", AspectListJTG.entityRinnosuke);
+		ThaumcraftApi.registerEntityTag(LibEntityName.FAIRY_ICE, AspectListJTG.ENTITY_TH_FAIRY_ICE);
+		ThaumcraftApi.registerEntityTag("THFairy", AspectListJTG.ENTITY_TH_FAIRY);
+		ThaumcraftApi.registerEntityTag("SunflowerFairy", AspectListJTG.ENTITY_SUNFLOWER_FAIRY);
+		ThaumcraftApi.registerEntityTag("THPhantom", AspectListJTG.ENTITY_TH_PHANTOM);
+		ThaumcraftApi.registerEntityTag("Cirno", AspectListJTG.ENTITY_CIRNO);
+		ThaumcraftApi.registerEntityTag("Rumia", AspectListJTG.ENTITY_RUMIA);
+		ThaumcraftApi.registerEntityTag("Toziko", AspectListJTG.ENTITY_TOZIKO);
+		ThaumcraftApi.registerEntityTag("Sanae", AspectListJTG.ENTITY_SANAE);
+		ThaumcraftApi.registerEntityTag("Hanabeeper", AspectListJTG.ENTITY_HANABEEPER);
+		ThaumcraftApi.registerEntityTag("Rinnosuke", AspectListJTG.ENTITY_RINNOSUKE);
 	}
 }

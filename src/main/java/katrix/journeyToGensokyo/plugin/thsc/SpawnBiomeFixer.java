@@ -9,9 +9,9 @@
 
 package katrix.journeyToGensokyo.plugin.thsc;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 import cpw.mods.fml.common.registry.EntityRegistry;
 import katrix.journeyToGensokyo.util.LogHelper;
@@ -34,261 +34,122 @@ import thKaguyaMod.entity.living.EntityWriggle;
 public class SpawnBiomeFixer {
 
 	public static void fairyFix() {
+		Set<BiomeGenBase> spawnBiomes = new HashSet<>();
+		Collections.addAll(spawnBiomes, BiomeDictionary.getBiomesForType(Type.PLAINS));
+		Collections.addAll(spawnBiomes, BiomeDictionary.getBiomesForType(Type.MOUNTAIN));
+		Collections.addAll(spawnBiomes, BiomeDictionary.getBiomesForType(Type.HILLS));
+		Collections.addAll(spawnBiomes, BiomeDictionary.getBiomesForType(Type.SANDY));
+		Collections.addAll(spawnBiomes, BiomeDictionary.getBiomesForType(Type.SNOWY));
+		Collections.addAll(spawnBiomes, BiomeDictionary.getBiomesForType(Type.COLD));
+		Collections.addAll(spawnBiomes, BiomeDictionary.getBiomesForType(Type.SWAMP));
 
-		List<BiomeGenBase> spawnbiomes = new ArrayList<BiomeGenBase>(Arrays.asList(BiomeDictionary.getBiomesForType(Type.PLAINS)));
-		for (BiomeGenBase biome : BiomeDictionary.getBiomesForType(Type.FOREST)) {
-			if (!spawnbiomes.contains(biome)) {
-				spawnbiomes.add(biome);
-			}
+		for(BiomeGenBase biome : BiomeDictionary.getBiomesForType(Type.END)) {
+			spawnBiomes.remove(biome);
 		}
-		for (BiomeGenBase biome : BiomeDictionary.getBiomesForType(Type.MOUNTAIN)) {
-			if (!spawnbiomes.contains(biome)) {
-				spawnbiomes.add(biome);
-			}
-		}
-		for (BiomeGenBase biome : BiomeDictionary.getBiomesForType(Type.HILLS)) {
-			if (!spawnbiomes.contains(biome)) {
-				spawnbiomes.add(biome);
-			}
-		}
-		for (BiomeGenBase biome : BiomeDictionary.getBiomesForType(Type.SANDY)) {
-			if (!spawnbiomes.contains(biome)) {
-				spawnbiomes.add(biome);
-			}
-		}
-		for (BiomeGenBase biome : BiomeDictionary.getBiomesForType(Type.SNOWY)) {
-			if (!spawnbiomes.contains(biome)) {
-				spawnbiomes.add(biome);
-			}
-		}
-		for (BiomeGenBase biome : BiomeDictionary.getBiomesForType(Type.COLD)) {
-			if (!spawnbiomes.contains(biome)) {
-				spawnbiomes.add(biome);
-			}
-		}
-		for (BiomeGenBase biome : BiomeDictionary.getBiomesForType(Type.SWAMP)) {
-			if (!spawnbiomes.contains(biome)) {
-				spawnbiomes.add(biome);
-			}
-		}
-		for (BiomeGenBase biome : BiomeDictionary.getBiomesForType(Type.END)) {
-			if (spawnbiomes.contains(biome)) {
-				spawnbiomes.remove(biome);
-			}
-		}
+
+		BiomeGenBase[] arrayBiomes = spawnBiomes.toArray(new BiomeGenBase[0]);
 
 		LogHelper.info("JTG fixing spawn biomes for THFairy");
-		EntityRegistry.addSpawn(EntityTHFairy.class, 30, 1, 6, EnumCreatureType.monster, spawnbiomes.toArray(new BiomeGenBase[0]));
+		EntityRegistry.addSpawn(EntityTHFairy.class, 30, 1, 6, EnumCreatureType.monster, arrayBiomes);
 
 		LogHelper.info("JTG fixing spawn biomes for SunflowerFairy");
-		EntityRegistry.addSpawn(EntitySunFlowerFairy.class, 30, 1, 6, EnumCreatureType.monster, spawnbiomes.toArray(new BiomeGenBase[0]));
+		EntityRegistry.addSpawn(EntitySunFlowerFairy.class, 30, 1, 6, EnumCreatureType.monster, arrayBiomes);
 	}
 
 	public static void phantomFix() {
+		Set<BiomeGenBase> spawnBiomes = new HashSet<>();
+		Collections.addAll(spawnBiomes, BiomeDictionary.getBiomesForType(Type.PLAINS));
+		Collections.addAll(spawnBiomes, BiomeDictionary.getBiomesForType(Type.FOREST));
+		Collections.addAll(spawnBiomes, BiomeDictionary.getBiomesForType(Type.MOUNTAIN));
+		Collections.addAll(spawnBiomes, BiomeDictionary.getBiomesForType(Type.HILLS));
+		Collections.addAll(spawnBiomes, BiomeDictionary.getBiomesForType(Type.SANDY));
+		Collections.addAll(spawnBiomes, BiomeDictionary.getBiomesForType(Type.SNOWY));
+		Collections.addAll(spawnBiomes, BiomeDictionary.getBiomesForType(Type.COLD));
+		Collections.addAll(spawnBiomes, BiomeDictionary.getBiomesForType(Type.SWAMP));
+		Collections.addAll(spawnBiomes, BiomeDictionary.getBiomesForType(Type.BEACH));
+		Collections.addAll(spawnBiomes, BiomeDictionary.getBiomesForType(Type.WATER));
+		Collections.addAll(spawnBiomes, BiomeDictionary.getBiomesForType(Type.JUNGLE));
 
-		List<BiomeGenBase> spawnbiomes = new ArrayList<BiomeGenBase>(Arrays.asList(BiomeDictionary.getBiomesForType(Type.PLAINS)));
-		for (BiomeGenBase biome : BiomeDictionary.getBiomesForType(Type.FOREST)) {
-			if (!spawnbiomes.contains(biome)) {
-				spawnbiomes.add(biome);
-			}
-		}
-		for (BiomeGenBase biome : BiomeDictionary.getBiomesForType(Type.MOUNTAIN)) {
-			if (!spawnbiomes.contains(biome)) {
-				spawnbiomes.add(biome);
-			}
-		}
-		for (BiomeGenBase biome : BiomeDictionary.getBiomesForType(Type.HILLS)) {
-			if (!spawnbiomes.contains(biome)) {
-				spawnbiomes.add(biome);
-			}
-		}
-		for (BiomeGenBase biome : BiomeDictionary.getBiomesForType(Type.SANDY)) {
-			if (!spawnbiomes.contains(biome)) {
-				spawnbiomes.add(biome);
-			}
-		}
-		for (BiomeGenBase biome : BiomeDictionary.getBiomesForType(Type.SNOWY)) {
-			if (!spawnbiomes.contains(biome)) {
-				spawnbiomes.add(biome);
-			}
-		}
-		for (BiomeGenBase biome : BiomeDictionary.getBiomesForType(Type.COLD)) {
-			if (!spawnbiomes.contains(biome)) {
-				spawnbiomes.add(biome);
-			}
-		}
-		for (BiomeGenBase biome : BiomeDictionary.getBiomesForType(Type.SWAMP)) {
-			if (!spawnbiomes.contains(biome)) {
-				spawnbiomes.add(biome);
-			}
-		}
-		for (BiomeGenBase biome : BiomeDictionary.getBiomesForType(Type.BEACH)) {
-			if (!spawnbiomes.contains(biome)) {
-				spawnbiomes.add(biome);
-			}
-		}
-		for (BiomeGenBase biome : BiomeDictionary.getBiomesForType(Type.WATER)) {
-			if (!spawnbiomes.contains(biome)) {
-				spawnbiomes.add(biome);
-			}
-		}
-		for (BiomeGenBase biome : BiomeDictionary.getBiomesForType(Type.JUNGLE)) {
-			if (!spawnbiomes.contains(biome)) {
-				spawnbiomes.add(biome);
-			}
-		}
-		for (BiomeGenBase biome : BiomeDictionary.getBiomesForType(Type.END)) {
-			if (spawnbiomes.contains(biome)) {
-				spawnbiomes.remove(biome);
-			}
+		for(BiomeGenBase biome : BiomeDictionary.getBiomesForType(Type.END)) {
+			spawnBiomes.remove(biome);
 		}
 
 		LogHelper.info("JTG fixing spawn biomes for THPhantom");
-		EntityRegistry.addSpawn(EntityTHPhantom.class, 20, 1, 3, EnumCreatureType.monster, spawnbiomes.toArray(new BiomeGenBase[0]));
+		EntityRegistry.addSpawn(EntityTHPhantom.class, 20, 1, 3, EnumCreatureType.monster, spawnBiomes.toArray(new BiomeGenBase[0]));
 	}
 
 	public static void hanabeeperFix() {
-
-		List<BiomeGenBase> spawnbiomes = new ArrayList<BiomeGenBase>(Arrays.asList(BiomeDictionary.getBiomesForType(Type.SANDY)));
-
 		LogHelper.info("JTG fixing spawn biomes for Hanabeeper");
-		EntityRegistry.addSpawn(EntityDanmakuCreeper.class, 2, 1, 4, EnumCreatureType.monster, spawnbiomes.toArray(new BiomeGenBase[0]));
+		EntityRegistry.addSpawn(EntityDanmakuCreeper.class, 2, 1, 4, EnumCreatureType.monster, BiomeDictionary.getBiomesForType(Type.SANDY));
 	}
 
 	public static void cirnoFix() {
+		Set<BiomeGenBase> spawnBiomes = new HashSet<>();
+		Collections.addAll(spawnBiomes, BiomeDictionary.getBiomesForType(Type.COLD));
+		Collections.addAll(spawnBiomes, BiomeDictionary.getBiomesForType(Type.SNOWY));
+		Collections.addAll(spawnBiomes, BiomeDictionary.getBiomesForType(Type.MOUNTAIN));
 
-		List<BiomeGenBase> spawnbiomes = new ArrayList<BiomeGenBase>(Arrays.asList(BiomeDictionary.getBiomesForType(Type.COLD)));
-		for (BiomeGenBase biome : BiomeDictionary.getBiomesForType(Type.SNOWY)) {
-			if (!spawnbiomes.contains(biome)) {
-				spawnbiomes.add(biome);
-			}
-		}
-		for (BiomeGenBase biome : BiomeDictionary.getBiomesForType(Type.MOUNTAIN)) {
-			if (!spawnbiomes.contains(biome)) {
-				spawnbiomes.add(biome);
-			}
-		}
-		for (BiomeGenBase biome : BiomeDictionary.getBiomesForType(Type.END)) {
-			if (spawnbiomes.contains(biome)) {
-				spawnbiomes.remove(biome);
-			}
+		for(BiomeGenBase biome : BiomeDictionary.getBiomesForType(Type.END)) {
+			spawnBiomes.remove(biome);
 		}
 
 		LogHelper.info("JTG fixing spawn biomes for Cirno");
-		EntityRegistry.addSpawn(EntityCirno.class, 2, 1, 1, EnumCreatureType.monster, spawnbiomes.toArray(new BiomeGenBase[0]));
+		EntityRegistry.addSpawn(EntityCirno.class, 2, 1, 1, EnumCreatureType.monster, spawnBiomes.toArray(new BiomeGenBase[0]));
 	}
 
 	public static void rumiaFix() {
-
-		List<BiomeGenBase> spawnbiomes = new ArrayList<BiomeGenBase>(Arrays.asList(BiomeDictionary.getBiomesForType(Type.FOREST)));
-		for (BiomeGenBase biome : BiomeDictionary.getBiomesForType(Type.PLAINS)) {
-			if (!spawnbiomes.contains(biome)) {
-				spawnbiomes.add(biome);
-			}
-		}
+		Set<BiomeGenBase> spawnBiomes = new HashSet<>();
+		Collections.addAll(spawnBiomes, BiomeDictionary.getBiomesForType(Type.FOREST));
+		Collections.addAll(spawnBiomes, BiomeDictionary.getBiomesForType(Type.PLAINS));
 
 		LogHelper.info("JTG fixing spawn biomes for Rumia");
-		EntityRegistry.addSpawn(EntityRumia.class, 4, 1, 1, EnumCreatureType.monster, spawnbiomes.toArray(new BiomeGenBase[0]));
+		EntityRegistry.addSpawn(EntityRumia.class, 4, 1, 1, EnumCreatureType.monster, spawnBiomes.toArray(new BiomeGenBase[0]));
 	}
 
 	public static void tozikoFix() {
-
-		List<BiomeGenBase> spawnbiomes = new ArrayList<BiomeGenBase>(Arrays.asList(BiomeDictionary.getBiomesForType(Type.FOREST)));
-		for (BiomeGenBase biome : BiomeDictionary.getBiomesForType(Type.PLAINS)) {
-			if (!spawnbiomes.contains(biome)) {
-				spawnbiomes.add(biome);
-			}
-		}
-		for (BiomeGenBase biome : BiomeDictionary.getBiomesForType(Type.SWAMP)) {
-			if (!spawnbiomes.contains(biome)) {
-				spawnbiomes.add(biome);
-			}
-		}
+		Set<BiomeGenBase> spawnBiomes = new HashSet<>();
+		Collections.addAll(spawnBiomes, BiomeDictionary.getBiomesForType(Type.FOREST));
+		Collections.addAll(spawnBiomes, BiomeDictionary.getBiomesForType(Type.PLAINS));
+		Collections.addAll(spawnBiomes, BiomeDictionary.getBiomesForType(Type.SWAMP));
 
 		LogHelper.info("JTG fixing spawn biomes for Toziko");
-		EntityRegistry.addSpawn(EntityToziko.class, 10, 1, 1, EnumCreatureType.monster, spawnbiomes.toArray(new BiomeGenBase[0]));
+		EntityRegistry.addSpawn(EntityToziko.class, 10, 1, 1, EnumCreatureType.monster, spawnBiomes.toArray(new BiomeGenBase[0]));
 	}
 
 	public static void wriggleFix() {
-
-		List<BiomeGenBase> spawnbiomes = new ArrayList<BiomeGenBase>(Arrays.asList(BiomeDictionary.getBiomesForType(Type.FOREST)));
-		for (BiomeGenBase biome : BiomeDictionary.getBiomesForType(Type.JUNGLE)) {
-			if (!spawnbiomes.contains(biome)) {
-				spawnbiomes.add(biome);
-			}
-		}
-		for (BiomeGenBase biome : BiomeDictionary.getBiomesForType(Type.RIVER)) {
-			if (!spawnbiomes.contains(biome)) {
-				spawnbiomes.add(biome);
-			}
-		}
+		Set<BiomeGenBase> spawnBiomes = new HashSet<>();
+		Collections.addAll(spawnBiomes, BiomeDictionary.getBiomesForType(Type.FOREST));
+		Collections.addAll(spawnBiomes, BiomeDictionary.getBiomesForType(Type.JUNGLE));
+		Collections.addAll(spawnBiomes, BiomeDictionary.getBiomesForType(Type.RIVER));
 
 		LogHelper.info("JTG fixing spawn biomes for Wriggle");
-		EntityRegistry.addSpawn(EntityWriggle.class, 20, 1, 3, EnumCreatureType.monster, spawnbiomes.toArray(new BiomeGenBase[0]));
+		EntityRegistry.addSpawn(EntityWriggle.class, 20, 1, 3, EnumCreatureType.monster, spawnBiomes.toArray(new BiomeGenBase[0]));
 	}
 
 	public static void ambientFix() {
 
-		List<BiomeGenBase> spawnbiomes = new ArrayList<BiomeGenBase>(Arrays.asList(BiomeDictionary.getBiomesForType(Type.PLAINS)));
-		for (BiomeGenBase biome : BiomeDictionary.getBiomesForType(Type.FOREST)) {
-			if (!spawnbiomes.contains(biome)) {
-				spawnbiomes.add(biome);
-			}
-		}
-		for (BiomeGenBase biome : BiomeDictionary.getBiomesForType(Type.MOUNTAIN)) {
-			if (!spawnbiomes.contains(biome)) {
-				spawnbiomes.add(biome);
-			}
-		}
-		for (BiomeGenBase biome : BiomeDictionary.getBiomesForType(Type.HILLS)) {
-			if (!spawnbiomes.contains(biome)) {
-				spawnbiomes.add(biome);
-			}
-		}
-		for (BiomeGenBase biome : BiomeDictionary.getBiomesForType(Type.SANDY)) {
-			if (!spawnbiomes.contains(biome)) {
-				spawnbiomes.add(biome);
-			}
-		}
-		for (BiomeGenBase biome : BiomeDictionary.getBiomesForType(Type.SNOWY)) {
-			if (!spawnbiomes.contains(biome)) {
-				spawnbiomes.add(biome);
-			}
-		}
-		for (BiomeGenBase biome : BiomeDictionary.getBiomesForType(Type.COLD)) {
-			if (!spawnbiomes.contains(biome)) {
-				spawnbiomes.add(biome);
-			}
-		}
-		for (BiomeGenBase biome : BiomeDictionary.getBiomesForType(Type.SWAMP)) {
-			if (!spawnbiomes.contains(biome)) {
-				spawnbiomes.add(biome);
-			}
-		}
-		for (BiomeGenBase biome : BiomeDictionary.getBiomesForType(Type.BEACH)) {
-			if (!spawnbiomes.contains(biome)) {
-				spawnbiomes.add(biome);
-			}
-		}
-		for (BiomeGenBase biome : BiomeDictionary.getBiomesForType(Type.WATER)) {
-			if (!spawnbiomes.contains(biome)) {
-				spawnbiomes.add(biome);
-			}
-		}
-		for (BiomeGenBase biome : BiomeDictionary.getBiomesForType(Type.JUNGLE)) {
-			if (!spawnbiomes.contains(biome)) {
-				spawnbiomes.add(biome);
-			}
-		}
-		for (BiomeGenBase biome : BiomeDictionary.getBiomesForType(Type.END)) {
-			if (spawnbiomes.contains(biome)) {
-				spawnbiomes.remove(biome);
-			}
+		Set<BiomeGenBase> spawnBiomes = new HashSet<>();
+		Collections.addAll(spawnBiomes, BiomeDictionary.getBiomesForType(Type.PLAINS));
+		Collections.addAll(spawnBiomes, BiomeDictionary.getBiomesForType(Type.FOREST));
+		Collections.addAll(spawnBiomes, BiomeDictionary.getBiomesForType(Type.MOUNTAIN));
+		Collections.addAll(spawnBiomes, BiomeDictionary.getBiomesForType(Type.HILLS));
+		Collections.addAll(spawnBiomes, BiomeDictionary.getBiomesForType(Type.SANDY));
+		Collections.addAll(spawnBiomes, BiomeDictionary.getBiomesForType(Type.SNOWY));
+		Collections.addAll(spawnBiomes, BiomeDictionary.getBiomesForType(Type.COLD));
+		Collections.addAll(spawnBiomes, BiomeDictionary.getBiomesForType(Type.SWAMP));
+		Collections.addAll(spawnBiomes, BiomeDictionary.getBiomesForType(Type.BEACH));
+		Collections.addAll(spawnBiomes, BiomeDictionary.getBiomesForType(Type.WATER));
+		Collections.addAll(spawnBiomes, BiomeDictionary.getBiomesForType(Type.JUNGLE));
+
+		for(BiomeGenBase biome : BiomeDictionary.getBiomesForType(Type.END)) {
+			spawnBiomes.remove(biome);
 		}
 
+		BiomeGenBase[] arrayBiomes = spawnBiomes.toArray(new BiomeGenBase[0]);
+
 		LogHelper.info("JTG fixing spawn biomes for Ambient mobs(Sanae, Sakuya, Rinnosuke)");
-		EntityRegistry.addSpawn(EntitySanae.class, 1, 0, 1, EnumCreatureType.ambient, spawnbiomes.toArray(new BiomeGenBase[0]));
-		EntityRegistry.addSpawn(EntitySakuya.class, 1, 0, 1, EnumCreatureType.ambient, spawnbiomes.toArray(new BiomeGenBase[0]));
-		EntityRegistry.addSpawn(EntityRinnosuke.class, 1, 0, 1, EnumCreatureType.ambient, spawnbiomes.toArray(new BiomeGenBase[0]));
+		EntityRegistry.addSpawn(EntitySanae.class, 1, 0, 1, EnumCreatureType.ambient, arrayBiomes);
+		EntityRegistry.addSpawn(EntitySakuya.class, 1, 0, 1, EnumCreatureType.ambient, arrayBiomes);
+		EntityRegistry.addSpawn(EntityRinnosuke.class, 1, 0, 1, EnumCreatureType.ambient, arrayBiomes);
 	}
 }

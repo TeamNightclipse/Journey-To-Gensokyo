@@ -22,14 +22,13 @@ import net.minecraftforge.common.config.ConfigElement;
 public class JTGGuiConfig extends GuiConfig {
 
 	public JTGGuiConfig(GuiScreen parentScreen) {
-
 		super(parentScreen, getConfigList(), LibMod.MODID, false, false, GuiConfig.getAbridgedConfigPath(ConfigHandler.cfg.toString()));
 	}
 
 	@SuppressWarnings("rawtypes")
 	public static List<IConfigElement> getConfigList() {
 
-		List<IConfigElement> list = new ArrayList<IConfigElement>();
+		List<IConfigElement> list = new ArrayList<>();
 		list.add(new ConfigElement(ConfigHandler.cfg.getCategory(ConfigHandler.MOBS.toLowerCase())));
 		list.add(new ConfigElement(ConfigHandler.cfg.getCategory(ConfigHandler.MISC.toLowerCase())));
 		list.add(new ConfigElement(ConfigHandler.cfg.getCategory(ConfigHandler.RTY.toLowerCase())));

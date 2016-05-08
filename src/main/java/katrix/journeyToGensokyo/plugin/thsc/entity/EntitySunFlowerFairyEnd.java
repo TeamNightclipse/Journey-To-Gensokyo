@@ -9,10 +9,6 @@
 
 package katrix.journeyToGensokyo.plugin.thsc.entity;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import cpw.mods.fml.common.registry.EntityRegistry;
 import katrix.journeyToGensokyo.JourneyToGensokyo;
 import katrix.journeyToGensokyo.handler.ConfigHandler;
@@ -24,7 +20,6 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
 import thKaguyaMod.DanmakuConstants;
@@ -109,17 +104,15 @@ public class EntitySunFlowerFairyEnd extends EntitySunFlowerFairy {
 		}
 	}
 
-	public void danmaku01(Vec3 angle, ShotData shotData, float speedRate, int level) {
-		int num = level;
-
+	private void danmaku01(Vec3 angle, ShotData shotData, float speedRate, int level) {
 		if (attackCounter == 0) {
 			THShotLib.playShotSound(this);
-			THShotLib.createRandomRingShot(getShooter(), getShooter(), pos(), angle, 0.0f, 0, speedRate, 0.4D, 0.05D, gravity_Zero(), shotData, num, 0.5D,
+			THShotLib.createRandomRingShot(getShooter(), getShooter(), pos(), angle, 0.0f, 0, speedRate, 0.4D, 0.05D, gravity_Zero(), shotData, level, 0.5D,
 					20.0F);
 		}
 	}
 
-	public void danmaku02(Vec3 angle, ShotData shotData, int level) {
+	private void danmaku02(Vec3 angle, ShotData shotData, int level) {
 		int num = 3;
 		if (level == 1) {
 			num = 1;
@@ -152,7 +145,7 @@ public class EntitySunFlowerFairyEnd extends EntitySunFlowerFairy {
 		}
 	}
 
-	public void danmaku03(Vec3 angle, ShotData shotData, int level) {
+	private void danmaku03(Vec3 angle, ShotData shotData, int level) {
 		int num = 3;
 		if (level == 1) {
 			num = 1;
@@ -199,21 +192,16 @@ public class EntitySunFlowerFairyEnd extends EntitySunFlowerFairy {
 
 	@Override
 	public boolean getCanSpawnHere() {
-		if (rand.nextInt(100) < THKaguyaConfig.fairySpawnRate)
-			return false;
+		return rand.nextInt(100) >= THKaguyaConfig.fairySpawnRate && worldObj.difficultySetting != EnumDifficulty.PEACEFUL;
 
-		return worldObj.difficultySetting != EnumDifficulty.PEACEFUL;
 	}
 
 	public static void postInit() {
-
 		EntityRegistry.registerModEntity(EntitySunFlowerFairyEnd.class, LibEntityName.FAIRY_SUNFLOWER_END, LibMobID.FAIRY_SUNFLOWER_END, JourneyToGensokyo.instance,
 				80, 1, true);
 
-		List<BiomeGenBase> spawnbiomes = new ArrayList<BiomeGenBase>(Arrays.asList(BiomeDictionary.getBiomesForType(Type.END)));
-
 		if (THKaguyaConfig.spawnDanmakuMob && ConfigHandler.newFariesSpawn) {
-			EntityRegistry.addSpawn(EntitySunFlowerFairyEnd.class, 5, 1, 3, EnumCreatureType.monster, spawnbiomes.toArray(new BiomeGenBase[0]));
+			EntityRegistry.addSpawn(EntitySunFlowerFairyEnd.class, 5, 1, 3, EnumCreatureType.monster, BiomeDictionary.getBiomesForType(Type.END));
 		}
 	}
 }

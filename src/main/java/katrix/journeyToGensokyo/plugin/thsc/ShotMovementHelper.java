@@ -10,6 +10,7 @@
 package katrix.journeyToGensokyo.plugin.thsc;
 
 import java.util.List;
+import java.util.Optional;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -22,19 +23,16 @@ import thKaguyaMod.entity.shot.EntityTHShot;
 
 public class ShotMovementHelper {
 
-	public static void homing(EntityTHShot shot, double range) {
-		EntityLivingBase nearEntity = getNearestEntity(shot, range);
-
-		if (nearEntity != null) {
-			shot.angle = shot.angle_ToLiving(nearEntity);
-		}
+	public static void homing(final EntityTHShot shot, double range) {
+		Optional<EntityLivingBase> nearEntity = getNearestEntity(shot, range);
+		nearEntity.ifPresent(e -> shot.angle = shot.angle_ToLiving(e));
 	}
 
 	public static void homing(EntityTHShot shot, double range, float homingLevel) {
-		EntityLivingBase nearEntity = getNearestEntity(shot, range);
+		Optional<EntityLivingBase> nearEntity = getNearestEntity(shot, range);
 
-		if (nearEntity != null) {
-			Vec3 targetVec = THShotLib.angle_ToPos(shot.pos(), THShotLib.pos_Living(nearEntity));
+		if(nearEntity.isPresent()) {
+			Vec3 targetVec = THShotLib.angle_ToPos(shot.pos(), THShotLib.pos_Living(nearEntity.get()));
 			Vec3 rotate = THShotLib.getOuterProduct(shot.getShotVector(), targetVec);
 			float rotateAngle = THShotLib.getVectorAndVectorAngle(shot.getShotVector(), targetVec);
 			if (rotateAngle > homingLevel) {
@@ -43,61 +41,48 @@ public class ShotMovementHelper {
 			else if (rotateAngle < -homingLevel) {
 				rotateAngle = -homingLevel;
 			}
-			Vec3 newVec = THShotLib.getVectorFromRotation(rotate, shot.angle, rotateAngle);
-			shot.angle = newVec;
+			shot.angle = THShotLib.getVectorFromRotation(rotate, shot.angle, rotateAngle);
 			if (!shot.worldObj.isRemote) {
 				shot.shotAcceleration();
 			}
 		}
 	}
 
-	private static EntityLivingBase getNearestEntity(EntityTHShot shot, double range) {
-		@SuppressWarnings("rawtypes")
-		List list = shot.worldObj.getEntitiesWithinAABBExcludingEntity(shot,
+	private static Optional<EntityLivingBase> getNearestEntity(EntityTHShot shot, double range) {
+		@SuppressWarnings("unchecked")
+		List<Entity> list = shot.worldObj.getEntitiesWithinAABBExcludingEntity(shot,
 				shot.boundingBox.addCoord(shot.motionX, shot.motionY, shot.motionZ).expand(range, range, range));
 
 		EntityLivingBase nearEntity = null;
-		double nearDistance = 999.9D;
-		float nearAngle = 180F;
-		double nearValue = nearDistance * THShotLib.halfAbsSin(nearAngle / 180F * (float)Math.PI);
+		double nearValue = 999.9D * THShotLib.halfAbsSin((float)Math.PI);
 		Vec3 shotVec = shot.getShotVector();
 
-		for (int j = 0; j < list.size(); j++) {
-			Entity entitys = (Entity)list.get(j);
-			if (!(entitys instanceof EntityLivingBase) || entitys instanceof EntityAnimal || entitys instanceof EntityVillager || entitys == shot.user) {
-				continue;
-			}
+		for(Entity entityListEntry : list) {
+			if((entityListEntry instanceof EntityLivingBase) && !(entityListEntry instanceof EntityAnimal)
+					&& !(entityListEntry instanceof EntityVillager) && entityListEntry != shot.user) {
 
-			EntityLivingBase entity1 = (EntityLivingBase)entitys;
+				EntityLivingBase living = (EntityLivingBase)entityListEntry;
+				if(!living.isDead) {
+					Vec3 shotPosVec = shot.pos();
+					Vec3 entityPosVec = THShotLib.pos_Living(living);
+					MovingObjectPosition movingObjectPosition = shot.worldObj.func_147447_a(shotPosVec, entityPosVec, false, true, false);
+					shotPosVec = shot.pos();
+					entityPosVec = THShotLib.pos_Living(living);
 
-			if (entity1.isDead) {
-				continue;
-			}
-
-			Vec3 shotPosVec = shot.pos();
-			Vec3 entityPosVec = THShotLib.pos_Living(entity1);
-			MovingObjectPosition movingObjectPosition = shot.worldObj.func_147447_a(shotPosVec, entityPosVec, false, true, false);
-			shotPosVec = shot.pos();
-			entityPosVec = THShotLib.pos_Living(entity1);
-
-			if (movingObjectPosition != null && movingObjectPosition.entityHit == null) {
-				continue;
-			}
-
-			Vec3 targetVec = THShotLib.angle_ToPos(shotPosVec, entityPosVec);
-			float angleSpan = Math.abs(THShotLib.getVectorAndVectorAngle(shotVec, targetVec));
-			double toEntity1Distance = shot.getDistance(entity1.posX, entity1.posY + entity1.getEyeHeight(), entity1.posZ);
-			double value = toEntity1Distance * THShotLib.halfAbsSin(angleSpan / 180F * (float)Math.PI);
-			if (nearValue > value) {
-				{
-					nearEntity = entity1;
-					nearAngle = angleSpan;
-					nearValue = value;
-					nearDistance = toEntity1Distance;
+					if(movingObjectPosition == null || movingObjectPosition.entityHit != null) {
+						Vec3 targetVec = THShotLib.angle_ToPos(shotPosVec, entityPosVec);
+						float angleSpan = Math.abs(THShotLib.getVectorAndVectorAngle(shotVec, targetVec));
+						double toEntity1Distance = shot.getDistance(living.posX, living.posY + living.getEyeHeight(), living.posZ);
+						double value = toEntity1Distance * THShotLib.halfAbsSin(angleSpan / 180F * (float)Math.PI);
+						if(nearValue > value) {
+							nearEntity = living;
+							nearValue = value;
+						}
+					}
 				}
 			}
 		}
 
-		return nearEntity;
+		return Optional.ofNullable(nearEntity);
 	}
 }

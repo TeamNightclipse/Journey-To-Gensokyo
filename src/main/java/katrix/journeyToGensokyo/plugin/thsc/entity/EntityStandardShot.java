@@ -53,8 +53,8 @@ public class EntityStandardShot extends Entity {
 	public void onUpdate() {
 
 		if (!worldObj.isRemote) {
-			if (user != null) {
-				if (user.getHeldItem() != null) {
+			if(user != null) {
+				if(user.getHeldItem() != null) {
 					if (!(user.getHeldItem().getItem() instanceof ItemStandardShot)) {
 						setDead();
 					}
@@ -80,7 +80,7 @@ public class EntityStandardShot extends Entity {
 		}
 	}
 
-	public void shootDanmaku(boolean isSlowMode) {
+	private void shootDanmaku(boolean isSlowMode) {
 
 		double speed = 0.7D;
 
@@ -253,11 +253,11 @@ public class EntityStandardShot extends Entity {
 
 	@Override
 	protected void entityInit() {
-		dataWatcher.addObject(16, new Byte((byte)0)); //Type
+		dataWatcher.addObject(16, (byte)0); //Type
 	}
 
 	public void setType(int type) {
-		dataWatcher.updateObject(16, Byte.valueOf((byte)type));
+		dataWatcher.updateObject(16, (byte)type);
 	}
 
 	public byte getType() {

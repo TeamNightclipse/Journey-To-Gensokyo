@@ -311,9 +311,8 @@ public class EntityYukari extends EntityDanmakuMob {
 			List<EntityTHShot> listShot = worldObj.getEntitiesWithinAABB(EntityTHShot.class,
 					AxisAlignedBB.getBoundingBox(posX - range, posY - range, posZ - range, posX + range + 1, posY + range + 1, posZ + range + 1));
 
-			for (int i = 0; i < listShot.size(); i++) {
-				EntityTHShot shots = listShot.get(i);
-				if (shots.source instanceof EntitySpellCard && shots.user != this) {
+			for(EntityTHShot shots : listShot) {
+				if(shots.source instanceof EntitySpellCard && shots.user != this) {
 					invicibilityTimer += 3;
 				}
 			}
@@ -322,10 +321,8 @@ public class EntityYukari extends EntityDanmakuMob {
 			List<EntityTHLaser> listLaser = worldObj.getEntitiesWithinAABB(EntityTHLaser.class,
 					AxisAlignedBB.getBoundingBox(posX - range, posY - range, posZ - range, posX + range + 1, posY + range + 1, posZ + range + 1));
 
-			for (int i = 0; i < listLaser.size(); i++) {
-				EntityTHLaser lasers = listLaser.get(i);
-
-				if (lasers.source instanceof EntitySpellCard && lasers.user != this) {
+			for(EntityTHLaser lasers : listLaser) {
+				if(lasers.source instanceof EntitySpellCard && lasers.user != this) {
 					invicibilityTimer += 3;
 				}
 			}
@@ -334,9 +331,8 @@ public class EntityYukari extends EntityDanmakuMob {
 			List<EntitySpellCard> listspellcard = worldObj.getEntitiesWithinAABB(EntitySpellCard.class, AxisAlignedBB.getBoundingBox(posX - range * 12,
 					posY - range * 12, posZ - range * 12, posX + range * 12 + 1, posY + range * 12 + 1, posZ + range * 12 + 1));
 
-			for (int i = 0; i < listspellcard.size(); i++) {
-				EntitySpellCard spellcards = listspellcard.get(i);
-				if (spellcards.user != this) {
+			for(EntitySpellCard spellcards : listspellcard) {
+				if(spellcards.user != this) {
 					invicibilityTimer += 3;
 				}
 			}
@@ -354,9 +350,7 @@ public class EntityYukari extends EntityDanmakuMob {
 
 	@Override
 	public boolean isEntityInvulnerable() {
-		if (getInvicibilityTimer() > 0)
-			return true;
-		return false;
+		return getInvicibilityTimer() > 0;
 	}
 
 	@Override
@@ -367,11 +361,11 @@ public class EntityYukari extends EntityDanmakuMob {
 	@Override
 	protected void entityInit() {
 		super.entityInit();
-		dataWatcher.addObject(20, new Integer(0)); //invicibilityTimer
-		dataWatcher.addObject(21, new Byte((byte)0)); //isAgressive
+		dataWatcher.addObject(20, 0); //invicibilityTimer
+		dataWatcher.addObject(21, (byte)0); //isAgressive
 	}
 
-	public void setInvicibilityTimer(int timer) {
+	private void setInvicibilityTimer(int timer) {
 		dataWatcher.updateObject(20, timer);
 	}
 
@@ -379,7 +373,7 @@ public class EntityYukari extends EntityDanmakuMob {
 		return dataWatcher.getWatchableObjectInt(20);
 	}
 
-	public void setIsAgressive(byte agressive) {
+	private void setIsAgressive(byte agressive) {
 		dataWatcher.updateObject(21, agressive);
 	}
 

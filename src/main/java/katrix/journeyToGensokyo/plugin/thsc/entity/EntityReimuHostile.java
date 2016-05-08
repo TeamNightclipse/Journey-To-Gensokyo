@@ -9,10 +9,9 @@
 
 package katrix.journeyToGensokyo.plugin.thsc.entity;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
 import cpw.mods.fml.common.registry.EntityRegistry;
 import katrix.journeyToGensokyo.JourneyToGensokyo;
 import katrix.journeyToGensokyo.handler.ConfigHandler;
@@ -36,7 +35,6 @@ import net.minecraft.village.MerchantRecipe;
 import net.minecraft.village.MerchantRecipeList;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
 import thKaguyaMod.DanmakuConstants;
@@ -277,17 +275,13 @@ public class EntityReimuHostile extends EntityDanmakuMob implements IMerchant {
 
 	@Override
 	public boolean getCanSpawnHere() {
-		if (rand.nextInt(100) < THKaguyaConfig.fairySpawnRate && rand.nextInt(100) < 90 || !super.getCanSpawnHere())
-			return false;
+		if(rand.nextInt(100) < THKaguyaConfig.fairySpawnRate && rand.nextInt(100) < 90 || !super.getCanSpawnHere()) return false;
 
 		int range = 64;
-		@SuppressWarnings("unchecked")
-		List<EntityReimuHostile> reimus = worldObj.getEntitiesWithinAABB(EntityReimuHostile.class,
+		@SuppressWarnings("unchecked") List<EntityReimuHostile> reimus = worldObj.getEntitiesWithinAABB(EntityReimuHostile.class,
 				AxisAlignedBB.getBoundingBox(posX - range, posY - range, posZ - range, posX + range + 1, posY + range + 1, posZ + range + 1));
-		if (reimus.size() >= 1)
-			return false;
+		return reimus.size() < 1 && worldObj.difficultySetting != EnumDifficulty.PEACEFUL;
 
-		return worldObj.difficultySetting != EnumDifficulty.PEACEFUL;
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -371,13 +365,10 @@ public class EntityReimuHostile extends EntityDanmakuMob implements IMerchant {
 	public void func_110297_a_(ItemStack stack) {}
 	
 	public static void postInit() {
-
 		EntityRegistry.registerModEntity(EntityReimuHostile.class, LibEntityName.REIMU_HOSTILE, LibMobID.REIMU_HOSTILE, JourneyToGensokyo.instance, 80, 1, true);
 
-		List<BiomeGenBase> spawnbiomes = new ArrayList<BiomeGenBase>(Arrays.asList(BiomeDictionary.getBiomesForType(Type.FOREST)));
-
 		if (THKaguyaConfig.spawnBoss && ConfigHandler.newBossesSpawn) {
-			EntityRegistry.addSpawn(EntityReimuHostile.class, 1, 1, 1, EnumCreatureType.monster, spawnbiomes.toArray(new BiomeGenBase[0]));
+			EntityRegistry.addSpawn(EntityReimuHostile.class, 1, 1, 1, EnumCreatureType.monster, BiomeDictionary.getBiomesForType(Type.FOREST));
 		}
 	}
 }

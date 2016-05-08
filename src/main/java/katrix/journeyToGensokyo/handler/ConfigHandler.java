@@ -37,7 +37,6 @@ public class ConfigHandler {
 	public static boolean newHealthBar;
 
 	public static void setConfig(File configFile) {
-
 		cfg = new Configuration(configFile);
 		loadConfig();
 		FMLCommonHandler.instance().bus().register(new ChangeListener());

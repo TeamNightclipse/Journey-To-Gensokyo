@@ -18,7 +18,6 @@ import net.minecraftforge.oredict.OreDictionary;
 public class OreDictionaryHandler {
 
 	public static void init() {
-
 		OreDictionary.registerOre(LibOreDictionary.ORE_GENSOKYO, new ItemStack(JTGBlock.gensokyoOreBlock, 1, 0));
 		OreDictionary.registerOre(LibOreDictionary.ORE_DEMON, new ItemStack(JTGBlock.gensokyoOreBlock, 1, 1));
 		OreDictionary.registerOre(LibOreDictionary.ORE_CELESTIAL, new ItemStack(JTGBlock.gensokyoOreBlock, 1, 2));

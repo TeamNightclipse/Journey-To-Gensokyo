@@ -18,9 +18,7 @@ import net.minecraft.client.gui.GuiScreen;
 public class GuiFactory implements IModGuiFactory {
 
 	@Override
-	public void initialize(Minecraft minecraftInstance) {
-
-	}
+	public void initialize(Minecraft minecraftInstance) {}
 
 	@Override
 	public Class<? extends GuiScreen> mainConfigGuiClass() {
@@ -36,5 +34,4 @@ public class GuiFactory implements IModGuiFactory {
 	public RuntimeOptionGuiHandler getHandlerFor(RuntimeOptionCategoryElement element) {
 		return null;
 	}
-
 }

@@ -9,9 +9,9 @@
 
 package katrix.journeyToGensokyo.plugin.thsc.entity;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 import cpw.mods.fml.common.registry.EntityRegistry;
 import katrix.journeyToGensokyo.JourneyToGensokyo;
@@ -72,9 +72,7 @@ public class EntityTHFairyIce extends EntityTHFairy {
 			motionZ = 0.0D;
 		}
 
-		if (ticksExisted <= lastTime)
-			return;
-		else {
+		if(ticksExisted > lastTime) {
 			super.onUpdate();
 			if (attackCounter > danmakuSpan) {
 				attackCounter = 0;
@@ -107,19 +105,12 @@ public class EntityTHFairyIce extends EntityTHFairy {
 	public static void postInit() {
 		EntityRegistry.registerModEntity(EntityTHFairyIce.class, LibEntityName.FAIRY_ICE, LibMobID.FAIRY_ICE, JourneyToGensokyo.instance, 80, 1, true);
 
-		List<BiomeGenBase> spawnbiomes = new ArrayList<BiomeGenBase>(Arrays.asList(BiomeDictionary.getBiomesForType(Type.COLD)));
-		for (BiomeGenBase biome : BiomeDictionary.getBiomesForType(Type.SNOWY)) {
-			if (!spawnbiomes.contains(biome)) {
-				spawnbiomes.add(biome);
-			}
-		}
-		for (BiomeGenBase biome : BiomeDictionary.getBiomesForType(Type.END)) {
-			if (spawnbiomes.contains(biome)) {
-				spawnbiomes.remove(biome);
-			}
-		}
 		if (THKaguyaConfig.spawnDanmakuMob && ConfigHandler.newFariesSpawn) {
-			EntityRegistry.addSpawn(EntityTHFairyIce.class, 20, 1, 3, EnumCreatureType.monster, spawnbiomes.toArray(new BiomeGenBase[0]));
+			Set<BiomeGenBase> spawnBiomes = new HashSet<>();
+			Collections.addAll(spawnBiomes, BiomeDictionary.getBiomesForType(Type.COLD));
+			Collections.addAll(spawnBiomes, BiomeDictionary.getBiomesForType(Type.SNOWY));
+
+			EntityRegistry.addSpawn(EntityTHFairyIce.class, 20, 1, 3, EnumCreatureType.monster, spawnBiomes.toArray(new BiomeGenBase[0]));
 		}
 	}
 }

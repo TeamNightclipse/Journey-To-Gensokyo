@@ -37,8 +37,7 @@ public class ShotMissile implements ISpecialShot {
 					List<EntityLivingBase> listEntity = world.getEntitiesWithinAABB(EntityLivingBase.class, AxisAlignedBB.getBoundingBox(shot.posX - range,
 							shot.posY - range, shot.posZ - range, shot.posX + range + 1, shot.posY + range + 1, shot.posZ + range + 1));
 
-					for (int i = 0; i < listEntity.size(); i++) {
-						EntityLivingBase living = listEntity.get(i);
+					for(EntityLivingBase living : listEntity) {
 						living.attackEntityFrom(DamageSource.causeIndirectMagicDamage(shot, shot.user), shot.damageRate);
 					}
 				}
@@ -63,8 +62,7 @@ public class ShotMissile implements ISpecialShot {
 					List<EntityLivingBase> listEntity = world.getEntitiesWithinAABB(EntityLivingBase.class, AxisAlignedBB.getBoundingBox(shot.posX - range,
 							shot.posY - range, shot.posZ - range, shot.posX + range + 1, shot.posY + range + 1, shot.posZ + range + 1));
 
-					for (int i = 0; i < listEntity.size(); i++) {
-						EntityLivingBase living = listEntity.get(i);
+					for(EntityLivingBase living : listEntity) {
 						living.attackEntityFrom(DamageSource.causeIndirectMagicDamage(shot, shot.user), shot.damageRate);
 					}
 				}

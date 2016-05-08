@@ -18,7 +18,7 @@ public class EventDanmakuHit {
 
 	@SubscribeEvent
 	public void onDanmakuHit(LivingHurtEvent event) {
-		if (event.entityLiving instanceof EntityPlayer && event.source.getSourceOfDamage() instanceof EntityTHShot) {
+		if(event.entityLiving instanceof EntityPlayer && event.source.getSourceOfDamage() instanceof EntityTHShot) {
 			EntityPlayer player = (EntityPlayer)event.entityLiving;
 			int reduce = 15;
 

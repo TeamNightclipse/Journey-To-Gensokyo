@@ -9,10 +9,6 @@
 
 package katrix.journeyToGensokyo.plugin.thsc.entity;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import cpw.mods.fml.common.registry.EntityRegistry;
 import katrix.journeyToGensokyo.JourneyToGensokyo;
 import katrix.journeyToGensokyo.handler.ConfigHandler;
@@ -25,7 +21,6 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
 import thKaguyaMod.DanmakuConstants;
@@ -131,7 +126,7 @@ public class EntityTenguCrow extends EntityTHFairy {
 		}
 	}
 
-	public void danmaku01(Vec3 angle, Vec3 accurateAngle, ShotData shotData, int level, int d) {
+	private void danmaku01(Vec3 angle, Vec3 accurateAngle, ShotData shotData, int level, int d) {
 		float shotSpan = (d + 1F) * (level / 2);
 		int num = (d / 100 + 1) * (level / 2);
 		if (level == 1) {
@@ -171,8 +166,8 @@ public class EntityTenguCrow extends EntityTHFairy {
 		}
 	}
 
-	public void danmaku02(Vec3 angle, Vec3 accurateAngle, ShotData shotData, int level, int d) {
-		int num = d + 1 * level;
+	private void danmaku02(Vec3 angle, Vec3 accurateAngle, ShotData shotData, int level, int d) {
+		int num = d + level;
 		if (attackCounter % 8 == 0) {
 			THShotLib.createRandomRingShot(getShooter(), pos(), angle, speedRate, shotData, num, 90F);
 
@@ -242,20 +237,14 @@ public class EntityTenguCrow extends EntityTHFairy {
 
 	@Override
 	public boolean getCanSpawnHere() {
-		if (rand.nextInt(100) < THKaguyaConfig.fairySpawnRate)
-			return false;
-
-		return worldObj.difficultySetting != EnumDifficulty.PEACEFUL;
+		return rand.nextInt(100) >= THKaguyaConfig.fairySpawnRate && worldObj.difficultySetting != EnumDifficulty.PEACEFUL;
 	}
 
 	public static void postInit() {
-
 		EntityRegistry.registerModEntity(EntityTenguCrow.class, LibEntityName.TENGU_CROW, LibMobID.TENGU_CROW, JourneyToGensokyo.instance, 80, 1, true);
 
-		List<BiomeGenBase> spawnbiomes = new ArrayList<BiomeGenBase>(Arrays.asList(BiomeDictionary.getBiomesForType(Type.MOUNTAIN)));
-
 		if (THKaguyaConfig.spawnDanmakuMob && ConfigHandler.newMobsSpawn) {
-			EntityRegistry.addSpawn(EntityTenguCrow.class, 15, 1, 3, EnumCreatureType.monster, spawnbiomes.toArray(new BiomeGenBase[0]));
+			EntityRegistry.addSpawn(EntityTenguCrow.class, 15, 1, 3, EnumCreatureType.monster, BiomeDictionary.getBiomesForType(Type.MOUNTAIN));
 		}
 	}
 }

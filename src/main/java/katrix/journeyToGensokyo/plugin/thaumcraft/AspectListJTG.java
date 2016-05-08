@@ -12,46 +12,44 @@ package katrix.journeyToGensokyo.plugin.thaumcraft;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 
-public class AspectListJTG {
+class AspectListJTG {
 
 	//Blocks
-	public static AspectList blockGensokyoOre = new AspectList().add(Aspect.SOUL, 2).add(Aspect.EARTH, 2).add(Aspect.MAGIC, 4);
-	public static AspectList blockCelestialOre = new AspectList().add(Aspect.SOUL, 2).add(Aspect.ELDRITCH, 2).add(Aspect.MAGIC, 4);
-	public static AspectList blockDemonOre = new AspectList().add(Aspect.SOUL, 2).add(Aspect.FIRE, 2).add(Aspect.MAGIC, 4);
+	static final AspectList BLOCK_GENSOKYO_ORE = new AspectList().add(Aspect.SOUL, 2).add(Aspect.EARTH, 2).add(Aspect.MAGIC, 4);
+	static final AspectList BLOCK_CELESTIAL_ORE = new AspectList().add(Aspect.SOUL, 2).add(Aspect.ELDRITCH, 2).add(Aspect.MAGIC, 4);
+	static final AspectList BLOCK_DEMON_ORE = new AspectList().add(Aspect.SOUL, 2).add(Aspect.FIRE, 2).add(Aspect.MAGIC, 4);
 
-	public static AspectList itemGensokyoDust = new AspectList().add(Aspect.SOUL, 1).add(Aspect.EARTH, 1).add(Aspect.MAGIC, 2);
-	public static AspectList itemCelestialDust = new AspectList().add(Aspect.SOUL, 1).add(Aspect.ELDRITCH, 1).add(Aspect.MAGIC, 2);
-	public static AspectList itemDemonDust = new AspectList().add(Aspect.SOUL, 1).add(Aspect.FIRE, 1).add(Aspect.MAGIC, 2);
+	static final AspectList ITEM_GENSOKYO_DUST = new AspectList().add(Aspect.SOUL, 1).add(Aspect.EARTH, 1).add(Aspect.MAGIC, 2);
+	static final AspectList ITEM_CELESTIAL_DUST = new AspectList().add(Aspect.SOUL, 1).add(Aspect.ELDRITCH, 1).add(Aspect.MAGIC, 2);
+	static final AspectList ITEM_DEMON_DUST = new AspectList().add(Aspect.SOUL, 1).add(Aspect.FIRE, 1).add(Aspect.MAGIC, 2);
 
-	public static AspectList itemGensokyoIngot = new AspectList().add(Aspect.SOUL, 1).add(Aspect.EARTH, 1).add(Aspect.MAGIC, 2);
-	public static AspectList itemCelestialIngot = new AspectList().add(Aspect.SOUL, 1).add(Aspect.ELDRITCH, 1).add(Aspect.MAGIC, 2);
-	public static AspectList itemDemonIngot = new AspectList().add(Aspect.SOUL, 1).add(Aspect.FIRE, 1).add(Aspect.MAGIC, 2);
+	static final AspectList ITEM_GENSOKYO_INGOT = new AspectList().add(Aspect.SOUL, 1).add(Aspect.EARTH, 1).add(Aspect.MAGIC, 2);
+	static final AspectList ITEM_CELESTIAL_INGOT = new AspectList().add(Aspect.SOUL, 1).add(Aspect.ELDRITCH, 1).add(Aspect.MAGIC, 2);
+	static final AspectList ITEM_DEMON_INGOT = new AspectList().add(Aspect.SOUL, 1).add(Aspect.FIRE, 1).add(Aspect.MAGIC, 2);
 
-	public static AspectList itemGensokyoNote = new AspectList().add(Aspect.SOUL, 3).add(Aspect.EARTH, 3).add(Aspect.MAGIC, 6).add(Aspect.MIND, 3);
-	public static AspectList itemCelestialNote = new AspectList().add(Aspect.SOUL, 3).add(Aspect.ELDRITCH, 3).add(Aspect.MAGIC, 6).add(Aspect.MIND, 3);
-	public static AspectList itemDemonNote = new AspectList().add(Aspect.SOUL, 3).add(Aspect.FIRE, 3).add(Aspect.MAGIC, 6).add(Aspect.MIND, 3);
+	static final AspectList ITEM_GENSOKYO_NOTE = new AspectList().add(Aspect.SOUL, 3).add(Aspect.EARTH, 3).add(Aspect.MAGIC, 6).add(Aspect.MIND, 3);
+	static final AspectList ITEM_CELESTIAL_NOTE = new AspectList().add(Aspect.SOUL, 3).add(Aspect.ELDRITCH, 3).add(Aspect.MAGIC, 6).add(Aspect.MIND, 3);
+	static final AspectList ITEM_DEMON_NOTE = new AspectList().add(Aspect.SOUL, 3).add(Aspect.FIRE, 3).add(Aspect.MAGIC, 6).add(Aspect.MIND, 3);
 
-	public static AspectList itemRuinedGensokyoNotes = new AspectList().add(Aspect.MIND, 1);
-	public static AspectList itemGensokyoNotesPat = new AspectList().add(Aspect.MIND, 2);
-	public static AspectList itemGensokyoNotesDus = new AspectList().add(Aspect.MAGIC, 1).add(Aspect.MIND, 3).add(Aspect.MAN, 1);
-	public static AspectList itemGensokyoNotes = new AspectList().add(Aspect.MAGIC, 1).add(Aspect.MIND, 4).add(Aspect.MAN, 2);
-	public static AspectList itemGensokyoNotesImb = new AspectList().add(Aspect.SOUL, 1).add(Aspect.MAGIC, 2).add(Aspect.MIND, 4).add(Aspect.MAN, 2);
-	public static AspectList itemGensokyoNotesArc = new AspectList().add(Aspect.SOUL, 2).add(Aspect.MAGIC, 2).add(Aspect.MIND, 4).add(Aspect.MAN, 2);
+	static final AspectList ITEM_RUINED_GENSOKYO_NOTES = new AspectList().add(Aspect.MIND, 1);
+	static final AspectList ITEM_GENSOKYO_NOTES_PAT = new AspectList().add(Aspect.MIND, 2);
+	static final AspectList ITEM_GENSOKYO_NOTES_DUS = new AspectList().add(Aspect.MAGIC, 1).add(Aspect.MIND, 3).add(Aspect.MAN, 1);
+	static final AspectList ITEM_GENSOKYO_NOTES = new AspectList().add(Aspect.MAGIC, 1).add(Aspect.MIND, 4).add(Aspect.MAN, 2);
+	static final AspectList ITEM_GENSOKYO_NOTES_IMB = new AspectList().add(Aspect.SOUL, 1).add(Aspect.MAGIC, 2).add(Aspect.MIND, 4).add(Aspect.MAN, 2);
+	static final AspectList ITEM_GENSOKYO_NOTES_ARC = new AspectList().add(Aspect.SOUL, 2).add(Aspect.MAGIC, 2).add(Aspect.MIND, 4).add(Aspect.MAN, 2);
 
-	public static AspectList itemPointItem = new AspectList().add(Aspect.SOUL, 1).add(Aspect.MAGIC, 2).add(Aspect.GREED, 2);
-	public static AspectList itemPowerItem = new AspectList().add(Aspect.SOUL, 1).add(Aspect.MAGIC, 2).add(Aspect.ENERGY, 2);
+	static final AspectList ITEM_POINT_ITEM = new AspectList().add(Aspect.SOUL, 1).add(Aspect.MAGIC, 2).add(Aspect.GREED, 2);
+	static final AspectList ITEM_POWER_ITEM = new AspectList().add(Aspect.SOUL, 1).add(Aspect.MAGIC, 2).add(Aspect.ENERGY, 2);
 
-	public static AspectList entityTHFairyIce = new AspectList().add(Aspect.SOUL, 2).add(Aspect.MAGIC, 2).add(Aspect.COLD, 1);
-	public static AspectList entityTHFairy = new AspectList().add(Aspect.SOUL, 2).add(Aspect.MAGIC, 2);
-	public static AspectList entitySunflowerFairy = new AspectList().add(Aspect.SOUL, 2).add(Aspect.MAGIC, 2).add(Aspect.PLANT, 1);
-	public static AspectList entityTHPhantom = new AspectList().add(Aspect.SOUL, 2).add(Aspect.MAGIC, 2).add(Aspect.DARKNESS, 1);
-	public static AspectList entityCirno = new AspectList().add(Aspect.SOUL, 2).add(Aspect.MAGIC, 2).add(Aspect.COLD, 9);
-	public static AspectList entityRumia = new AspectList().add(Aspect.SOUL, 2).add(Aspect.MAGIC, 2).add(Aspect.DARKNESS, 2);
-	public static AspectList entityToziko = new AspectList().add(Aspect.SOUL, 2).add(Aspect.MAGIC, 2).add(Aspect.ENERGY, 2);
-	public static AspectList entitySanae = new AspectList().add(Aspect.SOUL, 2).add(Aspect.MAGIC, 2).add(Aspect.MAN, 2);
-	public static AspectList entityHanabeeper = new AspectList().add(Aspect.MAGIC, 2).add(Aspect.PLANT, 2).add(Aspect.FIRE, 2);
-	public static AspectList entityRinnosuke = entitySanae;
-
-
+	static final AspectList ENTITY_TH_FAIRY_ICE = new AspectList().add(Aspect.SOUL, 2).add(Aspect.MAGIC, 2).add(Aspect.COLD, 1);
+	static final AspectList ENTITY_TH_FAIRY = new AspectList().add(Aspect.SOUL, 2).add(Aspect.MAGIC, 2);
+	static final AspectList ENTITY_SUNFLOWER_FAIRY = new AspectList().add(Aspect.SOUL, 2).add(Aspect.MAGIC, 2).add(Aspect.PLANT, 1);
+	static final AspectList ENTITY_TH_PHANTOM = new AspectList().add(Aspect.SOUL, 2).add(Aspect.MAGIC, 2).add(Aspect.DARKNESS, 1);
+	static final AspectList ENTITY_CIRNO = new AspectList().add(Aspect.SOUL, 2).add(Aspect.MAGIC, 2).add(Aspect.COLD, 9);
+	static final AspectList ENTITY_RUMIA = new AspectList().add(Aspect.SOUL, 2).add(Aspect.MAGIC, 2).add(Aspect.DARKNESS, 2);
+	static final AspectList ENTITY_TOZIKO = new AspectList().add(Aspect.SOUL, 2).add(Aspect.MAGIC, 2).add(Aspect.ENERGY, 2);
+	static final AspectList ENTITY_SANAE = new AspectList().add(Aspect.SOUL, 2).add(Aspect.MAGIC, 2).add(Aspect.MAN, 2);
+	static final AspectList ENTITY_HANABEEPER = new AspectList().add(Aspect.MAGIC, 2).add(Aspect.PLANT, 2).add(Aspect.FIRE, 2);
+	static final AspectList ENTITY_RINNOSUKE = ENTITY_SANAE;
 
 }

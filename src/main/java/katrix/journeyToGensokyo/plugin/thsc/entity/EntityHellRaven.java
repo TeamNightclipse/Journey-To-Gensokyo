@@ -9,24 +9,18 @@
 
 package katrix.journeyToGensokyo.plugin.thsc.entity;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import cpw.mods.fml.common.registry.EntityRegistry;
 import katrix.journeyToGensokyo.JourneyToGensokyo;
 import katrix.journeyToGensokyo.handler.ConfigHandler;
 import katrix.journeyToGensokyo.lib.LibEntityName;
 import katrix.journeyToGensokyo.lib.LibMobID;
 import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
 import thKaguyaMod.DanmakuConstants;
@@ -62,12 +56,6 @@ public class EntityHellRaven extends EntityTHFairy {
 		setAttackDistance(16.0D);
 		setDetectionDistance(16.0D);
 		setFlyingHeight(4);
-	}
-
-	@Override
-	public IEntityLivingData onSpawnWithEgg(IEntityLivingData entityLivingData) {
-		Object p_110161_1_1 = super.onSpawnWithEgg(entityLivingData);
-		return (IEntityLivingData)p_110161_1_1;
 	}
 
 	@Override
@@ -134,9 +122,9 @@ public class EntityHellRaven extends EntityTHFairy {
 		}
 	}
 
-	public void danmaku01(Vec3 angle, ShotData shotData, int level, int d) {
+	private void danmaku01(Vec3 angle, ShotData shotData, int level, int d) {
 
-		if (attackCounter <= 60 && attackCounter >= 2) {
+		if(attackCounter <= 60 && attackCounter >= 2) {
 
 			THShotLib.playShotSound(this);
 
@@ -175,7 +163,7 @@ public class EntityHellRaven extends EntityTHFairy {
 		}
 	}
 
-	public void danmaku02(Vec3 angle, ShotData shotData, int level) {
+	private void danmaku02(Vec3 angle, ShotData shotData, int level) {
 		int num = 1 + level;
 		if (attackCounter == 10 || attackCounter == 20 || attackCounter == 30) {
 
@@ -235,20 +223,15 @@ public class EntityHellRaven extends EntityTHFairy {
 
 	@Override
 	public boolean getCanSpawnHere() {
-		if (rand.nextInt(100) < THKaguyaConfig.fairySpawnRate)
-			return false;
+		return rand.nextInt(100) >= THKaguyaConfig.fairySpawnRate && worldObj.difficultySetting != EnumDifficulty.PEACEFUL;
 
-		return worldObj.difficultySetting != EnumDifficulty.PEACEFUL;
 	}
 
 	public static void postInit() {
-
 		EntityRegistry.registerModEntity(EntityHellRaven.class, LibEntityName.HELL_RAVEN, LibMobID.HELL_RAVEN, JourneyToGensokyo.instance, 80, 1, true);
 
-		List<BiomeGenBase> spawnbiomes = new ArrayList<BiomeGenBase>(Arrays.asList(BiomeDictionary.getBiomesForType(Type.NETHER)));
-
-		if (THKaguyaConfig.spawnDanmakuMob && ConfigHandler.newMobsSpawn) {
-			EntityRegistry.addSpawn(EntityHellRaven.class, 20, 1, 3, EnumCreatureType.monster, spawnbiomes.toArray(new BiomeGenBase[0]));
+		if(THKaguyaConfig.spawnDanmakuMob && ConfigHandler.newMobsSpawn) {
+			EntityRegistry.addSpawn(EntityHellRaven.class, 20, 1, 3, EnumCreatureType.monster, BiomeDictionary.getBiomesForType(Type.NETHER));
 		}
 	}
 }
