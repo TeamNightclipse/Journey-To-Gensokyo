@@ -8,9 +8,9 @@
  */
 package katrix.journeyToGensokyo.client.model;
 
-import katrix.journeyToGensokyo.util.MathHelperJTG;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.MathHelper;
 import thKaguyaMod.entity.living.EntityDanmakuMob;
 
 public class ModelRemilia extends ModelBipedDanmaku {
@@ -94,11 +94,11 @@ public class ModelRemilia extends ModelBipedDanmaku {
 		
         if (danmakuMob.getHealth() > 0F) {
             if (danmakuMob.getFlyingHeight() > 0) {
-                rightWing.rotateAngleY = (float)(MathHelperJTG.cos(tick * 0.8F) * Math.PI * 0.20F + Math.PI * 0.15F);
+                rightWing.rotateAngleY = (float)(MathHelper.cos(tick * 0.8F) * Math.PI * 0.20F + Math.PI * 0.15F);
                 leftWing.rotateAngleY = -rightWing.rotateAngleY;
             }
             else {
-                rightWing.rotateAngleY = (float)(MathHelperJTG.cos(tick * 0.5F) * Math.PI * 0.1F + Math.PI * 0.15F);
+                rightWing.rotateAngleY = (float)(MathHelper.cos(tick * 0.5F) * Math.PI * 0.1F + Math.PI * 0.15F);
                 leftWing.rotateAngleY = -rightWing.rotateAngleY;
             }
         }

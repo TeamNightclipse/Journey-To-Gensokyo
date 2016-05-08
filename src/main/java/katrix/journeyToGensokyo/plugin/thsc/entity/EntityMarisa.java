@@ -17,11 +17,11 @@ import katrix.journeyToGensokyo.lib.LibEntityName;
 import katrix.journeyToGensokyo.lib.LibMobID;
 import katrix.journeyToGensokyo.lib.LibSpecialShotId;
 import katrix.journeyToGensokyo.lib.LibSpellcardId;
-import katrix.journeyToGensokyo.util.MathHelperJTG;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
@@ -339,12 +339,12 @@ public class EntityMarisa extends EntityDanmakuMob {
 
 			for(k = 0; k < j; k += 2) {
 				yaw = 360F / j * k;
-				pitch = (float)(MathHelperJTG.sin(Math.toRadians(yaw) * 4F) * 20F - 60F);
+				pitch = MathHelper.sin((float)(Math.toRadians(yaw) * 4F)) * 20F - 60F;
 				vec3 = THShotLib.getVecFromAngle(yaw, pitch);
 				this.dropPointItem(this.pos(), vec3);
 
 				yaw = 360F / j * (k + 1);
-				pitch = (float)(MathHelperJTG.cos(Math.toRadians(yaw) * 4F) * 20F - 60F);
+				pitch = MathHelper.cos((float)(Math.toRadians(yaw) * 4F)) * 20F - 60F;
 				vec3 = THShotLib.getVecFromAngle(yaw, pitch);
 				this.dropPowerUpItem(this.pos(), vec3);
 			}

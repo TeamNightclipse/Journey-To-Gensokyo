@@ -12,7 +12,6 @@ import org.lwjgl.opengl.GL11;
 
 import katrix.journeyToGensokyo.lib.LibMod;
 import katrix.journeyToGensokyo.plugin.thsc.entity.EntityMiniHakkeroJTG;
-import katrix.journeyToGensokyo.util.MathHelperJTG;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.Render;
@@ -42,7 +41,8 @@ public class RenderMiniHakkeroJTG extends Render {
 		GL11.glPushMatrix();
 		bindEntityTexture(miniHakkero);
 		GL11.glTranslated(x, y, z);
-		GL11.glRotated(miniHakkero.rotationPitch, -MathHelperJTG.sin(Math.toRadians(yaw - 90F)), 0.0F, MathHelperJTG.cos(Math.toRadians(yaw - 90F)));
+		GL11.glRotated(miniHakkero.rotationPitch, -MathHelper.sin((float)Math.toRadians(yaw - 90F)), 0.0F, MathHelper.cos(
+				(float)Math.toRadians(yaw - 90F)));
 		GL11.glRotatef(180F - yaw, 0.0F, 1.0F, 0.0F);
 
 		GL11.glScalef(0.5F, 0.5F, 0.5F);
@@ -106,7 +106,8 @@ public class RenderMiniHakkeroJTG extends Render {
 	public void renderMiniHakkero2(EntityMiniHakkeroJTG miniHakkero, double x, double y, double z, float yaw, float pitch) {
 		GL11.glPushMatrix();
 		GL11.glTranslated(x, y, z);
-		GL11.glRotated(miniHakkero.rotationPitch, -MathHelperJTG.sin(Math.toRadians(yaw - 90F)), 0.0F, MathHelperJTG.cos(Math.toRadians(yaw - 90F)));
+		GL11.glRotated(miniHakkero.rotationPitch, -MathHelper.sin((float)Math.toRadians(yaw - 90F)), 0.0F, MathHelper.cos(
+				(float)Math.toRadians(yaw - 90F)));
 		GL11.glRotatef(180F - yaw, 0.0F, 1.0F, 0.0F);
 
 		GL11.glScalef(0.5F, 0.5F, 0.5F);

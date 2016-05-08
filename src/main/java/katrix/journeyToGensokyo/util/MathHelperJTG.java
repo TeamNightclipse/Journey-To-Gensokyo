@@ -13,51 +13,6 @@ import net.minecraft.entity.EntityLivingBase;
 
 public class MathHelperJTG {
 
-	//Thanks Mad for this Sin/Cos thingy
-	private static final double PI2 = Math.PI * 2;
-	private static final int SIZE = 5000;
-	private static final double[] SIN_TABLE = new double[SIZE];
-	private static final double[] COS_TABLE = new double[SIZE];
-	private static final double STEP = 2d * Math.PI / SIZE;
-	private static final double INV_STEP = 1.0f / STEP;
-
-	static {
-		for (int i = 0; i < SIZE; ++i) {
-			SIN_TABLE[i] = Math.sin(STEP * i);
-			COS_TABLE[i] = Math.cos(STEP * i);
-		}
-	}
-
-	/**
-	 * Find a linear interpolation from the table
-	 *
-	 * @param ang angle in radians
-	 * @return sin of angle a
-	 */
-	public static final double sin(double ang) {
-		double rev = ang < 0 ? -1 : 1;
-		double t = rev * ang % PI2;
-		int indexA = (int)(t / STEP);
-		int indexB = indexA + 1;
-		if (indexB >= SIZE)
-			return SIN_TABLE[indexA];
-		double a = SIN_TABLE[indexA];
-		return rev * (a + (SIN_TABLE[indexB] - a) * (t - indexA * STEP) * INV_STEP);
-	}
-
-	public static final double cos(double ang) {
-		double rev = ang < 0 ? -1 : 1;
-		double t = rev * ang % PI2;
-		int indexA = (int)(t / STEP);
-		int indexB = indexA + 1;
-		if (indexB >= SIZE)
-			return COS_TABLE[indexA];
-		double a = COS_TABLE[indexA];
-		return a + (COS_TABLE[indexB] - a) * (t - indexA * STEP) * INV_STEP;
-	}
-
-
-
 	public static float getAngleMax180(float angle) {
 		angle %= 360F;
 		if (angle > 180F) {

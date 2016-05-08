@@ -20,7 +20,6 @@ import katrix.journeyToGensokyo.lib.LibMobID;
 import katrix.journeyToGensokyo.lib.LibMod;
 import katrix.journeyToGensokyo.lib.LibSpecialShotId;
 import katrix.journeyToGensokyo.util.LogHelper;
-import katrix.journeyToGensokyo.util.MathHelperJTG;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.IMerchant;
 import net.minecraft.entity.player.EntityPlayer;
@@ -29,6 +28,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.MathHelper;
 import net.minecraft.util.StatCollector;
 import net.minecraft.util.Vec3;
 import net.minecraft.village.MerchantRecipe;
@@ -246,11 +246,11 @@ public class EntityReimuHostile extends EntityDanmakuMob implements IMerchant {
 
 			for (k = 0; k < j; k += 2) {
 				yaw = 360F / j * k;
-				pitch = (float)(MathHelperJTG.sin((float)(yaw / 180F * Math.PI * 4F)) * 20F - 60F);
+				pitch = MathHelper.sin((float)(yaw / 180F * Math.PI * 4F)) * 20F - 60F;
 				vec3 = THShotLib.getVecFromAngle(yaw, pitch, 1.0F);
 				this.dropPointItem(this.pos(), vec3);
 				yaw = 360F / j * (k + 1);
-				pitch = (float)(MathHelperJTG.cos((float)(yaw / 180F * Math.PI * 4F)) * 20F - 60F);
+				pitch = MathHelper.cos((float)(yaw / 180F * Math.PI * 4F)) * 20F - 60F;
 				vec3 = THShotLib.getVecFromAngle(yaw, pitch, 1.0F);
 				this.dropPowerUpItem(this.pos(), vec3);
 			}

@@ -10,8 +10,8 @@
 package katrix.journeyToGensokyo.plugin.thsc.entity.spellcard;
 
 import katrix.journeyToGensokyo.plugin.thsc.entity.EntityMiniHakkeroJTG;
-import katrix.journeyToGensokyo.util.MathHelperJTG;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import thKaguyaMod.DanmakuConstants;
@@ -49,7 +49,7 @@ public class THSC_DoubleSpark extends THSpellCard {
 			Vec3 lookAt = THShotLib.angle(card.rotationYaw, card.rotationPitch + 90F);
 			double angle = time * speed;
 			double angleSpan = 360D / pieces;
-			double gRate = 0.034 + 0.03D * MathHelperJTG.sin(Math.toRadians(angle));
+			double gRate = 0.034 + 0.03D * MathHelper.sin((float)Math.toRadians(angle));
 
 			Vec3 gravity = THShotLib.getVecFromAngle(card.rotationYaw, card.rotationPitch, gRate);
 			ShotData shot1 = ShotData.shot(DanmakuConstants.FORM_STAR, time % 7, 0.5F, 8.0F, 0, 55);
@@ -57,26 +57,26 @@ public class THSC_DoubleSpark extends THSpellCard {
 
 			double cardYawRad = Math.toRadians(card.rotationYaw);
 			double cardPitchRad = Math.toRadians(card.rotationPitch + 90);
-			double cardYawSin = MathHelperJTG.sin(cardYawRad);
-			double cardYawCos = MathHelperJTG.cos(cardYawRad);
-			double cardPitchSin = MathHelperJTG.sin(cardPitchRad);
+			double cardYawSin = MathHelper.sin((float)cardYawRad);
+			double cardYawCos = MathHelper.cos((float)cardYawRad);
+			double cardPitchSin = MathHelper.sin((float)cardPitchRad);
 
 			double angleY = 0;
 			double angleYRad = Math.toRadians(angleY);
-			double angleYSin = MathHelperJTG.sin(angleYRad);
-			double angleYCos = MathHelperJTG.cos(angleYRad);
+			double angleYSin = MathHelper.sin((float)angleYRad);
+			double angleYCos = MathHelper.cos((float)angleYRad);
 
 			for (int i = 0; i < pieces; i++) {
 				angleXZ = Math.toRadians(angle);
-				double angleXZSin = MathHelperJTG.sin(angleXZ);
-				double angleXZCos = MathHelperJTG.cos(angleXZ);
+				double angleXZSin = MathHelper.sin((float)angleXZ);
+				double angleXZCos = MathHelper.cos((float)angleXZ);
 
 				X1 = angleXZSin * cardYawCos;
 				Z1 = angleXZSin * cardYawSin;
 				X2 = angleXZCos * angleYSin * cardPitchSin * cardYawSin;
 				Z2 = angleXZCos * angleYSin * cardPitchSin * cardYawCos;
 
-				yVector = -angleXZCos * MathHelperJTG.sin(cardPitchRad - angleYRad);
+				yVector = -angleXZCos * MathHelper.sin((float)(cardPitchRad - angleYRad));
 				xVector = angleXZCos * angleYCos * lookAt.xCoord + X1 - X2;
 				zVector = angleXZCos * angleYCos * lookAt.zCoord + Z1 + Z2;
 				Vec3 vecAngle = THShotLib.angle(xVector, yVector, zVector);

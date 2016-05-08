@@ -8,10 +8,10 @@
  */
 package katrix.journeyToGensokyo.client.model;
 
-import katrix.journeyToGensokyo.util.MathHelperJTG;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.MathHelper;
 
 public class ModelTenguCrow extends ModelBase {
 
@@ -93,8 +93,8 @@ public class ModelTenguCrow extends ModelBase {
 	public void setRotationAngles(float movement, float far, float tick, float yaw, float pitch, float size, Entity entity) {
 		tenguHead.rotateAngleY = (float)(yaw / (180F / Math.PI));
 		tenguHead.rotateAngleX = (float)(pitch / (180F / Math.PI));
-		tenguBody.rotateAngleX = (float)(Math.PI / 3F + MathHelperJTG.cos(tick * 0.1F) * 0.15F);
-		tenguWingRight.rotateAngleY = (float)(MathHelperJTG.cos(tick * 0.8F) * Math.PI * 0.25F);
+		tenguBody.rotateAngleX = (float)(Math.PI / 3F + MathHelper.cos(tick * 0.1F) * 0.15F);
+		tenguWingRight.rotateAngleY = (float)(MathHelper.cos(tick * 0.8F) * Math.PI * 0.25F);
 		tenguWingLeft.rotateAngleY = -tenguWingRight.rotateAngleY;
 		tenguWingRight2.rotateAngleY = tenguWingRight.rotateAngleY * 0.5F;
 		tenguWingLeft2.rotateAngleY = -tenguWingRight.rotateAngleY * 0.5F;

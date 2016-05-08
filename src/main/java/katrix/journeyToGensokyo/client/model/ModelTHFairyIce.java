@@ -8,7 +8,6 @@
  */
 package katrix.journeyToGensokyo.client.model;
 
-import katrix.journeyToGensokyo.util.MathHelperJTG;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
@@ -270,7 +269,7 @@ public class ModelTHFairyIce extends ModelBase {
 
 		head.rotateAngleY = (float)(yaw / (180F / Math.PI));
 		head.rotateAngleX = (float)(pitch / (180F / Math.PI));
-		body.rotateAngleY = (float)(MathHelperJTG.sin(MathHelper.sqrt_float(onGround) * (float)Math.PI * 2.0F) * 0.2F);
+		body.rotateAngleY = MathHelper.sin(MathHelper.sqrt_float(onGround) * (float)Math.PI * 2.0F) * 0.2F;
 		skirt.rotateAngleX = 0F;
 
 		if (isRiding) {
@@ -288,21 +287,21 @@ public class ModelTHFairyIce extends ModelBase {
 		else {
 
 			if (thFairy.getFlyingHeight() == 0) {
-				rightLeg.rotateAngleX = (float)(MathHelperJTG.cos(movement) * 0.7F * far);
-				leftLeg.rotateAngleX = (float)(MathHelperJTG.cos(movement + Math.PI) * 0.7F * far);
+				rightLeg.rotateAngleX = MathHelper.cos(movement) * 0.7F * far;
+				leftLeg.rotateAngleX = MathHelper.cos((float)(movement + Math.PI)) * 0.7F * far;
 				rightLeg.rotateAngleZ = 0F;
 				leftLeg.rotateAngleZ = 0F;
 
 				if (movement > 0F) {
-					rightArm.rotateAngleX = (float)(MathHelperJTG.cos(movement + Math.PI) * 2.0F * far * 0.5F);
-					leftArm.rotateAngleX = (float)(MathHelperJTG.cos(movement) * 2.0F * far * 0.5F);
+					rightArm.rotateAngleX = MathHelper.cos((float)(movement + Math.PI)) * 2.0F * far * 0.5F;
+					leftArm.rotateAngleX = MathHelper.cos(movement) * 2.0F * far * 0.5F;
 					rightArm.rotateAngleY = (float)(-10F / 180F * Math.PI);
 					rightArm.rotateAngleZ = (float)(20F / 180F * Math.PI);
 					leftArm.rotateAngleY = -rightArm.rotateAngleY;
 					leftArm.rotateAngleZ = -rightArm.rotateAngleZ;
 				}
 				else {
-					rightArm.rotateAngleX = (float)(-0.7F - MathHelperJTG.sin(tick / 10F) * 0.1F);
+					rightArm.rotateAngleX = -0.7F - MathHelper.sin(tick / 10F) * 0.1F;
 					rightArm.rotateAngleY = 0.0F;
 					rightArm.rotateAngleZ = -0.6457718F;
 					leftArm.rotateAngleX = rightArm.rotateAngleX;
@@ -313,12 +312,12 @@ public class ModelTHFairyIce extends ModelBase {
 			}
 			else {
 
-				rightLeg.rotateAngleZ = (float)Math.abs(MathHelperJTG.sin(tick / 10F) * 0.1F);
+				rightLeg.rotateAngleZ = Math.abs(MathHelper.sin(tick / 10F) * 0.1F);
 				leftLeg.rotateAngleZ = -rightLeg.rotateAngleZ;
-				rightLeg.rotateAngleX = (float)Math.abs(MathHelperJTG.sin(tick / 10F) * 0.2F);
+				rightLeg.rotateAngleX = Math.abs(MathHelper.sin(tick / 10F) * 0.2F);
 				leftLeg.rotateAngleX = rightLeg.rotateAngleZ;
 
-				rightArm.rotateAngleX = (float)(-0.7F - MathHelperJTG.sin(tick / 10F) * 0.1F);
+				rightArm.rotateAngleX = -0.7F - MathHelper.sin(tick / 10F) * 0.1F;
 				rightArm.rotateAngleY = 0.0F;
 				rightArm.rotateAngleZ = -0.6457718F;
 				leftArm.rotateAngleX = rightArm.rotateAngleX;
@@ -332,15 +331,15 @@ public class ModelTHFairyIce extends ModelBase {
 		if (thFairy.getHealth() > 0F) {
 			body.rotateAngleX = 0F;
 			if (thFairy.getFlyingHeight() > 0) {
-				rightWing.rotateAngleY = (float)(MathHelperJTG.cos(tick * 1.3F) * Math.PI * 0.25F);
+				rightWing.rotateAngleY = (float)(MathHelper.cos(tick * 1.3F) * Math.PI * 0.25F);
 				leftWing.rotateAngleY = -rightWing.rotateAngleY;
-				rightWing2.rotateAngleY = (float)(MathHelperJTG.cos(tick * 1.3F) * Math.PI * 0.25F);
+				rightWing2.rotateAngleY = (float)(MathHelper.cos(tick * 1.3F) * Math.PI * 0.25F);
 				leftWing2.rotateAngleY = -rightWing2.rotateAngleY;
 			}
 			else {
-				rightWing.rotateAngleY = (float)(MathHelperJTG.cos(tick * 0.5F) * Math.PI * 0.1F + Math.PI * 0.15F);
+				rightWing.rotateAngleY = (float)(MathHelper.cos(tick * 0.5F) * Math.PI * 0.1F + Math.PI * 0.15F);
 				leftWing.rotateAngleY = -rightWing.rotateAngleY;
-				rightWing2.rotateAngleY = (float)(MathHelperJTG.cos(tick * 0.5F) * Math.PI * 0.1F + Math.PI * 0.15F);
+				rightWing2.rotateAngleY = (float)(MathHelper.cos(tick * 0.5F) * Math.PI * 0.1F + Math.PI * 0.15F);
 				leftWing2.rotateAngleY = -rightWing2.rotateAngleY;
 			}
 		}

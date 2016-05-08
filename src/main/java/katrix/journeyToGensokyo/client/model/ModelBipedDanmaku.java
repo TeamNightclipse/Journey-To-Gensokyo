@@ -8,7 +8,6 @@
  */
 package katrix.journeyToGensokyo.client.model;
 
-import katrix.journeyToGensokyo.util.MathHelperJTG;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
@@ -52,13 +51,13 @@ public class ModelBipedDanmaku extends ModelBase {
 	public void setRotationAngles(float movement, float far, float tick, float yaw, float pitch, float size, Entity entity) {
 		EntityDanmakuMob danmakuMob = (EntityDanmakuMob)entity;
 		float rad30F = (float)Math.toRadians(30F);
-		float cosMovTimes0_66 = (float)MathHelperJTG.cos(movement * 0.6662F);
-		float cosMovTimes0_66PlusPi = (float)MathHelperJTG.cos(movement * 0.6662F + Math.PI);
-		float sinTickDiv10F = (float)MathHelperJTG.sin(tick / 10F);
+		float cosMovTimes0_66 = MathHelper.cos(movement * 0.6662F);
+		float cosMovTimes0_66PlusPi = MathHelper.cos((float)(movement * 0.6662F + Math.PI));
+		float sinTickDiv10F = MathHelper.sin(tick / 10F);
 
 		bipedHead.rotateAngleY = (float)(yaw / (180F / Math.PI));
 		bipedHead.rotateAngleX = (float)(pitch / (180F / Math.PI));
-		bipedBody.rotateAngleY = (float)(MathHelperJTG.sin(MathHelper.sqrt_float(onGround) * Math.PI * 2.0F) * 0.2F);
+		bipedBody.rotateAngleY = MathHelper.sin((float)(MathHelper.sqrt_float(onGround) * Math.PI * 2.0F)) * 0.2F;
 
 		bipedRightArm.rotateAngleX = cosMovTimes0_66PlusPi * 2.0F * far * 0.5F;
 		bipedLeftArm.rotateAngleX = cosMovTimes0_66 * 2.0F * far * 0.5F;
@@ -97,8 +96,8 @@ public class ModelBipedDanmaku extends ModelBase {
 		else {
 
 			if (danmakuMob.getFlyingHeight() == 0) {
-				float cosMovement = (float)MathHelperJTG.cos(movement);
-				float cosMovementPlussPi = (float)MathHelperJTG.cos(movement + Math.PI);
+				float cosMovement = MathHelper.cos(movement);
+				float cosMovementPlussPi = MathHelper.cos((float)(movement + Math.PI));
 
 				bipedRightLeg.rotateAngleX = cosMovement * 0.7F * far;
 				bipedLeftLeg.rotateAngleX = cosMovementPlussPi * 0.7F * far;
@@ -114,7 +113,7 @@ public class ModelBipedDanmaku extends ModelBase {
 					bipedLeftArm.rotateAngleZ = -bipedRightArm.rotateAngleZ;
 				}
 				else {
-					bipedRightArm.rotateAngleX = (float)(-0.7F - MathHelperJTG.sin(tick / 10F) * 0.1F);
+					bipedRightArm.rotateAngleX = -0.7F - MathHelper.sin(tick / 10F) * 0.1F;
 					bipedRightArm.rotateAngleY = 0.0F;
 					bipedRightArm.rotateAngleZ = -0.6457718F;
 					bipedLeftArm.rotateAngleX = bipedRightArm.rotateAngleX;

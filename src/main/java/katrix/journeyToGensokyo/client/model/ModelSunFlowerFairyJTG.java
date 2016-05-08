@@ -8,7 +8,6 @@
  */
 package katrix.journeyToGensokyo.client.model;
 
-import katrix.journeyToGensokyo.util.MathHelperJTG;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
@@ -164,7 +163,7 @@ public class ModelSunFlowerFairyJTG extends ModelBase {
 
 		bipedHead.rotateAngleY = yaw / (180F / (float)Math.PI);
 		bipedHead.rotateAngleX = pitch / (180F / (float)Math.PI);
-		bipedBody.rotateAngleY = (float)(MathHelperJTG.sin(MathHelper.sqrt_float(onGround) * (float)Math.PI * 2.0F) * 0.2F);
+		bipedBody.rotateAngleY = MathHelper.sin(MathHelper.sqrt_float(onGround) * (float)Math.PI * 2.0F) * 0.2F;
 		skirtTop.rotateAngleX = 0F;
 
 		if (isRiding) {
@@ -182,21 +181,21 @@ public class ModelSunFlowerFairyJTG extends ModelBase {
 		else {
 
 			if (thFairy.getFlyingHeight() == 0) {
-				bipedRightLeg.rotateAngleX = (float)(MathHelperJTG.cos(movement) * 0.7F * far);
-				bipedLeftLeg.rotateAngleX = (float)(MathHelperJTG.cos(movement + Math.PI) * 0.7F * far);
+				bipedRightLeg.rotateAngleX = MathHelper.cos(movement) * 0.7F * far;
+				bipedLeftLeg.rotateAngleX = MathHelper.cos((float)(movement + Math.PI)) * 0.7F * far;
 				bipedRightLeg.rotateAngleZ = 0F;
 				bipedLeftLeg.rotateAngleZ = 0F;
 
 				if (movement > 0F) {
-					bipedRightArm.rotateAngleX = (float)(MathHelperJTG.cos(movement + Math.PI) * 2.0F * far * 0.5F);
-					bipedLeftArm.rotateAngleX = (float)(MathHelperJTG.cos(movement) * 2.0F * far * 0.5F);
+					bipedRightArm.rotateAngleX = MathHelper.cos((float)(movement + Math.PI)) * 2.0F * far * 0.5F;
+					bipedLeftArm.rotateAngleX = MathHelper.cos(movement) * 2.0F * far * 0.5F;
 					bipedRightArm.rotateAngleY = (float)(-10F / 180F * Math.PI);
 					bipedRightArm.rotateAngleZ = (float)(20F / 180F * Math.PI);
 					bipedLeftArm.rotateAngleY = -bipedRightArm.rotateAngleY;
 					bipedLeftArm.rotateAngleZ = -bipedRightArm.rotateAngleZ;
 				}
 				else {
-					bipedRightArm.rotateAngleX = (float)(-0.7F - MathHelperJTG.sin(tick / 10F) * 0.1F);
+					bipedRightArm.rotateAngleX = -0.7F - MathHelper.sin(tick / 10F) * 0.1F;
 					bipedRightArm.rotateAngleY = 0.0F;
 					bipedRightArm.rotateAngleZ = -0.6457718F;
 					bipedLeftArm.rotateAngleX = bipedRightArm.rotateAngleX;
@@ -207,12 +206,12 @@ public class ModelSunFlowerFairyJTG extends ModelBase {
 			}
 			else {
 
-				bipedRightLeg.rotateAngleZ = (float)Math.abs(MathHelperJTG.sin(tick / 10F) * 0.1F);
+				bipedRightLeg.rotateAngleZ = Math.abs(MathHelper.sin(tick / 10F) * 0.1F);
 				bipedLeftLeg.rotateAngleZ = -bipedRightLeg.rotateAngleZ;
-				bipedRightLeg.rotateAngleX = (float)Math.abs(MathHelperJTG.sin(tick / 10F) * 0.2F);
+				bipedRightLeg.rotateAngleX = Math.abs(MathHelper.sin(tick / 10F) * 0.2F);
 				bipedLeftLeg.rotateAngleX = bipedRightLeg.rotateAngleZ;
 
-				bipedRightArm.rotateAngleX = (float)(-0.7F - MathHelperJTG.sin(tick / 10F) * 0.1F);
+				bipedRightArm.rotateAngleX = -0.7F - MathHelper.sin(tick / 10F) * 0.1F;
 				bipedRightArm.rotateAngleY = 0.0F;
 				bipedRightArm.rotateAngleZ = -0.6457718F;
 				bipedLeftArm.rotateAngleX = bipedRightArm.rotateAngleX;
@@ -226,12 +225,12 @@ public class ModelSunFlowerFairyJTG extends ModelBase {
 		if (thFairy.getHealth() > 0F) {
 			bipedBody.rotateAngleX = 0F;
 			if (thFairy.getFlyingHeight() > 0) {
-				rightWing.rotateAngleY = (float)(MathHelperJTG.cos(tick * 1.3F) * Math.PI * 0.25F - Math.PI);
-				leftWing.rotateAngleY = (float)(-MathHelperJTG.cos(tick * 1.3F) * Math.PI * 0.25F);
+				rightWing.rotateAngleY = (float)(MathHelper.cos(tick * 1.3F) * Math.PI * 0.25F - Math.PI);
+				leftWing.rotateAngleY = (float)(-MathHelper.cos(tick * 1.3F) * Math.PI * 0.25F);
 			}
 			else {
-				rightWing.rotateAngleY = (float)(MathHelperJTG.cos(tick * 0.5F) * Math.PI * 0.1F - Math.PI);
-				leftWing.rotateAngleY = (float)(-MathHelperJTG.cos(tick * 0.5F) * Math.PI * 0.1F);
+				rightWing.rotateAngleY = (float)(MathHelper.cos(tick * 0.5F) * Math.PI * 0.1F - Math.PI);
+				leftWing.rotateAngleY = (float)(-MathHelper.cos(tick * 0.5F) * Math.PI * 0.1F);
 			}
 		}
 		else {

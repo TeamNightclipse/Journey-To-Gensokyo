@@ -9,10 +9,10 @@
 
 package katrix.journeyToGensokyo.client.model;
 
-import katrix.journeyToGensokyo.util.MathHelperJTG;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.MathHelper;
 
 public class ModelHellRaven extends ModelBase {
 
@@ -90,8 +90,8 @@ public class ModelHellRaven extends ModelBase {
 	public void setRotationAngles(float movement, float far, float tick, float yaw, float pitch, float size, Entity entity) {
 		ravenHead.rotateAngleY = yaw / (180F / (float)Math.PI);
 		ravenHead.rotateAngleX = pitch / (180F / (float)Math.PI);
-		ravenBody.rotateAngleX = (float)(Math.PI / 3F + MathHelperJTG.cos(tick * 0.1F) * 0.15F);
-		ravenWingRight.rotateAngleY = (float)(MathHelperJTG.cos(tick * 0.8F) * Math.PI * 0.25F);
+		ravenBody.rotateAngleX = (float)(Math.PI / 3F + MathHelper.cos(tick * 0.1F) * 0.15F);
+		ravenWingRight.rotateAngleY = (float)(MathHelper.cos(tick * 0.8F) * Math.PI * 0.25F);
 		ravenWingLeft.rotateAngleY = -ravenWingRight.rotateAngleY;
 		ravenWingRight2.rotateAngleY = ravenWingRight.rotateAngleY * 0.5F;
 		ravenWingleft2.rotateAngleY = -ravenWingRight.rotateAngleY * 0.5F;
