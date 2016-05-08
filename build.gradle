@@ -22,14 +22,8 @@ ext.config = parseConfig(configFile)
 
 compileJava.options.encoding = 'UTF-8'
 
-if(config.official_release == 'false') {
-    version = config.mc_version + "-" + config.version + "-" + config.build_number
-} else {
-    version = config.mc_version + "-" + config.version
-}
-
-//version = mc_version + "-" + version + "-" + build_number
-group= "katrix.journeyToGensokyo" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+version = config.mc_version + "-" + config.version + "-" + config.build_number
+group = "katrix.journeyToGensokyo" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "JourneyToGensokyo"
 
 minecraft {
