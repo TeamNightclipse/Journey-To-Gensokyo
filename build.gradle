@@ -1,21 +1,18 @@
 buildscript {
     repositories {
-        mavenCentral()
+        jcenter()
         maven {
             name = "forge"
             url = "http://files.minecraftforge.net/maven"
         }
-        maven {
-            name = "sonatype"
-            url = "https://oss.sonatype.org/content/repositories/snapshots/"
-        }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
     }
 }
 
-apply plugin: 'forge'
+apply plugin: 'scala'
+apply plugin: 'net.minecraftforge.gradle.forge'
 
 ext.configFile = file('build.properties')
 ext.config = parseConfig(configFile)
@@ -25,43 +22,39 @@ compileJava.options.encoding = 'UTF-8'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
+compileScala {
+    scalaCompileOptions.additionalParameters = ["-Xexperimental"]
+}
+
 version = config.mc_version + "-" + config.version + "-" + config.build_number
-group = "katrix.journeyToGensokyo" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "JourneyToGensokyo"
+group= "net.katsstuff"
+archivesBaseName = "journeyToGensokyo"
+
+sourceSets.main.scala.srcDir "src/main/java" //Joint compilation
+sourceSets.main.java.srcDirs = []
 
 minecraft {
     version = config.mc_version + "-" + config.forge_version
-    
-	if (file('../run').exists()) {
-		runDir = "../run"
+	if (file('../run1.10').exists()) {
+		runDir = "../run1.10"
 	} else {
-		runDir = "eclipse"
+		runDir = "run"
 	}
+    
+    // the mappings can be changed at any time, and must be in the following format.
+    // snapshot_YYYYMMDD   snapshot are built nightly.
+    // stable_#            stables are built at the discretion of the MCP team.
+    // Use non-default mappings at your own risk. they may not allways work.
+    // simply re-run your setup task after changing the mappings to update your workspace.
+    mappings = "snapshot_20160916"
+    // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
 	
 	replace '@VERSION@', project.version
-	replaceIn 'LibMod.java'
-}
-
-repositories {
-    maven {
-        name = "ic2"
-        url = "http://maven.ic2.player.to/"
-    }
-    ivy {
-        name = 'ThaumCraft 4 API'
-        artifactPattern 'https://dl.dropboxusercontent.com/u/47135879/[module](-[classifier])-1.7.10-[revision](.[ext])'
-    }
+	replaceIn 'LibMod.scala'
 }
 
 dependencies {
-	compile 'net.industrial-craft:industrialcraft-2:2.2.796-experimental:dev'
-	compile 'Azanor:Thaumcraft:4.2.3.5:deobf@jar'
-
-	compile files (
-		"libs/Botania r1.8-242-deobf.jar", 
-		"libs/五つの難題MOD+ ver2.90-1.7.10.zip", 
-		"libs/CoFHLib-[1.7.10]1.0.3-175-dev.jar"
-)
+	compile project(':danmakuCore')
     // you may put jars on which you depend on in ./libs
     // or you may define them like so..
     //compile "some.group:artifact:version:classifier"
@@ -70,6 +63,14 @@ dependencies {
     // real examples
     //compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env
     //compile 'com.googlecode.efficient-java-matrix-library:ejml:0.24' // adds ejml to the dev env
+
+    // the 'provided' configuration is for optional dependencies that exist at compile-time but might not at runtime.
+    //provided 'com.mod-buildcraft:buildcraft:6.0.8:dev'
+
+    // the deobf configurations:  'deobfCompile' and 'deobfProvided' are the same as the normal compile and provided,
+    // except that these dependencies get remapped to your current MCP mappings
+    //deobfCompile 'com.mod-buildcraft:buildcraft:6.0.8:dev'
+    //deobfProvided 'com.mod-buildcraft:buildcraft:6.0.8:dev'
 
     // for more info...
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
@@ -99,12 +100,10 @@ processResources
 
 //All config file stuff from Botania
 task incrementBuildNumber(dependsOn: 'reobf') << {
-    if(config.official_release == 'false') {
-	    config.build_number = (config.build_number.toString().toInteger()) + 1
-        configFile.withWriter {
-            config.toProperties().store(it, "")
-        }
-	}
+	config.build_number = (config.build_number.toString().toInteger()) + 1
+    configFile.withWriter {
+        config.toProperties().store(it, "")
+    }
 }
 
 def parseConfig(File config) {
@@ -112,6 +111,12 @@ def parseConfig(File config) {
         def prop = new Properties()
         prop.load(it)
         return (new ConfigSlurper().parse(prop))
+    }
+}
+
+idea{
+    module{
+        inheritOutputDirs = true
     }
 }
 

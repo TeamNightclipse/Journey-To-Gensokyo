@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><templates><template autoinsert="false" context="filecomment_context" deleted="false" description="Comment for created Java files" enabled="true" id="org.eclipse.jdt.ui.text.codetemplates.filecomment" name="filecomment">/**
- * This class was created by &lt;Katrix&gt;. It's distributed as
- * part of the Journey To Gensokyo Mod. Get the Source Code in github:
- * https://github.com/Katrix-/JTG
- * 
- * Journey To Gensokyo is Open Source and distributed under the
- * a modifed Botania license: https://github.com/Katrix-/JTG/blob/master/LICENSE.md
- */</template></templates>

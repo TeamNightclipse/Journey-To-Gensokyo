@@ -1,0 +1,3 @@
+[submodule "DanmakuCore"]
+	path = DanmakuCore
+	url = https://github.com/Katrix-/DanmakuCore.git

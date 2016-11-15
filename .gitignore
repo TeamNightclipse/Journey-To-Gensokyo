@@ -1,29 +1,22 @@
-Thumbs.db
-
-#eclipse
-.project
-.classpath
-.metadata
-org.*
+# eclipse
 bin
-libs
-assetsSource
-libsSource
-gradle.prefs
+*.launch
+.settings
+.metadata
+.classpath
+.project
 
-#idea
-*.iml
+# idea
+out
 *.ipr
 *.iws
+*.iml
 .idea
-out
 
-#gradle
+# gradle
 build
 .gradle
 
-#runtime
+# other
+eclipse
 run
-
-#mac
-.DS_Store
