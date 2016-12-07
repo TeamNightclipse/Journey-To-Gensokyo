@@ -12,6 +12,5 @@ import net.minecraft.item.Item
 
 class ItemJTGBase(name: String) extends Item {
 
-	setRegistryName(name)
 	setUnlocalizedName(name)
 }

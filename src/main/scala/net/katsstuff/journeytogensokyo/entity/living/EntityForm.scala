@@ -8,14 +8,14 @@
  */
 package net.katsstuff.journeytogensokyo.entity.living
 
-import java.lang.{Byte => jByte}
+import java.lang.{Byte => JByte}
 
 import net.minecraft.entity.monster.EntityMob
 import net.minecraft.network.datasync.{DataParameter, DataSerializers, EntityDataManager}
 
 object EntityForm {
 
-	private final val Form: DataParameter[jByte] = EntityDataManager.createKey(classOf[EntityForm], DataSerializers.BYTE)
+	private final val Form: DataParameter[JByte] = EntityDataManager.createKey(classOf[EntityForm], DataSerializers.BYTE)
 }
 trait EntityForm extends EntityMob {
 

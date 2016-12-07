@@ -14,17 +14,15 @@ import net.katsstuff.danmakucore.lib.data.{LibForms, LibSubEntities}
 import net.katsstuff.journeytogensokyo.api.{JourneyToGensokyoAPI => JTGAPI}
 import net.katsstuff.journeytogensokyo.block.{BlockDanmakuCrafting, JTGBlocks}
 import net.katsstuff.journeytogensokyo.entity.living.EntityFairy
-import net.katsstuff.journeytogensokyo.lib.LibEntityName
-import net.katsstuff.journeytogensokyo.phase.{PhaseShapeContinuousType, PhaseShapeType, PhaseStageEnemyType}
+import net.katsstuff.journeytogensokyo.lib.{LibEntityName, LibPhaseName}
+import net.katsstuff.journeytogensokyo.phase.PhaseStageEnemyType
 import net.minecraft.block.Block
 import net.minecraft.init.{Blocks, Items}
 import net.minecraft.item.{Item, ItemBlock, ItemStack}
 import net.minecraftforge.event.RegistryEvent
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.registry.EntityRegistry
 
-@EventBusSubscriber
 object CommonProxy {
 
 	@SubscribeEvent
@@ -44,9 +42,7 @@ object CommonProxy {
 	@SubscribeEvent
 	def registerPhases(event: RegistryEvent.Register[PhaseType]): Unit = {
 		event.getRegistry.registerAll(
-			new PhaseShapeType,
-			new PhaseShapeContinuousType,
-			new PhaseStageEnemyType
+			(new PhaseStageEnemyType).setRegistryName(LibPhaseName.StageEnemy)
 		)
 	}
 
@@ -61,7 +57,7 @@ class CommonProxy {
 
 	def registerRenderers(): Unit = {}
 
-	def initEntities(): Unit = {
+	def registerEntities(): Unit = {
 		EntityRegistry.registerModEntity(classOf[EntityFairy], LibEntityName.Fairy, 0, this, 64, 1, true, 0xFFFFFF, 0x000000)
 	}
 

@@ -8,15 +8,23 @@
  */
 package net.katsstuff.journeytogensokyo
 
+import net.katsstuff.journeytogensokyo.client.ClientProxy
 import net.katsstuff.journeytogensokyo.handler.GuiHandler
 import net.katsstuff.journeytogensokyo.lib.{LibMod, LibModJ}
+import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.fml.common.Mod.EventHandler
 import net.minecraftforge.fml.common.event.{FMLInitializationEvent, FMLPreInitializationEvent}
 import net.minecraftforge.fml.common.network.NetworkRegistry
-import net.minecraftforge.fml.common.{Mod, SidedProxy}
+import net.minecraftforge.fml.common.{FMLCommonHandler, Mod, SidedProxy}
+import net.minecraftforge.fml.relauncher.Side
 
 @Mod(modid = LibMod.Id, name = LibMod.Name, version = LibMod.Version, modLanguage = "scala", dependencies = "require-after:danmakucore")
 object JourneyToGensokyo {
+	MinecraftForge.EVENT_BUS.register(CommonProxy)
+
+	if(FMLCommonHandler.instance().getSide == Side.CLIENT) {
+		MinecraftForge.EVENT_BUS.register(ClientProxy)
+	}
 
 	assert(LibMod.Id == LibModJ.ID)
 
@@ -32,6 +40,6 @@ object JourneyToGensokyo {
 	@EventHandler
 	def init(event: FMLInitializationEvent): Unit = {
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, GuiHandler)
-		proxy.initEntities()
+		proxy.registerEntities()
 	}
 }

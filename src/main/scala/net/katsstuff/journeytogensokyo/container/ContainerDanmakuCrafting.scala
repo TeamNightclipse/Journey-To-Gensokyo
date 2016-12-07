@@ -12,7 +12,6 @@ import scala.collection.mutable.ListBuffer
 
 import net.katsstuff.danmakucore.data.{ShotData, Vector3}
 import net.katsstuff.danmakucore.handler.ConfigHandler
-import net.katsstuff.danmakucore.helper.ItemNBTHelper
 import net.katsstuff.danmakucore.item.ItemDanmaku
 import net.katsstuff.danmakucore.lib.data.LibItems
 import net.katsstuff.journeytogensokyo.api.recipe.{CraftingManager, RecipeDanmaku}
@@ -72,7 +71,7 @@ class ContainerDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: Bl
 				val newSpeed = r.map(r => speedCombined(stack, r)).getOrElse(speedCurrent(stack))
 				val newGravity = r.map(r => gravityCombined(stack, r)).getOrElse(gravityCurrent(stack))
 				val stackSize = Math.min(if(slotCopy.getHasStack) stack.stackSize + slotCopy.getStack.stackSize else stack.stackSize, 64)
-				val custom = r.map(r => true).getOrElse(ItemNBTHelper.getBoolean(stack, ItemDanmaku.NBT_CUSTOM, false))
+				val custom = r.map(r => true).getOrElse(ItemDanmaku.getCustom(stack))
 
 				createOutput(stack, newShot, newSpeed, newGravity, stackSize, custom)
 			case None => null
@@ -85,7 +84,7 @@ class ContainerDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: Bl
 
 	private def createOutput(danmaku: ItemStack, shot: ShotData, speed: Double, gravity: Vector3, stackSize: Int, custom: Boolean): ItemStack = {
 		val amount = {
-			val maxNumber = ConfigHandler.getDanmakuMaxNumber
+			val maxNumber = ConfigHandler.danmaku.danmakuMaxNumber
 			val total = amountCurrent(danmaku) + amountResult(danmaku)
 			if(total > maxNumber) maxNumber else total
 		}
@@ -99,7 +98,7 @@ class ContainerDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: Bl
 		ItemDanmaku.setGravity(danmakuCopy, gravity)
 		ItemDanmaku.setPattern(danmakuCopy, pattern)
 		ItemDanmaku.setAmount(danmakuCopy, amount)
-		ItemNBTHelper.setBoolean(danmakuCopy, ItemDanmaku.NBT_CUSTOM, custom)
+		ItemDanmaku.setCustom(danmakuCopy, custom)
 
 		danmakuCopy
 	}

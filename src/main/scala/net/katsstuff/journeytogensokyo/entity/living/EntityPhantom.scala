@@ -8,13 +8,14 @@
  */
 package net.katsstuff.journeytogensokyo.entity.living
 
+import net.katsstuff.danmakucore.entity.living.ai.EntityAIMoveRanged
 import net.katsstuff.danmakucore.entity.living.{EntityDanmakuMob, EnumSpecies, IAllyDanmaku}
 import net.katsstuff.journeytogensokyo.handler.ConfigHandler
 import net.katsstuff.journeytogensokyo.phase.JTGPhases
+import net.minecraft.block.material.Material
 import net.minecraft.entity.EnumCreatureAttribute
 import net.minecraft.entity.ai.{EntityAIFleeSun, EntityAIHurtByTarget, EntityAILookIdle, EntityAINearestAttackableTarget, EntityAIRestrictSun, EntityAISwimming, EntityAIWander}
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.init.Blocks
 import net.minecraft.util.math.{BlockPos, MathHelper}
 import net.minecraft.world.World
 
@@ -22,7 +23,8 @@ class EntityPhantom(world: World) extends EntityDanmakuMob(world) with IAllyDanm
 
 	setSize(0.5F, 0.5F)
 	experienceValue = 3
-	phaseManager.setCurrentPhase(JTGPhases.StageEnemy.instantiate(phaseManager))
+	phaseManager.addPhase(JTGPhases.StageEnemy.instantiate(phaseManager))
+	phaseManager.getCurrentPhase.init()
 
 	setFlyingHeight(3)
 	setSpecies(EnumSpecies.PHANTOM)
@@ -32,8 +34,9 @@ class EntityPhantom(world: World) extends EntityDanmakuMob(world) with IAllyDanm
 		this.tasks.addTask(0, new EntityAISwimming(this))
 		this.tasks.addTask(2, new EntityAIRestrictSun(this))
 		this.tasks.addTask(3, new EntityAIFleeSun(this, 1.0D))
-		this.tasks.addTask(4, new EntityAIWander(this, 1.0D, 50))
-		this.tasks.addTask(5, new EntityAILookIdle(this))
+		this.tasks.addTask(4, new EntityAIMoveRanged(this, getSpeed, 16F))
+		this.tasks.addTask(6, new EntityAIWander(this, getSpeed))
+		this.tasks.addTask(7, new EntityAILookIdle(this))
 		this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false))
 		this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, classOf[EntityPlayer], true))
 	}
@@ -48,11 +51,9 @@ class EntityPhantom(world: World) extends EntityDanmakuMob(world) with IAllyDanm
 			val x = MathHelper.floor_double(posX)
 			val y = MathHelper.floor_double(getEntityBoundingBox.minY)
 			val z = MathHelper.floor_double(posZ)
-			val blockpos: BlockPos = new BlockPos(x, y, z)
-			val spawnBlocks = Seq(Blocks.GRASS, Blocks.DIRT, Blocks.SAND, Blocks.STONE)
-			return spawnBlocks.contains(worldObj.getBlockState(blockpos.down).getBlock) && super.getCanSpawnHere
-		}
-
-		false
+			val blockpos = new BlockPos(x, y, z)
+			val spawnMaterial = Seq(Material.GRASS, Material.GROUND, Material.SAND, Material.ROCK)
+			spawnMaterial.contains(worldObj.getBlockState(blockpos.down).getMaterial) && super.getCanSpawnHere
+		} else false
 	}
 }

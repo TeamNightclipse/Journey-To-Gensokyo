@@ -15,10 +15,6 @@ import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 @ObjectHolder(LibModJ.ID)
 public class JTGPhases {
 
-	@ObjectHolder(LibPhaseName.Shape)
-	public static final PhaseShapeType Shape = new PhaseShapeType();
-	@ObjectHolder(LibPhaseName.ShapeContinuous)
-	public static final PhaseShapeContinuousType ShapeContinuous = new PhaseShapeContinuousType();
 	@ObjectHolder(LibPhaseName.StageEnemy)
 	public static final PhaseStageEnemyType StageEnemy = new PhaseStageEnemyType();
 }

@@ -62,7 +62,7 @@ class GuiDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: BlockPos
 				val amountCurrent = container.amountCurrent(stack)
 				val amountResult = container.amountResult(stack)
 				val amountTotal = {
-					val maxNumber = ConfigHandler.getDanmakuMaxNumber
+					val maxNumber = ConfigHandler.danmaku.danmakuMaxNumber
 					val total = amountCurrent + amountResult
 					if(total > maxNumber) maxNumber else total
 				}

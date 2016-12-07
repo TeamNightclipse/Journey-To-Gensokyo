@@ -12,7 +12,6 @@ import net.katsstuff.danmakucore.data.Vector3
 import net.minecraft.block.Block
 import net.minecraft.entity.Entity
 import net.minecraft.item.{Item, ItemStack}
-import net.minecraft.util.math.Vec3d
 
 /**
 	* All implicit classes and methods to add functionality or convert
@@ -23,22 +22,15 @@ object Implicits {
 	implicit class RichEntity(val entity: Entity) extends AnyVal {
 
 		def getAngle: Vector3 = Vector3.fromSpherical(entity.rotationYaw, entity.rotationPitch)
-
 	}
-
-	implicit def vector3(vec: Vec3d): Vector3 = new Vector3(vec)
-
-	implicit def vec3d(vec: Vector3): Vec3d = vec.toVec3d
 
 	implicit class RichItem(val item: Item) extends AnyVal {
 
 		def toStack: ItemStack = new ItemStack(item)
-
 	}
 
 	implicit class RichBlock(val block: Block) extends AnyVal {
 
 		def toStack: ItemStack = new ItemStack(block)
-
 	}
 }
