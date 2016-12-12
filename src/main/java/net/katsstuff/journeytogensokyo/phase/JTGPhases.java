@@ -16,5 +16,8 @@ import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 public class JTGPhases {
 
 	@ObjectHolder(LibPhaseName.StageEnemy)
-	public static final PhaseStageEnemyType StageEnemy = new PhaseStageEnemyType();
+	public static final PhaseTypeStageEnemy StageEnemy = new PhaseTypeStageEnemy();
+
+	@ObjectHolder(LibPhaseName.ShapeArrow)
+	public static final PhaseTypeShapeArrow ShapeArrow = new PhaseTypeShapeArrow();
 }

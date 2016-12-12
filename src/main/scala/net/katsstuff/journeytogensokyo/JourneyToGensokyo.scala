@@ -28,6 +28,7 @@ object JourneyToGensokyo {
 
 	assert(LibMod.Id == LibModJ.ID)
 
+	//noinspection VarCouldBeVal
 	@SidedProxy(serverSide = LibMod.CommonProxy, clientSide = LibMod.ClientProxy, modId = LibMod.Id)
 	var proxy: CommonProxy = _
 

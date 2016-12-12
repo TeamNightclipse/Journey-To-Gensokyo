@@ -22,7 +22,7 @@ public final class JourneyToGensokyoAPI {
 	 * It will only use what is at the time supported by the danmaku item.
 	 * @param input The input for the recipe. Can be either an ItemStack, or an OreName.
 	 */
-	public static void addDanmakuRecipe(ShotData shot, MovementData movementData, Object input) {
-		CraftingManager.addRecipeDanmaku(shot, movementData, input);
+	public static void addDanmakuRecipe(ShotData shot, MovementData movementData, Object input, int scoreCost) {
+		CraftingManager.addItemRecipeDanmaku(shot, movementData, input, scoreCost);
 	}
 }

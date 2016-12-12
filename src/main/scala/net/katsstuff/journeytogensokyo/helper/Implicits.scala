@@ -8,6 +8,8 @@
  */
 package net.katsstuff.journeytogensokyo.helper
 
+import java.util.Optional
+
 import net.katsstuff.danmakucore.data.Vector3
 import net.minecraft.block.Block
 import net.minecraft.entity.Entity
@@ -18,6 +20,11 @@ import net.minecraft.item.{Item, ItemStack}
 	* between classes go in here.
 	*/
 object Implicits {
+
+	implicit class RickOptional[A](val optional: Optional[A]) extends AnyVal {
+
+		def toOption: Option[A] = if(optional.isPresent) Some(optional.get()) else None
+	}
 
 	implicit class RichEntity(val entity: Entity) extends AnyVal {
 

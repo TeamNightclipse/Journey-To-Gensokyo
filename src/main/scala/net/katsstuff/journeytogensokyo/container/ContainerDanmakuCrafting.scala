@@ -12,9 +12,10 @@ import scala.collection.mutable.ListBuffer
 
 import net.katsstuff.danmakucore.data.{ShotData, Vector3}
 import net.katsstuff.danmakucore.handler.ConfigHandler
+import net.katsstuff.danmakucore.helper.TouhouHelper
 import net.katsstuff.danmakucore.item.ItemDanmaku
 import net.katsstuff.danmakucore.lib.data.LibItems
-import net.katsstuff.journeytogensokyo.api.recipe.{CraftingManager, RecipeDanmaku}
+import net.katsstuff.journeytogensokyo.api.recipe.{CraftingManager, IRecipeDanmaku}
 import net.katsstuff.journeytogensokyo.block.JTGBlocks
 import net.katsstuff.journeytogensokyo.container.slot.{SlotDanmakuInput, SlotDanmakuOutput, SlotDanmakuType}
 import net.minecraft.entity.player.{EntityPlayer, InventoryPlayer}
@@ -23,6 +24,8 @@ import net.minecraft.item.ItemStack
 import net.minecraft.util.math.{BlockPos, MathHelper}
 import net.minecraft.world.World
 
+import net.katsstuff.journeytogensokyo.helper.Implicits._
+
 class ContainerDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: BlockPos) extends Container {
 
 	private val craftMatrix = new InventoryCrafting(this, 3, 3)
@@ -30,12 +33,12 @@ class ContainerDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: Bl
 
 	private val craftIngredients = new InventoryCrafting(this, 1, 4)
 
-	private val slotDanmaku  = new SlotDanmakuInput(craftIngredients, 0, 107, 142, SlotDanmakuType.Danmaku)
-	private val slotCopy     = new SlotDanmakuInput(craftIngredients, 1, 20, 160, ???)
-	private val slotAmount   = new SlotDanmakuInput(craftIngredients, 2, 56, 160, ???)
+	private val slotDanmaku  = new SlotDanmakuInput(craftIngredients, 0, 107, 142, SlotDanmakuType.Danmaku, false)
+	private val slotCopy     = new SlotDanmakuInput(craftIngredients, 1, 20, 160, SlotDanmakuType.BulletCore, false)
+	private val slotAmount     = new SlotDanmakuInput(craftIngredients, 2, 56, 160, SlotDanmakuType.BulletCore, false)
 	private val slotMaterial = new Slot(craftIngredients, 3, 161, 142)
 
-	private val slotOutput = new SlotDanmakuOutput(invPlayer.player, craftIngredients, craftMatrix, craftResult, 0, 224, 142)
+	private val slotOutput = new SlotDanmakuOutput(this, invPlayer.player, craftIngredients, craftMatrix, craftResult, 0, 224, 142)
 
 	addSlotToContainer(slotOutput)
 	addSlotToContainer(slotDanmaku)
@@ -48,7 +51,7 @@ class ContainerDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: Bl
 		val offsetY = 173
 
 		for(i <- 0 until 3; j <- 0 until 3) {
-			addSlotToContainer(new SlotDanmakuInput(craftMatrix, j + i * 3, offsetX - 69 + j * 18, offsetY + 22 + i * 18, ???))
+			addSlotToContainer(new SlotDanmakuInput(craftMatrix, j + i * 3, offsetX - 69 + j * 18, offsetY + 22 + i * 18, SlotDanmakuType.BulletCore, true))
 		}
 
 		for(i <- 0 until 3; j <- 0 until 9) {
@@ -71,7 +74,7 @@ class ContainerDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: Bl
 				val newSpeed = r.map(r => speedCombined(stack, r)).getOrElse(speedCurrent(stack))
 				val newGravity = r.map(r => gravityCombined(stack, r)).getOrElse(gravityCurrent(stack))
 				val stackSize = Math.min(if(slotCopy.getHasStack) stack.stackSize + slotCopy.getStack.stackSize else stack.stackSize, 64)
-				val custom = r.map(r => true).getOrElse(ItemDanmaku.getCustom(stack))
+				val custom = r.map(_ => true).getOrElse(ItemDanmaku.getCustom(stack))
 
 				createOutput(stack, newShot, newSpeed, newGravity, stackSize, custom)
 			case None => null
@@ -108,8 +111,8 @@ class ContainerDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: Bl
 
 	def shotCurrent(input: ItemStack): ShotData = ShotData.fromNBTItemStack(input)
 
-	def shotResult(multiplier: Int, recipe: RecipeDanmaku): ShotData = {
-		val result = recipe.getOutputShotData
+	def shotResult(multiplier: Int, recipe: IRecipeDanmaku): ShotData = {
+		val result = recipe.outputShotData
 
 		result.copy(
 			damage = result.damage * multiplier,
@@ -121,7 +124,7 @@ class ContainerDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: Bl
 		)
 	}
 
-	def shotCombined(input: ItemStack, recipe: RecipeDanmaku): ShotData = {
+	def shotCombined(input: ItemStack, recipe: IRecipeDanmaku): ShotData = {
 		def round(d: Float, decimalPlace: Int): Float = BigDecimal(d).setScale(decimalPlace, BigDecimal.RoundingMode.HALF_UP).toFloat
 		val current = shotCurrent(input)
 		val result = shotResult(input.stackSize, recipe)
@@ -145,14 +148,14 @@ class ContainerDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: Bl
 	}
 
 	def speedCurrent(input: ItemStack): Double = ItemDanmaku.getSpeed(input)
-	def speedResult(multiplier: Int, recipe: RecipeDanmaku): Double = recipe.getMovement.getSpeedOriginal * multiplier
-	def speedCombined(input: ItemStack, recipe: RecipeDanmaku): Double =
+	def speedResult(multiplier: Int, recipe: IRecipeDanmaku): Double = recipe.outputMovement.getSpeedOriginal * multiplier
+	def speedCombined(input: ItemStack, recipe: IRecipeDanmaku): Double =
 		MathHelper.clamp_double(speedCurrent(input) + speedResult(input.stackSize, recipe), 0D, 2D)
 
-	def gravityResult(multiplier: Int, recipe: RecipeDanmaku): Vector3 = recipe.getMovement.getGravity * multiplier
+	def gravityResult(multiplier: Int, recipe: IRecipeDanmaku): Vector3 = recipe.outputMovement.getGravity * multiplier
 	def gravityCurrent(input: ItemStack): Vector3 = ItemDanmaku.getGravity(input)
 
-	def gravityCombined(input: ItemStack, recipe: RecipeDanmaku): Vector3 = {
+	def gravityCombined(input: ItemStack, recipe: IRecipeDanmaku): Vector3 = {
 		val current = gravityCurrent(input)
 		val result = gravityResult(input.stackSize, recipe)
 
@@ -164,7 +167,7 @@ class ContainerDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: Bl
 	}
 
 	def amountCurrent(input: ItemStack): Int = ItemDanmaku.getAmount(input)
-	def amountResult(input: ItemStack) = input.stackSize
+	def amountResult(input: ItemStack): Int = input.stackSize
 
 	def getPattern(amount: Int, default: ItemStack): Int = {
 		def pattern(slots: Int*) = slots.map(craftMatrix.getStackInSlot).contains(null)
@@ -181,7 +184,11 @@ class ContainerDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: Bl
 		ItemDanmaku.getPattern(default)
 	}
 
-	def recipe: Option[RecipeDanmaku] = CraftingManager.findMatchingRecipeDanmaku(slotMaterial)
+	def recipe: Option[IRecipeDanmaku] = for {
+		recipe <- CraftingManager.findMatchingRecipeDanmaku(slotMaterial)
+		data <- TouhouHelper.getDanmakuCoreData(invPlayer.player).toOption
+		if data.getScore >= recipe.scoreCost()
+	} yield recipe
 
 	override def slotClick(slotId: Int, dragType: Int, mode: ClickType, player: EntityPlayer): ItemStack = {
 		val stack = super.slotClick(slotId, dragType, mode, player)

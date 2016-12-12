@@ -11,5 +11,5 @@ package net.katsstuff.journeytogensokyo.lib
 object LibEntityName {
 
 	final val Fairy = "fairy"
-
+	final val TenguCrow = "tenguCrow"
 }

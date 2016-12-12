@@ -8,15 +8,24 @@
  */
 package net.katsstuff.journeytogensokyo.container.slot
 
+import net.katsstuff.danmakucore.capability.IDanmakuCoreData
+import net.katsstuff.danmakucore.helper.TouhouHelper
+import net.katsstuff.journeytogensokyo.container.ContainerDanmakuCrafting
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.inventory.{IInventory, InventoryCrafting, SlotCrafting}
 import net.minecraft.item.ItemStack
 
-class SlotDanmakuOutput(player: EntityPlayer, ingredients: IInventory, matrix: InventoryCrafting, inv: IInventory, index: Int, xPos: Int, yPos: Int)
+class SlotDanmakuOutput(container: ContainerDanmakuCrafting, player: EntityPlayer, ingredients: IInventory, matrix: InventoryCrafting, inv: IInventory,
+		index: Int, xPos: Int, yPos: Int)
 	extends SlotCrafting(player, matrix, inv, index, xPos, yPos) {
 
 	override def onPickupFromSlot(playerIn: EntityPlayer, stack: ItemStack): Unit = {
 		matrix.clear()
 		ingredients.clear()
+
+		container.recipe match {
+			case Some(r) => TouhouHelper.changeAndSyncPlayerData((data: IDanmakuCoreData) => data.addScore(-r.scoreCost()), playerIn)
+			case None =>
+		}
 	}
 }

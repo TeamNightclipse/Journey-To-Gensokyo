@@ -8,23 +8,23 @@
  */
 package net.katsstuff.journeytogensokyo.api.recipe;
 
-import java.util.List;
-
 import net.katsstuff.danmakucore.data.MovementData;
 import net.katsstuff.danmakucore.data.ShotData;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class RecipeDanmaku {
+public class RecipeDanmakuItem implements IRecipeDanmaku {
 
 	private final ShotData shot;
 	private final MovementData movement;
 	private final Object input;
+	private final int scoreCost;
 
-	RecipeDanmaku(ShotData outputShot, MovementData movement, Object input) {
+	RecipeDanmakuItem(ShotData outputShot, MovementData movement, Object input, int scoreCost) {
 		shot = outputShot;
 		this.movement = movement;
+		this.scoreCost = scoreCost;
 
 		if(input instanceof ItemStack || input instanceof String) {
 			this.input = input;
@@ -36,23 +36,30 @@ public class RecipeDanmaku {
 		if(slot.getHasStack()) {
 			ItemStack stack = slot.getStack();
 			if(input instanceof String) {
-				List<ItemStack> validOres = OreDictionary.getOres((String)input);
-				for(ItemStack oreStack : validOres) {
-					if(ItemStack.areItemStacksEqual(stack, oreStack)) return true;
+				if(OreDictionary.containsMatch(false, OreDictionary.getOres((String)input), stack)) {
+					return true;
 				}
 			}
 			else {
 				return ItemStack.areItemStacksEqual(stack, (ItemStack)input);
 			}
 		}
+
 		return false;
 	}
 
-	public ShotData getOutputShotData() {
-		return shot;
+	@Override
+	public int scoreCost() {
+		return scoreCost;
 	}
 
-	public MovementData getMovement() {
+	@Override
+	public MovementData outputMovement() {
 		return movement;
+	}
+
+	@Override
+	public ShotData outputShotData() {
+		return shot;
 	}
 }

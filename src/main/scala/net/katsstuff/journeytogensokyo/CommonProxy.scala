@@ -13,12 +13,15 @@ import net.katsstuff.danmakucore.entity.living.phase.PhaseType
 import net.katsstuff.danmakucore.lib.data.{LibForms, LibSubEntities}
 import net.katsstuff.journeytogensokyo.api.{JourneyToGensokyoAPI => JTGAPI}
 import net.katsstuff.journeytogensokyo.block.{BlockDanmakuCrafting, JTGBlocks}
-import net.katsstuff.journeytogensokyo.entity.living.EntityFairy
+import net.katsstuff.journeytogensokyo.entity.living.{EntityFairy, EntityTenguCrow}
+import net.katsstuff.journeytogensokyo.item.ItemBulletCore
 import net.katsstuff.journeytogensokyo.lib.{LibEntityName, LibPhaseName}
-import net.katsstuff.journeytogensokyo.phase.PhaseStageEnemyType
+import net.katsstuff.journeytogensokyo.phase.{PhaseTypeStageEnemy, PhaseTypeShapeArrow}
 import net.minecraft.block.Block
+import net.minecraft.entity.EnumCreatureType
 import net.minecraft.init.{Blocks, Items}
 import net.minecraft.item.{Item, ItemBlock, ItemStack}
+import net.minecraftforge.common.BiomeDictionary
 import net.minecraftforge.event.RegistryEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.registry.EntityRegistry
@@ -35,6 +38,7 @@ object CommonProxy {
 	@SubscribeEvent
 	def registerItems(event: RegistryEvent.Register[Item]): Unit = {
 		event.getRegistry.registerAll(
+			new ItemBulletCore,
 			itemBlock(JTGBlocks.BlockDanmakuCrafting)
 		)
 	}
@@ -42,7 +46,8 @@ object CommonProxy {
 	@SubscribeEvent
 	def registerPhases(event: RegistryEvent.Register[PhaseType]): Unit = {
 		event.getRegistry.registerAll(
-			(new PhaseStageEnemyType).setRegistryName(LibPhaseName.StageEnemy)
+			(new PhaseTypeStageEnemy).setRegistryName(LibPhaseName.StageEnemy),
+			(new PhaseTypeShapeArrow).setRegistryName(LibPhaseName.ShapeArrow)
 		)
 	}
 
@@ -58,7 +63,13 @@ class CommonProxy {
 	def registerRenderers(): Unit = {}
 
 	def registerEntities(): Unit = {
-		EntityRegistry.registerModEntity(classOf[EntityFairy], LibEntityName.Fairy, 0, this, 64, 1, true, 0xFFFFFF, 0x000000)
+		EntityRegistry.registerModEntity(classOf[EntityFairy], LibEntityName.Fairy, 0, JourneyToGensokyo, 64, 1, true, 0xFFFFFF, 0x000000)
+		val fairySpawn = BiomeDictionary.getBiomesForType(BiomeDictionary.Type.HILLS) ++ BiomeDictionary.getBiomesForType(BiomeDictionary.Type.PLAINS)
+		EntityRegistry.addSpawn(classOf[EntityFairy], 25, 1, 4, EnumCreatureType.MONSTER, fairySpawn: _*)
+
+		EntityRegistry.registerModEntity(classOf[EntityTenguCrow], LibEntityName.TenguCrow, 1, JourneyToGensokyo, 64, 1, true, 0xFFFFFF, 0x000000)
+		EntityRegistry.addSpawn(classOf[EntityTenguCrow], 15, 1, 2, EnumCreatureType.MONSTER,
+			BiomeDictionary.getBiomesForType(BiomeDictionary.Type.MOUNTAIN): _*)
 	}
 
 	def registerDanmakuCrafting(): Unit = {

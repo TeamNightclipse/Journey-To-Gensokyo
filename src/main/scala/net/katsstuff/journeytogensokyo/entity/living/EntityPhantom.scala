@@ -46,7 +46,7 @@ class EntityPhantom(world: World) extends EntityDanmakuMob(world) with IAllyDanm
 	override def getMaxSpawnedInChunk: Int = 3
 
 	override def getCanSpawnHere: Boolean = {
-		val spawnChance = ConfigHandler.entry.spawnRate
+		val spawnChance = ConfigHandler.entry.spawnRateCommon
 		if(rand.nextInt(100) < spawnChance) {
 			val x = MathHelper.floor_double(posX)
 			val y = MathHelper.floor_double(getEntityBoundingBox.minY)

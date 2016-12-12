@@ -18,10 +18,9 @@ import net.katsstuff.danmakucore.handler.ConfigHandler
 import net.katsstuff.danmakucore.helper.DanmakuHelper
 import net.katsstuff.danmakucore.impl.shape.{ShapeArrow, ShapeCircle, ShapeRandomRing, ShapeRing, ShapeStar, ShapeWideShot}
 import net.katsstuff.danmakucore.registry.DanmakuRegistry
-import net.katsstuff.journeytogensokyo.phase.PhaseStageEnemy._
 import net.minecraft.nbt.NBTTagCompound
 
-class PhaseStageEnemyType extends PhaseType {
+class PhaseTypeStageEnemy extends PhaseType {
 
 	final   val ShapeAmount = 6
 	private val rand        = new Random()
@@ -37,16 +36,6 @@ class PhaseStageEnemyType extends PhaseType {
 	}
 }
 
-object PhaseStageEnemy {
-
-	private final val NbtMovement = "speed"
-	private final val NbtShape    = "shape"
-	private final val NbtAmount   = "amount"
-	private final val NbtWidth    = "width"
-	private final val NbtShotData = "shotData"
-	private final val Accuracy    = 5F
-}
-
 class PhaseStageEnemy(
 		manager: PhaseManager,
 		var shot: ShotData,
@@ -54,7 +43,14 @@ class PhaseStageEnemy(
 		var shape: Int,
 		var amount: Int,
 		var width: Float,
-		val getType: PhaseStageEnemyType) extends Phase(manager) {
+		val getType: PhaseTypeStageEnemy) extends Phase(manager) {
+
+	private val NbtMovement = "speed"
+	private val NbtShape    = "shape"
+	private val NbtAmount   = "amount"
+	private val NbtWidth    = "width"
+	private val NbtShotData = "shotData"
+	private val Accuracy    = 5F
 
 	private val shapeObj = {
 		val distance = 0.1D

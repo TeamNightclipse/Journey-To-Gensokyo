@@ -10,13 +10,12 @@ package net.katsstuff.journeytogensokyo.helper
 
 import org.apache.logging.log4j.Level
 
+import net.katsstuff.danmakucore.lib.LibMod
 import net.minecraftforge.fml.common.FMLLog
 
 object LogHelper {
 
-	lazy val log = FMLLog.getLogger
-
-	private def log(level: Level, obj: Any): Unit = log.log(level, String.valueOf(obj))
+	private def log(level: Level, obj: Any): Unit = FMLLog.log(LibMod.NAME, level, String.valueOf(obj))
 
 	def all(obj: Any): Unit = log(Level.ALL, obj)
 	def debug(obj: Any): Unit = log(Level.DEBUG, obj)

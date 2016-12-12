@@ -10,7 +10,6 @@ package net.katsstuff.journeytogensokyo.lib;
 
 public class LibPhaseName {
 
-	public static final String Shape = "shape";
-	public static final String ShapeContinuous = "shapeContinuous";
+	public static final String ShapeArrow = "shapeArrow";
 	public static final String StageEnemy = "stageEnemy";
 }

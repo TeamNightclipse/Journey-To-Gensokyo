@@ -9,19 +9,17 @@
 package net.katsstuff.journeytogensokyo.entity.living
 
 import net.katsstuff.danmakucore.data.{MovementData, RotationData}
-import net.katsstuff.danmakucore.entity.danmaku.DanmakuTemplate
 import net.katsstuff.danmakucore.entity.living.EnumSpecies
-import net.katsstuff.danmakucore.lib.data.{LibDanmakuVariants, LibPhases}
+import net.katsstuff.danmakucore.lib.data.{LibPhases, LibShotData}
 import net.minecraft.world.World
 
 class EntityFairyNether(world: World) extends EntityFairy(world) {
 
 	{
-		val danmaku = DanmakuTemplate.builder().setUser(this).setShot(LibDanmakuVariants.SPHERE_DARK.getShotData).build()
 		val movement = MovementData.constant(0.4D)
 		val rotation = RotationData.none
 
-		phaseManager.addPhase(LibPhases.SHAPE_WIDE.instantiate(phaseManager, 8, 30F, 0F, 0D, danmaku, movement, rotation))
+		phaseManager.addPhase(LibPhases.SHAPE_WIDE.instantiate(phaseManager, 8, 30F, 0F, 0D, LibShotData.SHOT_SPHERE_DARK, movement, rotation))
 		phaseManager.getCurrentPhase.init()
 		setSpecies(EnumSpecies.FAIRY_HELL)
 	}
