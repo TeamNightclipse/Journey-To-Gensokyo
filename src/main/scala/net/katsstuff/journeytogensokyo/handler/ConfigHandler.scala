@@ -16,16 +16,16 @@ import net.minecraftforge.common.config.Config.Comment
 @Config(modid = LibMod.Id)
 class ConfigHandler {
 
-	ConfigHandler.entry = this
+  ConfigHandler.entry = this
 
-	@Comment(Array("The spawn rate of common mobs"))
-	var spawnRateCommon = 30
+  @Comment(Array("The spawn rate of common mobs"))
+  var spawnRateCommon = 30
 
-	@Comment(Array("The spawn rate of harder mobs", "Examples of harder mobs are tengu and hell ravens"))
-	var spawnRateHard = 15
+  @Comment(Array("The spawn rate of harder mobs", "Examples of harder mobs are tengu and hell ravens"))
+  var spawnRateHard = 15
 }
 object ConfigHandler {
 
-	//Super hacky, but meh
-	var entry: ConfigHandler = _
+  //Super hacky, but meh
+  var entry: ConfigHandler = _
 }

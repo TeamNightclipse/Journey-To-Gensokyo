@@ -12,5 +12,5 @@ import net.katsstuff.journeytogensokyo.helper.LogHelper
 
 trait InitNeeded {
 
-	def init(): Unit = LogHelper.debug("Initializing" + this.toString)
+  def init(): Unit = LogHelper.debug("Initializing" + this.toString)
 }

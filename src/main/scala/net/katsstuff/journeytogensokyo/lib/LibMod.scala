@@ -10,9 +10,9 @@ package net.katsstuff.journeytogensokyo.lib
 
 object LibMod {
 
-	final val Id          = "journeytogensokyo"
-	final val Name        = "Journey To Gensokyo"
-	final val Version     = "@VERSION@"
-	final val CommonProxy = "net.katsstuff.journeytogensokyo.CommonProxy"
-	final val ClientProxy = "net.katsstuff.journeytogensokyo.client.ClientProxy"
+  final val Id          = "journeytogensokyo"
+  final val Name        = "Journey To Gensokyo"
+  final val Version     = "@VERSION@"
+  final val CommonProxy = "net.katsstuff.journeytogensokyo.CommonProxy"
+  final val ClientProxy = "net.katsstuff.journeytogensokyo.client.ClientProxy"
 }

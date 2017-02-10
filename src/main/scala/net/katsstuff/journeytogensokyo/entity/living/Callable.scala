@@ -12,8 +12,8 @@ import net.katsstuff.danmakucore.entity.living.ICallable
 
 trait Callable extends ICallable {
 
-	private var distance = 0
-	override def setEntityCallDistance(distance: Int): Unit = this.distance = distance
-	override def getEntityCallDistance: Int = distance
+  private var distance = 0
+  override def setEntityCallDistance(distance: Int): Unit = this.distance = distance
+  override def getEntityCallDistance: Int = distance
 
 }

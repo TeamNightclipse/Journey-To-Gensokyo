@@ -15,17 +15,23 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.inventory.{IInventory, InventoryCrafting, SlotCrafting}
 import net.minecraft.item.ItemStack
 
-class SlotDanmakuOutput(container: ContainerDanmakuCrafting, player: EntityPlayer, ingredients: IInventory, matrix: InventoryCrafting, inv: IInventory,
-		index: Int, xPos: Int, yPos: Int)
-	extends SlotCrafting(player, matrix, inv, index, xPos, yPos) {
+class SlotDanmakuOutput(container:   ContainerDanmakuCrafting,
+                        player:      EntityPlayer,
+                        ingredients: IInventory,
+                        matrix:      InventoryCrafting,
+                        inv:         IInventory,
+                        index:       Int,
+                        xPos:        Int,
+                        yPos:        Int)
+    extends SlotCrafting(player, matrix, inv, index, xPos, yPos) {
 
-	override def onPickupFromSlot(playerIn: EntityPlayer, stack: ItemStack): Unit = {
-		matrix.clear()
-		ingredients.clear()
+  override def onPickupFromSlot(playerIn: EntityPlayer, stack: ItemStack): Unit = {
+    matrix.clear()
+    ingredients.clear()
 
-		container.recipe match {
-			case Some(r) => TouhouHelper.changeAndSyncPlayerData((data: IDanmakuCoreData) => data.addScore(-r.scoreCost()), playerIn)
-			case None =>
-		}
-	}
+    container.recipe match {
+      case Some(r) => TouhouHelper.changeAndSyncPlayerData((data: IDanmakuCoreData) => data.addScore(-r.scoreCost()), playerIn)
+      case None    =>
+    }
+  }
 }

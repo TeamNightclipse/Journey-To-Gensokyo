@@ -13,5 +13,5 @@ import net.minecraft.block.material.Material
 
 class BlockJTGBase(material: Material, name: String) extends Block(material) {
 
-	setUnlocalizedName(name)
+  setUnlocalizedName(name)
 }

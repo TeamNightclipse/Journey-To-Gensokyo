@@ -16,13 +16,10 @@ import net.minecraft.world.World
 
 class EntityFairyEnd(world: World) extends EntityFairy(world) {
 
-	{
-		val shot = LibDanmakuVariants.LASER.getShotData.copy(
-			color = DanmakuHelper.randomSaturatedColor(),
-			subEntity = ???
-		)
-		phaseManager.addPhase(JTGPhases.ShapeArrow.instantiate(phaseManager, shot, MovementData.constant(0.4D), RotationData.none, 8, 0.5, 2D))
-		phaseManager.getCurrentPhase.init()
-	}
+  {
+    val shot = LibDanmakuVariants.LASER.getShotData.copy(color = DanmakuHelper.randomSaturatedColor(), subEntity = ???)
+    phaseManager.addPhase(JTGPhases.ShapeArrow.instantiate(phaseManager, shot, MovementData.constant(0.4D), RotationData.none, 8, 0.5, 2D))
+    phaseManager.getCurrentPhase.init()
+  }
 
 }

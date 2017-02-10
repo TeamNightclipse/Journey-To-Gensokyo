@@ -15,12 +15,12 @@ import net.minecraft.world.World
 
 class EntityFairyNether(world: World) extends EntityFairy(world) {
 
-	{
-		val movement = MovementData.constant(0.4D)
-		val rotation = RotationData.none
+  {
+    val movement = MovementData.constant(0.4D)
+    val rotation = RotationData.none
 
-		phaseManager.addPhase(LibPhases.SHAPE_WIDE.instantiate(phaseManager, 8, 30F, 0F, 0D, LibShotData.SHOT_SPHERE_DARK, movement, rotation))
-		phaseManager.getCurrentPhase.init()
-		setSpecies(EnumSpecies.FAIRY_HELL)
-	}
+    phaseManager.addPhase(LibPhases.SHAPE_WIDE.instantiate(phaseManager, 8, 30F, 0F, 0D, LibShotData.SHOT_SPHERE_DARK, movement, rotation))
+    phaseManager.getCurrentPhase.init()
+    setSpecies(EnumSpecies.FAIRY_HELL)
+  }
 }

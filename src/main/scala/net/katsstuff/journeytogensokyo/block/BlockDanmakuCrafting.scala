@@ -20,13 +20,21 @@ import net.minecraft.world.World
 
 class BlockDanmakuCrafting extends BlockJTGBase(Material.WOOD, LibBlockName.DanmakuCrafting) {
 
-	setCreativeTab(JTGCreativeTab)
+  setCreativeTab(JTGCreativeTab)
 
-	override def onBlockActivated(world: World, pos: BlockPos, state: IBlockState, player: EntityPlayer, hand: EnumHand, heldItem: ItemStack,
-			side: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): Boolean = {
-		if(!world.isRemote) {
-			player.openGui(JourneyToGensokyo, LibGuiId.DanmakuCraftingGui, world, pos.getX, pos.getY, pos.getZ)
-		}
-		true
-	}
+  override def onBlockActivated(world:    World,
+                                pos:      BlockPos,
+                                state:    IBlockState,
+                                player:   EntityPlayer,
+                                hand:     EnumHand,
+                                heldItem: ItemStack,
+                                side:     EnumFacing,
+                                hitX:     Float,
+                                hitY:     Float,
+                                hitZ:     Float): Boolean = {
+    if (!world.isRemote) {
+      player.openGui(JourneyToGensokyo, LibGuiId.DanmakuCraftingGui, world, pos.getX, pos.getY, pos.getZ)
+    }
+    true
+  }
 }

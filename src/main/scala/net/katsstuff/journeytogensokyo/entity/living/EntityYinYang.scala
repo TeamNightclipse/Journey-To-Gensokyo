@@ -22,37 +22,37 @@ import net.minecraft.world.World
 
 class EntityYinYang(world: World) extends EntityDanmakuMob(world) with IAllyDanmaku {
 
-	setSize(0.5F, 0.5F)
-	experienceValue = 3
-	phaseManager.addPhase(JTGPhases.StageEnemy.instantiate(phaseManager))
-	phaseManager.getCurrentPhase.init()
+  setSize(0.5F, 0.5F)
+  experienceValue = 3
+  phaseManager.addPhase(JTGPhases.StageEnemy.instantiate(phaseManager))
+  phaseManager.getCurrentPhase.init()
 
-	setFlyingHeight(2)
-	setSpecies(EnumSpecies.OTHERS)
-	setMaxHP(2F)
+  setFlyingHeight(2)
+  setSpecies(EnumSpecies.OTHERS)
+  setMaxHP(2F)
 
-	override def initEntityAI(): Unit = {
-		this.tasks.addTask(0, new EntityAISwimming(this))
-		this.tasks.addTask(3, new EntityAIMoveRanged(this, getSpeed, 8F))
-		this.tasks.addTask(4, new EntityAIWander(this, getSpeed))
-		this.tasks.addTask(5, new EntityAILookIdle(this))
-		this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false))
-		this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, classOf[EntityPlayer], true))
-	}
+  override def initEntityAI(): Unit = {
+    this.tasks.addTask(0, new EntityAISwimming(this))
+    this.tasks.addTask(3, new EntityAIMoveRanged(this, getSpeed, 8F))
+    this.tasks.addTask(4, new EntityAIWander(this, getSpeed))
+    this.tasks.addTask(5, new EntityAILookIdle(this))
+    this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false))
+    this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, classOf[EntityPlayer], true))
+  }
 
-	override def getCreatureAttribute: EnumCreatureAttribute = EnumCreatureAttribute.UNDEAD
+  override def getCreatureAttribute: EnumCreatureAttribute = EnumCreatureAttribute.UNDEAD
 
-	override def getMaxSpawnedInChunk: Int = 3
+  override def getMaxSpawnedInChunk: Int = 3
 
-	override def getCanSpawnHere: Boolean = {
-		val spawnChance = ConfigHandler.entry.spawnRateCommon
-		if(rand.nextInt(100) < spawnChance) {
-			val x = MathHelper.floor_double(posX)
-			val y = MathHelper.floor_double(getEntityBoundingBox.minY)
-			val z = MathHelper.floor_double(posZ)
-			val blockpos = new BlockPos(x, y, z)
-			val spawnMaterial = Seq(Material.GRASS, Material.GROUND, Material.SAND, Material.ROCK)
-			spawnMaterial.contains(worldObj.getBlockState(blockpos.down).getMaterial) && super.getCanSpawnHere
-		} else false
-	}
+  override def getCanSpawnHere: Boolean = {
+    val spawnChance = ConfigHandler.entry.spawnRateCommon
+    if (rand.nextInt(100) < spawnChance) {
+      val x             = MathHelper.floor_double(posX)
+      val y             = MathHelper.floor_double(getEntityBoundingBox.minY)
+      val z             = MathHelper.floor_double(posZ)
+      val blockpos      = new BlockPos(x, y, z)
+      val spawnMaterial = Seq(Material.GRASS, Material.GROUND, Material.SAND, Material.ROCK)
+      spawnMaterial.contains(worldObj.getBlockState(blockpos.down).getMaterial) && super.getCanSpawnHere
+    } else false
+  }
 }

@@ -20,27 +20,27 @@ import net.minecraftforge.fml.relauncher.Side
 
 @Mod(modid = LibMod.Id, name = LibMod.Name, version = LibMod.Version, modLanguage = "scala", dependencies = "require-after:danmakucore")
 object JourneyToGensokyo {
-	MinecraftForge.EVENT_BUS.register(CommonProxy)
+  MinecraftForge.EVENT_BUS.register(CommonProxy)
 
-	if(FMLCommonHandler.instance().getSide == Side.CLIENT) {
-		MinecraftForge.EVENT_BUS.register(ClientProxy)
-	}
+  if (FMLCommonHandler.instance().getSide == Side.CLIENT) {
+    MinecraftForge.EVENT_BUS.register(ClientProxy)
+  }
 
-	assert(LibMod.Id == LibModJ.ID)
+  assert(LibMod.Id == LibModJ.ID)
 
-	//noinspection VarCouldBeVal
-	@SidedProxy(serverSide = LibMod.CommonProxy, clientSide = LibMod.ClientProxy, modId = LibMod.Id)
-	var proxy: CommonProxy = _
+  //noinspection VarCouldBeVal
+  @SidedProxy(serverSide = LibMod.CommonProxy, clientSide = LibMod.ClientProxy, modId = LibMod.Id)
+  var proxy: CommonProxy = _
 
-	@EventHandler
-	def preInit(event: FMLPreInitializationEvent): Unit = {
-		proxy.registerDanmakuCrafting()
-		proxy.registerRenderers()
-	}
+  @EventHandler
+  def preInit(event: FMLPreInitializationEvent): Unit = {
+    proxy.registerDanmakuCrafting()
+    proxy.registerRenderers()
+  }
 
-	@EventHandler
-	def init(event: FMLInitializationEvent): Unit = {
-		NetworkRegistry.INSTANCE.registerGuiHandler(this, GuiHandler)
-		proxy.registerEntities()
-	}
+  @EventHandler
+  def init(event: FMLInitializationEvent): Unit = {
+    NetworkRegistry.INSTANCE.registerGuiHandler(this, GuiHandler)
+    proxy.registerEntities()
+  }
 }

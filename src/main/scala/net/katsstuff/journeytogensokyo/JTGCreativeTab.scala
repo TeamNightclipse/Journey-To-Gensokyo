@@ -15,8 +15,8 @@ import net.minecraft.item.Item
 
 object JTGCreativeTab extends CreativeTabs(LibMod.Id) {
 
-	setNoTitle()
-	setBackgroundImageName("item_search.png")
+  setNoTitle()
+  setBackgroundImageName("item_search.png")
 
-	override def getTabIconItem: Item = Item.getItemFromBlock(JTGBlocks.BlockDanmakuCrafting)
+  override def getTabIconItem: Item = Item.getItemFromBlock(JTGBlocks.BlockDanmakuCrafting)
 }

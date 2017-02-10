@@ -12,5 +12,5 @@ import net.minecraft.item.Item
 
 class ItemJTGBase(name: String) extends Item {
 
-	setUnlocalizedName(name)
+  setUnlocalizedName(name)
 }

@@ -24,20 +24,18 @@ import net.minecraftforge.fml.relauncher.Side
 
 object ClientProxy {
 
-	@SubscribeEvent
-	def registerModels(event: ModelRegistryEvent): Unit = {
-		registerItemBlock(JTGBlocks.BlockDanmakuCrafting, 0)
-	}
+  @SubscribeEvent
+  def registerModels(event: ModelRegistryEvent): Unit =
+    registerItemBlock(JTGBlocks.BlockDanmakuCrafting, 0)
 
-	private def registerItemBlock(block: Block, damage: Int): Unit = {
-		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), damage, new MRL(block.getRegistryName, "inventory"))
-	}
+  private def registerItemBlock(block: Block, damage: Int): Unit =
+    ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), damage, new MRL(block.getRegistryName, "inventory"))
 }
 
 class ClientProxy extends CommonProxy {
 
-	override def registerRenderers(): Unit = {
-		val fairyRenderer: IRenderFactory[EntityFairy] = new RenderFairy(_)
-		RenderingRegistry.registerEntityRenderingHandler(classOf[EntityFairy], fairyRenderer)
-	}
+  override def registerRenderers(): Unit = {
+    val fairyRenderer: IRenderFactory[EntityFairy] = new RenderFairy(_)
+    RenderingRegistry.registerEntityRenderingHandler(classOf[EntityFairy], fairyRenderer)
+  }
 }

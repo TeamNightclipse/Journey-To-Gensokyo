@@ -21,23 +21,23 @@ import net.minecraft.item.{Item, ItemStack}
 	*/
 object Implicits {
 
-	implicit class RickOptional[A](val optional: Optional[A]) extends AnyVal {
+  implicit class RickOptional[A](val optional: Optional[A]) extends AnyVal {
 
-		def toOption: Option[A] = if(optional.isPresent) Some(optional.get()) else None
-	}
+    def toOption: Option[A] = if (optional.isPresent) Some(optional.get()) else None
+  }
 
-	implicit class RichEntity(val entity: Entity) extends AnyVal {
+  implicit class RichEntity(val entity: Entity) extends AnyVal {
 
-		def getAngle: Vector3 = Vector3.fromSpherical(entity.rotationYaw, entity.rotationPitch)
-	}
+    def getAngle: Vector3 = Vector3.fromSpherical(entity.rotationYaw, entity.rotationPitch)
+  }
 
-	implicit class RichItem(val item: Item) extends AnyVal {
+  implicit class RichItem(val item: Item) extends AnyVal {
 
-		def toStack: ItemStack = new ItemStack(item)
-	}
+    def toStack: ItemStack = new ItemStack(item)
+  }
 
-	implicit class RichBlock(val block: Block) extends AnyVal {
+  implicit class RichBlock(val block: Block) extends AnyVal {
 
-		def toStack: ItemStack = new ItemStack(block)
-	}
+    def toStack: ItemStack = new ItemStack(block)
+  }
 }

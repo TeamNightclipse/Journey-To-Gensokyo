@@ -14,46 +14,54 @@ import net.katsstuff.journeytogensokyo.handler.ConfigHandler
 import net.katsstuff.journeytogensokyo.phase.JTGPhases
 import net.minecraft.block.material.Material
 import net.minecraft.entity.EnumCreatureAttribute
-import net.minecraft.entity.ai.{EntityAIFleeSun, EntityAIHurtByTarget, EntityAILookIdle, EntityAINearestAttackableTarget, EntityAIRestrictSun, EntityAISwimming, EntityAIWander}
+import net.minecraft.entity.ai.{
+  EntityAIFleeSun,
+  EntityAIHurtByTarget,
+  EntityAILookIdle,
+  EntityAINearestAttackableTarget,
+  EntityAIRestrictSun,
+  EntityAISwimming,
+  EntityAIWander
+}
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.util.math.{BlockPos, MathHelper}
 import net.minecraft.world.World
 
 class EntityPhantom(world: World) extends EntityDanmakuMob(world) with IAllyDanmaku {
 
-	setSize(0.5F, 0.5F)
-	experienceValue = 3
-	phaseManager.addPhase(JTGPhases.StageEnemy.instantiate(phaseManager))
-	phaseManager.getCurrentPhase.init()
+  setSize(0.5F, 0.5F)
+  experienceValue = 3
+  phaseManager.addPhase(JTGPhases.StageEnemy.instantiate(phaseManager))
+  phaseManager.getCurrentPhase.init()
 
-	setFlyingHeight(3)
-	setSpecies(EnumSpecies.PHANTOM)
-	setMaxHP(2F)
+  setFlyingHeight(3)
+  setSpecies(EnumSpecies.PHANTOM)
+  setMaxHP(2F)
 
-	override def initEntityAI(): Unit = {
-		this.tasks.addTask(0, new EntityAISwimming(this))
-		this.tasks.addTask(2, new EntityAIRestrictSun(this))
-		this.tasks.addTask(3, new EntityAIFleeSun(this, 1.0D))
-		this.tasks.addTask(4, new EntityAIMoveRanged(this, getSpeed, 16F))
-		this.tasks.addTask(6, new EntityAIWander(this, getSpeed))
-		this.tasks.addTask(7, new EntityAILookIdle(this))
-		this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false))
-		this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, classOf[EntityPlayer], true))
-	}
+  override def initEntityAI(): Unit = {
+    this.tasks.addTask(0, new EntityAISwimming(this))
+    this.tasks.addTask(2, new EntityAIRestrictSun(this))
+    this.tasks.addTask(3, new EntityAIFleeSun(this, 1.0D))
+    this.tasks.addTask(4, new EntityAIMoveRanged(this, getSpeed, 16F))
+    this.tasks.addTask(6, new EntityAIWander(this, getSpeed))
+    this.tasks.addTask(7, new EntityAILookIdle(this))
+    this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false))
+    this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, classOf[EntityPlayer], true))
+  }
 
-	override def getCreatureAttribute: EnumCreatureAttribute = EnumCreatureAttribute.UNDEAD
+  override def getCreatureAttribute: EnumCreatureAttribute = EnumCreatureAttribute.UNDEAD
 
-	override def getMaxSpawnedInChunk: Int = 3
+  override def getMaxSpawnedInChunk: Int = 3
 
-	override def getCanSpawnHere: Boolean = {
-		val spawnChance = ConfigHandler.entry.spawnRateCommon
-		if(rand.nextInt(100) < spawnChance) {
-			val x = MathHelper.floor_double(posX)
-			val y = MathHelper.floor_double(getEntityBoundingBox.minY)
-			val z = MathHelper.floor_double(posZ)
-			val blockpos = new BlockPos(x, y, z)
-			val spawnMaterial = Seq(Material.GRASS, Material.GROUND, Material.SAND, Material.ROCK)
-			spawnMaterial.contains(worldObj.getBlockState(blockpos.down).getMaterial) && super.getCanSpawnHere
-		} else false
-	}
+  override def getCanSpawnHere: Boolean = {
+    val spawnChance = ConfigHandler.entry.spawnRateCommon
+    if (rand.nextInt(100) < spawnChance) {
+      val x             = MathHelper.floor_double(posX)
+      val y             = MathHelper.floor_double(getEntityBoundingBox.minY)
+      val z             = MathHelper.floor_double(posZ)
+      val blockpos      = new BlockPos(x, y, z)
+      val spawnMaterial = Seq(Material.GRASS, Material.GROUND, Material.SAND, Material.ROCK)
+      spawnMaterial.contains(worldObj.getBlockState(blockpos.down).getMaterial) && super.getCanSpawnHere
+    } else false
+  }
 }

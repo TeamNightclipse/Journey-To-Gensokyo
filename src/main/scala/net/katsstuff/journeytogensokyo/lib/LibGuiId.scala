@@ -10,6 +10,6 @@ package net.katsstuff.journeytogensokyo.lib
 
 object LibGuiId {
 
-	final val DanmakuCraftingGui = 0
+  final val DanmakuCraftingGui = 0
 
 }
