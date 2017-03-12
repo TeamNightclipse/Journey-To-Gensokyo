@@ -9,29 +9,37 @@
 package net.katsstuff.journeytogensokyo.entity.living
 
 import net.katsstuff.danmakucore.entity.living.ai.EntityAIMoveRanged
-import net.katsstuff.danmakucore.entity.living.{EntityDanmakuMob, EnumSpecies, IAllyDanmaku}
+import net.katsstuff.danmakucore.entity.living.{EnumSpecies, IAllyDanmaku}
 import net.katsstuff.journeytogensokyo.handler.ConfigHandler
+import net.katsstuff.journeytogensokyo.handler.ConfigHandler.Spawns.SpawnEntry
 import net.katsstuff.journeytogensokyo.phase.JTGPhases
 import net.minecraft.block.material.Material
-import net.minecraft.entity.EntityLivingBase
-import net.minecraft.entity.ai.{
-  EntityAIHurtByTarget,
-  EntityAILookIdle,
-  EntityAINearestAttackableTarget,
-  EntityAISwimming,
-  EntityAIWander,
-  EntityAIWatchClosest
-}
+import net.minecraft.block.state.IBlockState
+import net.minecraft.entity.{EntityLivingBase, IEntityLivingData}
+import net.minecraft.entity.ai.{EntityAIHurtByTarget, EntityAILookIdle, EntityAINearestAttackableTarget, EntityAISwimming, EntityAIWander, EntityAIWatchClosest}
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.util.math.{BlockPos, MathHelper}
-import net.minecraft.world.World
+import net.minecraft.util.math.BlockPos
+import net.minecraft.world.{DifficultyInstance, EnumSkyBlock, World}
 
+object EntityFairy {
+  var counter = 0
+  def nextCounter(): Byte = {
+    if(counter == 3) counter = 0
+    else counter += 1
+
+    counter.toByte
+  }
+}
 class EntityFairy(world: World) extends EntityForm(world) with Callable with IAllyDanmaku {
 
   setSize(0.5F, 1F)
   experienceValue = 5
 
-  form = rand.nextInt(4).toByte
+  form = {
+    if(worldObj.isRemote) 0
+    else EntityFairy.nextCounter()
+  }
+
   phaseManager.addPhase(JTGPhases.StageEnemy.instantiate(phaseManager))
   phaseManager.getCurrentPhase.init()
 
@@ -59,18 +67,30 @@ class EntityFairy(world: World) extends EntityForm(world) with Callable with IAl
     }
   }
 
-  override def getMaxSpawnedInChunk: Int = 3
+  override def onInitialSpawn(difficulty: DifficultyInstance, livingData: IEntityLivingData): IEntityLivingData = {
+    val superData = super.onInitialSpawn(difficulty, livingData)
 
-  override def getCanSpawnHere: Boolean = {
-    val spawnChance = ConfigHandler.spawnRateCommon
-    if (rand.nextInt(100) < spawnChance) {
-      val x = MathHelper.floor_double(posX)
-      val y = MathHelper.floor_double(getEntityBoundingBox.minY)
-      val z = MathHelper.floor_double(posZ)
+    val groupData = superData match {
+      case fairy: FairyGroupData => fairy
+      case _ => FairyGroupData(form)
+    }
 
-      val blockpos      = new BlockPos(x, y, z)
-      val spawnMaterial = Seq(Material.GRASS, Material.GROUND, Material.SAND)
-      spawnMaterial.contains(worldObj.getBlockState(blockpos.down).getMaterial) && worldObj.getLight(blockpos) > 8 && super.getCanSpawnHere
-    } else false
+    form = groupData.form
+
+    groupData
+  }
+
+  override def isValidLightLevel: Boolean = {
+    val blockpos = new BlockPos(this.posX, this.getEntityBoundingBox.minY, this.posZ)
+    worldObj.getLightFor(EnumSkyBlock.SKY, blockpos) > 8
+  }
+
+  override def getBlockPathWeight(pos: BlockPos): Float = worldObj.getLightBrightness(pos) - 0.5F
+
+  override def spawnEntry: SpawnEntry = ConfigHandler.spawns.fairy
+  override def spawnBlockCheck(state: IBlockState): Boolean = {
+    val spawnMaterial = Seq(Material.GRASS, Material.GROUND, Material.SAND)
+    spawnMaterial.contains(state.getMaterial)
   }
 }
+case class FairyGroupData(form: Byte) extends IEntityLivingData

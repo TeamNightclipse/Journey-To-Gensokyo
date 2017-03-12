@@ -41,18 +41,4 @@ class EntityYinYang(world: World) extends EntityDanmakuMob(world) with IAllyDanm
   }
 
   override def getCreatureAttribute: EnumCreatureAttribute = EnumCreatureAttribute.UNDEAD
-
-  override def getMaxSpawnedInChunk: Int = 3
-
-  override def getCanSpawnHere: Boolean = {
-    val spawnChance = ConfigHandler.spawnRateCommon
-    if (rand.nextInt(100) < spawnChance) {
-      val x             = MathHelper.floor_double(posX)
-      val y             = MathHelper.floor_double(getEntityBoundingBox.minY)
-      val z             = MathHelper.floor_double(posZ)
-      val blockpos      = new BlockPos(x, y, z)
-      val spawnMaterial = Seq(Material.GRASS, Material.GROUND, Material.SAND, Material.ROCK)
-      spawnMaterial.contains(worldObj.getBlockState(blockpos.down).getMaterial) && super.getCanSpawnHere
-    } else false
-  }
 }

@@ -2,6 +2,8 @@ package net.katsstuff.journeytogensokyo.entity.living
 
 import net.katsstuff.danmakucore.entity.living.EnumSpecies
 import net.katsstuff.danmakucore.entity.living.ai.EntityAIMoveRanged
+import net.katsstuff.journeytogensokyo.handler.ConfigHandler
+import net.katsstuff.journeytogensokyo.handler.ConfigHandler.Spawns.SpawnEntry
 import net.katsstuff.journeytogensokyo.phase.JTGPhases
 import net.minecraft.entity.ai.{EntityAIHurtByTarget, EntityAILookIdle, EntityAINearestAttackableTarget, EntityAISwimming, EntityAIWander, EntityAIWatchClosest}
 import net.minecraft.entity.player.EntityPlayer
@@ -16,7 +18,6 @@ class EntityHellRaven(world: World) extends EntityBigBird(world) {
   setSpecies(EnumSpecies.ANIMAL_RAVEN_HELL)
 
   isImmuneToFire = true
-  setMaxHP(6F)
   override protected def initEntityAI(): Unit = {
     this.tasks.addTask(0, new EntityAISwimming(this))
     this.tasks.addTask(2, new EntityAIMoveRanged(this, getSpeed, 24F))
@@ -26,4 +27,5 @@ class EntityHellRaven(world: World) extends EntityBigBird(world) {
     this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false))
     this.targetTasks.addTask(2, new EntityAINearestAttackableTarget[EntityPlayer](this, classOf[EntityPlayer], true))
   }
+  override def spawnEntry: SpawnEntry = ConfigHandler.spawns.hellRaven
 }

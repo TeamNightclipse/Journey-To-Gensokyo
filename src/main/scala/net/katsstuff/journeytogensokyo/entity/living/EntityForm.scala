@@ -10,7 +10,7 @@ package net.katsstuff.journeytogensokyo.entity.living
 
 import java.lang.{Byte => JByte}
 
-import net.katsstuff.danmakucore.entity.living.EntityDanmakuMob
+import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.network.datasync.{DataParameter, DataSerializers, EntityDataManager}
 import net.minecraft.world.World
 
@@ -18,7 +18,7 @@ object EntityForm {
 
   private final val Form: DataParameter[JByte] = EntityDataManager.createKey(classOf[EntityForm], DataSerializers.BYTE)
 }
-class EntityForm(world: World) extends EntityDanmakuMob(world) {
+abstract class EntityForm(world: World) extends EntityJTGDanmakuMob(world) {
 
   override def entityInit(): Unit = {
     super.entityInit()
@@ -27,4 +27,14 @@ class EntityForm(world: World) extends EntityDanmakuMob(world) {
 
   def form: Byte = getDataManager.get(EntityForm.Form)
   def form_=(byte: Byte): Unit = getDataManager.set(EntityForm.Form, Byte.box(byte))
+
+  override def readEntityFromNBT(tag: NBTTagCompound): Unit = {
+    super.readEntityFromNBT(tag)
+    form = tag.getByte("form")
+  }
+
+  override def writeEntityToNBT(tag: NBTTagCompound): Unit = {
+    super.writeEntityToNBT(tag)
+    tag.setByte("form", form)
+  }
 }

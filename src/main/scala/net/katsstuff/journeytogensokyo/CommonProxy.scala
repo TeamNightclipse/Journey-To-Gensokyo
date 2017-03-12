@@ -14,14 +14,17 @@ import net.katsstuff.danmakucore.lib.data.{LibForms, LibSubEntities}
 import net.katsstuff.journeytogensokyo.api.{JourneyToGensokyoAPI => JTGAPI}
 import net.katsstuff.journeytogensokyo.block.{BlockDanmakuCrafting, JTGBlocks}
 import net.katsstuff.journeytogensokyo.entity.living.{EntityFairy, EntityHellRaven, EntityTenguCrow}
+import net.katsstuff.journeytogensokyo.handler.ConfigHandler
 import net.katsstuff.journeytogensokyo.item.ItemBulletCore
 import net.katsstuff.journeytogensokyo.lib.{LibBlockName, LibEntityName, LibItemName, LibPhaseName}
 import net.katsstuff.journeytogensokyo.phase.{PhaseTypeGenericStageEnemy, PhaseTypeHellRaven, PhaseTypeShapeArrow, PhaseTypeTengu}
 import net.minecraft.block.Block
-import net.minecraft.entity.EnumCreatureType
+import net.minecraft.entity.{Entity, EntityLiving, EnumCreatureType}
 import net.minecraft.init.{Blocks, Items}
 import net.minecraft.item.{Item, ItemBlock, ItemStack}
+import net.minecraft.world.biome.Biome
 import net.minecraftforge.common.BiomeDictionary
+import net.minecraftforge.common.BiomeManager.BiomeType
 import net.minecraftforge.event.RegistryEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.registry.EntityRegistry
@@ -30,26 +33,23 @@ object CommonProxy {
 
   @SubscribeEvent
   def registerBlocks(event: RegistryEvent.Register[Block]): Unit =
-    event.getRegistry.registerAll((new BlockDanmakuCrafting).setRegistryName(LibBlockName.DanmakuCrafting))
+    event.getRegistry.registerAll(new BlockDanmakuCrafting setRegistryName LibBlockName.DanmakuCrafting)
 
   @SubscribeEvent
   def registerItems(event: RegistryEvent.Register[Item]): Unit =
-    event.getRegistry.registerAll((new ItemBulletCore).setRegistryName(LibItemName.BulletCore), itemBlock(JTGBlocks.BlockDanmakuCrafting))
+    event.getRegistry.registerAll(new ItemBulletCore setRegistryName LibItemName.BulletCore, itemBlock(JTGBlocks.BlockDanmakuCrafting))
 
   @SubscribeEvent
   def registerPhases(event: RegistryEvent.Register[PhaseType]): Unit =
     event.getRegistry.registerAll(
-      (new PhaseTypeGenericStageEnemy).setRegistryName(LibPhaseName.StageEnemy),
-      (new PhaseTypeShapeArrow).setRegistryName(LibPhaseName.ShapeArrow),
-      (new PhaseTypeTengu).setRegistryName(LibPhaseName.Tengu),
-      (new PhaseTypeHellRaven).setRegistryName(LibPhaseName.HellRaven)
+      new PhaseTypeGenericStageEnemy setRegistryName LibPhaseName.StageEnemy,
+      new PhaseTypeShapeArrow setRegistryName LibPhaseName.ShapeArrow,
+      new PhaseTypeTengu setRegistryName LibPhaseName.Tengu,
+      new PhaseTypeHellRaven setRegistryName LibPhaseName.HellRaven
     )
 
-  private def itemBlock(block: Block): ItemBlock = {
-    val itemBlock = new ItemBlock(block)
-    itemBlock.setRegistryName(block.getRegistryName)
-    itemBlock
-  }
+  private def itemBlock(block: Block): Item =
+    new ItemBlock(block).setRegistryName(block.getRegistryName)
 }
 
 class CommonProxy {
@@ -57,18 +57,26 @@ class CommonProxy {
   def registerRenderers(): Unit = {}
 
   def registerEntities(): Unit = {
+    import BiomeDictionary.{Type => BiomeType}
+
     EntityRegistry.registerModEntity(classOf[EntityFairy], LibEntityName.Fairy, 0, JourneyToGensokyo, 64, 1, true, 0xFFFFFF, 0x000000)
-    val fairySpawn = BiomeDictionary.getBiomesForType(BiomeDictionary.Type.HILLS) ++ BiomeDictionary.getBiomesForType(BiomeDictionary.Type.PLAINS)
-    EntityRegistry.addSpawn(classOf[EntityFairy], 25, 1, 4, EnumCreatureType.MONSTER, fairySpawn: _*)
+    registerSpawn(classOf[EntityFairy], ConfigHandler.spawns.fairy, EnumCreatureType.MONSTER, BiomeType.HILLS, BiomeType.PLAINS, BiomeType.FOREST)
 
     EntityRegistry.registerModEntity(classOf[EntityTenguCrow], LibEntityName.TenguCrow, 1, JourneyToGensokyo, 64, 1, true, 0xFFFFFF, 0x000000)
-    val mountain = BiomeDictionary.getBiomesForType(BiomeDictionary.Type.MOUNTAIN)
-    EntityRegistry.addSpawn(classOf[EntityTenguCrow], 15, 1, 2, EnumCreatureType.MONSTER, mountain: _*)
+    registerSpawn(classOf[EntityTenguCrow], ConfigHandler.spawns.tenguCrow, EnumCreatureType.MONSTER, BiomeType.MOUNTAIN)
 
     EntityRegistry.registerModEntity(classOf[EntityHellRaven], LibEntityName.HellRaven, 2, JourneyToGensokyo, 64, 1, true, 0xFFFFFF, 0x000000)
-    val nether = BiomeDictionary.getBiomesForType(BiomeDictionary.Type.NETHER)
-    EntityRegistry.addSpawn(classOf[EntityHellRaven], 15, 1, 2, EnumCreatureType.MONSTER, nether: _*)
+    registerSpawn(classOf[EntityHellRaven], ConfigHandler.spawns.hellRaven, EnumCreatureType.MONSTER, BiomeType.NETHER)
   }
+
+  def registerSpawn(clazz:        Class[_ <: EntityLiving],
+                    entry:        ConfigHandler.Spawns.SpawnEntry,
+                    creatureType: EnumCreatureType,
+                    biomeTypes:   BiomeDictionary.Type*): Unit =
+    EntityRegistry.addSpawn(clazz, entry.weightedProbability(), entry.minAmount(), entry.maxAmount(), creatureType, biomesForTypes(biomeTypes: _*): _*)
+
+  def biomesForTypes(types: BiomeDictionary.Type*): Seq[Biome] =
+    types.flatMap(BiomeDictionary.getBiomesForType).distinct
 
   def registerDanmakuCrafting(): Unit = {
     val defaultForm      = LibForms.SPHERE
