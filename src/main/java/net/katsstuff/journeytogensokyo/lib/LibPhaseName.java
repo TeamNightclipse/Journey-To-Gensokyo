@@ -10,6 +10,8 @@ package net.katsstuff.journeytogensokyo.lib;
 
 public class LibPhaseName {
 
-	public static final String ShapeArrow = "shapeArrow";
-	public static final String StageEnemy = "stageEnemy";
+	public static final String ShapeArrow = "shape_arrow";
+	public static final String StageEnemy = "stage_enemy";
+	public static final String Tengu = "tengu";
+	public static final String HellRaven = "hell_raven";
 }

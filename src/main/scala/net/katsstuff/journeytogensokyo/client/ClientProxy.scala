@@ -8,19 +8,20 @@
  */
 package net.katsstuff.journeytogensokyo.client
 
+import scala.reflect.ClassTag
+
 import net.katsstuff.journeytogensokyo.CommonProxy
 import net.katsstuff.journeytogensokyo.block.JTGBlocks
-import net.katsstuff.journeytogensokyo.client.render.RenderFairy
-import net.katsstuff.journeytogensokyo.entity.living.EntityFairy
+import net.katsstuff.journeytogensokyo.client.render.{RenderFairy, RenderHellRaven, RenderTenguCrow}
 import net.minecraft.block.Block
 import net.minecraft.client.renderer.block.model.{ModelResourceLocation => MRL}
+import net.minecraft.client.renderer.entity.{Render, RenderManager}
+import net.minecraft.entity.Entity
 import net.minecraft.item.Item
 import net.minecraftforge.client.event.ModelRegistryEvent
 import net.minecraftforge.client.model.ModelLoader
 import net.minecraftforge.fml.client.registry.{IRenderFactory, RenderingRegistry}
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
-import net.minecraftforge.fml.relauncher.Side
 
 object ClientProxy {
 
@@ -35,7 +36,13 @@ object ClientProxy {
 class ClientProxy extends CommonProxy {
 
   override def registerRenderers(): Unit = {
-    val fairyRenderer: IRenderFactory[EntityFairy] = new RenderFairy(_)
-    RenderingRegistry.registerEntityRenderingHandler(classOf[EntityFairy], fairyRenderer)
+    registerEntityRenderer(new RenderFairy(_))
+    registerEntityRenderer(new RenderTenguCrow(_))
+    registerEntityRenderer(new RenderHellRaven(_))
+  }
+
+  def registerEntityRenderer[A <: Entity: ClassTag](f: RenderManager => Render[A]): Unit = {
+    val factory: IRenderFactory[A] = manager => f(manager)
+    RenderingRegistry.registerEntityRenderingHandler(implicitly[ClassTag[A]].runtimeClass.asInstanceOf[Class[A]], factory)
   }
 }

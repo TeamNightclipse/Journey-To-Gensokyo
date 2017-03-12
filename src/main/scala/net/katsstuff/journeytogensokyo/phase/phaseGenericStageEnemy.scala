@@ -20,7 +20,7 @@ import net.katsstuff.danmakucore.impl.shape.{ShapeArrow, ShapeCircle, ShapeRando
 import net.katsstuff.danmakucore.registry.DanmakuRegistry
 import net.minecraft.nbt.NBTTagCompound
 
-class PhaseTypeStageEnemy extends PhaseType {
+class PhaseTypeGenericStageEnemy extends PhaseType {
 
   final val ShapeAmount = 6
   private val rand      = new Random()
@@ -30,19 +30,19 @@ class PhaseTypeStageEnemy extends PhaseType {
 
     val shot   = variant.getShotData.copy(color = DanmakuHelper.randomSaturatedColor())
     val shape  = rand.nextInt(ShapeAmount)
-    val amount = rand.nextInt(ConfigHandler.danmaku.danmakuMaxNumber)
+    val amount = rand.nextInt(ConfigHandler.danmaku.danmakuLevel.getMultiplier * 4)
     val width  = rand.nextFloat * 90
-    new PhaseStageEnemy(phaseManager, shot, variant.getMovementData, shape, amount, width, this)
+    new PhaseGenericStageEnemy(phaseManager, shot, variant.getMovementData, shape, amount, width, this)
   }
 }
 
-class PhaseStageEnemy(manager:      PhaseManager,
+class PhaseGenericStageEnemy(manager:      PhaseManager,
                       var shot:     ShotData,
                       var movement: MovementData,
                       var shape:    Int,
                       var amount:   Int,
                       var width:    Float,
-                      val getType:  PhaseTypeStageEnemy)
+                      val getType:  PhaseTypeGenericStageEnemy)
     extends Phase(manager) {
 
   private val NbtMovement = "speed"

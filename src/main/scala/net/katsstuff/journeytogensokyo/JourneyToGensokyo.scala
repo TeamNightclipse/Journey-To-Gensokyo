@@ -18,7 +18,7 @@ import net.minecraftforge.fml.common.network.NetworkRegistry
 import net.minecraftforge.fml.common.{FMLCommonHandler, Mod, SidedProxy}
 import net.minecraftforge.fml.relauncher.Side
 
-@Mod(modid = LibMod.Id, name = LibMod.Name, version = LibMod.Version, modLanguage = "scala", dependencies = "require-after:danmakucore")
+@Mod(modid = LibMod.Id, name = LibMod.Name, version = LibMod.Version, modLanguage = "scala", dependencies = "required-after:danmakucore")
 object JourneyToGensokyo {
   MinecraftForge.EVENT_BUS.register(CommonProxy)
 

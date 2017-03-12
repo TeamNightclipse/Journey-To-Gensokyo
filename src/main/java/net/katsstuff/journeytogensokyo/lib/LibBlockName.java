@@ -10,5 +10,5 @@ package net.katsstuff.journeytogensokyo.lib;
 
 public class LibBlockName {
 
-	public static final String DanmakuCrafting = "danmakuCraftingTable";
+	public static final String DanmakuCrafting = "danmaku_crafting_table";
 }

@@ -28,7 +28,7 @@ object Implicits {
 
   implicit class RichEntity(val entity: Entity) extends AnyVal {
 
-    def getAngle: Vector3 = Vector3.fromSpherical(entity.rotationYaw, entity.rotationPitch)
+    def angle: Vector3 = Vector3.fromSpherical(entity.rotationYaw, entity.rotationPitch)
   }
 
   implicit class RichItem(val item: Item) extends AnyVal {

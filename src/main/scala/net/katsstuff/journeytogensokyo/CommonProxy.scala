@@ -13,10 +13,10 @@ import net.katsstuff.danmakucore.entity.living.phase.PhaseType
 import net.katsstuff.danmakucore.lib.data.{LibForms, LibSubEntities}
 import net.katsstuff.journeytogensokyo.api.{JourneyToGensokyoAPI => JTGAPI}
 import net.katsstuff.journeytogensokyo.block.{BlockDanmakuCrafting, JTGBlocks}
-import net.katsstuff.journeytogensokyo.entity.living.{EntityFairy, EntityTenguCrow}
+import net.katsstuff.journeytogensokyo.entity.living.{EntityFairy, EntityHellRaven, EntityTenguCrow}
 import net.katsstuff.journeytogensokyo.item.ItemBulletCore
-import net.katsstuff.journeytogensokyo.lib.{LibEntityName, LibPhaseName}
-import net.katsstuff.journeytogensokyo.phase.{PhaseTypeShapeArrow, PhaseTypeStageEnemy}
+import net.katsstuff.journeytogensokyo.lib.{LibBlockName, LibEntityName, LibItemName, LibPhaseName}
+import net.katsstuff.journeytogensokyo.phase.{PhaseTypeGenericStageEnemy, PhaseTypeHellRaven, PhaseTypeShapeArrow, PhaseTypeTengu}
 import net.minecraft.block.Block
 import net.minecraft.entity.EnumCreatureType
 import net.minecraft.init.{Blocks, Items}
@@ -30,17 +30,19 @@ object CommonProxy {
 
   @SubscribeEvent
   def registerBlocks(event: RegistryEvent.Register[Block]): Unit =
-    event.getRegistry.registerAll(new BlockDanmakuCrafting)
+    event.getRegistry.registerAll((new BlockDanmakuCrafting).setRegistryName(LibBlockName.DanmakuCrafting))
 
   @SubscribeEvent
   def registerItems(event: RegistryEvent.Register[Item]): Unit =
-    event.getRegistry.registerAll(new ItemBulletCore, itemBlock(JTGBlocks.BlockDanmakuCrafting))
+    event.getRegistry.registerAll((new ItemBulletCore).setRegistryName(LibItemName.BulletCore), itemBlock(JTGBlocks.BlockDanmakuCrafting))
 
   @SubscribeEvent
   def registerPhases(event: RegistryEvent.Register[PhaseType]): Unit =
     event.getRegistry.registerAll(
-      (new PhaseTypeStageEnemy).setRegistryName(LibPhaseName.StageEnemy),
-      (new PhaseTypeShapeArrow).setRegistryName(LibPhaseName.ShapeArrow)
+      (new PhaseTypeGenericStageEnemy).setRegistryName(LibPhaseName.StageEnemy),
+      (new PhaseTypeShapeArrow).setRegistryName(LibPhaseName.ShapeArrow),
+      (new PhaseTypeTengu).setRegistryName(LibPhaseName.Tengu),
+      (new PhaseTypeHellRaven).setRegistryName(LibPhaseName.HellRaven)
     )
 
   private def itemBlock(block: Block): ItemBlock = {
@@ -62,6 +64,10 @@ class CommonProxy {
     EntityRegistry.registerModEntity(classOf[EntityTenguCrow], LibEntityName.TenguCrow, 1, JourneyToGensokyo, 64, 1, true, 0xFFFFFF, 0x000000)
     val mountain = BiomeDictionary.getBiomesForType(BiomeDictionary.Type.MOUNTAIN)
     EntityRegistry.addSpawn(classOf[EntityTenguCrow], 15, 1, 2, EnumCreatureType.MONSTER, mountain: _*)
+
+    EntityRegistry.registerModEntity(classOf[EntityHellRaven], LibEntityName.HellRaven, 2, JourneyToGensokyo, 64, 1, true, 0xFFFFFF, 0x000000)
+    val nether = BiomeDictionary.getBiomesForType(BiomeDictionary.Type.NETHER)
+    EntityRegistry.addSpawn(classOf[EntityHellRaven], 15, 1, 2, EnumCreatureType.MONSTER, nether: _*)
   }
 
   def registerDanmakuCrafting(): Unit = {
@@ -70,26 +76,26 @@ class CommonProxy {
     val defGravity       = Vector3.GravityDefault
     val strGravity       = Vector3.GravityDefault * 2.5D
 
-    def recipe  = new DanmakuRecipeBuilder
-    def builder = ShotData.DefaultShotData setForm null setSubEntity null
+    def recipe = new DanmakuRecipeBuilder
+    def shot   = ShotData.DefaultShotData setForm null setSubEntity null
 
     import net.katsstuff.danmakucore.data.Vector3.gravity
     import net.katsstuff.danmakucore.lib.LibColor._
 
     recipe
-      .withShot(builder.setDamage(1F))
+      .withShot(shot.setDamage(1F))
       .withOreInput("logWood")
       .withCost(300)
       .build()
 
     recipe
-      .withShot(builder.setDamage(0.25F))
+      .withShot(shot.setDamage(0.25F))
       .withOreInput("plankWood")
       .withCost(200)
       .build()
 
     recipe
-      .withShot(builder.setColor(COLOR_SATURATED_GREEN).setDelay(2))
+      .withShot(shot.setColor(COLOR_SATURATED_GREEN).setDelay(2))
       .withSpeed(-0.2D)
       .withGravity(gravity(0.01D))
       .withOreInput("treeSapling")
@@ -97,183 +103,183 @@ class CommonProxy {
       .build()
 
     recipe
-      .withShot(builder.setDamage(1F))
+      .withShot(shot.setDamage(1F))
       .withGravity(defGravity)
       .withOreInput("oreGold")
       .build()
 
     recipe
-      .withShot(builder.setDamage(0.5F))
+      .withShot(shot.setDamage(0.5F))
       .withGravity(defGravity)
       .withOreInput("oreIron")
       .withCost(200)
       .build()
 
     recipe
-      .withShot(builder.setDamage(0.25F))
+      .withShot(shot.setDamage(0.25F))
       .withGravity(defGravity)
       .withOreInput("oreLapis")
       .withCost(100)
       .build()
 
     recipe
-      .withShot(builder.setDamage(2F))
+      .withShot(shot.setDamage(2F))
       .withGravity(defGravity)
       .withOreInput("oreDiamond")
       .withCost(300)
       .build()
 
     recipe
-      .withShot(builder.setEnd(5))
+      .withShot(shot.setEnd(5))
       .withGravity(defGravity)
       .withOreInput("oreRedstone")
       .withCost(200)
       .build()
 
     recipe
-      .withShot(builder.setDamage(1.5F))
+      .withShot(shot.setDamage(1.5F))
       .withGravity(defGravity)
       .withOreInput("oreEmerald")
       .withCost(400)
       .build()
 
     recipe
-      .withShot(builder.setDamage(1F).setDelay(10).setEnd(5))
+      .withShot(shot.setDamage(1F).setDelay(10).setEnd(5))
       .withGravity(defGravity)
       .withOreInput("oreQuartz")
       .withCost(300)
       .build()
 
     recipe
-      .withShot(builder.setColor(COLOR_VANILLA_BLACK).setDamage(0.5F).setSubEntity(LibSubEntities.FIRE))
+      .withShot(shot.setColor(COLOR_VANILLA_BLACK).setDamage(0.5F).setSubEntity(LibSubEntities.FIRE))
       .withGravity(defGravity)
       .withOreInput("oreCoal")
       .withCost(200)
       .build()
 
     recipe
-      .withShot(builder.setDamage(1F).setEnd(-20))
+      .withShot(shot.setDamage(1F).setEnd(-20))
       .withOreInput("blockGlassColorless")
       .withCost(200)
       .build()
 
     recipe
-      .withShot(builder.setDamage(0.25F).setEnd(-5))
+      .withShot(shot.setDamage(0.25F).setEnd(-5))
       .withOreInput("paneGlassColorless")
       .withCost(100)
       .build()
 
     recipe
-      .withShot(builder.setDamage(1F).setDelay(3))
+      .withShot(shot.setDamage(1F).setDelay(3))
       .withOreInput("ingotIron")
       .withCost(300)
       .build()
 
     recipe
-      .withShot(builder.setColor(COLOR_SATURATED_ORANGE).setDamage(2F))
+      .withShot(shot.setColor(COLOR_SATURATED_ORANGE).setDamage(2F))
       .withOreInput("ingotGold")
       .withCost(300)
       .build()
 
     recipe
-      .withShot(builder.setDamage(3F))
+      .withShot(shot.setDamage(3F))
       .withGravity(strGravity)
       .withOreInput("ingotBrick")
       .withCost(300)
       .build()
 
     recipe
-      .withShot(builder.setDamage(2F).setSubEntity(LibSubEntities.FIRE))
+      .withShot(shot.setDamage(2F).setSubEntity(LibSubEntities.FIRE))
       .withGravity(strGravity)
       .withOreInput("ingotBrickNether")
       .withCost(200)
       .build()
 
     recipe
-      .withShot(builder.setDamage(0.25F))
+      .withShot(shot.setDamage(0.25F))
       .withOreInput("nuggetGold")
       .withCost(100)
       .build()
 
     recipe
-      .withShot(builder.setColor(COLOR_SATURATED_CYAN).setDamage(3F))
+      .withShot(shot.setColor(COLOR_SATURATED_CYAN).setDamage(3F))
       .withOreInput("gemDiamond")
       .withCost(300)
       .build()
 
     recipe
-      .withShot(builder.setColor(COLOR_SATURATED_GREEN).setDamage(2F))
+      .withShot(shot.setColor(COLOR_SATURATED_GREEN).setDamage(2F))
       .withOreInput("gemEmerald")
       .withCost(200)
       .build()
 
     recipe
-      .withShot(builder.setColor(COLOR_VANILLA_WHITE).setDamage(1.5F).setDelay(10).setEnd(10))
+      .withShot(shot.setColor(COLOR_VANILLA_WHITE).setDamage(1.5F).setDelay(10).setEnd(10))
       .withOreInput("gemQuartz")
       .withCost(300)
       .build()
 
     recipe
-      .withShot(builder.setColor(COLOR_SATURATED_RED).setEnd(10))
+      .withShot(shot.setColor(COLOR_SATURATED_RED).setEnd(10))
       .withOreInput("dustRedstone")
       .withCost(300)
       .build()
 
     recipe
-      .withShot(builder.setColor(COLOR_SATURATED_YELLOW).setDamage(0.5F).setEnd(1))
+      .withShot(shot.setColor(COLOR_SATURATED_YELLOW).setDamage(0.5F).setEnd(1))
       .withOreInput("dustGlowstone")
       .withCost(100)
       .build()
 
     recipe
-      .withShot(builder.setDamage(2F).setEnd(5))
+      .withShot(shot.setDamage(2F).setEnd(5))
       .withOreInput("glowstone")
       .withCost(400)
       .build()
 
     recipe
-      .withShot(builder.setDamage(-0.5F).setEnd(10))
+      .withShot(shot.setDamage(-0.5F).setEnd(10))
       .withGravity(gravity(-0.01D))
       .withOreInput("cropPotato")
       .withCost(300)
       .build()
 
     recipe
-      .withShot(builder.setDamage(-0.5F).setEnd(10))
+      .withShot(shot.setDamage(-0.5F).setEnd(10))
       .withGravity(gravity(-0.01D))
       .withOreInput("cropCarrot")
       .withCost(300)
       .build()
 
     recipe
-      .withShot(builder.setDamage(0.5F).setDelay(2))
+      .withShot(shot.setDamage(0.5F).setDelay(2))
       .withGravity(defGravity)
       .withOreInput("stone")
       .withCost(200)
       .build()
 
     recipe
-      .withShot(builder.setDamage(0.5F).setDelay(2))
+      .withShot(shot.setDamage(0.5F).setDelay(2))
       .withGravity(defGravity)
       .withOreInput("cobblestone")
       .withCost(200)
       .build()
 
     recipe
-      .withShot(builder.setDamage(0.5F).setDelay(2))
+      .withShot(shot.setDamage(0.5F).setDelay(2))
       .withGravity(defGravity)
       .withOreInput("sandstone")
       .withCost(200)
       .build()
 
     recipe
-      .withShot(builder.setColor(COLOR_VANILLA_BLACK).setDamage(0.5F).setSubEntity(LibSubEntities.FIRE))
+      .withShot(shot.setColor(COLOR_VANILLA_BLACK).setDamage(0.5F).setSubEntity(LibSubEntities.FIRE))
       .withInput(Items.COAL)
       .withCost(300)
       .build()
 
     recipe
-      .withShot(builder.setColor(COLOR_VANILLA_BLACK).setDamage(6F))
+      .withShot(shot.setColor(COLOR_VANILLA_BLACK).setDamage(6F))
       .withSpeed(-2D)
       .withGravity(strGravity)
       .withInput(Blocks.OBSIDIAN)
@@ -281,63 +287,63 @@ class CommonProxy {
       .build()
 
     recipe
-      .withShot(builder.setForm(LibForms.CRYSTAL_1).setColor(COLOR_VANILLA_CYAN))
+      .withShot(shot.setForm(LibForms.CRYSTAL_1).setColor(COLOR_VANILLA_CYAN))
       .withInput(new ItemStack(Blocks.ICE))
       .withCost(100)
       .build()
 
     recipe
-      .withShot(builder.setForm(LibForms.CRYSTAL_1).setColor(COLOR_VANILLA_CYAN).setDamage(0.25F))
+      .withShot(shot.setForm(LibForms.CRYSTAL_1).setColor(COLOR_VANILLA_CYAN).setDamage(0.25F))
       .withInput(Blocks.PACKED_ICE)
       .withCost(100)
       .build()
 
     recipe
-      .withShot(builder.setForm(defaultForm).setColor(COLOR_WHITE).setDamage(-0.2F))
+      .withShot(shot.setForm(defaultForm).setColor(COLOR_WHITE).setDamage(-0.2F))
       .withInput(Blocks.SNOW)
       .withCost(100)
       .build()
 
     recipe
-      .withShot(builder.setDamage(1F).setSubEntity(LibSubEntities.EXPLOSION))
+      .withShot(shot.setDamage(1F).setSubEntity(LibSubEntities.EXPLOSION))
       .withInput(Blocks.TNT)
       .withCost(1000)
       .build()
 
     recipe
-      .withShot(builder.setColor(COLOR_SATURATED_BLUE).setDamage(-0.2F).setSubEntity(defaultSubEntity))
+      .withShot(shot.setColor(COLOR_SATURATED_BLUE).setDamage(-0.2F).setSubEntity(defaultSubEntity))
       .withSpeed(0.2D)
       .withInput(Items.WATER_BUCKET)
       .withCost(200)
       .build()
 
     recipe
-      .withShot(builder.setColor(COLOR_SATURATED_RED).setDamage(0.5F).setSubEntity(LibSubEntities.FIRE))
+      .withShot(shot.setColor(COLOR_SATURATED_RED).setDamage(0.5F).setSubEntity(LibSubEntities.FIRE))
       .withSpeed(-0.2D)
       .withInput(Items.LAVA_BUCKET)
       .withCost(300)
       .build()
 
     recipe
-      .withShot(builder.setColor(COLOR_VANILLA_PURPLE).setDamage(-10F).setDelay(20).setSubEntity(LibSubEntities.FIRE))
+      .withShot(shot.setColor(COLOR_VANILLA_PURPLE).setDamage(-10F).setDelay(20).setSubEntity(LibSubEntities.FIRE))
       .withSpeed(-1D)
       .withInput(Items.ENDER_PEARL)
       .withCost(1000)
       .build()
 
     recipe
-      .withShot(builder.setDamage(0.5F).setSubEntity(LibSubEntities.FIRE))
+      .withShot(shot.setDamage(0.5F).setSubEntity(LibSubEntities.FIRE))
       .withInput(Items.FIRE_CHARGE)
       .withCost(300)
       .build()
 
     recipe
-      .withShot(builder.setSubEntity(LibSubEntities.FIRE))
+      .withShot(shot.setSubEntity(LibSubEntities.FIRE))
       .withInput(Items.FLINT_AND_STEEL)
       .withCost(300)
       .build()
 
-    def dyeRecipe(color: Int, oreName: String): Unit = recipe.withShot(builder.setColor(color)).withOreInput(oreName).withCost(100).build()
+    def dyeRecipe(color: Int, oreName: String): Unit = recipe.withShot(shot.setColor(color)).withOreInput(oreName).withCost(100).build()
 
     dyeRecipe(COLOR_VANILLA_BLACK, "dyeBlack")
     dyeRecipe(COLOR_VANILLA_BLUE, "dyeBlue")

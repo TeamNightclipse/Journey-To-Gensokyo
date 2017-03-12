@@ -1,10 +1,13 @@
 package net.katsstuff.journeytogensokyo.client.model
 
-import net.minecraft.client.model.ModelRenderer
+import net.minecraft.client.model.{ModelBase, ModelRenderer}
+import net.minecraft.client.renderer.GlStateManager
+import net.minecraft.entity.Entity
 import net.minecraftforge.fml.relauncher.{Side, SideOnly}
+import org.lwjgl.opengl.GL11
 
 @SideOnly(Side.CLIENT)
-object RedFairyModel extends ModelFairy {
+object YellowFairyModel extends ModelFairy {
   textureWidth = 64
   textureHeight = 32
 
@@ -20,8 +23,8 @@ object RedFairyModel extends ModelFairy {
   val dress2    = new ModelRenderer(this, 20, 0)
   val dress3    = new ModelRenderer(this, 8, 0)
   val dress4    = new ModelRenderer(this, 20, 0)
-  val rightWing = new ModelRenderer(this, 32, 0)
   val leftWing  = new ModelRenderer(this, 32, 0)
+  val rightWing = new ModelRenderer(this, 32, 0)
 
   body.setRotationPoint(0.0F, 13.0F, 0.0F)
   body.addBox(-2.0F, 0.0F, -2.0F, 4, 6, 4)

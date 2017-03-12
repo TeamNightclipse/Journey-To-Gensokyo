@@ -13,9 +13,9 @@ import net.minecraft.entity.Entity
 import net.minecraft.util.math.MathHelper
 
 object ModelTenguCrow extends ModelBase {
-
   textureWidth = 64
   textureHeight = 64
+
   val tenguFootLeft   = new ModelRenderer(this, 32, 32)
   val tenguWingRight  = new ModelRenderer(this, 34, 13)
   val tenguWingLeft2  = new ModelRenderer(this, 42, 0)

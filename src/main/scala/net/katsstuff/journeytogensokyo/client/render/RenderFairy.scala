@@ -10,7 +10,7 @@ package net.katsstuff.journeytogensokyo.client.render
 
 import scala.annotation.switch
 
-import net.katsstuff.journeytogensokyo.client.model.RedFairyModel
+import net.katsstuff.journeytogensokyo.client.model.{BlueFairyModel, GreenFairyModel, RedFairyModel, YellowFairyModel}
 import net.katsstuff.journeytogensokyo.client.render.RenderFairy._
 import net.katsstuff.journeytogensokyo.entity.living.EntityFairy
 import net.katsstuff.journeytogensokyo.lib.LibMod
@@ -20,17 +20,17 @@ import net.minecraft.util.ResourceLocation
 
 object RenderFairy {
 
-  final private val DeadTex = new ResourceLocation(LibMod.Id, "textures/entity/living/fairy_dead.png")
+  final private val DeadTex = new ResourceLocation(LibMod.Id, "textures/entity/mob/fairy_dead.png")
 
-  final private val RedTex    = new ResourceLocation(LibMod.Id, "textures/entity/living/fairy_red.png")
-  final private val BlueTex   = new ResourceLocation(LibMod.Id, "textures/entity/living/fairy_blue.png")
-  final private val GreenTex  = new ResourceLocation(LibMod.Id, "textures/entity/living/fairy_green.png")
-  final private val YellowTex = new ResourceLocation(LibMod.Id, "textures/entity/living/fairy_yellow.png")
+  final private val RedTex    = new ResourceLocation(LibMod.Id, "textures/entity/mob/fairy_red.png")
+  final private val BlueTex   = new ResourceLocation(LibMod.Id, "textures/entity/mob/fairy_blue.png")
+  final private val GreenTex  = new ResourceLocation(LibMod.Id, "textures/entity/mob/fairy_green.png")
+  final private val YellowTex = new ResourceLocation(LibMod.Id, "textures/entity/mob/fairy_yellow.png")
 
-  final private val MoonBlueTex   = new ResourceLocation(LibMod.Id, "textures/entity/living/fairy_moon_blue.png")
-  final private val MoonRedTex    = new ResourceLocation(LibMod.Id, "textures/entity/living/fairy_moon_red.png")
-  final private val MoonPurpleTex = new ResourceLocation(LibMod.Id, "textures/entity/living/fairy_moon_purple.png")
-  final private val MoonYellowTex = new ResourceLocation(LibMod.Id, "textures/entity/living/fairy_moon_yellow.png")
+  final private val MoonBlueTex   = new ResourceLocation(LibMod.Id, "textures/entity/mob/fairy_moon_blue.png")
+  final private val MoonRedTex    = new ResourceLocation(LibMod.Id, "textures/entity/mob/fairy_moon_red.png")
+  final private val MoonPurpleTex = new ResourceLocation(LibMod.Id, "textures/entity/mob/fairy_moon_purple.png")
+  final private val MoonYellowTex = new ResourceLocation(LibMod.Id, "textures/entity/mob/fairy_moon_yellow.png")
 
   final private val Gray = new ResourceLocation(LibMod.Id, "textures/entity/living/fairy_gray.png")
 }
@@ -60,5 +60,10 @@ class RenderFairy(renderManager: RenderManager) extends RenderLiving[EntityFairy
 
   private def modelForEntity(entity: EntityFairy): ModelBase = (entity.form: @switch) match {
     case 0 => RedFairyModel
+    case 1 => BlueFairyModel
+    case 2 => GreenFairyModel
+    case 3 => YellowFairyModel
+
+    case _ => RedFairyModel //TODO
   }
 }

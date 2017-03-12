@@ -10,14 +10,15 @@ package net.katsstuff.journeytogensokyo.entity.living
 
 import java.lang.{Byte => JByte}
 
-import net.minecraft.entity.monster.EntityMob
+import net.katsstuff.danmakucore.entity.living.EntityDanmakuMob
 import net.minecraft.network.datasync.{DataParameter, DataSerializers, EntityDataManager}
+import net.minecraft.world.World
 
 object EntityForm {
 
   private final val Form: DataParameter[JByte] = EntityDataManager.createKey(classOf[EntityForm], DataSerializers.BYTE)
 }
-trait EntityForm extends EntityMob {
+class EntityForm(world: World) extends EntityDanmakuMob(world) {
 
   override def entityInit(): Unit = {
     super.entityInit()

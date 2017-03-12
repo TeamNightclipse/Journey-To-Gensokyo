@@ -9,7 +9,7 @@
 package net.katsstuff.journeytogensokyo.lib
 
 object LibEntityName {
-
   final val Fairy     = "fairy"
-  final val TenguCrow = "tenguCrow"
+  final val TenguCrow = "tengu_crow"
+  final val HellRaven = "hell_raven"
 }
