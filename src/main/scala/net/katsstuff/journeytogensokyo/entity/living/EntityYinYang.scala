@@ -20,7 +20,7 @@ import net.minecraft.init.Blocks
 import net.minecraft.util.math.{BlockPos, MathHelper}
 import net.minecraft.world.World
 
-class EntityYinYang(world: World) extends EntityDanmakuMob(world) with IAllyDanmaku {
+class EntityYinYang(_world: World) extends EntityDanmakuMob(_world) with IAllyDanmaku {
 
   setSize(0.5F, 0.5F)
   experienceValue = 3

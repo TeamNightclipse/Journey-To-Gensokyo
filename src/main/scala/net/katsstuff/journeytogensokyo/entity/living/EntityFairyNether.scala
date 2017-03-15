@@ -13,7 +13,7 @@ import net.katsstuff.danmakucore.entity.living.EnumSpecies
 import net.katsstuff.danmakucore.lib.data.{LibPhases, LibShotData}
 import net.minecraft.world.World
 
-class EntityFairyNether(world: World) extends EntityFairy(world) {
+class EntityFairyNether(_world: World) extends EntityFairy(_world) {
 
   {
     val movement = MovementData.constant(0.4D)

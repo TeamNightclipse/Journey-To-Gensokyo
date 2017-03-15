@@ -62,7 +62,7 @@ class PhaseHellRaven(manager: PhaseManager, star: Boolean, val getType:  PhaseTy
           val template = DanmakuTemplate.builder().setUser(entity).setShot(otherShotData).setAngle(angle)
 
           for(i <- 1 until num) {
-            entity.worldObj.spawnEntityInWorld(template.setMovementData(0.3D * (i + i / 2D), 0.3D * (i / 2D), 0D).build().asEntity())
+            entity.world.spawnEntityInWorld(template.setMovementData(0.3D * (i + i / 2D), 0.3D * (i / 2D), 0D).build().asEntity())
           }
 
           DanmakuHelper.playShotSound(entity)

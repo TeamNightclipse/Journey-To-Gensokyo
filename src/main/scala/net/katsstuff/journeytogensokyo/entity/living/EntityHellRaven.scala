@@ -9,7 +9,7 @@ import net.minecraft.entity.ai.{EntityAIHurtByTarget, EntityAILookIdle, EntityAI
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.world.World
 
-class EntityHellRaven(world: World) extends EntityBigBird(world) {
+class EntityHellRaven(_world: World) extends EntityBigBird(_world) {
 
   phaseManager.addPhase(JTGPhases.HellRaven.instantiate(phaseManager))
   phaseManager.getCurrentPhase.init()

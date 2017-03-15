@@ -137,12 +137,12 @@ class ContainerDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: Bl
 
     val newForm      = if (result.getForm != null) result.getForm else current.getForm
     val newColor     = if (result.color != -1) result.color else current.color
-    val newSizeX     = MathHelper.clamp_float(roundedSizeX, 0.01F, 2F)
-    val newSizeY     = MathHelper.clamp_float(roundedSizeY, 0.01F, 2F)
-    val newSizeZ     = MathHelper.clamp_float(roundedSizeZ, 0.01F, 2F)
-    val newDamage    = MathHelper.clamp_float(roundedDamage, 0F, 8F)
-    val newDelay     = MathHelper.clamp_int(current.delay + result.delay, 0, 100)
-    val newEnd       = MathHelper.clamp_int(current.end + result.end, 1, 120)
+    val newSizeX     = MathHelper.clamp(roundedSizeX, 0.01F, 2F)
+    val newSizeY     = MathHelper.clamp(roundedSizeY, 0.01F, 2F)
+    val newSizeZ     = MathHelper.clamp(roundedSizeZ, 0.01F, 2F)
+    val newDamage    = MathHelper.clamp(roundedDamage, 0F, 8F)
+    val newDelay     = MathHelper.clamp(current.delay + result.delay, 0, 100)
+    val newEnd       = MathHelper.clamp(current.end + result.end, 1, 120)
     val newSubEntity = if (result.getSubEntity != null) result.getSubEntity else current.getSubEntity
 
     new ShotData(newForm, newColor, newSizeX, newSizeY, newSizeZ, newDamage, newDelay, newEnd, newSubEntity)
@@ -151,7 +151,7 @@ class ContainerDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: Bl
   def speedCurrent(input:     ItemStack): Double = ItemDanmaku.getSpeed(input)
   def speedResult(multiplier: Int, recipe: IRecipeDanmaku): Double = recipe.outputMovement.getSpeedOriginal * multiplier
   def speedCombined(input:    ItemStack, recipe: IRecipeDanmaku): Double =
-    MathHelper.clamp_double(speedCurrent(input) + speedResult(input.stackSize, recipe), 0D, 2D)
+    MathHelper.clamp(speedCurrent(input) + speedResult(input.stackSize, recipe), 0D, 2D)
 
   def gravityResult(multiplier: Int, recipe: IRecipeDanmaku): Vector3 = recipe.outputMovement.getGravity * multiplier
   def gravityCurrent(input:     ItemStack): Vector3 = ItemDanmaku.getGravity(input)
@@ -160,9 +160,9 @@ class ContainerDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: Bl
     val current = gravityCurrent(input)
     val result  = gravityResult(input.stackSize, recipe)
 
-    val x = MathHelper.clamp_double(current.x + result.x, 0.5D, -0.5D)
-    val y = MathHelper.clamp_double(current.y + result.y, 0.5D, -0.5D)
-    val z = MathHelper.clamp_double(current.z + result.z, 0.5D, -0.5D)
+    val x = MathHelper.clamp(current.x + result.x, 0.5D, -0.5D)
+    val y = MathHelper.clamp(current.y + result.y, 0.5D, -0.5D)
+    val z = MathHelper.clamp(current.z + result.z, 0.5D, -0.5D)
 
     new Vector3(x, y, z)
   }

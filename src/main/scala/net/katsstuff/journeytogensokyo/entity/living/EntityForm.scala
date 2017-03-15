@@ -18,7 +18,7 @@ object EntityForm {
 
   private final val Form: DataParameter[JByte] = EntityDataManager.createKey(classOf[EntityForm], DataSerializers.BYTE)
 }
-abstract class EntityForm(world: World) extends EntityJTGDanmakuMob(world) {
+abstract class EntityForm(_world: World) extends EntityJTGDanmakuMob(_world) {
 
   override def entityInit(): Unit = {
     super.entityInit()

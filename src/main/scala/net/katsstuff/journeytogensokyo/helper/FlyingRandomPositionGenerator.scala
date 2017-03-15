@@ -40,7 +40,7 @@ object FlyingRandomPositionGenerator {
         val zMod = rand.nextInt(2 * xz + 1) - xz
         if (targetVec3 == null || xMod * targetVec3.xCoord + zMod * targetVec3.zCoord >= 0.0D) {
           val blockpos1 = new BlockPos(xMod + entity.posX, yMod + entity.posY, zMod + entity.posZ)
-          if (navigate.canEntityStandOnPos(blockpos1) || entity.worldObj.isAirBlock(blockpos1)) {
+          if (navigate.canEntityStandOnPos(blockpos1) || entity.world.isAirBlock(blockpos1)) {
             val currentWeight = entity.getBlockPathWeight(blockpos1)
             if (currentWeight > weight) {
               weight = currentWeight

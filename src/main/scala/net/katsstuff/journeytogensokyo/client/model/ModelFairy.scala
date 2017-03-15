@@ -68,8 +68,8 @@ abstract class ModelFairy extends ModelBase {
     leftArm.rotateAngleZ = -0.5061454830783556F
 
     val posDown   = fairy.getPosition.down
-    val blockDown = fairy.worldObj.getBlockState(posDown)
-    val closeToGround = Option(blockDown.getCollisionBoundingBox(fairy.worldObj, posDown))
+    val blockDown = fairy.world.getBlockState(posDown)
+    val closeToGround = Option(blockDown.getCollisionBoundingBox(fairy.world, posDown))
       .exists(_.offset(posDown).isVecInside(fairy.getPositionVector.subtract(0D, 0.2D, 0D)))
 
     if (closeToGround) {
@@ -110,7 +110,7 @@ abstract class ModelFairy extends ModelBase {
       val primaryHand      = fairy.getPrimaryHand
       val primaryHandModel = if (primaryHand == EnumHandSide.LEFT) leftArm else rightArm
       var f1               = swingProgress
-      body.rotateAngleY = MathHelper.sin(MathHelper.sqrt_float(f1) * (Math.PI.toFloat * 2F)) * 0.2F
+      body.rotateAngleY = MathHelper.sin(MathHelper.sqrt(f1) * (Math.PI.toFloat * 2F)) * 0.2F
 
       if (primaryHand == EnumHandSide.LEFT) body.rotateAngleY *= -1.0F
 

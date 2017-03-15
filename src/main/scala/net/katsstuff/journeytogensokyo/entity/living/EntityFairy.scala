@@ -30,13 +30,13 @@ object EntityFairy {
     counter.toByte
   }
 }
-class EntityFairy(world: World) extends EntityForm(world) with Callable with IAllyDanmaku {
+class EntityFairy(_world: World) extends EntityForm(_world) with Callable with IAllyDanmaku {
 
   setSize(0.5F, 1F)
   experienceValue = 5
 
   form = {
-    if(worldObj.isRemote) 0
+    if(world.isRemote) 0
     else EntityFairy.nextCounter()
   }
 
@@ -82,10 +82,10 @@ class EntityFairy(world: World) extends EntityForm(world) with Callable with IAl
 
   override def isValidLightLevel: Boolean = {
     val blockpos = new BlockPos(this.posX, this.getEntityBoundingBox.minY, this.posZ)
-    worldObj.getLightFor(EnumSkyBlock.SKY, blockpos) > 8
+    world.getLightFor(EnumSkyBlock.SKY, blockpos) > 8
   }
 
-  override def getBlockPathWeight(pos: BlockPos): Float = worldObj.getLightBrightness(pos) - 0.5F
+  override def getBlockPathWeight(pos: BlockPos): Float = world.getLightBrightness(pos) - 0.5F
 
   override def spawnEntry: SpawnEntry = ConfigHandler.spawns.fairy
   override def spawnBlockCheck(state: IBlockState): Boolean = {

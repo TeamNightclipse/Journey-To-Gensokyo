@@ -14,7 +14,7 @@ import net.katsstuff.danmakucore.lib.data.LibDanmakuVariants
 import net.katsstuff.journeytogensokyo.phase.JTGPhases
 import net.minecraft.world.World
 
-class EntityFairyEnd(world: World) extends EntityFairy(world) {
+class EntityFairyEnd(_world: World) extends EntityFairy(_world) {
 
   {
     val shot = LibDanmakuVariants.LASER.getShotData.copy(color = DanmakuHelper.randomSaturatedColor(), subEntity = ???)

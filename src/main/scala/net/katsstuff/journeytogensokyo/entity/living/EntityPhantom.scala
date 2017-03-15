@@ -27,7 +27,7 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.util.math.{BlockPos, MathHelper}
 import net.minecraft.world.World
 
-class EntityPhantom(world: World) extends EntityDanmakuMob(world) with IAllyDanmaku {
+class EntityPhantom(_world: World) extends EntityDanmakuMob(_world) with IAllyDanmaku {
 
   setSize(0.5F, 0.5F)
   experienceValue = 3

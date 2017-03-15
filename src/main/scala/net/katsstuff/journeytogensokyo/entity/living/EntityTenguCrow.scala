@@ -12,7 +12,7 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
 import net.minecraft.world.World
 
-class EntityTenguCrow(world: World) extends EntityBigBird(world) {
+class EntityTenguCrow(_world: World) extends EntityBigBird(_world) {
 
   phaseManager.addPhase(JTGPhases.Tengu.instantiate(phaseManager))
   phaseManager.getCurrentPhase.init()

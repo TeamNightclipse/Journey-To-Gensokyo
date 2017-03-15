@@ -6,7 +6,7 @@ import net.minecraft.block.state.IBlockState
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
-abstract class EntityJTGDanmakuMob(world: World) extends EntityDanmakuMob(world) {
+abstract class EntityJTGDanmakuMob(_world: World) extends EntityDanmakuMob(_world) {
 
   def spawnEntry: ConfigHandler.Spawns.SpawnEntry
 
@@ -16,7 +16,7 @@ abstract class EntityJTGDanmakuMob(world: World) extends EntityDanmakuMob(world)
 
   override def getCanSpawnHere: Boolean = {
     if (rand.nextInt(100) <= spawnEntry.lastProbability) {
-      spawnBlockCheck(worldObj.getBlockState(new BlockPos(posX, getEntityBoundingBox.minY, posZ).down)) && super.getCanSpawnHere
+      spawnBlockCheck(world.getBlockState(new BlockPos(posX, getEntityBoundingBox.minY, posZ).down)) && super.getCanSpawnHere
     } else false
   }
 }
