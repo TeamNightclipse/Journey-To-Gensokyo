@@ -60,7 +60,7 @@ class ContainerDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: Bl
       addSlotToContainer(new Slot(invPlayer, j + i * 9 + 9, offsetX + j * 18, offsetY + i * 18))
     }
 
-    for (i <- 0 until 3) {
+    for (i <- 0 until 9) {
       addSlotToContainer(new Slot(invPlayer, i, offsetX + i * 18, offsetY + 58))
     }
   }

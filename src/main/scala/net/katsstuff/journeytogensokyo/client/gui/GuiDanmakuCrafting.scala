@@ -38,15 +38,22 @@ class GuiDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: BlockPos
     def i18n(string:             String) = I18n.format(string)
     def i18nDanmaku(string:      String) = i18n(s"item.danmaku.$string")
     def i18nDanmaku2(string1:    String, string2: String) = i18nDanmaku(string1) + SpaceDivider + i18nDanmaku(string2)
-    def i18nDanmakuValue(string: String, value: (_, _)*) = {
-      val builder = new StringBuilder(i18nDanmaku(string))
+    def i18nValue(string: String, value: (_, _)*) = {
+      val builder = new StringBuilder(i18n(string) + SpaceDivider)
 
-      value.foreach(t => builder.append(SpaceDivider, t._1))
-      builder.append(" + ")
-      value.foreach(t => builder.append(SpaceDivider, t._2))
+      if(value.size == 1) {
+        builder.append(s"${value.head._1} + ${value.head._2}")
+      }
+      else {
+        builder.append(s"(${value.map(_._1).mkString(", ")})")
+        builder.append(" + ")
+        builder.append(s"(${value.map(_._2).mkString(", ")})")
+      }
 
       builder.mkString
     }
+
+    def i18nDanmakuValue(string: String, value: (_, _)*) = i18nValue(s"item.danmaku.$string", value: _*)
 
     draw(i18n("crafting.danmaku.copy"), 18, 150, 4210752)
     draw(i18nDanmaku("amount"), 54, 150, 4210752)
@@ -66,35 +73,35 @@ class GuiDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: BlockPos
           if (total > maxNumber) maxNumber else total
         }
 
-        draw(i18nDanmakuValue("amount", (amountCurrent, amountResult)), 14, 70)
+        draw(i18nDanmakuValue("amount", amountCurrent -> amountResult), 14, 70)
 
         container.recipe match {
           case Some(recipe) =>
             val result = container.shotResult(multiplier, recipe)
 
-            draw(i18nDanmaku2("form", s"form.${if (result.form == null) current.form else result.form}"), 14, 10)
+            draw(i18nDanmaku2("form", if (result.form == null) current.form.getUnlocalizedName else result.form.getUnlocalizedName), 14, 10)
             draw(i18nDanmaku2("color", s"color.${if (result.color == -1) current.color else result.color}"), 14, 20)
-            draw(i18nDanmakuValue("damage", (current.damage, result.damage)), 14, 30)
-            draw(i18nDanmakuValue("size", (current.sizeX, result.sizeX), (current.sizeY, result.sizeY), (current.sizeZ, result.sizeZ)), 14, 40)
-            draw(i18nDanmakuValue("speed", (container.speedCurrent(stack), container.speedResult(multiplier, recipe))), 14, 50)
+            draw(i18nDanmakuValue("damage", current.damage -> result.damage), 14, 30)
+            draw(i18nDanmakuValue("size", current.sizeX -> result.sizeX, current.sizeY -> result.sizeY, current.sizeZ -> result.sizeZ), 14, 40)
+            draw(i18nDanmakuValue("speed", container.speedCurrent(stack) -> container.speedResult(multiplier, recipe)), 14, 50)
             draw(i18nDanmakuValue("gravity", toTuple(container.gravityCurrent(stack), container.gravityResult(multiplier, recipe)): _*), 14, 60)
             draw(i18nDanmaku2("pattern", "pattern." + container.getPattern(amountTotal, stack)), 14, 80)
-            draw(i18nDanmakuValue("delay", (current.delay, result.delay)), 14, 90)
-            draw(i18nDanmakuValue("end", (current.end, result.end)), 14, 100)
-            draw(i18nDanmaku2("subentity", s"subentity.${if (result.subEntity == null) current.subEntity else result.subEntity}"), 14, 110)
+            draw(i18nValue("crafting.danmaku.delay", current.delay -> result.delay), 14, 90)
+            draw(i18nValue("crafting.danmaku.end", current.end -> result.end), 14, 100)
+            draw(i18nDanmaku2("subentity", if (result.subEntity == null) current.subEntity.getUnlocalizedName else result.subEntity.getUnlocalizedName), 14, 110)
           case None =>
             val gravity = container.gravityCurrent(stack)
 
-            draw(i18nDanmaku2("form", s"form.${current.form}"), 14, 10)
+            draw(i18nDanmaku2("form", current.form.getUnlocalizedName), 14, 10)
             draw(i18nDanmaku2("color", s"color.${current.color}"), 14, 20)
-            draw(i18nDanmaku("damage") + s" ${current.damage}", 14, 30)
-            draw(i18nDanmaku("size") + s" ${current.sizeX}, ${current.sizeY}, ${current.sizeZ}", 14, 40)
-            draw(i18nDanmaku("speed") + s" ${container.speedCurrent(stack)}", 14, 50)
-            draw(i18nDanmaku("gravity") + s" ${gravity.x}, ${gravity.y}, ${gravity.z}", 14, 60)
+            draw(i18nDanmaku("damage") + SpaceDivider + current.damage, 14, 30)
+            draw(i18nDanmaku("size") + SpaceDivider + s"${current.sizeX}, ${current.sizeY}, ${current.sizeZ}", 14, 40)
+            draw(i18nDanmaku("speed") + SpaceDivider + s"${container.speedCurrent(stack)}", 14, 50)
+            draw(i18nDanmaku("gravity") + SpaceDivider + s"${gravity.x}, ${gravity.y}, ${gravity.z}", 14, 60)
             draw(i18nDanmaku2("pattern", "pattern." + container.getPattern(amountTotal, stack)), 14, 80)
-            draw(i18nDanmaku("delay" + s" ${current.delay}"), 14, 90)
-            draw(i18nDanmaku("end" + s" ${current.end}"), 14, 100)
-            draw(i18nDanmaku2("subentity", s"subentity.${current.subEntity}"), 14, 110)
+            draw(i18n("crafting.danmaku.delay") + SpaceDivider + current.delay, 14, 90)
+            draw(i18n("crafting.danmaku.end") + SpaceDivider + current.end, 14, 100)
+            draw(i18nDanmaku2("subentity", current.subEntity.getUnlocalizedName), 14, 110)
         }
       case None =>
     }
