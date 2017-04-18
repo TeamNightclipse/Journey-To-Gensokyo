@@ -7,11 +7,9 @@
 	"mcversion": "${mcversion}",
 	"url": "",
 	"updateUrl": "",
-	"authorList": [
-	  "Katrix"
-	],
-	"credits": "Original creator of the Touhou Items mod, that this mod is based on.",
-	"logoFile": "",
+	"authorList": ["Katrix"],
+	"credits": "Kuroanko, Creator of the Touhou Items mod. Aya, Nick, Redleaf and Cyros for help with textures.",
+	"logoFile": "assets/journeytogensokyo/textures/logo.png",
 	"screenshots": [],
 	"dependencies": []
   }
