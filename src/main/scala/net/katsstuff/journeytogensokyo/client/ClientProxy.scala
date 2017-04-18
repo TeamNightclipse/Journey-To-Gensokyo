@@ -12,7 +12,7 @@ import scala.reflect.ClassTag
 
 import net.katsstuff.journeytogensokyo.CommonProxy
 import net.katsstuff.journeytogensokyo.block.JTGBlocks
-import net.katsstuff.journeytogensokyo.client.render.{RenderFairy, RenderHellRaven, RenderTenguCrow}
+import net.katsstuff.journeytogensokyo.client.render.{RenderFairy, RenderHellRaven, RenderPhantom, RenderTenguCrow}
 import net.minecraft.block.Block
 import net.minecraft.client.renderer.block.model.{ModelResourceLocation => MRL}
 import net.minecraft.client.renderer.entity.{Render, RenderManager}
@@ -39,6 +39,7 @@ class ClientProxy extends CommonProxy {
     registerEntityRenderer(new RenderFairy(_))
     registerEntityRenderer(new RenderTenguCrow(_))
     registerEntityRenderer(new RenderHellRaven(_))
+    registerEntityRenderer(new RenderPhantom(_))
   }
 
   def registerEntityRenderer[A <: Entity: ClassTag](f: RenderManager => Render[A]): Unit = {

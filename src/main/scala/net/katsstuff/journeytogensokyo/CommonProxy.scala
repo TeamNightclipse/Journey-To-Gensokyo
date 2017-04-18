@@ -13,18 +13,17 @@ import net.katsstuff.danmakucore.entity.living.phase.PhaseType
 import net.katsstuff.danmakucore.lib.data.{LibForms, LibSubEntities}
 import net.katsstuff.journeytogensokyo.api.{JourneyToGensokyoAPI => JTGAPI}
 import net.katsstuff.journeytogensokyo.block.{BlockDanmakuCrafting, JTGBlocks}
-import net.katsstuff.journeytogensokyo.entity.living.{EntityFairy, EntityHellRaven, EntityTenguCrow}
+import net.katsstuff.journeytogensokyo.entity.living.{EntityFairy, EntityHellRaven, EntityPhantom, EntityTenguCrow}
 import net.katsstuff.journeytogensokyo.handler.ConfigHandler
 import net.katsstuff.journeytogensokyo.item.ItemBulletCore
 import net.katsstuff.journeytogensokyo.lib.{LibBlockName, LibEntityName, LibItemName, LibPhaseName}
 import net.katsstuff.journeytogensokyo.phase.{PhaseTypeGenericStageEnemy, PhaseTypeHellRaven, PhaseTypeShapeArrow, PhaseTypeTengu}
 import net.minecraft.block.Block
-import net.minecraft.entity.{Entity, EntityLiving, EnumCreatureType}
+import net.minecraft.entity.{EntityLiving, EnumCreatureType}
 import net.minecraft.init.{Blocks, Items}
 import net.minecraft.item.{Item, ItemBlock, ItemStack}
 import net.minecraft.world.biome.Biome
 import net.minecraftforge.common.BiomeDictionary
-import net.minecraftforge.common.BiomeManager.BiomeType
 import net.minecraftforge.event.RegistryEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.registry.EntityRegistry
@@ -67,6 +66,9 @@ class CommonProxy {
 
     EntityRegistry.registerModEntity(classOf[EntityHellRaven], LibEntityName.HellRaven, 2, JourneyToGensokyo, 64, 1, true, 0xFFFFFF, 0x000000)
     registerSpawn(classOf[EntityHellRaven], ConfigHandler.spawns.hellRaven, EnumCreatureType.MONSTER, BiomeType.NETHER)
+
+    EntityRegistry.registerModEntity(classOf[EntityPhantom], LibEntityName.Phantom, 3, JourneyToGensokyo, 64, 1, true, 0xFFFFFF, 0x000000)
+    registerSpawn(classOf[EntityPhantom], ConfigHandler.spawns.hellRaven, EnumCreatureType.MONSTER, BiomeType.HILLS, BiomeType.PLAINS, BiomeType.FOREST, BiomeType.NETHER)
   }
 
   def registerSpawn(clazz:        Class[_ <: EntityLiving],

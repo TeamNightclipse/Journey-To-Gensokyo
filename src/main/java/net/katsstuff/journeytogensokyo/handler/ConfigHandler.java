@@ -14,6 +14,7 @@ public class ConfigHandler {
 		public Fairy fairy = new Fairy();
 		public TenguCrow tenguCrow = new TenguCrow();
 		public HellRaven hellRaven = new HellRaven();
+		public Phantom phantom = new Phantom();
 
 		public static class Fairy implements SpawnEntry {
 			public int weightedProbability = 20;
@@ -87,6 +88,39 @@ public class ConfigHandler {
 			public int maxAmount = 3;
 			public int lastProbability = 100;
 			public int maxInChunk = 3;
+
+			@Override
+			public int weightedProbability() {
+				return weightedProbability;
+			}
+
+			@Override
+			public int minAmount() {
+				return minAmount;
+			}
+
+			@Override
+			public int maxAmount() {
+				return maxAmount;
+			}
+
+			@Override
+			public int lastProbability() {
+				return lastProbability;
+			}
+
+			@Override
+			public int maxInChunk() {
+				return maxInChunk;
+			}
+		}
+
+		public static class Phantom implements SpawnEntry {
+			public int weightedProbability = 30;
+			public int minAmount = 2;
+			public int maxAmount = 6;
+			public int lastProbability = 100;
+			public int maxInChunk = 6;
 
 			@Override
 			public int weightedProbability() {

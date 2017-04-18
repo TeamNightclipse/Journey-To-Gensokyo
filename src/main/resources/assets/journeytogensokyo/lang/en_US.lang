@@ -1,6 +1,15 @@
 #Creative
-itemGroup.journeyToGensokyo=Journey To Gensokyo
+itemGroup.journeytogensokyo=Journey To Gensokyo
 #Normal Block names
-tile.danmakuCrafting.name=Danmaku Crafting Table
+tile.danmaku_crafting_table.name=Danmaku Crafting Table
 #Danmaku Crafting
 crafting.danmaku.copy=Copy
+crafting.danmaku.delay=Delay
+crafting.danmaku.end=End
+
+entity.journeytogensokyo.tengu_crow.name=Crow Tengu
+entity.journeytogensokyo.hell_raven.name=Hell raven
+entity.journeytogensokyo.fairy.name=Fairy
+entity.journeytogensokyo.phantom.name=Phantom
+
+item.bullet_core.name=Bullet core

@@ -12,4 +12,5 @@ object LibEntityName {
   final val Fairy     = "fairy"
   final val TenguCrow = "tengu_crow"
   final val HellRaven = "hell_raven"
+  final val Phantom = "phantom"
 }
