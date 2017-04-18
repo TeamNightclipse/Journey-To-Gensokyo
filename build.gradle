@@ -53,8 +53,16 @@ minecraft {
 	replaceIn 'LibMod.scala'
 }
 
+repositories {
+    maven {
+        url = "http://dvs1.progwml6.com/files/maven"
+    }
+}
+
 dependencies {
 	compile project(':danmakuCore')
+    deobfCompile "mezz.jei:jei_${config.mc_version}:${config.jei_version}:api"
+    runtime "mezz.jei:jei_${config.mc_version}:${config.jei_version}"
     // you may put jars on which you depend on in ./libs
     // or you may define them like so..
     //compile "some.group:artifact:version:classifier"

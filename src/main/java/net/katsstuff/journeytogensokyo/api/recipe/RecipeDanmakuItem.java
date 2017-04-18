@@ -62,4 +62,8 @@ public class RecipeDanmakuItem implements IRecipeDanmaku {
 	public ShotData outputShotData() {
 		return shot;
 	}
+
+	public Object input() {
+		return input;
+	}
 }
