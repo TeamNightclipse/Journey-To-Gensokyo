@@ -2,11 +2,13 @@ package net.katsstuff.journeytogensokyo.phase
 
 import net.katsstuff.danmakucore.data.Vector3
 import net.katsstuff.danmakucore.entity.danmaku.DanmakuTemplate
+import net.katsstuff.danmakucore.entity.living.EntityDanmakuMob
 import net.katsstuff.danmakucore.entity.living.phase.{Phase, PhaseManager, PhaseType}
-import net.katsstuff.danmakucore.helper.{DanmakuCreationHelper, DanmakuHelper}
+import net.katsstuff.danmakucore.helper.{DanmakuCreationHelper, DanmakuHelper, TouhouHelper}
 import net.katsstuff.danmakucore.lib.LibColor
 import net.katsstuff.danmakucore.lib.data.LibShotData
 import net.katsstuff.journeytogensokyo.helper.FlyingRandomPositionGenerator
+import net.minecraft.entity.EntityLivingBase
 
 class PhaseTypeTengu extends PhaseType {
   override def instantiate(manager: PhaseManager): Phase = new PhaseTengu(manager, this)
@@ -15,7 +17,8 @@ class PhaseTypeTengu extends PhaseType {
 class PhaseTengu(manager: PhaseManager, val getType: PhaseTypeTengu) extends Phase(manager) {
 
   var cooldown = 0
-  private val shotData = LibShotData.SHOT_SMALL.copy(color = LibColor.COLOR_SATURATED_YELLOW)
+  var charge = 0
+  private val shotData = LibShotData.SHOT_SMALL.copy(color = LibColor.COLOR_SATURATED_YELLOW, damage = 0.1F)
 
   override def init(): Unit = {
     super.init()
@@ -43,35 +46,55 @@ class PhaseTengu(manager: PhaseManager, val getType: PhaseTypeTengu) extends Pha
         DanmakuHelper.playShotSound(entity)
       }
 
-      if (isCounterStart) {
-        if (cooldown > 0) cooldown -= 1
+      if(charge > 0) doCharge(entity, target) else moveAround(entity, target)
+    }
+  }
 
-        if (cooldown == 0 && !entity.hasPath) {
+  override protected def useFreeze(): Boolean = false
 
-          if (entity.getRNG.nextInt(3) == 0) {
-            val angle @ Vector3(x, y, z) = Vector3.angleToLiving(entity, target) * (entity.getSpeed * 2.5)
-            entity.motionX += x
-            entity.motionY += y
-            entity.motionZ += z
+  private def doCharge(entity: EntityDanmakuMob, target: EntityLivingBase): Unit = {
+    if(counter % 12 == 0) {
+      if(charge < 3) {
+        charge += 1
+        createChargeSphere(entity)
+      }
+      else {
+        val angle @ Vector3(x, y, z) = Vector3.angleToLiving(entity, target) * (entity.getSpeed * 2.5D)
+        entity.motionX += x
+        entity.motionY += y
+        entity.motionZ += z
 
-            val template = DanmakuTemplate
-              .builder()
-              .setUser(entity)
-              .setAngle(angle)
-              .setShot(shotData.setColor(LibColor.COLOR_SATURATED_RED).scaleSize(2F))
-              .setMovementData(entity.getSpeed * 2)
-              .build()
+        val template = DanmakuTemplate
+          .builder()
+          .setUser(entity)
+          .setAngle(angle.normalize)
+          .setShot(shotData.setColor(LibColor.COLOR_SATURATED_RED).scaleSize(2F))
+          .setMovementData(entity.getSpeed * 1.2D)
+          .build()
 
-            entity.worldObj.spawnEntityInWorld(template.asEntity())
-            cooldown = 3
-          } else {
-            val targetVec = FlyingRandomPositionGenerator.findRandomTarget(entity, 4, 1)
-            if (targetVec != null) {
-              val path = entity.getNavigator.getPathToXYZ(targetVec.xCoord, targetVec.yCoord, targetVec.zCoord)
-              if (path != null) {
-                if (entity.getNavigator.setPath(path, entity.getSpeed)) {
-                  cooldown = 2
-                }
+        entity.world.spawnEntityInWorld(template.asEntity())
+        charge = 0
+      }
+    }
+  }
+
+  private def moveAround(entity: EntityDanmakuMob, target: EntityLivingBase): Unit = {
+    if (isCounterStart) {
+      if (cooldown > 0) cooldown -= 1
+
+      if (cooldown == 0 && !entity.hasPath) {
+
+        if (entity.getRNG.nextInt(3) == 0) {
+          cooldown = 3
+          charge = 1
+          createChargeSphere(entity)
+        } else {
+          val targetVec = FlyingRandomPositionGenerator.findRandomTarget(entity, 4, 1)
+          if (targetVec != null) {
+            val path = entity.getNavigator.getPathToXYZ(targetVec.xCoord, targetVec.yCoord, targetVec.zCoord)
+            if (path != null) {
+              if (entity.getNavigator.setPath(path, entity.getSpeed)) {
+                cooldown = 2
               }
             }
           }
@@ -79,4 +102,6 @@ class PhaseTengu(manager: PhaseManager, val getType: PhaseTypeTengu) extends Pha
       }
     }
   }
+
+  private def createChargeSphere(entity: EntityDanmakuMob): Unit = TouhouHelper.createChargeSphere(entity, 50 * charge, 2D, 10D, 1F, 0.1F, 0.1F, 40)
 }
