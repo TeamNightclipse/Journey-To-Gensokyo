@@ -90,11 +90,11 @@ class ContainerDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: Bl
   private def createOutput(danmaku: ItemStack, shot: ShotData, speed: Double, gravity: Vector3, stackSize: Int, custom: Boolean): ItemStack = {
     val amount = {
       val maxNumber = ConfigHandler.danmaku.danmakuMaxNumber
-      val total     = amountCurrent(danmaku) + amountResult(danmaku)
+      val total     = amountCurrent() + amountResult()
       if (total > maxNumber) maxNumber else total
     }
 
-    val pattern = getPattern(amount, danmaku)
+    val pattern = getPattern(amount)
 
     val danmakuCopy = danmaku.copy()
     danmakuCopy.stackSize = stackSize
@@ -167,22 +167,30 @@ class ContainerDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: Bl
     new Vector3(x, y, z)
   }
 
-  def amountCurrent(input: ItemStack): Int = ItemDanmaku.getAmount(input)
-  def amountResult(input:  ItemStack): Int = input.stackSize
+  def amountCurrent(): Int = {
+    danmaku.fold(0)(ItemDanmaku.getAmount)
+  }
 
-  def getPattern(amount: Int, default: ItemStack): Int = {
-    def pattern(slots: Int*) = slots.map(craftMatrix.getStackInSlot).contains(null)
+  def amountResult(): Int = {
+    val stack = slotAmount.getStack
+    if(stack == null) 0 else stack.stackSize
+  }
 
-    val circlePresent = pattern(0, 1, 2, 3, 5, 6, 7, 8) && !pattern(4)
+  def getPattern(amount: Int): Int = {
+    def pattern(slots: Int*): Boolean = {
+      val (nonNull, nullable) = (0 until 9).partition(slots.contains)
 
-    if (!circlePresent) return 0
-    else if (!pattern(0, 2, 3, 5, 6, 7, 8) && pattern(1, 4)) return 1
-    else if (pattern(0, 1, 2) && !pattern(3, 4, 5, 6, 7, 8)) return 2
-    else if (circlePresent) return 3
-    else if (pattern(0, 1, 2, 3, 4, 5, 6, 7, 8) && amount > 2) return 4
-    else if (!pattern(0, 2, 4, 6, 8) && pattern(1, 3, 5, 7) && amount > 2) return 5
+      !nonNull.map(craftMatrix.getStackInSlot).contains(null) &&
+        nullable.map(craftMatrix.getStackInSlot).forall(_ == null)
+    }
 
-    ItemDanmaku.getPattern(default)
+    if (pattern(4)) 0
+    else if (pattern(1, 4)) 1
+    else if (pattern(0, 1, 2)) 2
+    else if (pattern(0, 1, 2, 3, 5, 6, 7, 8)) 3
+    else if (pattern(0, 1, 2, 3, 4, 5, 6, 7, 8) && amount > 2) 4
+    else if (pattern(1, 3, 5, 7) && amount > 2) 5
+    else danmaku.fold(0)(ItemDanmaku.getPattern)
   }
 
   def recipe: Option[IRecipeDanmaku] =

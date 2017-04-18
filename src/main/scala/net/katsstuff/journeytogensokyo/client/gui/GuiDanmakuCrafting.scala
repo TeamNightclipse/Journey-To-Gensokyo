@@ -65,8 +65,8 @@ class GuiDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: BlockPos
         val multiplier = stack.stackSize
         val current    = container.shotCurrent(stack)
 
-        val amountCurrent = container.amountCurrent(stack)
-        val amountResult  = container.amountResult(stack)
+        val amountCurrent = container.amountCurrent()
+        val amountResult  = container.amountResult()
         val amountTotal = {
           val maxNumber = ConfigHandler.danmaku.danmakuMaxNumber
           val total     = amountCurrent + amountResult
@@ -85,7 +85,7 @@ class GuiDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: BlockPos
             draw(i18nDanmakuValue("size", current.sizeX -> result.sizeX, current.sizeY -> result.sizeY, current.sizeZ -> result.sizeZ), 14, 40)
             draw(i18nDanmakuValue("speed", container.speedCurrent(stack) -> container.speedResult(multiplier, recipe)), 14, 50)
             draw(i18nDanmakuValue("gravity", toTuple(container.gravityCurrent(stack), container.gravityResult(multiplier, recipe)): _*), 14, 60)
-            draw(i18nDanmaku2("pattern", "pattern." + container.getPattern(amountTotal, stack)), 14, 80)
+            draw(i18nDanmaku2("pattern", "pattern." + container.getPattern(amountTotal)), 14, 80)
             draw(i18nValue("crafting.danmaku.delay", current.delay -> result.delay), 14, 90)
             draw(i18nValue("crafting.danmaku.end", current.end -> result.end), 14, 100)
             draw(i18nDanmaku2("subentity", if (result.subEntity == null) current.subEntity.getUnlocalizedName else result.subEntity.getUnlocalizedName), 14, 110)
@@ -98,7 +98,7 @@ class GuiDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: BlockPos
             draw(i18nDanmaku("size") + SpaceDivider + s"${current.sizeX}, ${current.sizeY}, ${current.sizeZ}", 14, 40)
             draw(i18nDanmaku("speed") + SpaceDivider + s"${container.speedCurrent(stack)}", 14, 50)
             draw(i18nDanmaku("gravity") + SpaceDivider + s"${gravity.x}, ${gravity.y}, ${gravity.z}", 14, 60)
-            draw(i18nDanmaku2("pattern", "pattern." + container.getPattern(amountTotal, stack)), 14, 80)
+            draw(i18nDanmaku2("pattern", "pattern." + container.getPattern(amountTotal)), 14, 80)
             draw(i18n("crafting.danmaku.delay") + SpaceDivider + current.delay, 14, 90)
             draw(i18n("crafting.danmaku.end") + SpaceDivider + current.end, 14, 100)
             draw(i18nDanmaku2("subentity", current.subEntity.getUnlocalizedName), 14, 110)
