@@ -303,7 +303,7 @@ class CommonProxy {
       .build()
 
     recipe
-      .withShot(shot.setForm(LibForms.CRYSTAL_1).setColor(COLOR_VANILLA_CYAN).setDamage(0.25F))
+      .withShot(shot.setForm(LibForms.CRYSTAL_2).setColor(COLOR_VANILLA_CYAN).setDamage(0.25F))
       .withInput(Blocks.PACKED_ICE)
       .withCost(100)
       .build()
@@ -328,7 +328,7 @@ class CommonProxy {
       .build()
 
     recipe
-      .withShot(shot.setColor(COLOR_SATURATED_RED).setDamage(0.5F).setSubEntity(LibSubEntities.FIRE))
+      .withShot(shot.setForm(LibForms.FIRE).setColor(COLOR_SATURATED_RED).setDamage(0.5F).setSubEntity(LibSubEntities.FIRE))
       .withSpeed(-0.2D)
       .withInput(Items.LAVA_BUCKET)
       .withCost(300)
@@ -342,13 +342,13 @@ class CommonProxy {
       .build()
 
     recipe
-      .withShot(shot.setDamage(0.5F).setSubEntity(LibSubEntities.FIRE))
+      .withShot(shot.setForm(LibForms.FIRE).setDamage(0.5F).setSubEntity(LibSubEntities.FIRE))
       .withInput(Items.FIRE_CHARGE)
       .withCost(300)
       .build()
 
     recipe
-      .withShot(shot.setSubEntity(LibSubEntities.FIRE))
+      .withShot(shot.setForm(LibForms.FIRE).setSubEntity(LibSubEntities.FIRE))
       .withInput(Items.FLINT_AND_STEEL)
       .withCost(300)
       .build()
