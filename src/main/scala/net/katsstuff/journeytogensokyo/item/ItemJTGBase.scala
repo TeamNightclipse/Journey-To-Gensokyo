@@ -8,9 +8,10 @@
  */
 package net.katsstuff.journeytogensokyo.item
 
+import net.katsstuff.journeytogensokyo.JTGCreativeTab
 import net.minecraft.item.Item
 
 class ItemJTGBase(name: String) extends Item {
-
+  setCreativeTab(JTGCreativeTab)
   setUnlocalizedName(name)
 }

@@ -18,5 +18,12 @@ import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 public class JTGBlocks {
 
 	@ObjectHolder(LibBlockName.DanmakuCrafting)
-	public static final Block BlockDanmakuCrafting = new Block(Material.AIR);
+	public static final Block DanmakuCrafting = new Block(Material.AIR);
+
+	@ObjectHolder(LibBlockName.GensokyoOre)
+	public static final Block GensokyoOre = new Block(Material.AIR);
+	@ObjectHolder(LibBlockName.MakaiOre)
+	public static final Block MakaiOre = new Block(Material.AIR);
+	@ObjectHolder(LibBlockName.CelestialOre)
+	public static final Block CelestialOre = new Block(Material.AIR);
 }

@@ -8,10 +8,11 @@
  */
 package net.katsstuff.journeytogensokyo.block
 
+import net.katsstuff.journeytogensokyo.JTGCreativeTab
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 
 class BlockJTGBase(material: Material, name: String) extends Block(material) {
-
+  setCreativeTab(JTGCreativeTab)
   setUnlocalizedName(name)
 }

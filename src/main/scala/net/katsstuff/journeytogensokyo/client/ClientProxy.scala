@@ -27,7 +27,7 @@ object ClientProxy {
 
   @SubscribeEvent
   def registerModels(event: ModelRegistryEvent): Unit =
-    registerItemBlock(JTGBlocks.BlockDanmakuCrafting, 0)
+    registerItemBlock(JTGBlocks.DanmakuCrafting, 0)
 
   private def registerItemBlock(block: Block, damage: Int): Unit =
     ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), damage, new MRL(block.getRegistryName, "inventory"))

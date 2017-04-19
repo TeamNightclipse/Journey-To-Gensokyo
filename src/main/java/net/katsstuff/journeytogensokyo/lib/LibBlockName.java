@@ -11,4 +11,7 @@ package net.katsstuff.journeytogensokyo.lib;
 public class LibBlockName {
 
 	public static final String DanmakuCrafting = "danmaku_crafting_table";
+	public static final String GensokyoOre = "ore_gensokyo";
+	public static final String MakaiOre = "ore_makai";
+	public static final String CelestialOre = "ore_celestial";
 }

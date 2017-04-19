@@ -12,12 +12,13 @@ import net.katsstuff.danmakucore.data.{MovementData, ShotData, Vector3}
 import net.katsstuff.danmakucore.entity.living.phase.PhaseType
 import net.katsstuff.danmakucore.lib.data.{LibForms, LibSubEntities}
 import net.katsstuff.journeytogensokyo.api.{JourneyToGensokyoAPI => JTGAPI}
-import net.katsstuff.journeytogensokyo.block.{BlockDanmakuCrafting, JTGBlocks}
+import net.katsstuff.journeytogensokyo.block.{BlockDanOre, BlockDanmakuCrafting, JTGBlocks}
 import net.katsstuff.journeytogensokyo.entity.living.{EntityFairy, EntityHellRaven, EntityPhantom, EntityTenguCrow}
 import net.katsstuff.journeytogensokyo.handler.ConfigHandler
-import net.katsstuff.journeytogensokyo.item.ItemBulletCore
+import net.katsstuff.journeytogensokyo.item.{ItemJTGBase, JTGItems}
 import net.katsstuff.journeytogensokyo.lib.{LibBlockName, LibEntityName, LibItemName, LibPhaseName}
 import net.katsstuff.journeytogensokyo.phase.{PhaseTypeGenericStageEnemy, PhaseTypeHellRaven, PhaseTypeShapeArrow, PhaseTypeTengu}
+import net.katsstuff.journeytogensokyo.worldgen.OreWorldGen
 import net.minecraft.block.Block
 import net.minecraft.entity.{EntityLiving, EnumCreatureType}
 import net.minecraft.init.{Blocks, Items}
@@ -26,17 +27,65 @@ import net.minecraft.world.biome.Biome
 import net.minecraftforge.common.BiomeDictionary
 import net.minecraftforge.event.RegistryEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
-import net.minecraftforge.fml.common.registry.EntityRegistry
+import net.minecraftforge.fml.common.registry.{EntityRegistry, GameRegistry}
+import net.minecraftforge.oredict.OreDictionary
 
 object CommonProxy {
 
   @SubscribeEvent
-  def registerBlocks(event: RegistryEvent.Register[Block]): Unit =
-    event.getRegistry.registerAll(new BlockDanmakuCrafting setRegistryName LibBlockName.DanmakuCrafting)
+  def registerBlocks(event: RegistryEvent.Register[Block]): Unit = {
+    event.getRegistry.registerAll(
+      new BlockDanmakuCrafting setRegistryName LibBlockName.DanmakuCrafting,
+      new BlockDanOre(LibBlockName.GensokyoOre) setRegistryName LibBlockName.GensokyoOre,
+      new BlockDanOre(LibBlockName.MakaiOre) setRegistryName LibBlockName.MakaiOre setLightLevel 1F,
+      new BlockDanOre(LibBlockName.CelestialOre) setRegistryName LibBlockName.CelestialOre setLightLevel 1F
+    )
+  }
 
   @SubscribeEvent
-  def registerItems(event: RegistryEvent.Register[Item]): Unit =
-    event.getRegistry.registerAll(new ItemBulletCore setRegistryName LibItemName.BulletCore, itemBlock(JTGBlocks.BlockDanmakuCrafting))
+  def registerItems(event: RegistryEvent.Register[Item]): Unit = {
+    val gensokyoDust = new ItemJTGBase(LibItemName.GensokyoDust) setRegistryName LibItemName.GensokyoDust
+    val makaiDust = new ItemJTGBase(LibItemName.MakaiDust) setRegistryName LibItemName.MakaiDust
+    val celestialDust = new ItemJTGBase(LibItemName.CelestialDust) setRegistryName LibItemName.CelestialDust
+    val gensokyoCrystal = new ItemJTGBase(LibItemName.GensokyoCrystal) setRegistryName LibItemName.GensokyoCrystal
+    val makaiCrystal = new ItemJTGBase(LibItemName.MakaiCrystal) setRegistryName LibItemName.MakaiCrystal
+    val celestialCrystal = new ItemJTGBase(LibItemName.CelestialCrystal) setRegistryName LibItemName.CelestialCrystal
+
+    val gensokyoOre = itemBlock(JTGBlocks.GensokyoOre)
+    val makaiOre = itemBlock(JTGBlocks.MakaiOre)
+    val celestialOre = itemBlock(JTGBlocks.CelestialOre)
+
+    event.getRegistry.registerAll(
+      new ItemJTGBase(LibItemName.BulletCore) setRegistryName LibItemName.BulletCore,
+      gensokyoOre,
+      makaiOre,
+      celestialOre,
+      gensokyoDust,
+      makaiDust,
+      celestialDust,
+      gensokyoCrystal,
+      makaiCrystal,
+      celestialCrystal,
+      new ItemJTGBase(LibItemName.GensokyoSpell) setRegistryName LibItemName.GensokyoSpell,
+      new ItemJTGBase(LibItemName.MakaiSpell) setRegistryName LibItemName.MakaiSpell,
+      new ItemJTGBase(LibItemName.CelestialSpell) setRegistryName LibItemName.CelestialSpell,
+      new ItemJTGBase(LibItemName.GensokyoNotes) setRegistryName LibItemName.GensokyoNotes,
+      new ItemJTGBase(LibItemName.PatchedGensokyoNotes) setRegistryName LibItemName.PatchedGensokyoNotes,
+      itemBlock(JTGBlocks.DanmakuCrafting)
+    )
+
+    OreDictionary.registerOre("oreGensokyo", gensokyoOre)
+    OreDictionary.registerOre("oreMakai", makaiOre)
+    OreDictionary.registerOre("oreCelestial", celestialOre)
+
+    OreDictionary.registerOre("dustGensokyo", gensokyoDust)
+    OreDictionary.registerOre("dustMakai", makaiDust)
+    OreDictionary.registerOre("dustCelestial", celestialDust)
+
+    OreDictionary.registerOre("ingotGensokyo", gensokyoCrystal)
+    OreDictionary.registerOre("ingotMakai", makaiCrystal)
+    OreDictionary.registerOre("ingotCelestial", celestialCrystal)
+  }
 
   @SubscribeEvent
   def registerPhases(event: RegistryEvent.Register[PhaseType]): Unit =
@@ -68,14 +117,41 @@ class CommonProxy {
     registerSpawn(classOf[EntityHellRaven], ConfigHandler.spawns.hellRaven, EnumCreatureType.MONSTER, BiomeType.NETHER)
 
     EntityRegistry.registerModEntity(classOf[EntityPhantom], LibEntityName.Phantom, 3, JourneyToGensokyo, 64, 1, true, 0xFFFFFF, 0x000000)
-    registerSpawn(classOf[EntityPhantom], ConfigHandler.spawns.hellRaven, EnumCreatureType.MONSTER, BiomeType.HILLS, BiomeType.PLAINS, BiomeType.FOREST, BiomeType.NETHER)
+    registerSpawn(
+      classOf[EntityPhantom],
+      ConfigHandler.spawns.hellRaven,
+      EnumCreatureType.MONSTER,
+      BiomeType.HILLS,
+      BiomeType.PLAINS,
+      BiomeType.FOREST,
+      BiomeType.NETHER
+    )
+  }
+
+  def registerCrafting(): Unit = {
+    GameRegistry.addSmelting(JTGBlocks.GensokyoOre, new ItemStack(JTGItems.GensokyoCrystal), 5F)
+    GameRegistry.addSmelting(JTGBlocks.MakaiOre, new ItemStack(JTGItems.MakaiCrystal), 5F)
+    GameRegistry.addSmelting(JTGBlocks.CelestialOre, new ItemStack(JTGItems.CelestialCrystal), 5F)
+  }
+
+  def registerWorldGen(): Unit = {
+    GameRegistry.registerWorldGenerator(OreWorldGen.GensokyoOreGen, 5)
+    GameRegistry.registerWorldGenerator(OreWorldGen.MakaiOreGen, 5)
+    GameRegistry.registerWorldGenerator(OreWorldGen.CelestialOreGen, 5)
   }
 
   def registerSpawn(clazz:        Class[_ <: EntityLiving],
                     entry:        ConfigHandler.Spawns.SpawnEntry,
                     creatureType: EnumCreatureType,
                     biomeTypes:   BiomeDictionary.Type*): Unit =
-    EntityRegistry.addSpawn(clazz, entry.weightedProbability(), entry.minAmount(), entry.maxAmount(), creatureType, biomesForTypes(biomeTypes: _*): _*)
+    EntityRegistry.addSpawn(
+      clazz,
+      entry.weightedProbability(),
+      entry.minAmount(),
+      entry.maxAmount(),
+      creatureType,
+      biomesForTypes(biomeTypes: _*): _*
+    )
 
   def biomesForTypes(types: BiomeDictionary.Type*): Seq[Biome] =
     types.flatMap(BiomeDictionary.getBiomesForType).distinct

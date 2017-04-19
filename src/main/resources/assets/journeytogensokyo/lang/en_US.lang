@@ -1,7 +1,30 @@
 #Creative
 itemGroup.journeytogensokyo=Journey To Gensokyo
+
 #Normal Block names
 tile.danmaku_crafting_table.name=Danmaku Crafting Table
+tile.ore_gensokyo.name=Gensokyium ore
+tile.ore_makai.name=Makaiium ore
+tile.ore_celestial.name=Celestium ore
+
+#Item names
+item.bullet_core.name=Bullet core
+
+item.dust_gensokyo.name=Gensokyium dust
+item.dust_makai.name=Makaiium dust
+item.dust_celestial.name=Celestium dust
+
+item.crystal_gensokyo.name=Gensokyium crystal
+item.crystal_makai.name=Makaiium crystal
+item.crystal_celestial.name=Celestium crystal
+
+item.spell_gensokyo.name=Old Gensokyo spell
+item.spell_makai.name=Old Makai spell
+item.spell_celestial.name=Old Celestial spell
+
+item.gensokyo_notes=Gensokyo notes
+item.gensokyo_notes_patched=Patched Gensokyo notes
+
 #Danmaku Crafting
 crafting.danmaku.copy=Copy
 crafting.danmaku.delay=Delay
@@ -11,5 +34,3 @@ entity.journeytogensokyo.tengu_crow.name=Crow Tengu
 entity.journeytogensokyo.hell_raven.name=Hell raven
 entity.journeytogensokyo.fairy.name=Fairy
 entity.journeytogensokyo.phantom.name=Phantom
-
-item.bullet_core.name=Bullet core

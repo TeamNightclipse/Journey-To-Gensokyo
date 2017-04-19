@@ -23,8 +23,6 @@ class BlockDanmakuCrafting extends BlockJTGBase(Material.WOOD, LibBlockName.Danm
 
   protected val BoundingBoxAABB = new AxisAlignedBB(0.0625D, 0.0D, 0.0625D, 0.9375D, 0.5D, 0.9375D)
 
-  setCreativeTab(JTGCreativeTab)
-
   override def onBlockActivated(world:    World,
                                 pos:      BlockPos,
                                 state:    IBlockState,

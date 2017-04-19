@@ -258,6 +258,6 @@ class ContainerDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: Bl
   }
 
   override def canInteractWith(playerIn: EntityPlayer): Boolean =
-    world.getBlockState(pos).getBlock == JTGBlocks.BlockDanmakuCrafting &&
+    world.getBlockState(pos).getBlock == JTGBlocks.DanmakuCrafting &&
       playerIn.getDistanceSq(pos.add(0.5D, 0.5D, 0.5D)) <= 64D
 }
