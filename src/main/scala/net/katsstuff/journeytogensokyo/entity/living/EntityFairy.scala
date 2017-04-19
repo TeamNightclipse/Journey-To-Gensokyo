@@ -12,6 +12,7 @@ import net.katsstuff.danmakucore.entity.living.ai.EntityAIMoveRanged
 import net.katsstuff.danmakucore.entity.living.{EnumSpecies, IAllyDanmaku}
 import net.katsstuff.journeytogensokyo.handler.ConfigHandler
 import net.katsstuff.journeytogensokyo.handler.ConfigHandler.Spawns.SpawnEntry
+import net.katsstuff.journeytogensokyo.lib.LibEntityName
 import net.katsstuff.journeytogensokyo.phase.JTGPhases
 import net.minecraft.block.material.Material
 import net.minecraft.block.state.IBlockState
@@ -86,6 +87,8 @@ class EntityFairy(_world: World) extends EntityForm(_world) with Callable with I
   }
 
   override def getBlockPathWeight(pos: BlockPos): Float = world.getLightBrightness(pos) - 0.5F
+
+  override def lootTableName: String = LibEntityName.Fairy
 
   override def spawnEntry: SpawnEntry = ConfigHandler.spawns.fairy
   override def spawnBlockCheck(state: IBlockState): Boolean = {

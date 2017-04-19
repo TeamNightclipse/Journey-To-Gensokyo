@@ -1,0 +1,15 @@
+{
+  "pools": [
+	{
+	  "name": "tengu_crow",
+	  "rolls": 1,
+	  "entries": [
+		{
+		  "type": "loot_table",
+		  "name": "journeytogensokyo:entities/hard_mob",
+		  "weight": 1
+		}
+	  ]
+	}
+  ]
+}

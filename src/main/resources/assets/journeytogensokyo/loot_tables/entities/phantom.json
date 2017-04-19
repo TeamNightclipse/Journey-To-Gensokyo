@@ -1,0 +1,15 @@
+{
+  "pools": [
+	{
+	  "name": "phantom",
+	  "rolls": 1,
+	  "entries": [
+		{
+		  "type": "loot_table",
+		  "name": "journeytogensokyo:entities/normal_mob",
+		  "weight": 1
+		}
+	  ]
+	}
+  ]
+}

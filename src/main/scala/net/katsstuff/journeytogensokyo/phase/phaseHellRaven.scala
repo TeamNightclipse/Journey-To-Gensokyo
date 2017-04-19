@@ -2,13 +2,16 @@ package net.katsstuff.journeytogensokyo.phase
 
 import java.util.concurrent.ThreadLocalRandom
 
-import net.katsstuff.danmakucore.data.{Quat, Vector3}
+import net.katsstuff.danmakucore.data.{Quat, ShotData, Vector3}
 import net.katsstuff.danmakucore.entity.danmaku.DanmakuTemplate
 import net.katsstuff.danmakucore.entity.living.phase.{Phase, PhaseManager, PhaseType}
 import net.katsstuff.danmakucore.helper.{DanmakuCreationHelper, DanmakuHelper}
+import net.katsstuff.danmakucore.item.ItemDanmaku
 import net.katsstuff.danmakucore.lib.LibColor
-import net.katsstuff.danmakucore.lib.data.LibShotData
+import net.katsstuff.danmakucore.lib.data.{LibItems, LibShotData}
 import net.katsstuff.journeytogensokyo.helper.Implicits._
+import net.minecraft.item.ItemStack
+import net.minecraft.util.DamageSource
 
 class PhaseTypeHellRaven extends PhaseType {
   override def instantiate(manager: PhaseManager): Phase = new PhaseHellRaven(manager, ThreadLocalRandom.current().nextBoolean(), this)
@@ -73,5 +76,27 @@ class PhaseHellRaven(manager: PhaseManager, star: Boolean, val getType:  PhaseTy
         }
       }
     }
+  }
+
+  override def dropLoot(source: DamageSource): Unit = {
+    val stack = new ItemStack(LibItems.DANMAKU)
+    val entity = getEntity
+    stack.stackSize = entity.getRNG.nextInt(5) + 1
+
+    if(star) {
+      ItemDanmaku.setAmount(stack, Math.max(5, entity.getRNG.nextInt(8) + 1))
+      ItemDanmaku.setSpeed(stack, 0.5D)
+      ItemDanmaku.setPattern(stack, 4)
+      ShotData.serializeNBTItemStack(stack, starShotData)
+    }
+    else {
+      ItemDanmaku.setAmount(stack, entity.getRNG.nextInt(5) + 1)
+      ItemDanmaku.setSpeed(stack, 0.3D)
+      ItemDanmaku.setPattern(stack, 0)
+      ShotData.serializeNBTItemStack(stack, otherShotData)
+    }
+    ItemDanmaku.setCustom(stack, true)
+
+    entity.entityDropItem(stack, 0F)
   }
 }

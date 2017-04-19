@@ -1,14 +1,18 @@
 package net.katsstuff.journeytogensokyo.phase
 
-import net.katsstuff.danmakucore.data.Vector3
+import net.katsstuff.danmakucore.data.{ShotData, Vector3}
 import net.katsstuff.danmakucore.entity.danmaku.DanmakuTemplate
 import net.katsstuff.danmakucore.entity.living.EntityDanmakuMob
 import net.katsstuff.danmakucore.entity.living.phase.{Phase, PhaseManager, PhaseType}
 import net.katsstuff.danmakucore.helper.{DanmakuCreationHelper, DanmakuHelper, TouhouHelper}
+import net.katsstuff.danmakucore.item.ItemDanmaku
 import net.katsstuff.danmakucore.lib.LibColor
-import net.katsstuff.danmakucore.lib.data.LibShotData
+import net.katsstuff.danmakucore.lib.data.{LibItems, LibShotData}
+import net.katsstuff.danmakucore.registry.DanmakuRegistry
 import net.katsstuff.journeytogensokyo.helper.FlyingRandomPositionGenerator
 import net.minecraft.entity.EntityLivingBase
+import net.minecraft.item.ItemStack
+import net.minecraft.util.DamageSource
 
 class PhaseTypeTengu extends PhaseType {
   override def instantiate(manager: PhaseManager): Phase = new PhaseTengu(manager, this)
@@ -18,7 +22,7 @@ class PhaseTengu(manager: PhaseManager, val getType: PhaseTypeTengu) extends Pha
 
   var cooldown = 0
   var charge = 0
-  private val shotData = LibShotData.SHOT_SMALL.copy(color = LibColor.COLOR_SATURATED_YELLOW, damage = 0.1F)
+  private val shotData = LibShotData.SHOT_SMALL.copy(color = LibColor.COLOR_SATURATED_YELLOW)
 
   override def init(): Unit = {
     super.init()
@@ -104,4 +108,18 @@ class PhaseTengu(manager: PhaseManager, val getType: PhaseTypeTengu) extends Pha
   }
 
   private def createChargeSphere(entity: EntityDanmakuMob): Unit = TouhouHelper.createChargeSphere(entity, 50 * charge, 2D, 10D, 1F, 0.1F, 0.1F, 40)
+
+  override def dropLoot(source: DamageSource): Unit = {
+    val stack = new ItemStack(LibItems.DANMAKU)
+    val entity = getEntity
+
+    stack.stackSize = entity.getRNG.nextInt(5) + 1
+    ItemDanmaku.setAmount(stack, entity.getRNG.nextInt(5) + 1)
+    ItemDanmaku.setSpeed(stack, 0.4D)
+    ItemDanmaku.setPattern(stack, 1)
+    ShotData.serializeNBTItemStack(stack, shotData)
+    ItemDanmaku.setCustom(stack, true)
+
+    entity.entityDropItem(stack, 0F)
+  }
 }
