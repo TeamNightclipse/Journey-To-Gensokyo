@@ -99,7 +99,7 @@ processResources
 }
 
 //All config file stuff from Botania
-task incrementBuildNumber(dependsOn: 'reobf') << {
+task incrementBuildNumber(dependsOn: 'reobfJar') << {
 	config.build_number = (config.build_number.toString().toInteger()) + 1
     configFile.withWriter {
         config.toProperties().store(it, "")
