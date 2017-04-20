@@ -32,13 +32,15 @@ import net.minecraftforge.oredict.OreDictionary
 
 object CommonProxy {
 
+  private val LightLevel = 1F / 15F
+
   @SubscribeEvent
   def registerBlocks(event: RegistryEvent.Register[Block]): Unit = {
     event.getRegistry.registerAll(
       new BlockDanmakuCrafting setRegistryName LibBlockName.DanmakuCrafting,
       new BlockDanOre(LibBlockName.GensokyoOre) setRegistryName LibBlockName.GensokyoOre,
-      new BlockDanOre(LibBlockName.MakaiOre) setRegistryName LibBlockName.MakaiOre setLightLevel 1F,
-      new BlockDanOre(LibBlockName.CelestialOre) setRegistryName LibBlockName.CelestialOre setLightLevel 1F
+      new BlockDanOre(LibBlockName.MakaiOre) setRegistryName LibBlockName.MakaiOre setLightLevel LightLevel * 5,
+      new BlockDanOre(LibBlockName.CelestialOre) setRegistryName LibBlockName.CelestialOre setLightLevel LightLevel * 5
     )
   }
 
