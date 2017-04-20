@@ -124,7 +124,7 @@ class ContainerDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: Bl
   }
 
   def shotCombined(input: ItemStack, recipe: IRecipeDanmaku): ShotData = {
-    def round(d: Float, decimalPlace: Int): Float = BigDecimal(d).setScale(decimalPlace, BigDecimal.RoundingMode.HALF_UP).toFloat
+    def round(d: Float, decimalPlace: Int): Float = BigDecimal(d.toDouble).setScale(decimalPlace, BigDecimal.RoundingMode.HALF_UP).toFloat
     val current = shotCurrent(input)
     val result  = shotResult(recipe)
 
