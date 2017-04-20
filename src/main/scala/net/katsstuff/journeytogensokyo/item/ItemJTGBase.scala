@@ -4,7 +4,7 @@
  * https://github.com/Katrix-/JTG
  *
  * Journey To Gensokyo is Open Source and distributed under the
- * a modifed Botania license: https://github.com/Katrix-/JTG/blob/master/LICENSE.md
+ * a modifed Botania license: https://github.com/Katrix-/JTG/blob/devDanmakuCore/LICENSE.md
  */
 package net.katsstuff.journeytogensokyo.item
 
