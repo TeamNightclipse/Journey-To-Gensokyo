@@ -22,8 +22,8 @@ item.spell_gensokyo.name=Old Gensokyo spell
 item.spell_makai.name=Old Makai spell
 item.spell_celestial.name=Old Celestial spell
 
-item.gensokyo_notes=Gensokyo notes
-item.gensokyo_notes_patched=Patched Gensokyo notes
+item.gensokyo_notes.name=Gensokyo notes
+item.gensokyo_notes_patched.name=Patched Gensokyo notes
 
 #Danmaku Crafting
 crafting.danmaku.copy=Copy
