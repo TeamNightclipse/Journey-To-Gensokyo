@@ -11,7 +11,6 @@ package net.katsstuff.journeytogensokyo.client
 import scala.reflect.ClassTag
 
 import net.katsstuff.journeytogensokyo.CommonProxy
-import net.katsstuff.journeytogensokyo.block.JTGBlocks
 import net.katsstuff.journeytogensokyo.client.render.{RenderFairy, RenderHellRaven, RenderPhantom, RenderTenguCrow}
 import net.minecraft.block.Block
 import net.minecraft.client.renderer.block.model.{ModelResourceLocation => MRL}
@@ -26,11 +25,38 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 object ClientProxy {
 
   @SubscribeEvent
-  def registerModels(event: ModelRegistryEvent): Unit =
-    registerItemBlock(JTGBlocks.DanmakuCrafting, 0)
+  def registerModels(event: ModelRegistryEvent): Unit = {
+    import net.katsstuff.journeytogensokyo.block.JTGBlocks._
+    import net.katsstuff.journeytogensokyo.item.JTGItems._
 
-  private def registerItemBlock(block: Block, damage: Int): Unit =
-    ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), damage, new MRL(block.getRegistryName, "inventory"))
+    registerItemBlock(DanmakuCrafting)
+    registerItemBlock(GensokyoOre)
+    registerItemBlock(MakaiOre)
+    registerItemBlock(CelestialOre)
+
+    registerItem(BulletCore)
+
+    registerItem(GensokyoDust)
+    registerItem(CelestialDust)
+    registerItem(MakaiDust)
+
+    registerItem(GensokyoCrystal)
+    registerItem(MakaiCrystal)
+    registerItem(CelestialCrystal)
+
+    registerItem(GensokyoSpell)
+    registerItem(MakaiSpell)
+    registerItem(CelestialSpell)
+
+    registerItem(GensokyoNotes)
+    registerItem(PatchedGensokyoNotes)
+  }
+
+  private def registerItemBlock(block: Block, damage: Int = 0): Unit =
+    registerItem(Item.getItemFromBlock(block), damage)
+
+  def registerItem(item: Item, damage: Int = 0): Unit =
+    ModelLoader.setCustomModelResourceLocation(item, damage, new MRL(item.getRegistryName, "inventory"))
 }
 
 class ClientProxy extends CommonProxy {
