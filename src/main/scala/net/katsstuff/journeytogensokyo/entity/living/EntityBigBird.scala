@@ -6,7 +6,7 @@ import net.minecraft.block.state.IBlockState
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
-abstract class EntityBigBird(_world: World) extends EntityJTGDanmakuMob(_world) with IAllyDanmaku{
+abstract class EntityBigBird(_world: World) extends EntityJTGDanmakuMob(_world) with IAllyDanmaku {
 
   setSize(1.3F, 1.2F)
   experienceValue = 8

@@ -8,7 +8,14 @@ import net.katsstuff.journeytogensokyo.lib.LibEntityName
 import net.katsstuff.journeytogensokyo.phase.JTGPhases
 import net.minecraft.block.BlockGrass
 import net.minecraft.block.state.IBlockState
-import net.minecraft.entity.ai.{EntityAIHurtByTarget, EntityAILookIdle, EntityAINearestAttackableTarget, EntityAISwimming, EntityAIWander, EntityAIWatchClosest}
+import net.minecraft.entity.ai.{
+  EntityAIHurtByTarget,
+  EntityAILookIdle,
+  EntityAINearestAttackableTarget,
+  EntityAISwimming,
+  EntityAIWander,
+  EntityAIWatchClosest
+}
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
 import net.minecraft.world.World
@@ -34,6 +41,6 @@ class EntityTenguCrow(_world: World) extends EntityBigBird(_world) {
     this.targetTasks.addTask(2, new EntityAINearestAttackableTarget[EntityPlayer](this, classOf[EntityPlayer], true))
   }
 
-  override def lootTableName: String = LibEntityName.TenguCrow
-  override def spawnEntry: SpawnEntry = ConfigHandler.spawns.tenguCrow
+  override def lootTableName: String     = LibEntityName.TenguCrow
+  override def spawnEntry:    SpawnEntry = ConfigHandler.spawns.tenguCrow
 }

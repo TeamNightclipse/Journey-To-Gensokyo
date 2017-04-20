@@ -40,13 +40,15 @@ abstract class ModelFairy extends ModelBase {
   }
 
   //Adapted from ModelBiped
-  override def setRotationAngles(limbSwing:       Float,
-                                 limbSwingAmount: Float,
-                                 age:             Float,
-                                 headYaw:         Float,
-                                 headPitch:       Float,
-                                 scale:           Float,
-                                 entity:          Entity): Unit = {
+  override def setRotationAngles(
+      limbSwing:       Float,
+      limbSwingAmount: Float,
+      age:             Float,
+      headYaw:         Float,
+      headPitch:       Float,
+      scale:           Float,
+      entity:          Entity
+  ): Unit = {
     val fairy = entity.asInstanceOf[EntityFairy]
 
     val flag = fairy.getTicksElytraFlying > 4

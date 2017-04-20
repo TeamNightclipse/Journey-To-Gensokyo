@@ -40,15 +40,16 @@ class PhaseTypeGenericStageEnemy extends PhaseType {
   }
 }
 
-class PhaseGenericStageEnemy(manager:      PhaseManager,
-                      var variant: DanmakuVariant,
-                      var shot:     ShotData,
-                      var movement: MovementData,
-                      var shape:    Int,
-                      var amount:   Int,
-                      var width:    Float,
-                      val getType:  PhaseTypeGenericStageEnemy)
-    extends Phase(manager) {
+class PhaseGenericStageEnemy(
+    manager:      PhaseManager,
+    var variant:  DanmakuVariant,
+    var shot:     ShotData,
+    var movement: MovementData,
+    var shape:    Int,
+    var amount:   Int,
+    var width:    Float,
+    val getType:  PhaseTypeGenericStageEnemy
+) extends Phase(manager) {
 
   private val NbtVariant  = "variant"
   private val NbtMovement = "speed"
@@ -108,7 +109,7 @@ class PhaseGenericStageEnemy(manager:      PhaseManager,
   override def deserializeNBT(tag: NBTTagCompound) {
     super.deserializeNBT(tag)
     val variantKey = tag.getString(NbtVariant)
-    variant = if(variantKey.nonEmpty) {
+    variant = if (variantKey.nonEmpty) {
       DanmakuRegistry.DANMAKU_VARIANT.getValue(new ResourceLocation(variantKey))
     } else DanmakuRegistry.DANMAKU_VARIANT.getDefaultValue
 
@@ -120,7 +121,7 @@ class PhaseGenericStageEnemy(manager:      PhaseManager,
   }
 
   override def dropLoot(source: DamageSource): Unit = {
-    val stack = new ItemStack(LibItems.DANMAKU)
+    val stack  = new ItemStack(LibItems.DANMAKU)
     val entity = getEntity
 
     stack.stackSize = entity.getRNG.nextInt(5) + 1

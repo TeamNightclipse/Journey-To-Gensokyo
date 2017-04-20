@@ -20,8 +20,8 @@ class PhaseTypeTengu extends PhaseType {
 
 class PhaseTengu(manager: PhaseManager, val getType: PhaseTypeTengu) extends Phase(manager) {
 
-  var cooldown = 0
-  var charge = 0
+  var cooldown         = 0
+  var charge           = 0
   private val shotData = LibShotData.SHOT_SMALL.copy(color = LibColor.COLOR_SATURATED_YELLOW)
 
   override def init(): Unit = {
@@ -50,19 +50,18 @@ class PhaseTengu(manager: PhaseManager, val getType: PhaseTypeTengu) extends Pha
         DanmakuHelper.playShotSound(entity)
       }
 
-      if(charge > 0) doCharge(entity, target) else moveAround(entity, target)
+      if (charge > 0) doCharge(entity, target) else moveAround(entity, target)
     }
   }
 
   override protected def useFreeze(): Boolean = false
 
   private def doCharge(entity: EntityDanmakuMob, target: EntityLivingBase): Unit = {
-    if(counter % 12 == 0) {
-      if(charge < 3) {
+    if (counter % 12 == 0) {
+      if (charge < 3) {
         charge += 1
         createChargeSphere(entity)
-      }
-      else {
+      } else {
         val angle @ Vector3(x, y, z) = Vector3.angleToLiving(entity, target) * (entity.getSpeed * 2.5D)
         entity.motionX += x
         entity.motionY += y
@@ -110,7 +109,7 @@ class PhaseTengu(manager: PhaseManager, val getType: PhaseTypeTengu) extends Pha
   private def createChargeSphere(entity: EntityDanmakuMob): Unit = TouhouHelper.createChargeSphere(entity, 50 * charge, 2D, 10D, 1F, 0.1F, 0.1F, 40)
 
   override def dropLoot(source: DamageSource): Unit = {
-    val stack = new ItemStack(LibItems.DANMAKU)
+    val stack  = new ItemStack(LibItems.DANMAKU)
     val entity = getEntity
 
     stack.stackSize = entity.getRNG.nextInt(5) + 1

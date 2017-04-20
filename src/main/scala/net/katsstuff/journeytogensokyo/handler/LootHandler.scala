@@ -29,9 +29,9 @@ class LootHandler {
       val custom = new ResourceLocation(LibMod.Id, event.getName.getResourcePath)
 
       for {
-        table <- JTGLootTableLoader.loadTable(custom).toSeq
+        table    <- JTGLootTableLoader.loadTable(custom).toSeq
         poolName <- poolNames
-        pool <- Option(table.getPool(poolName)).toSeq
+        pool     <- Option(table.getPool(poolName)).toSeq
       } {
         event.getTable.addPool(pool)
       }

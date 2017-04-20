@@ -50,13 +50,19 @@ class ContainerDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: Bl
     val offsetX = 89
     val offsetY = 173
 
-    for (i <- 0 until 3; j <- 0 until 3) {
+    for {
+      i <- 0 until 3
+      j <- 0 until 3
+    } {
       addSlotToContainer(
         new SlotDanmakuInput(craftMatrix, j + i * 3, offsetX - 69 + j * 18, offsetY + 22 + i * 18, SlotDanmakuType.BulletCore, true)
       )
     }
 
-    for (i <- 0 until 3; j <- 0 until 9) {
+    for {
+      i <- 0 until 3
+      j <- 0 until 9
+    } {
       addSlotToContainer(new Slot(invPlayer, j + i * 9 + 9, offsetX + j * 18, offsetY + i * 18))
     }
 
@@ -167,13 +173,12 @@ class ContainerDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: Bl
     new Vector3(x, y, z)
   }
 
-  def amountCurrent(): Int = {
+  def amountCurrent(): Int =
     danmaku.fold(0)(ItemDanmaku.getAmount)
-  }
 
   def amountResult(): Int = {
     val stack = slotAmount.getStack
-    if(stack == null) 0 else stack.stackSize
+    if (stack == null) 0 else stack.stackSize
   }
 
   def getPattern(amount: Int): Int = {
@@ -181,7 +186,7 @@ class ContainerDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: Bl
       val (nonNull, nullable) = (0 until 9).partition(slots.contains)
 
       !nonNull.map(craftMatrix.getStackInSlot).contains(null) &&
-        nullable.map(craftMatrix.getStackInSlot).forall(_ == null)
+      nullable.map(craftMatrix.getStackInSlot).forall(_ == null)
     }
 
     if (pattern(4)) 0

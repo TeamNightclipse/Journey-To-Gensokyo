@@ -19,7 +19,15 @@ import net.katsstuff.journeytogensokyo.phase.JTGPhases
 import net.minecraft.block.material.Material
 import net.minecraft.block.state.IBlockState
 import net.minecraft.entity.{EnumCreatureAttribute, IEntityLivingData}
-import net.minecraft.entity.ai.{EntityAIFleeSun, EntityAIHurtByTarget, EntityAILookIdle, EntityAINearestAttackableTarget, EntityAIRestrictSun, EntityAISwimming, EntityAIWander}
+import net.minecraft.entity.ai.{
+  EntityAIFleeSun,
+  EntityAIHurtByTarget,
+  EntityAILookIdle,
+  EntityAINearestAttackableTarget,
+  EntityAIRestrictSun,
+  EntityAISwimming,
+  EntityAIWander
+}
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.world.{DifficultyInstance, World}
 
@@ -81,10 +89,9 @@ class EntityPhantom(_world: World) extends EntityForm(_world) with IAllyDanmaku 
 
     form = groupData.form
 
-    if(world.isAirBlock(getPosition.up(2))) {
+    if (world.isAirBlock(getPosition.up(2))) {
       setPositionAndUpdate(posX, posY + 2, posZ)
-    }
-    else if(world.isAirBlock(getPosition.up(1))) {
+    } else if (world.isAirBlock(getPosition.up(1))) {
       setPositionAndUpdate(posX, posY + 1, posZ)
     }
 
@@ -100,7 +107,7 @@ class EntityPhantom(_world: World) extends EntityForm(_world) with IAllyDanmaku 
       val b     = (color & 255) / 255.0F
       val size  = 0.4F
 
-      for(i <- 0 until 2) {
+      for (i <- 0 until 2) {
         val coeff  = i / 2D
         val pos    = Vector3(prevPosX + (posX - prevPosX) * coeff, 0.2F + prevPosY + (posY - prevPosY) * coeff, prevPosZ + (posZ - prevPosZ) * coeff)
         val motion = Vector3(0.0125f * (rand.nextFloat - 0.5f), 0.075f * rand.nextFloat, 0.0125f * (rand.nextFloat - 0.5f))
@@ -109,8 +116,8 @@ class EntityPhantom(_world: World) extends EntityForm(_world) with IAllyDanmaku 
     }
   }
 
-  override def lootTableName: String = LibEntityName.Phantom
-  override def spawnEntry: Spawns.SpawnEntry = ConfigHandler.spawns.phantom
+  override def lootTableName: String            = LibEntityName.Phantom
+  override def spawnEntry:    Spawns.SpawnEntry = ConfigHandler.spawns.phantom
   override def spawnBlockCheck(state: IBlockState): Boolean = {
     val spawnMaterial = Seq(Material.GRASS, Material.GROUND, Material.ROCK)
     spawnMaterial.contains(state.getMaterial)

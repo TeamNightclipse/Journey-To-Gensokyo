@@ -44,15 +44,15 @@ object CommonProxy {
 
   @SubscribeEvent
   def registerItems(event: RegistryEvent.Register[Item]): Unit = {
-    val gensokyoDust = new ItemJTGBase(LibItemName.GensokyoDust) setRegistryName LibItemName.GensokyoDust
-    val makaiDust = new ItemJTGBase(LibItemName.MakaiDust) setRegistryName LibItemName.MakaiDust
-    val celestialDust = new ItemJTGBase(LibItemName.CelestialDust) setRegistryName LibItemName.CelestialDust
-    val gensokyoCrystal = new ItemJTGBase(LibItemName.GensokyoCrystal) setRegistryName LibItemName.GensokyoCrystal
-    val makaiCrystal = new ItemJTGBase(LibItemName.MakaiCrystal) setRegistryName LibItemName.MakaiCrystal
+    val gensokyoDust     = new ItemJTGBase(LibItemName.GensokyoDust) setRegistryName LibItemName.GensokyoDust
+    val makaiDust        = new ItemJTGBase(LibItemName.MakaiDust) setRegistryName LibItemName.MakaiDust
+    val celestialDust    = new ItemJTGBase(LibItemName.CelestialDust) setRegistryName LibItemName.CelestialDust
+    val gensokyoCrystal  = new ItemJTGBase(LibItemName.GensokyoCrystal) setRegistryName LibItemName.GensokyoCrystal
+    val makaiCrystal     = new ItemJTGBase(LibItemName.MakaiCrystal) setRegistryName LibItemName.MakaiCrystal
     val celestialCrystal = new ItemJTGBase(LibItemName.CelestialCrystal) setRegistryName LibItemName.CelestialCrystal
 
-    val gensokyoOre = itemBlock(JTGBlocks.GensokyoOre)
-    val makaiOre = itemBlock(JTGBlocks.MakaiOre)
+    val gensokyoOre  = itemBlock(JTGBlocks.GensokyoOre)
+    val makaiOre     = itemBlock(JTGBlocks.MakaiOre)
     val celestialOre = itemBlock(JTGBlocks.CelestialOre)
 
     event.getRegistry.registerAll(
@@ -140,10 +140,12 @@ class CommonProxy {
     GameRegistry.registerWorldGenerator(OreWorldGen.CelestialOreGen, 5)
   }
 
-  def registerSpawn(clazz:        Class[_ <: EntityLiving],
-                    entry:        ConfigHandler.Spawns.SpawnEntry,
-                    creatureType: EnumCreatureType,
-                    biomeTypes:   BiomeDictionary.Type*): Unit =
+  def registerSpawn(
+      clazz:        Class[_ <: EntityLiving],
+      entry:        ConfigHandler.Spawns.SpawnEntry,
+      creatureType: EnumCreatureType,
+      biomeTypes:   BiomeDictionary.Type*
+  ): Unit =
     EntityRegistry.addSpawn(
       clazz,
       entry.weightedProbability(),
@@ -450,10 +452,12 @@ class CommonProxy {
   }
 }
 
-case class DanmakuRecipeBuilder(shot:     ShotData = null,
-                                input:    Either[String, ItemStack] = null,
-                                movement: MovementData = new MovementData(0.4D, 0.4D, 0D, Vector3.Zero),
-                                cost:     Int = 1000) {
+case class DanmakuRecipeBuilder(
+    shot:     ShotData = null,
+    input:    Either[String, ItemStack] = null,
+    movement: MovementData = new MovementData(0.4D, 0.4D, 0D, Vector3.Zero),
+    cost:     Int = 1000
+) {
 
   import net.katsstuff.journeytogensokyo.helper.Implicits._
 

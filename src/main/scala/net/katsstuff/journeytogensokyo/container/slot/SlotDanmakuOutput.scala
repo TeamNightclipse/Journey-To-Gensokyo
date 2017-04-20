@@ -15,15 +15,16 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.inventory.{IInventory, InventoryCrafting, SlotCrafting}
 import net.minecraft.item.ItemStack
 
-class SlotDanmakuOutput(container:   ContainerDanmakuCrafting,
-                        player:      EntityPlayer,
-                        ingredients: IInventory,
-                        matrix:      InventoryCrafting,
-                        inv:         IInventory,
-                        index:       Int,
-                        xPos:        Int,
-                        yPos:        Int)
-    extends SlotCrafting(player, matrix, inv, index, xPos, yPos) {
+class SlotDanmakuOutput(
+    container:   ContainerDanmakuCrafting,
+    player:      EntityPlayer,
+    ingredients: IInventory,
+    matrix:      InventoryCrafting,
+    inv:         IInventory,
+    index:       Int,
+    xPos:        Int,
+    yPos:        Int
+) extends SlotCrafting(player, matrix, inv, index, xPos, yPos) {
 
   override def onPickupFromSlot(playerIn: EntityPlayer, stack: ItemStack): Unit = {
     matrix.clear()

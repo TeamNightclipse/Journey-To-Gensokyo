@@ -17,18 +17,13 @@ class PhaseTypeHellRaven extends PhaseType {
   override def instantiate(manager: PhaseManager): Phase = new PhaseHellRaven(manager, ThreadLocalRandom.current().nextBoolean(), this)
 }
 
-class PhaseHellRaven(manager: PhaseManager, star: Boolean, val getType:  PhaseTypeHellRaven) extends Phase(manager) {
-  private val starShotData = LibShotData.SHOT_KUNAI.copy(
-    color = LibColor.COLOR_SATURATED_BLUE,
-    end = 60
-  )
-  private val otherShotData = LibShotData.SHOT_SMALL.copy(
-    color = LibColor.COLOR_SATURATED_BLUE
-  )
+class PhaseHellRaven(manager: PhaseManager, star: Boolean, val getType: PhaseTypeHellRaven) extends Phase(manager) {
+  private val starShotData  = LibShotData.SHOT_KUNAI.copy(color = LibColor.COLOR_SATURATED_BLUE, end = 60)
+  private val otherShotData = LibShotData.SHOT_SMALL.copy(color = LibColor.COLOR_SATURATED_BLUE)
 
   override def init(): Unit = {
     super.init()
-    if(star) interval = 81
+    if (star) interval = 81
     else interval = 45
   }
 
@@ -38,7 +33,7 @@ class PhaseHellRaven(manager: PhaseManager, star: Boolean, val getType:  PhaseTy
     val target = entity.getAttackTarget
 
     def moveLeftRight(): Unit = {
-      val dir = if(entity.getRNG.nextBoolean()) 1 else -1
+      val dir              = if (entity.getRNG.nextBoolean()) 1 else -1
       val Vector3(x, y, z) = entity.angle.rotate(Quat.eulerToQuat(dir * 45F, 0F, 0F)) / 2
 
       entity.motionX += x
@@ -48,30 +43,30 @@ class PhaseHellRaven(manager: PhaseManager, star: Boolean, val getType:  PhaseTy
 
     if (!isFrozen && target != null && entity.getEntitySenses.canSee(target)) {
       val angle = Vector3.angleToLiving(entity, target)
-      if(star) {
-        if(counter >= 20) {
-          val template = DanmakuTemplate.builder().setUser(entity).setShot(starShotData).setAngle(angle).setMovementData(0.3D * level.getMultiplier).build()
+      if (star) {
+        if (counter >= 20) {
+          val template =
+            DanmakuTemplate.builder().setUser(entity).setShot(starShotData).setAngle(angle).setMovementData(0.3D * level.getMultiplier).build()
           DanmakuCreationHelper.createStarShot(template, Math.max(10, 5 * level.getMultiplier), 0F, 0F, 0.5D)
           DanmakuHelper.playShotSound(entity)
         }
 
-        if(isCounterStart) {
+        if (isCounterStart) {
           moveLeftRight()
         }
-      }
-      else {
-        if(counter % 10 == 0) {
-          val num = ((1 + level.getMultiplier) * 1.3).toInt
+      } else {
+        if (counter % 10 == 0) {
+          val num      = ((1 + level.getMultiplier) * 1.3).toInt
           val template = DanmakuTemplate.builder().setUser(entity).setShot(otherShotData).setAngle(angle)
 
-          for(i <- 1 until num) {
+          for (i <- 1 until num) {
             entity.world.spawnEntityInWorld(template.setMovementData(0.3D * (i + i / 2D), 0.3D * (i / 2D), 0D).build().asEntity())
           }
 
           DanmakuHelper.playShotSound(entity)
         }
 
-        if(counter == 31) {
+        if (counter == 31) {
           moveLeftRight()
         }
       }
@@ -79,17 +74,16 @@ class PhaseHellRaven(manager: PhaseManager, star: Boolean, val getType:  PhaseTy
   }
 
   override def dropLoot(source: DamageSource): Unit = {
-    val stack = new ItemStack(LibItems.DANMAKU)
+    val stack  = new ItemStack(LibItems.DANMAKU)
     val entity = getEntity
     stack.stackSize = entity.getRNG.nextInt(5) + 1
 
-    if(star) {
+    if (star) {
       ItemDanmaku.setAmount(stack, Math.max(5, entity.getRNG.nextInt(8) + 1))
       ItemDanmaku.setSpeed(stack, 0.5D)
       ItemDanmaku.setPattern(stack, 4)
       ShotData.serializeNBTItemStack(stack, starShotData)
-    }
-    else {
+    } else {
       ItemDanmaku.setAmount(stack, entity.getRNG.nextInt(5) + 1)
       ItemDanmaku.setSpeed(stack, 0.3D)
       ItemDanmaku.setPattern(stack, 0)

@@ -17,7 +17,14 @@ import net.katsstuff.journeytogensokyo.phase.JTGPhases
 import net.minecraft.block.material.Material
 import net.minecraft.block.state.IBlockState
 import net.minecraft.entity.{EntityLivingBase, IEntityLivingData}
-import net.minecraft.entity.ai.{EntityAIHurtByTarget, EntityAILookIdle, EntityAINearestAttackableTarget, EntityAISwimming, EntityAIWander, EntityAIWatchClosest}
+import net.minecraft.entity.ai.{
+  EntityAIHurtByTarget,
+  EntityAILookIdle,
+  EntityAINearestAttackableTarget,
+  EntityAISwimming,
+  EntityAIWander,
+  EntityAIWatchClosest
+}
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.{DifficultyInstance, EnumSkyBlock, World}
@@ -25,7 +32,7 @@ import net.minecraft.world.{DifficultyInstance, EnumSkyBlock, World}
 object EntityFairy {
   var counter = 0
   def nextCounter(): Byte = {
-    if(counter == 3) counter = 0
+    if (counter == 3) counter = 0
     else counter += 1
 
     counter.toByte
@@ -37,7 +44,7 @@ class EntityFairy(_world: World) extends EntityForm(_world) with Callable with I
   experienceValue = 5
 
   form = {
-    if(world.isRemote) 0
+    if (world.isRemote) 0
     else EntityFairy.nextCounter()
   }
 

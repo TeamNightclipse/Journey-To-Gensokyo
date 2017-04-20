@@ -20,9 +20,8 @@ abstract class EntityJTGDanmakuMob(_world: World) extends EntityDanmakuMob(_worl
 
   override def getLootTable: ResourceLocation = new ResourceLocation(LibMod.Id, s"entities/$lootTableName")
 
-  override def getCanSpawnHere: Boolean = {
+  override def getCanSpawnHere: Boolean =
     if (rand.nextInt(100) <= spawnEntry.lastProbability) {
       spawnBlockCheck(world.getBlockState(new BlockPos(posX, getEntityBoundingBox.minY, posZ).down)) && super.getCanSpawnHere
     } else false
-  }
 }

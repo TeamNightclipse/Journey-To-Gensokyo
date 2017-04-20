@@ -14,7 +14,7 @@ class EntityAIMoveRangedTengu(val entity: EntityTenguCrow, val moveSpeedAmp: Dou
   this.maxAttackDistance = maxDistance * maxDistance
 
   this.setMutexBits(3)
-  def shouldExecute:              Boolean = this.entity.getAttackTarget != null
+  def shouldExecute: Boolean = this.entity.getAttackTarget != null
 
   override def continueExecuting: Boolean = this.shouldExecute || !this.entity.getNavigator.noPath
 
@@ -37,10 +37,10 @@ class EntityAIMoveRangedTengu(val entity: EntityTenguCrow, val moveSpeedAmp: Dou
 
       if (d0 <= this.maxAttackDistance && seeTime >= 20) {
         val path = entity.getNavigator.getPath
-        if(path != null) {
+        if (path != null) {
           val last = path.getFinalPathPoint
-          val vec = Vector3(last.xCoord, last.yCoord, last.zCoord)
-          if(vec.distanceSquared(target.posX, target.posY, target.posZ) < 3 * 3) {
+          val vec  = Vector3(last.xCoord, last.yCoord, last.zCoord)
+          if (vec.distanceSquared(target.posX, target.posY, target.posZ) < 3 * 3) {
             entity.getNavigator.clearPathEntity()
           }
         }
@@ -60,10 +60,7 @@ class EntityAIMoveRangedTengu(val entity: EntityTenguCrow, val moveSpeedAmp: Dou
         if (d0 > (maxAttackDistance * 0.75F)) strafingBackwards = false
         else if (d0 < maxAttackDistance * 0.25F) strafingBackwards = true
 
-        entity.getMoveHelper.strafe(
-          if (strafingBackwards) -0.5F else 0.5F,
-          if (strafingClockwise) 0.5F else -0.5F
-        )
+        entity.getMoveHelper.strafe(if (strafingBackwards) -0.5F else 0.5F, if (strafingClockwise) 0.5F else -0.5F)
         entity.faceEntity(target, 30.0F, 30.0F)
       } else entity.getLookHelper.setLookPositionWithEntity(target, 30.0F, 30.0F)
     }

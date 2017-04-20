@@ -17,19 +17,21 @@ object OreWorldGen {
   object MakaiGenMinable     extends WorldGenMinable(JTGBlocks.MakaiOre.getDefaultState, 8, BlockMatcher.forBlock(Blocks.NETHERRACK))
   object CelestialGenMinable extends WorldGenMinable(JTGBlocks.CelestialOre.getDefaultState, 8, BlockMatcher.forBlock(Blocks.END_STONE))
 
-  object GensokyoOreGen extends GenMineableWrapper(4, 32, 0, GensokyoGenMinable)
-  object MakaiOreGen extends GenMineableWrapper(4, 128, 0, MakaiGenMinable)
+  object GensokyoOreGen  extends GenMineableWrapper(4, 32, 0, GensokyoGenMinable)
+  object MakaiOreGen     extends GenMineableWrapper(4, 128, 0, MakaiGenMinable)
   object CelestialOreGen extends GenMineableWrapper(4, 128, 0, CelestialGenMinable)
 
   class GenMineableWrapper(blockCount: Int, maxHeight: Int, minHeight: Int, minable: WorldGenMinable) extends IWorldGenerator {
-    override def generate(random:         Random,
-                          chunkX:         Int,
-                          chunkZ:         Int,
-                          world:          World,
-                          chunkGenerator: IChunkGenerator,
-                          chunkProvider:  IChunkProvider): Unit = {
+    override def generate(
+        random:         Random,
+        chunkX:         Int,
+        chunkZ:         Int,
+        world:          World,
+        chunkGenerator: IChunkGenerator,
+        chunkProvider:  IChunkProvider
+    ): Unit = {
       val chunkPos = new BlockPos(chunkX * 16, 0, chunkZ * 16)
-      for(i <- 0 until blockCount) {
+      for (i <- 0 until blockCount) {
         val blockpos = chunkPos.add(random.nextInt(16), random.nextInt(maxHeight - minHeight) + minHeight, random.nextInt(16))
         minable.generate(world, random, blockpos)
       }

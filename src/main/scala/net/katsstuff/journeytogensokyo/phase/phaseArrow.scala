@@ -11,24 +11,27 @@ class PhaseTypeShapeArrow extends PhaseType {
   override def instantiate(phaseManager: PhaseManager): Phase =
     new PhaseArrow(phaseManager, ShotData.DefaultShotData, MovementData.constant(0.4D), RotationData.none, 5, 1D, 1D, this)
 
-  def instantiate(phaseManager: PhaseManager,
-                  shotData:     ShotData,
-                  movementData: MovementData,
-                  rotationData: RotationData,
-                  amount:       Int,
-                  distance:     Double,
-                  width:        Double): Phase = new PhaseArrow(phaseManager, shotData, movementData, rotationData, amount, distance, width, this)
+  def instantiate(
+      phaseManager: PhaseManager,
+      shotData:     ShotData,
+      movementData: MovementData,
+      rotationData: RotationData,
+      amount:       Int,
+      distance:     Double,
+      width:        Double
+  ): Phase = new PhaseArrow(phaseManager, shotData, movementData, rotationData, amount, distance, width, this)
 }
 
-class PhaseArrow(manager:          PhaseManager,
-                 var shotData:     ShotData,
-                 var movementData: MovementData,
-                 var rotationData: RotationData,
-                 var amount:       Int,
-                 var distance:     Double,
-                 var width:        Double,
-                 val getType:      PhaseTypeShapeArrow)
-    extends Phase(manager) {
+class PhaseArrow(
+    manager:          PhaseManager,
+    var shotData:     ShotData,
+    var movementData: MovementData,
+    var rotationData: RotationData,
+    var amount:       Int,
+    var distance:     Double,
+    var width:        Double,
+    val getType:      PhaseTypeShapeArrow
+) extends Phase(manager) {
 
   private val NbtShotData     = "shotData"
   private val NbtMovementData = "movementData"

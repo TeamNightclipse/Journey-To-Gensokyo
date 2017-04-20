@@ -27,10 +27,10 @@ object FlyingRandomPositionGenerator {
     val navigate = entity.getNavigator
     val rand     = entity.getRNG
     var flag     = false
-    var xDest        = 0D
-    var yDest        = 0D
-    var zDest        = 0D
-    var weight        = -99999.0F
+    var xDest    = 0D
+    var yDest    = 0D
+    var zDest    = 0D
+    var weight   = -99999.0F
 
     var j1 = 0
     while (j1 < 10) {

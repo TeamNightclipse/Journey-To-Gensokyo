@@ -19,8 +19,8 @@ class RenderPhantom(manager: RenderManager) extends RenderLiving[EntityPhantom](
 
     //Fairly similar to fire form
     val pitch = entity.rotationPitch
-    val yaw = entity.rotationYaw
-    val size = 0.3F
+    val yaw   = entity.rotationYaw
+    val size  = 0.3F
     val color = EntityPhantom.formToColor(entity.form)
     val alpha = 0.3F
 

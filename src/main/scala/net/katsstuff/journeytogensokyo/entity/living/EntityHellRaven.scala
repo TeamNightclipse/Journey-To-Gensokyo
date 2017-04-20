@@ -6,7 +6,14 @@ import net.katsstuff.journeytogensokyo.handler.ConfigHandler
 import net.katsstuff.journeytogensokyo.handler.ConfigHandler.Spawns.SpawnEntry
 import net.katsstuff.journeytogensokyo.lib.LibEntityName
 import net.katsstuff.journeytogensokyo.phase.JTGPhases
-import net.minecraft.entity.ai.{EntityAIHurtByTarget, EntityAILookIdle, EntityAINearestAttackableTarget, EntityAISwimming, EntityAIWander, EntityAIWatchClosest}
+import net.minecraft.entity.ai.{
+  EntityAIHurtByTarget,
+  EntityAILookIdle,
+  EntityAINearestAttackableTarget,
+  EntityAISwimming,
+  EntityAIWander,
+  EntityAIWatchClosest
+}
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.world.World
 
@@ -28,6 +35,6 @@ class EntityHellRaven(_world: World) extends EntityBigBird(_world) {
     this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false))
     this.targetTasks.addTask(2, new EntityAINearestAttackableTarget[EntityPlayer](this, classOf[EntityPlayer], true))
   }
-  override def lootTableName: String = LibEntityName.HellRaven
-  override def spawnEntry: SpawnEntry = ConfigHandler.spawns.hellRaven
+  override def lootTableName: String     = LibEntityName.HellRaven
+  override def spawnEntry:    SpawnEntry = ConfigHandler.spawns.hellRaven
 }
