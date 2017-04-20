@@ -10,6 +10,7 @@ package net.katsstuff.journeytogensokyo.client.gui
 
 import net.katsstuff.danmakucore.data.Vector3
 import net.katsstuff.danmakucore.handler.ConfigHandler
+import net.katsstuff.danmakucore.helper.TouhouHelper
 import net.katsstuff.journeytogensokyo.container.ContainerDanmakuCrafting
 import net.katsstuff.journeytogensokyo.lib.LibMod
 import net.minecraft.client.gui.inventory.GuiContainer
@@ -19,6 +20,8 @@ import net.minecraft.entity.player.InventoryPlayer
 import net.minecraft.util.ResourceLocation
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
+
+import net.katsstuff.journeytogensokyo.helper.Implicits._
 
 class GuiDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: BlockPos)
     extends GuiContainer(new ContainerDanmakuCrafting(invPlayer, world, pos)) {
@@ -61,7 +64,6 @@ class GuiDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: BlockPos
 
     container.danmaku match {
       case Some(stack) =>
-        val multiplier = stack.stackSize
         val current    = container.shotCurrent(stack)
 
         val amountCurrent = container.amountCurrent()
@@ -76,26 +78,33 @@ class GuiDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: BlockPos
 
         container.recipe match {
           case Some(recipe) =>
-            val result = container.shotResult(multiplier, recipe)
+            val result = container.shotResult(recipe)
 
-            draw(i18nDanmaku2("form", if (result.form == null) current.form.getUnlocalizedName else result.form.getUnlocalizedName), 14, 10)
+            draw(i18nDanmaku("form") + SpaceDivider + i18n(if (result.form == null) current.form.getUnlocalizedName else result.form.getUnlocalizedName), 14, 10)
             draw(i18nDanmaku2("color", s"color.${if (result.color == -1) current.color else result.color}"), 14, 20)
             draw(i18nDanmakuValue("damage", current.damage               -> result.damage), 14, 30)
             draw(i18nDanmakuValue("size", current.sizeX                  -> result.sizeX, current.sizeY -> result.sizeY, current.sizeZ -> result.sizeZ), 14, 40)
-            draw(i18nDanmakuValue("speed", container.speedCurrent(stack) -> container.speedResult(multiplier, recipe)), 14, 50)
-            draw(i18nDanmakuValue("gravity", toTuple(container.gravityCurrent(stack), container.gravityResult(multiplier, recipe)): _*), 14, 60)
+            draw(i18nDanmakuValue("speed", container.speedCurrent(stack) -> container.speedResult(recipe)), 14, 50)
+            draw(i18nDanmakuValue("gravity", toTuple(container.gravityCurrent(stack), container.gravityResult(recipe)): _*), 14, 60)
             draw(i18nDanmaku2("pattern", "pattern." + container.getPattern(amountTotal)), 14, 80)
             draw(i18nValue("crafting.danmaku.delay", current.delay -> result.delay), 14, 90)
             draw(i18nValue("crafting.danmaku.end", current.end     -> result.end), 14, 100)
             draw(
-              i18nDanmaku2("subentity", if (result.subEntity == null) current.subEntity.getUnlocalizedName else result.subEntity.getUnlocalizedName),
+              i18nDanmaku("subentity") + SpaceDivider + i18n(if (result.subEntity == null) current.subEntity.getUnlocalizedName else result.subEntity.getUnlocalizedName),
               14,
               110
             )
+
+            val scoreCost = "crafting.danmaku.scoreCost"
+            val currentScore = TouhouHelper.getDanmakuCoreData(invPlayer.player).toOption.map(_.getScore).getOrElse(0)
+            val color = if(currentScore >= recipe.scoreCost) 0x00FF00 else 0xFF0000
+
+            draw(s"${i18n(scoreCost)}$SpaceDivider${recipe.scoreCost}" , 14, 120, color)
+
           case None =>
             val gravity = container.gravityCurrent(stack)
 
-            draw(i18nDanmaku2("form", current.form.getUnlocalizedName), 14, 10)
+            draw(i18nDanmaku("form") + SpaceDivider + i18n(current.form.getUnlocalizedName), 14, 10)
             draw(i18nDanmaku2("color", s"color.${current.color}"), 14, 20)
             draw(i18nDanmaku("damage") + SpaceDivider + current.damage, 14, 30)
             draw(i18nDanmaku("size") + SpaceDivider + s"${current.sizeX}, ${current.sizeY}, ${current.sizeZ}", 14, 40)
@@ -104,7 +113,7 @@ class GuiDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: BlockPos
             draw(i18nDanmaku2("pattern", "pattern." + container.getPattern(amountTotal)), 14, 80)
             draw(i18n("crafting.danmaku.delay") + SpaceDivider + current.delay, 14, 90)
             draw(i18n("crafting.danmaku.end") + SpaceDivider + current.end, 14, 100)
-            draw(i18nDanmaku2("subentity", current.subEntity.getUnlocalizedName), 14, 110)
+            draw(i18nDanmaku("subentity") + SpaceDivider + i18n(current.subEntity.getUnlocalizedName), 14, 110)
         }
       case None =>
     }

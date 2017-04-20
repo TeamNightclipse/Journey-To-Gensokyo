@@ -29,6 +29,7 @@ item.gensokyo_notes_patched.name=Patched Gensokyo notes
 crafting.danmaku.copy=Copy
 crafting.danmaku.delay=Delay
 crafting.danmaku.end=End
+crafting.danmaku.scoreCost=Score cost
 
 entity.journeytogensokyo.tengu_crow.name=Crow Tengu
 entity.journeytogensokyo.hell_raven.name=Hell raven

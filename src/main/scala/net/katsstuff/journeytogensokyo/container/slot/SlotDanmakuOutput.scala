@@ -28,10 +28,14 @@ class SlotDanmakuOutput(
 
   override def onPickupFromSlot(playerIn: EntityPlayer, stack: ItemStack): Unit = {
     matrix.clear()
-    ingredients.clear()
+    ingredients.setInventorySlotContents(0, null)
+    ingredients.setInventorySlotContents(1, null)
+    ingredients.setInventorySlotContents(2, null)
 
-    container.recipe match {
-      case Some(r) => TouhouHelper.changeAndSyncPlayerData((data: IDanmakuCoreData) => data.addScore(-r.scoreCost()), playerIn)
+    container.recipeAndScore match {
+      case Some(r) =>
+        ingredients.setInventorySlotContents(3, null)
+        TouhouHelper.changeAndSyncPlayerData((data: IDanmakuCoreData) => data.addScore(-r.scoreCost()), playerIn)
       case None    =>
     }
   }
