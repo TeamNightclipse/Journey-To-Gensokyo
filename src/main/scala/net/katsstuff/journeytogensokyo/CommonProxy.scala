@@ -109,16 +109,16 @@ class CommonProxy {
   def registerEntities(): Unit = {
     import BiomeDictionary.{Type => BiomeType}
 
-    EntityRegistry.registerModEntity(classOf[EntityFairy], LibEntityName.Fairy, 0, JourneyToGensokyo, 64, 1, true, 0xFFFFFF, 0x000000)
+    EntityRegistry.registerModEntity(classOf[EntityFairy], LibEntityName.Fairy, 0, JourneyToGensokyo, 64, 1, true, 0xCCCCCC, 0x65D159)
     registerSpawn(classOf[EntityFairy], ConfigHandler.spawns.fairy, EnumCreatureType.MONSTER, BiomeType.HILLS, BiomeType.PLAINS, BiomeType.FOREST)
 
-    EntityRegistry.registerModEntity(classOf[EntityTenguCrow], LibEntityName.TenguCrow, 1, JourneyToGensokyo, 64, 1, true, 0xFFFFFF, 0x000000)
+    EntityRegistry.registerModEntity(classOf[EntityTenguCrow], LibEntityName.TenguCrow, 1, JourneyToGensokyo, 64, 1, true, 0x191713, 0x494742)
     registerSpawn(classOf[EntityTenguCrow], ConfigHandler.spawns.tenguCrow, EnumCreatureType.MONSTER, BiomeType.MOUNTAIN)
 
-    EntityRegistry.registerModEntity(classOf[EntityHellRaven], LibEntityName.HellRaven, 2, JourneyToGensokyo, 64, 1, true, 0xFFFFFF, 0x000000)
+    EntityRegistry.registerModEntity(classOf[EntityHellRaven], LibEntityName.HellRaven, 2, JourneyToGensokyo, 64, 1, true, 0x0F1116, 0x1E5096)
     registerSpawn(classOf[EntityHellRaven], ConfigHandler.spawns.hellRaven, EnumCreatureType.MONSTER, BiomeType.NETHER)
 
-    EntityRegistry.registerModEntity(classOf[EntityPhantom], LibEntityName.Phantom, 3, JourneyToGensokyo, 64, 1, true, 0xFFFFFF, 0x000000)
+    EntityRegistry.registerModEntity(classOf[EntityPhantom], LibEntityName.Phantom, 3, JourneyToGensokyo, 64, 1, true, 0x384FFF, 0xFFFFFF)
     registerSpawn(
       classOf[EntityPhantom],
       ConfigHandler.spawns.hellRaven,
