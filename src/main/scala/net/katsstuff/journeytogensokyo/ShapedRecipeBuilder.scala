@@ -25,9 +25,9 @@ case class ShapedRecipeBuilder(rows: Seq[String] = Seq.empty, mappings: Map[Char
   def returns(item: Item): ShapedOreRecipe = returns(new ItemStack(item))
   def returns(block: Block): ShapedOreRecipe = returns(new ItemStack(block))
   def returns(result: ItemStack): ShapedOreRecipe = {
-    val array = Array(Boolean.box(mirror), rows.toArray, mappings) ++ mappings.toSeq.flatMap(t => Seq(Char.box(t._1), t._2))
+    val array = Array(Boolean.box(mirror)) ++ rows ++ mappings.flatMap(t => Seq(Char.box(t._1), t._2))
 
-    new ShapedOreRecipe(result, array)
+    new ShapedOreRecipe(result, array: _*)
   }
 }
 

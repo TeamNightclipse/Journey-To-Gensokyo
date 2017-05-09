@@ -140,7 +140,7 @@ class CommonProxy {
       recipe
         .withPattern("ccc", "cbc", "ccc")
         .where('c').mapsTo(JTGItems.BulletCore)
-        .where('b').mapsTo(LibItems.DANMAKU)
+        .where('b').mapsTo(new ItemStack(LibItems.DANMAKU, 1, OreDictionary.WILDCARD_VALUE))
         .returns(JTGBlocks.DanmakuCrafting)
     )
   }
