@@ -10,7 +10,7 @@ package net.katsstuff.journeytogensokyo
 
 import net.katsstuff.danmakucore.data.{MovementData, ShotData, Vector3}
 import net.katsstuff.danmakucore.entity.living.phase.PhaseType
-import net.katsstuff.danmakucore.lib.data.{LibForms, LibSubEntities}
+import net.katsstuff.danmakucore.lib.data.{LibForms, LibItems, LibSubEntities}
 import net.katsstuff.journeytogensokyo.api.{JourneyToGensokyoAPI => JTGAPI}
 import net.katsstuff.journeytogensokyo.block.{BlockDanOre, BlockDanmakuCrafting, JTGBlocks}
 import net.katsstuff.journeytogensokyo.entity.living.{EntityFairy, EntityHellRaven, EntityPhantom, EntityTenguCrow}
@@ -134,6 +134,15 @@ class CommonProxy {
     GameRegistry.addSmelting(JTGBlocks.GensokyoOre, new ItemStack(JTGItems.GensokyoCrystal), 5F)
     GameRegistry.addSmelting(JTGBlocks.MakaiOre, new ItemStack(JTGItems.MakaiCrystal), 5F)
     GameRegistry.addSmelting(JTGBlocks.CelestialOre, new ItemStack(JTGItems.CelestialCrystal), 5F)
+
+    def recipe = ShapedRecipeBuilder()
+    GameRegistry.addRecipe(
+      recipe
+        .withPattern("ccc", "cbc", "ccc")
+        .where('c').mapsTo(JTGItems.BulletCore)
+        .where('b').mapsTo(LibItems.DANMAKU)
+        .returns(JTGBlocks.DanmakuCrafting)
+    )
   }
 
   def registerWorldGen(): Unit = {
