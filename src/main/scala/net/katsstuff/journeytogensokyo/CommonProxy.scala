@@ -458,7 +458,7 @@ class CommonProxy {
 case class DanmakuRecipeBuilder(
     shot:     ShotData = null,
     input:    Either[String, ItemStack] = null,
-    movement: MovementData = new MovementData(0.4D, 0.4D, 0D, Vector3.Zero),
+    movement: MovementData = MovementData.constant(0.4D),
     cost:     Int = 1000
 ) {
 
@@ -470,7 +470,7 @@ case class DanmakuRecipeBuilder(
   def withCost(cost:       Int):       DanmakuRecipeBuilder = copy(cost = cost)
   def withInput(block:     Block):     DanmakuRecipeBuilder = withInput(block.toStack)
   def withInput(item:      Item):      DanmakuRecipeBuilder = withInput(item.toStack)
-  def withSpeed(speed:     Double):    DanmakuRecipeBuilder = copy(movement = new MovementData(speed, speed, 0D, movement.getGravity))
+  def withSpeed(speed:     Double):    DanmakuRecipeBuilder = copy(movement = MovementData(speed, speed, speed, 0D, movement.gravity))
   def withGravity(gravity: Vector3):   DanmakuRecipeBuilder = copy(movement = movement.copy(gravity = gravity))
   def build(): Unit = JTGAPI.addDanmakuRecipe(shot, movement, input.merge, cost)
 
