@@ -17,6 +17,7 @@ import net.minecraft.world.IBlockAccess
 
 class BlockDanOre(name: String) extends BlockJTGBase(Material.ROCK, name) {
   setHarvestLevel("pickaxe", 2)
+  setHardness(2.5F)
 
   override def canEntityDestroy(state: IBlockState, world: IBlockAccess, pos: BlockPos, entity: Entity): Boolean =
     if (entity.isInstanceOf[EntityDragon]) false
