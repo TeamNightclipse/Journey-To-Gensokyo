@@ -114,7 +114,9 @@ class PhaseTengu(manager: PhaseManager, val getType: PhaseTypeTengu) extends Pha
     }
   }
 
-  private def createChargeSphere(entity: EntityDanmakuMob): Unit = TouhouHelper.createChargeSphere(entity, 50 * charge, 2D, 10D, 1F, 0.1F, 0.1F, 40)
+  private def createChargeSphere(entity: EntityDanmakuMob): Unit = {
+    TouhouHelper.createChargeSpherePacket(new Vector3(entity), entity, 50 * charge, 2D, 10D, 1F, 0.1F, 0.1F, 40)
+  }
 
   override def dropLoot(source: DamageSource): Unit = {
     val stack  = new ItemStack(LibItems.DANMAKU)
