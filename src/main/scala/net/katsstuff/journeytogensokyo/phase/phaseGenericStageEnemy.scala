@@ -18,7 +18,7 @@ import net.katsstuff.danmakucore.handler.ConfigHandler
 import net.katsstuff.danmakucore.helper.DanmakuHelper
 import net.katsstuff.danmakucore.impl.shape.{ShapeArrow, ShapeCircle, ShapeRandomRing, ShapeRing, ShapeStar, ShapeWideShot}
 import net.katsstuff.danmakucore.item.ItemDanmaku
-import net.katsstuff.danmakucore.lib.data.LibItems
+import net.katsstuff.danmakucore.lib.data.{LibDanmakuVariants, LibItems}
 import net.katsstuff.danmakucore.registry.DanmakuRegistry
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
@@ -26,14 +26,14 @@ import net.minecraft.util.{DamageSource, ResourceLocation}
 
 class PhaseTypeGenericStageEnemy extends PhaseType {
 
-  final val ShapeAmount = 6
-  private val rand      = new Random()
+  val ShapeAmount: Int = ItemDanmaku.Pattern.values().length
+  private val rand           = new Random()
 
-  override def instantiate(phaseManager: PhaseManager): Phase = instantiate(phaseManager, DanmakuRegistry.DANMAKU_VARIANT.getRandomObject(rand.self))
+  override def instantiate(phaseManager: PhaseManager): Phase = instantiate(phaseManager, DanmakuRegistry.getRandomObject(classOf[DanmakuVariant], rand.self))
   def instantiate(phaseManager:          PhaseManager, variant: DanmakuVariant): Phase = {
 
     val shot   = variant.getShotData.copy(color = DanmakuHelper.randomSaturatedColor())
-    val shape  = rand.nextInt(ShapeAmount)
+    val shape  = ItemDanmaku.Pattern.values()(rand.nextInt(ShapeAmount))
     val amount = rand.nextInt(ConfigHandler.danmaku.danmakuLevel.getMultiplier * 4) + 1
     val width  = Math.min(10F, rand.nextFloat * 90F)
     new PhaseGenericStageEnemy(phaseManager, variant, shot, variant.getMovementData, shape, amount, width, this)
@@ -45,7 +45,7 @@ class PhaseGenericStageEnemy(
     var variant:  DanmakuVariant,
     var shot:     ShotData,
     var movement: MovementData,
-    var shape:    Int,
+    var shape:    ItemDanmaku.Pattern,
     var amount:   Int,
     var width:    Float,
     val getType:  PhaseTypeGenericStageEnemy
@@ -62,13 +62,13 @@ class PhaseGenericStageEnemy(
   private val shapeObj = {
     val distance = 0.1D
     val danmaku  = DanmakuTemplate.builder.setUser(getEntity).setShot(shot).setMovementData(movement).build()
-    (shape: @switch) match {
-      case 0 => new ShapeArrow(danmaku, amount, distance, width)
-      case 1 => new ShapeCircle(danmaku, amount, 0F, distance)
-      case 2 => new ShapeRandomRing(danmaku, amount, width, distance)
-      case 3 => new ShapeRing(danmaku, amount, width, 0F, distance)
-      case 4 => new ShapeStar(danmaku, amount, width, 0F, distance)
-      case 5 => new ShapeWideShot(danmaku, amount, width, 0F, distance)
+    shape match {
+      case ItemDanmaku.Pattern.LINE => new ShapeArrow(danmaku, amount, distance, width)
+      case ItemDanmaku.Pattern.CIRCLE => new ShapeCircle(danmaku, amount, 0F, distance)
+      case ItemDanmaku.Pattern.RANDOM_RING => new ShapeRandomRing(danmaku, amount, width, distance)
+      case ItemDanmaku.Pattern.RING => new ShapeRing(danmaku, amount, width, 0F, distance)
+      case ItemDanmaku.Pattern.STAR => new ShapeStar(danmaku, amount, width, 0F, distance)
+      case ItemDanmaku.Pattern.WIDE => new ShapeWideShot(danmaku, amount, width, 0F, distance)
     }
   }
 
@@ -99,7 +99,7 @@ class PhaseGenericStageEnemy(
     val tag = super.serializeNBT
     tag.setString(NbtVariant, variant.getFullName.toString)
     tag.setTag(NbtMovement, movement.serializeNBT)
-    tag.setInteger(NbtShape, shape)
+    tag.setInteger(NbtShape, shape.ordinal())
     tag.setInteger(NbtAmount, amount)
     tag.setFloat(NbtWidth, width)
     tag.setTag(NbtShotData, shot.serializeNBT)
@@ -108,12 +108,8 @@ class PhaseGenericStageEnemy(
 
   override def deserializeNBT(tag: NBTTagCompound) {
     super.deserializeNBT(tag)
-    val variantKey = tag.getString(NbtVariant)
-    variant = if (variantKey.nonEmpty) {
-      DanmakuRegistry.DANMAKU_VARIANT.getValue(new ResourceLocation(variantKey))
-    } else DanmakuRegistry.DANMAKU_VARIANT.getDefaultValue
-
-    shape = tag.getInteger(NbtShape)
+    variant = Option(DanmakuRegistry.DANMAKU_VARIANT.getValue(new ResourceLocation(tag.getString(NbtVariant)))).getOrElse(LibDanmakuVariants.DEFAULT_TYPE)
+    shape = ItemDanmaku.Pattern.values()(tag.getInteger(NbtShape))
     amount = tag.getInteger(NbtAmount)
     width = tag.getFloat(NbtWidth)
     shot = new ShotData(tag.getCompoundTag(NbtShotData))
@@ -121,11 +117,10 @@ class PhaseGenericStageEnemy(
   }
 
   override def dropLoot(source: DamageSource): Unit = {
-    val stack  = new ItemStack(LibItems.DANMAKU)
+    val stack  = ItemDanmaku.createStack(variant)
     val entity = getEntity
 
-    stack.stackSize = entity.getRNG.nextInt(5) + 1
-    stack.setItemDamage(DanmakuRegistry.DANMAKU_VARIANT.getId(variant))
+    stack.stackSize = entity.getRNG.nextInt(5) + 2
     ItemDanmaku.setAmount(stack, amount)
     ItemDanmaku.setSpeed(stack, movement.speedOriginal)
     ItemDanmaku.setGravity(stack, movement.gravity)

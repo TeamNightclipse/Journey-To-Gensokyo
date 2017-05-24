@@ -183,7 +183,7 @@ class ContainerDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: Bl
     if (stack == null) 0 else stack.stackSize
   }
 
-  def getPattern(amount: Int): Int = {
+  def getPattern(amount: Int): ItemDanmaku.Pattern = {
     def pattern(slots: Int*): Boolean = {
       val (nonNull, nullable) = (0 until 9).partition(slots.contains)
 
@@ -191,13 +191,13 @@ class ContainerDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: Bl
       nullable.map(craftMatrix.getStackInSlot).forall(_ == null)
     }
 
-    if (pattern(4)) 0
-    else if (pattern(1, 4)) 1
-    else if (pattern(0, 1, 2)) 2
-    else if (pattern(0, 1, 2, 3, 5, 6, 7, 8)) 3
-    else if (pattern(0, 1, 2, 3, 4, 5, 6, 7, 8) && amount > 2) 4
-    else if (pattern(1, 3, 5, 7) && amount > 2) 5
-    else danmaku.fold(0)(ItemDanmaku.getPattern)
+    if (pattern(4)) ItemDanmaku.Pattern.LINE
+    else if (pattern(1, 4)) ItemDanmaku.Pattern.RANDOM_RING
+    else if (pattern(0, 1, 2)) ItemDanmaku.Pattern.WIDE
+    else if (pattern(0, 1, 2, 3, 5, 6, 7, 8)) ItemDanmaku.Pattern.CIRCLE
+    else if (pattern(0, 1, 2, 3, 4, 5, 6, 7, 8) && amount > 2) ItemDanmaku.Pattern.STAR
+    else if (pattern(1, 3, 5, 7) && amount > 2) ItemDanmaku.Pattern.RING
+    else danmaku.fold(ItemDanmaku.Pattern.LINE)(ItemDanmaku.getPattern)
   }
 
   def recipe: Option[IRecipeDanmaku] =

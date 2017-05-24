@@ -16,7 +16,6 @@ import net.katsstuff.danmakucore.helper.{DanmakuCreationHelper, DanmakuHelper, T
 import net.katsstuff.danmakucore.item.ItemDanmaku
 import net.katsstuff.danmakucore.lib.LibColor
 import net.katsstuff.danmakucore.lib.data.{LibItems, LibShotData}
-import net.katsstuff.danmakucore.registry.DanmakuRegistry
 import net.katsstuff.journeytogensokyo.helper.FlyingRandomPositionGenerator
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.item.ItemStack
@@ -125,7 +124,7 @@ class PhaseTengu(manager: PhaseManager, val getType: PhaseTypeTengu) extends Pha
     stack.stackSize = entity.getRNG.nextInt(5) + 1
     ItemDanmaku.setAmount(stack, entity.getRNG.nextInt(5) + 1)
     ItemDanmaku.setSpeed(stack, 0.4D)
-    ItemDanmaku.setPattern(stack, 1)
+    ItemDanmaku.setPattern(stack, ItemDanmaku.Pattern.RANDOM_RING)
     ShotData.serializeNBTItemStack(stack, shotData)
     ItemDanmaku.setCustom(stack, true)
 
