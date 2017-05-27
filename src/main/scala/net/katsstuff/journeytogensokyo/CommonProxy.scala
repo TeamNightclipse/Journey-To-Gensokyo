@@ -143,6 +143,8 @@ class CommonProxy {
         .where('b').mapsTo(new ItemStack(LibItems.DANMAKU, 1, OreDictionary.WILDCARD_VALUE))
         .returns(JTGBlocks.DanmakuCrafting)
     )
+
+    GameRegistry.addShapelessRecipe(new ItemStack(JTGItems.BulletCore), new ItemStack(LibItems.DANMAKU, 1, OreDictionary.WILDCARD_VALUE))
   }
 
   def registerWorldGen(): Unit = {
