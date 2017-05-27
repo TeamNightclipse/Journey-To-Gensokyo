@@ -25,11 +25,11 @@ public class ConfigHandler {
 		public Phantom phantom = new Phantom();
 
 		public static class Fairy implements SpawnEntry {
-			public int weightedProbability = 20;
-			public int minAmount = 2;
-			public int maxAmount = 6;
+			public int weightedProbability = 15;
+			public int minAmount = 1;
+			public int maxAmount = 3;
 			public int lastProbability = 100;
-			public int maxInChunk = 6;
+			public int maxInChunk = 3;
 
 			@Override
 			public int weightedProbability() {
@@ -58,11 +58,11 @@ public class ConfigHandler {
 		}
 
 		public static class TenguCrow implements SpawnEntry {
-			public int weightedProbability = 20;
+			public int weightedProbability = 5;
 			public int minAmount = 1;
-			public int maxAmount = 3;
+			public int maxAmount = 2;
 			public int lastProbability = 100;
-			public int maxInChunk = 3;
+			public int maxInChunk = 2;
 
 			@Override
 			public int weightedProbability() {
@@ -91,11 +91,11 @@ public class ConfigHandler {
 		}
 
 		public static class HellRaven implements SpawnEntry {
-			public int weightedProbability = 20;
+			public int weightedProbability = 10;
 			public int minAmount = 1;
-			public int maxAmount = 3;
+			public int maxAmount = 2;
 			public int lastProbability = 100;
-			public int maxInChunk = 3;
+			public int maxInChunk = 2;
 
 			@Override
 			public int weightedProbability() {
@@ -124,11 +124,11 @@ public class ConfigHandler {
 		}
 
 		public static class Phantom implements SpawnEntry {
-			public int weightedProbability = 30;
-			public int minAmount = 2;
-			public int maxAmount = 6;
+			public int weightedProbability = 10;
+			public int minAmount = 1;
+			public int maxAmount = 3;
 			public int lastProbability = 100;
-			public int maxInChunk = 6;
+			public int maxInChunk = 3;
 
 			@Override
 			public int weightedProbability() {
