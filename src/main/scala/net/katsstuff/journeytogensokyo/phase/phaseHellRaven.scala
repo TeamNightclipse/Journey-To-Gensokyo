@@ -56,6 +56,7 @@ class PhaseHellRaven(manager: PhaseManager, star: Boolean, val getType: PhaseTyp
         if (counter >= 20) {
           val template =
             DanmakuTemplate.builder().setUser(entity).setShot(starShotData).setDirection(forward).setMovementData(0.3D * level.getMultiplier).build()
+          //TODO: Use star shot when it's working again
           DanmakuCreationHelper.createSphereShot(Quat.lookRotation(forward, Vector3.Up), template, 4, Math.max(8, 2 * level.getMultiplier), 0F, 0.5D)
           DanmakuHelper.playShotSound(entity)
         }
