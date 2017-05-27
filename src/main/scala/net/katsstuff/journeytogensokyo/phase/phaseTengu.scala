@@ -8,7 +8,7 @@
  */
 package net.katsstuff.journeytogensokyo.phase
 
-import net.katsstuff.danmakucore.data.{ShotData, Vector3}
+import net.katsstuff.danmakucore.data.{Quat, ShotData, Vector3}
 import net.katsstuff.danmakucore.entity.danmaku.DanmakuTemplate
 import net.katsstuff.danmakucore.entity.living.EntityDanmakuMob
 import net.katsstuff.danmakucore.entity.living.phase.{Phase, PhaseManager, PhaseType}
@@ -43,17 +43,19 @@ class PhaseTengu(manager: PhaseManager, val getType: PhaseTypeTengu) extends Pha
     val target = entity.getAttackTarget
 
     if (!isFrozen && target != null && entity.getEntitySenses.canSee(target)) {
+      val entityPos = new Vector3(entity)
+      val forward = Vector3.directionToEntity(entityPos, target)
       entity.faceEntity(target, 30F, 30F)
       if (counter % 12 == 0) {
         val template = DanmakuTemplate
           .builder()
           .setUser(entity)
-          .setAngle(Vector3.angleToLiving(entity, target))
+          .setDirection(Vector3.directionToLiving(entity, target))
           .setShot(shotData)
           .setMovementData(0.4D)
           .build()
 
-        DanmakuCreationHelper.createRandomRingShot(template, 3 * level.getMultiplier, 40F, 0.5D)
+        DanmakuCreationHelper.createRandomRingShot(Quat.lookRotation(forward, Vector3.Up), template, 3 * level.getMultiplier, 40F, 0.5D)
         DanmakuHelper.playShotSound(entity)
       }
 
@@ -69,7 +71,7 @@ class PhaseTengu(manager: PhaseManager, val getType: PhaseTypeTengu) extends Pha
         charge += 1
         createChargeSphere(entity)
       } else {
-        val angle @ Vector3(x, y, z) = Vector3.angleToLiving(entity, target) * (entity.getSpeed * 2.5D)
+        val direction @ Vector3(x, y, z) = Vector3.directionToLiving(entity, target) * (entity.getSpeed * 2.5D)
         entity.motionX += x
         entity.motionY += y
         entity.motionZ += z
@@ -77,7 +79,7 @@ class PhaseTengu(manager: PhaseManager, val getType: PhaseTypeTengu) extends Pha
         val template = DanmakuTemplate
           .builder()
           .setUser(entity)
-          .setAngle(angle.normalize)
+          .setDirection(direction.normalize)
           .setShot(shotData.setColor(LibColor.COLOR_SATURATED_RED).scaleSize(2F))
           .setMovementData(entity.getSpeed * 1.2D)
           .build()

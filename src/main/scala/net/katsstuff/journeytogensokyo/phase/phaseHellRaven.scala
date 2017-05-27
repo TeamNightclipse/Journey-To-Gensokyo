@@ -42,7 +42,7 @@ class PhaseHellRaven(manager: PhaseManager, star: Boolean, val getType: PhaseTyp
 
     def moveLeftRight(): Unit = {
       val dir              = if (entity.getRNG.nextBoolean()) 1 else -1
-      val Vector3(x, y, z) = entity.angle.rotate(Quat.eulerToQuat(dir * 45F, 0F, 0F)) / 2
+      val Vector3(x, y, z) = entity.direction.rotate(Quat.fromEuler(dir * 45F, 0F, 0F)) / 2
 
       entity.motionX += x
       entity.motionY += y
@@ -50,12 +50,13 @@ class PhaseHellRaven(manager: PhaseManager, star: Boolean, val getType: PhaseTyp
     }
 
     if (!isFrozen && target != null && entity.getEntitySenses.canSee(target)) {
-      val angle = Vector3.angleToLiving(entity, target)
+      val entityPos = new Vector3(entity)
+      val forward = Vector3.directionToEntity(entityPos, target)
       if (star) {
         if (counter >= 20) {
           val template =
-            DanmakuTemplate.builder().setUser(entity).setShot(starShotData).setAngle(angle).setMovementData(0.3D * level.getMultiplier).build()
-          DanmakuCreationHelper.createStarShot(template, Math.max(10, 5 * level.getMultiplier), 0F, 0F, 0.5D)
+            DanmakuTemplate.builder().setUser(entity).setShot(starShotData).setDirection(forward).setMovementData(0.3D * level.getMultiplier).build()
+          DanmakuCreationHelper.createSphereShot(Quat.lookRotation(forward, Vector3.Up), template, 4, Math.max(8, 2 * level.getMultiplier), 0F, 0.5D)
           DanmakuHelper.playShotSound(entity)
         }
 
@@ -65,7 +66,7 @@ class PhaseHellRaven(manager: PhaseManager, star: Boolean, val getType: PhaseTyp
       } else {
         if (counter % 10 == 0) {
           val num      = ((1 + level.getMultiplier) * 1.3).toInt
-          val template = DanmakuTemplate.builder().setUser(entity).setShot(otherShotData).setAngle(angle)
+          val template = DanmakuTemplate.builder().setUser(entity).setShot(otherShotData).setDirection(forward)
 
           for (i <- 1 until num) {
             entity.world.spawnEntityInWorld(template.setMovementData(0.3D * (i + i / 2D), 0.3D * (i / 2D), 0D).build().asEntity())

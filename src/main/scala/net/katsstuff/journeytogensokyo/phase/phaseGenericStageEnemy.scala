@@ -11,15 +11,16 @@ package net.katsstuff.journeytogensokyo.phase
 import scala.annotation.switch
 import scala.util.Random
 
-import net.katsstuff.danmakucore.data.{MovementData, ShotData, Vector3}
+import net.katsstuff.danmakucore.data.{MovementData, Quat, ShotData, Vector3}
 import net.katsstuff.danmakucore.entity.danmaku.{DanmakuTemplate, DanmakuVariant}
 import net.katsstuff.danmakucore.entity.living.phase.{Phase, PhaseManager, PhaseType}
 import net.katsstuff.danmakucore.handler.ConfigHandler
 import net.katsstuff.danmakucore.helper.DanmakuHelper
-import net.katsstuff.danmakucore.impl.shape.{ShapeArrow, ShapeCircle, ShapeRandomRing, ShapeRing, ShapeStar, ShapeWideShot}
+import net.katsstuff.danmakucore.impl.shape.{ShapeArrow, ShapeCircle, ShapeRandomRing, ShapeRing, ShapeSphere, ShapeStar, ShapeWideShot}
 import net.katsstuff.danmakucore.item.ItemDanmaku
 import net.katsstuff.danmakucore.lib.data.{LibDanmakuVariants, LibItems}
 import net.katsstuff.danmakucore.registry.DanmakuRegistry
+import net.katsstuff.journeytogensokyo.helper.LogHelper
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.util.{DamageSource, ResourceLocation}
@@ -69,6 +70,7 @@ class PhaseGenericStageEnemy(
       case ItemDanmaku.Pattern.RING => new ShapeRing(danmaku, amount, width, 0F, distance)
       case ItemDanmaku.Pattern.STAR => new ShapeStar(danmaku, amount, width, 0F, distance)
       case ItemDanmaku.Pattern.WIDE => new ShapeWideShot(danmaku, amount, width, 0F, distance)
+      case ItemDanmaku.Pattern.SPHERE => new ShapeSphere(danmaku, amount, amount / 2, 0F, distance)
     }
   }
 
@@ -84,10 +86,14 @@ class PhaseGenericStageEnemy(
     val target = entity.getAttackTarget
 
     if (isCounterStart && !isFrozen && target != null && entity.getEntitySenses.canSee(target)) {
-      val angle = Vector3.angleLimitRandom(Vector3.angleToLiving(entity, target), Accuracy)
+      val entityPos = new Vector3(entity)
+      val forward = Vector3.directionToEntity(entityPos, target)
+      val baseLook = Quat.lookRotation(forward, Vector3.Up) //TODO: Add inaccuracy here?
       DanmakuHelper.playShotSound(entity)
+      LogHelper.info(forward.normalize)
+      LogHelper.info(baseLook * Vector3.Forward)
 
-      shapeObj.drawForTick(new Vector3(entity), angle, 0)
+      shapeObj.drawForTick(entityPos, baseLook, 0)
     }
   }
 

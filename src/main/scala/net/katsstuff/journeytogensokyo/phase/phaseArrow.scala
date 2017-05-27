@@ -8,7 +8,7 @@
  */
 package net.katsstuff.journeytogensokyo.phase
 
-import net.katsstuff.danmakucore.data.{MovementData, RotationData, ShotData, Vector3}
+import net.katsstuff.danmakucore.data.{MovementData, Quat, RotationData, ShotData, Vector3}
 import net.katsstuff.danmakucore.entity.danmaku.DanmakuTemplate
 import net.katsstuff.danmakucore.entity.living.phase.{Phase, PhaseManager, PhaseType}
 import net.katsstuff.danmakucore.impl.shape.ShapeArrow
@@ -60,7 +60,10 @@ class PhaseArrow(
     val entity = getEntity
     val target = entity.getAttackTarget
     if (!isFrozen && isCounterStart && target != null && entity.getEntitySenses.canSee(target)) {
-      shape.drawForTick(new Vector3(entity), Vector3.angleToEntity(entity, target), 0)
+      val entityPos = new Vector3(entity)
+      val forward = Vector3.directionToEntity(entityPos, target)
+
+      shape.drawForTick(entityPos, Quat.lookRotation(forward, Vector3.Up), 0)
     }
   }
 
