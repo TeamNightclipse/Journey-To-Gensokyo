@@ -36,6 +36,7 @@ object RenderFairy {
 }
 
 class RenderFairy(renderManager: RenderManager) extends RenderLiving[EntityFairy](renderManager, RedFairyModel, 0.5F) {
+  this.addLayer[EntityFairy, LayerFairyFlower](new LayerFairyFlower(this))
 
   override def doRender(entity: EntityFairy, x: Double, y: Double, z: Double, entityYaw: Float, partialTicks: Float): Unit = {
     mainModel = modelForEntity(entity)
