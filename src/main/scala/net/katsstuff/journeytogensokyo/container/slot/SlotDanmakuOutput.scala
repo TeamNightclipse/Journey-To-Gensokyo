@@ -14,6 +14,7 @@ import net.katsstuff.journeytogensokyo.container.ContainerDanmakuCrafting
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.inventory.{IInventory, InventoryCrafting, SlotCrafting}
 import net.minecraft.item.ItemStack
+import net.katsstuff.journeytogensokyo.helper.Implicits._
 
 class SlotDanmakuOutput(
     container:   ContainerDanmakuCrafting,
@@ -27,16 +28,19 @@ class SlotDanmakuOutput(
 ) extends SlotCrafting(player, matrix, inv, index, xPos, yPos) {
 
   override def onPickupFromSlot(playerIn: EntityPlayer, stack: ItemStack): Unit = {
+    for {
+      ctx <- container.createContext
+      data <- TouhouHelper.getDanmakuCoreData(playerIn).toOption
+      requiredScore = ctx.requiredScore
+      if data.getScore >= requiredScore
+    } {
+      ingredients.setInventorySlotContents(3, null)
+      TouhouHelper.changeAndSyncPlayerData((data: IDanmakuCoreData) => data.addScore(-requiredScore), playerIn)
+    }
+
     matrix.clear()
     ingredients.setInventorySlotContents(0, null)
     ingredients.setInventorySlotContents(1, null)
     ingredients.setInventorySlotContents(2, null)
-
-    container.recipeAndScore match {
-      case Some(r) =>
-        ingredients.setInventorySlotContents(3, null)
-        TouhouHelper.changeAndSyncPlayerData((data: IDanmakuCoreData) => data.addScore(-r.scoreCost()), playerIn)
-      case None    =>
-    }
   }
 }
