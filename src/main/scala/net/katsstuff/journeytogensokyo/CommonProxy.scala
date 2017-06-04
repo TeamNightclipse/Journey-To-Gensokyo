@@ -178,22 +178,19 @@ class CommonProxy {
     val strGravity       = Vector3.GravityDefault * 2.5D
 
     def recipe = new DanmakuRecipeBuilder
-    def shot   = ShotData.DefaultShotData setForm null setSubEntity null
+    def shot   = ShotData(
+      form = null,
+      color = -1,
+      damage = 0F,
+      sizeX = 0F,
+      sizeY = 0F,
+      sizeZ = 0F,
+      end = 0,
+      subEntity = null
+    )
 
     import net.katsstuff.danmakucore.data.Vector3.gravity
     import net.katsstuff.danmakucore.lib.LibColor._
-
-    recipe
-      .withShot(shot.setDamage(1F))
-      .withOreInput("logWood")
-      .withCost(300)
-      .build()
-
-    recipe
-      .withShot(shot.setDamage(0.25F))
-      .withOreInput("plankWood")
-      .withCost(100)
-      .build()
 
     recipe
       .withShot(shot.setColor(COLOR_SATURATED_GREEN).setDelay(2))
@@ -204,28 +201,28 @@ class CommonProxy {
       .build()
 
     recipe
-      .withShot(shot.setDamage(1F))
+      .withShot(shot.setDamage(0.5F))
       .withGravity(defGravity)
       .withOreInput("oreGold")
       .withCost(1000)
       .build()
 
     recipe
-      .withShot(shot.setDamage(0.5F))
+      .withShot(shot.setDamage(0.25F))
       .withGravity(defGravity)
       .withOreInput("oreIron")
       .withCost(500)
       .build()
 
     recipe
-      .withShot(shot.setDamage(0.25F))
+      .withShot(shot.setDamage(0.125F))
       .withGravity(defGravity)
       .withOreInput("oreLapis")
       .withCost(250)
       .build()
 
     recipe
-      .withShot(shot.setDamage(2F))
+      .withShot(shot.setDamage(1F))
       .withGravity(defGravity)
       .withOreInput("oreDiamond")
       .withCost(3000)
@@ -239,84 +236,84 @@ class CommonProxy {
       .build()
 
     recipe
-      .withShot(shot.setDamage(1.5F))
+      .withShot(shot.setDamage(0.75F))
       .withGravity(defGravity)
       .withOreInput("oreEmerald")
       .withCost(2000)
       .build()
 
     recipe
-      .withShot(shot.setDamage(1F).setDelay(10).setEnd(5))
+      .withShot(shot.setDamage(0.5F).setDelay(10).setEnd(5))
       .withGravity(defGravity)
       .withOreInput("oreQuartz")
       .withCost(1000)
       .build()
 
     recipe
-      .withShot(shot.setColor(COLOR_VANILLA_BLACK).setDamage(0.5F).setSubEntity(LibSubEntities.FIRE))
+      .withShot(shot.setColor(COLOR_VANILLA_BLACK).setDamage(0.125F).setSubEntity(LibSubEntities.FIRE))
       .withGravity(defGravity)
       .withOreInput("oreCoal")
       .withCost(250)
       .build()
 
     recipe
-      .withShot(shot.setDamage(1F).setEnd(-20))
+      .withShot(shot.setDamage(0.5F).setEnd(-20))
       .withOreInput("blockGlassColorless")
       .withCost(500)
       .build()
 
     recipe
-      .withShot(shot.setDamage(0.25F).setEnd(-5))
+      .withShot(shot.setDamage(0.125F).setEnd(-5))
       .withOreInput("paneGlassColorless")
       .withCost(200)
       .build()
 
     recipe
-      .withShot(shot.setDamage(0.6F).setDelay(3))
+      .withShot(shot.setDamage(0.3F).setDelay(3))
       .withOreInput("ingotIron")
       .withCost(500)
       .build()
 
     recipe
-      .withShot(shot.setColor(COLOR_SATURATED_ORANGE).setDamage(1.2F))
+      .withShot(shot.setColor(COLOR_SATURATED_ORANGE).setDamage(0.6F))
       .withOreInput("ingotGold")
       .withCost(1000)
       .build()
 
     recipe
-      .withShot(shot.setDamage(0.75F))
+      .withShot(shot.setDamage(0.25F))
       .withGravity(strGravity)
       .withOreInput("ingotBrick")
       .withCost(300)
       .build()
 
     recipe
-      .withShot(shot.setDamage(0.5F).setSubEntity(LibSubEntities.FIRE))
+      .withShot(shot.setDamage(0.2F).setSubEntity(LibSubEntities.FIRE))
       .withGravity(strGravity)
       .withOreInput("ingotBrickNether")
       .withCost(300)
       .build()
 
     recipe
-      .withShot(shot.setDamage(0.1F))
+      .withShot(shot.setDamage(0.05F))
       .withOreInput("nuggetGold")
       .withCost(100)
       .build()
 
     recipe
-      .withShot(shot.setColor(COLOR_SATURATED_CYAN).setDamage(2.4F))
+      .withShot(shot.setColor(COLOR_SATURATED_CYAN).setDamage(1.2F))
       .withOreInput("gemDiamond")
       .withCost(3000)
       .build()
 
     recipe
-      .withShot(shot.setColor(COLOR_SATURATED_GREEN).setDamage(1.7F))
+      .withShot(shot.setColor(COLOR_SATURATED_GREEN).setDamage(1F))
       .withOreInput("gemEmerald")
       .withCost(2000)
       .build()
 
     recipe
-      .withShot(shot.setColor(COLOR_VANILLA_WHITE).setDamage(1.2F).setDelay(10).setEnd(10))
+      .withShot(shot.setColor(COLOR_VANILLA_WHITE).setDamage(0.6F).setDelay(10).setEnd(10))
       .withOreInput("gemQuartz")
       .withCost(1000)
       .build()
@@ -328,13 +325,13 @@ class CommonProxy {
       .build()
 
     recipe
-      .withShot(shot.setColor(COLOR_SATURATED_YELLOW).setDamage(0.5F).setEnd(1))
+      .withShot(shot.setColor(COLOR_SATURATED_YELLOW).setDamage(0.125F).setEnd(1))
       .withOreInput("dustGlowstone")
       .withCost(200)
       .build()
 
     recipe
-      .withShot(shot.setDamage(1F).setEnd(5))
+      .withShot(shot.setDamage(0.5F).setEnd(5))
       .withOreInput("glowstone")
       .withCost(800)
       .build()
@@ -354,34 +351,34 @@ class CommonProxy {
       .build()
 
     recipe
-      .withShot(shot.setDamage(0.25F).setDelay(2))
+      .withShot(shot.setDamage(0.125F).setDelay(2))
       .withGravity(defGravity)
       .withOreInput("stone")
       .withCost(200)
       .build()
 
     recipe
-      .withShot(shot.setDamage(0.25F).setDelay(2))
+      .withShot(shot.setDamage(0.125F).setDelay(2))
       .withGravity(defGravity)
       .withOreInput("cobblestone")
       .withCost(200)
       .build()
 
     recipe
-      .withShot(shot.setDamage(0.25F).setDelay(2))
+      .withShot(shot.setDamage(0.125F).setDelay(2))
       .withGravity(defGravity)
       .withOreInput("sandstone")
       .withCost(200)
       .build()
 
     recipe
-      .withShot(shot.setColor(COLOR_VANILLA_BLACK).setDamage(0.5F).setSubEntity(LibSubEntities.FIRE))
+      .withShot(shot.setColor(COLOR_VANILLA_BLACK).setDamage(0.25F).setSubEntity(LibSubEntities.FIRE))
       .withInput(Items.COAL)
       .withCost(300)
       .build()
 
     recipe
-      .withShot(shot.setColor(COLOR_VANILLA_BLACK).setDamage(4F))
+      .withShot(shot.setColor(COLOR_VANILLA_BLACK).setDamage(2F))
       .withSpeed(-3D)
       .withGravity(strGravity)
       .withInput(Blocks.OBSIDIAN)
@@ -395,7 +392,7 @@ class CommonProxy {
       .build()
 
     recipe
-      .withShot(shot.setForm(LibForms.CRYSTAL_2).setColor(COLOR_VANILLA_CYAN).setDamage(0.25F))
+      .withShot(shot.setForm(LibForms.CRYSTAL_2).setColor(COLOR_VANILLA_CYAN).setDamage(0.125F))
       .withInput(Blocks.PACKED_ICE)
       .withCost(200)
       .build()
@@ -427,14 +424,14 @@ class CommonProxy {
       .build()
 
     recipe
-      .withShot(shot.setColor(COLOR_VANILLA_PURPLE).setDamage(-10F).setDelay(20).setSubEntity(LibSubEntities.FIRE))
+      .withShot(shot.setColor(COLOR_VANILLA_PURPLE).setDamage(-10F).setDelay(20).setSubEntity(LibSubEntities.TELEPORT))
       .withSpeed(-1D)
       .withInput(Items.ENDER_PEARL)
       .withCost(5000)
       .build()
 
     recipe
-      .withShot(shot.setForm(LibForms.FIRE).setDamage(0.5F).setSubEntity(LibSubEntities.FIRE))
+      .withShot(shot.setForm(LibForms.FIRE).setDamage(0.25F).setSubEntity(LibSubEntities.FIRE))
       .withInput(Items.FIRE_CHARGE)
       .withCost(300)
       .build()
