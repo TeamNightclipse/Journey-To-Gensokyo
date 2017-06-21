@@ -16,19 +16,22 @@ import net.katsstuff.journeytogensokyo.block.{BlockDanOre, BlockDanmakuCrafting,
 import net.katsstuff.journeytogensokyo.entity.living.{EntityFairy, EntityHellRaven, EntityPhantom, EntityTenguCrow}
 import net.katsstuff.journeytogensokyo.handler.ConfigHandler
 import net.katsstuff.journeytogensokyo.item.{ItemJTGBase, JTGItems}
-import net.katsstuff.journeytogensokyo.lib.{LibBlockName, LibEntityName, LibItemName, LibPhaseName}
+import net.katsstuff.journeytogensokyo.lib.{LibBlockName, LibEntityName, LibItemName, LibMod, LibPhaseName}
 import net.katsstuff.journeytogensokyo.phase.{PhaseTypeGenericStageEnemy, PhaseTypeHellRaven, PhaseTypeShapeArrow, PhaseTypeTengu}
 import net.katsstuff.journeytogensokyo.worldgen.OreWorldGen
 import net.minecraft.block.Block
-import net.minecraft.entity.{EntityLiving, EnumCreatureType}
+import net.minecraft.entity.{Entity, EntityLiving, EnumCreatureType}
 import net.minecraft.init.{Blocks, Items}
 import net.minecraft.item.{Item, ItemBlock, ItemStack}
+import net.minecraft.util.ResourceLocation
 import net.minecraft.world.biome.Biome
 import net.minecraftforge.common.BiomeDictionary
 import net.minecraftforge.event.RegistryEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.registry.{EntityRegistry, GameRegistry}
 import net.minecraftforge.oredict.OreDictionary
+
+import scala.collection.JavaConverters._
 
 object CommonProxy {
 
@@ -109,25 +112,20 @@ class CommonProxy {
   def registerEntities(): Unit = {
     import BiomeDictionary.{Type => BiomeType}
 
-    EntityRegistry.registerModEntity(classOf[EntityFairy], LibEntityName.Fairy, 0, JourneyToGensokyo, 64, 1, true, 0xCCCCCC, 0x65D159)
+    def registerEntity[A <: Entity](clazz: Class[A], name: String, id: Int, trackingRange: Int = 64, updateFrequency: Int = 1, sendVelocityUpdates: Boolean = true, eggPrimary: Int, eggSecondary: Int): Unit =
+      EntityRegistry.registerModEntity(new ResourceLocation(LibMod.Id, name), clazz, name, id, JourneyToGensokyo, trackingRange, updateFrequency, sendVelocityUpdates, eggPrimary, eggSecondary)
+
+    registerEntity(classOf[EntityFairy], LibEntityName.Fairy, 0, eggPrimary = 0xCCCCCC, eggSecondary = 0x65D159)
     registerSpawn(classOf[EntityFairy], ConfigHandler.spawns.fairy, EnumCreatureType.MONSTER, BiomeType.HILLS, BiomeType.PLAINS, BiomeType.FOREST)
 
-    EntityRegistry.registerModEntity(classOf[EntityTenguCrow], LibEntityName.TenguCrow, 1, JourneyToGensokyo, 64, 1, true, 0x191713, 0x494742)
+    registerEntity(classOf[EntityTenguCrow], LibEntityName.TenguCrow, 1, eggPrimary = 0x191713, eggSecondary = 0x494742)
     registerSpawn(classOf[EntityTenguCrow], ConfigHandler.spawns.tenguCrow, EnumCreatureType.MONSTER, BiomeType.MOUNTAIN)
 
-    EntityRegistry.registerModEntity(classOf[EntityHellRaven], LibEntityName.HellRaven, 2, JourneyToGensokyo, 64, 1, true, 0x0F1116, 0x1E5096)
+    registerEntity(classOf[EntityHellRaven], LibEntityName.HellRaven, 2, eggPrimary = 0x0F1116, eggSecondary = 0x1E5096)
     registerSpawn(classOf[EntityHellRaven], ConfigHandler.spawns.hellRaven, EnumCreatureType.MONSTER, BiomeType.NETHER)
 
-    EntityRegistry.registerModEntity(classOf[EntityPhantom], LibEntityName.Phantom, 3, JourneyToGensokyo, 64, 1, true, 0x384FFF, 0xFFFFFF)
-    registerSpawn(
-      classOf[EntityPhantom],
-      ConfigHandler.spawns.hellRaven,
-      EnumCreatureType.MONSTER,
-      BiomeType.HILLS,
-      BiomeType.PLAINS,
-      BiomeType.FOREST,
-      BiomeType.NETHER
-    )
+    registerEntity(classOf[EntityPhantom], LibEntityName.Phantom, 3, eggPrimary = 0x384FFF, eggSecondary = 0xFFFFFF)
+    registerSpawn(classOf[EntityPhantom], ConfigHandler.spawns.hellRaven, EnumCreatureType.MONSTER, BiomeType.HILLS, BiomeType.PLAINS, BiomeType.FOREST, BiomeType.NETHER)
   }
 
   def registerCrafting(): Unit = {
@@ -169,7 +167,7 @@ class CommonProxy {
     )
 
   def biomesForTypes(types: BiomeDictionary.Type*): Seq[Biome] =
-    types.flatMap(BiomeDictionary.getBiomesForType).distinct
+    types.flatMap(BiomeDictionary.getBiomes(_).asScala).distinct
 
   def registerDanmakuCrafting(): Unit = {
     val defaultForm      = LibForms.SPHERE

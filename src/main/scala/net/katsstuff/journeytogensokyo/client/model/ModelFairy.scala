@@ -80,7 +80,7 @@ abstract class ModelFairy extends ModelBase {
     val posDown   = fairy.getPosition.down
     val blockDown = fairy.world.getBlockState(posDown)
     val closeToGround = Option(blockDown.getCollisionBoundingBox(fairy.world, posDown))
-      .exists(_.offset(posDown).isVecInside(fairy.getPositionVector.subtract(0D, 0.2D, 0D)))
+      .exists(_.offset(posDown).contains(fairy.getPositionVector.subtract(0D, 0.2D, 0D)))
 
     if (closeToGround) {
       rightArm.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + Math.PI.toFloat) * 2.0F * limbSwingAmount * 0.5F / f

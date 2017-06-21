@@ -21,7 +21,6 @@ import net.minecraft.util.ResourceLocation
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import net.katsstuff.journeytogensokyo.helper.Implicits._
-import net.katsstuff.journeytogensokyo.helper.LogHelper
 
 class GuiDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: BlockPos)
     extends GuiContainer(new ContainerDanmakuCrafting(invPlayer, world, pos)) {
@@ -38,7 +37,7 @@ class GuiDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: BlockPos
   override protected def drawGuiContainerForegroundLayer(mouseX: Int, mouseY: Int) {
     def toTuple(vector1: Vector3, vector2: Option[Vector3]) =
       Seq((vector1.x, vector2.map(_.x)), (vector1.y, vector2.map(_.y)), (vector1.z, vector2.map(_.z)))
-    def draw(string: String, x: Int, y: Int, color: Int = White) = fontRendererObj.drawString(string, x, y, color)
+    def draw(string: String, x: Int, y: Int, color: Int = White) = fontRenderer.drawString(string, x, y, color)
     def drawAll(x: Int, startY: Int, incrementY: Int, strings: Seq[String]): Int = {
       for (i <- strings.indices) draw(strings(i), x, startY + incrementY * i)
       startY + incrementY * strings.length
@@ -55,7 +54,7 @@ class GuiDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: BlockPos
     val i18nDanmakuTranslate = i18nDouble(i18nDanmaku, i18nTranslatable)
     val i18nCrafting = i18nPrefix("crafting.danmaku")
 
-    def i18nValue(string: String, value: (_, Option[_])*) = {
+    def i18nValueOpt(string: String, value: (_, Option[_])*) = {
       val builder = new StringBuilder(i18n(string) + SpaceDivider)
 
       if (value.size == 1) {
@@ -72,8 +71,24 @@ class GuiDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: BlockPos
       builder.mkString
     }
 
-    def i18nDanmakuValue(string: String, value: (_, Option[_])*) = i18nValue(s"item.danmaku.$string", value: _*)
-    def i18nCraftingValue(string: String, value: (_, Option[_])*) = i18nValue(s"crafting.danmaku.$string", value: _*)
+    def i18nValue(string: String, value: (_, _)*) = {
+      val builder = new StringBuilder(i18n(string) + SpaceDivider)
+
+      if (value.size == 1) {
+        builder.append(s"${value.head._1} + ${value.head._2}")
+        //LogHelper.info(builder.toString())
+      } else {
+        builder.append(s"(${value.map(_._1).mkString(", ")})")
+        builder.append(" + ")
+        builder.append(s"(${value.map(_._2.toString).mkString(", ")})")
+      }
+
+      builder.mkString
+    }
+
+    def i18nDanmakuValueOpt(string: String, value: (_, Option[_])*) = i18nValueOpt(s"item.danmaku.$string", value: _*)
+    def i18nDanmakuValue(string: String, value: (_, _)*) = i18nValue(s"item.danmaku.$string", value: _*)
+    def i18nCraftingValue(string: String, value: (_, Option[_])*) = i18nValueOpt(s"crafting.danmaku.$string", value: _*)
 
     draw(i18nCrafting("copy"), 18, 150, 0x404040)
     draw(i18nDanmaku("amount"), 54, 150, 0x404040)
@@ -91,12 +106,12 @@ class GuiDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: BlockPos
         Seq(
           i18nDanmakuTranslate("form", result.filter(_.form != null).fold(current.form)(_.form)),
           i18nDanmaku2("color", s"color.${result.filter(_.color != -1).fold(current.color)(_.color)}"),
-          i18nDanmakuValue("damage", current.damage -> result.map(_.damage)),
-          i18nDanmakuValue("size", current.sizeX -> result.map(_.sizeX), current.sizeY -> result.map(_.sizeY), current.sizeZ -> result.map(_.sizeZ)),
-          i18nDanmakuValue("speed", ctx.speedCurrent -> ctx.speedResult),
-          i18nDanmakuValue("gravity", toTuple(ctx.gravityCurrent, ctx.gravityResult): _*),
-          i18nDanmakuValue("amount", amountCurrent -> amountCombined.map(_ - amountCurrent)),
-          i18nDanmaku2("pattern", "pattern." + ctx.patternResult(ctx.usedAmount).getOrElse(ctx.patternCurrent)),
+          i18nDanmakuValueOpt("damage", current.damage -> result.map(_.damage)),
+          i18nDanmakuValueOpt("size", current.sizeX -> result.map(_.sizeX), current.sizeY -> result.map(_.sizeY), current.sizeZ -> result.map(_.sizeZ)),
+          i18nDanmakuValueOpt("speed", ctx.speedCurrent -> ctx.speedResult),
+          i18nDanmakuValueOpt("gravity", toTuple(ctx.gravityCurrent, ctx.gravityResult): _*),
+          i18nDanmakuValue("amount", amountCurrent -> (amountCombined - amountCurrent)),
+          i18nDanmaku2("pattern", "pattern." + ctx.patternResult(ctx.amountCombined).getOrElse(ctx.patternCurrent)),
           i18nCraftingValue("delay", current.delay -> result.map(_.delay)),
           i18nCraftingValue("end", current.end     -> result.map(_.end)),
           i18nDanmakuTranslate("subentity", result.filter(_.subEntity != null).fold(current.subEntity)(_.subEntity))

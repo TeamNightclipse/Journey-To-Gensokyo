@@ -24,28 +24,27 @@ class LayerFairyFlower(val fairyRenderer: RenderFairy) extends LayerRenderer[Ent
     val fairyModel = fairyRenderer.getMainModel.asInstanceOf[ModelFairy]
 
     if (fairy.holdingFlower) {
-      fairy.likedFlower.foreach { likedFlower =>
-        val blockRenderer = Minecraft.getMinecraft.getBlockRendererDispatcher
+      val likedFlower = fairy.likedFlower
+      val blockRenderer = Minecraft.getMinecraft.getBlockRendererDispatcher
 
-        GlStateManager.enableRescaleNormal()
-        GlStateManager.pushMatrix()
-        GlStateManager.rotate(90F, 1.0F, 0.0F, 0.0F)
-        GlStateManager.translate(-0.45F, -0.04F, -0.87F)
-        GlStateManager.rotate(Math.toDegrees(fairyModel.rightArm.rotateAngleX).toFloat, 1F, 0F, 0F)
-        GlStateManager.scale(0.4F, -0.4F, 0.4F)
-        val i = fairy.getBrightnessForRender(partialTicks)
-        val j = i % 65536
-        val k = i / 65536
-        OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, j.toFloat, k.toFloat)
-        GlStateManager.color(1F, 1F, 1F, 1F)
-        this.fairyRenderer.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE)
-        //noinspection ScalaDeprecation
-        val state = Block.getBlockFromItem(likedFlower.getItem).getStateFromMeta(likedFlower.getItemDamage)
+      GlStateManager.enableRescaleNormal()
+      GlStateManager.pushMatrix()
+      GlStateManager.rotate(90F, 1.0F, 0.0F, 0.0F)
+      GlStateManager.translate(-0.45F, -0.04F, -0.87F)
+      GlStateManager.rotate(Math.toDegrees(fairyModel.rightArm.rotateAngleX).toFloat, 1F, 0F, 0F)
+      GlStateManager.scale(0.4F, -0.4F, 0.4F)
+      val i = fairy.getBrightnessForRender(partialTicks)
+      val j = i % 65536
+      val k = i / 65536
+      OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, j.toFloat, k.toFloat)
+      GlStateManager.color(1F, 1F, 1F, 1F)
+      this.fairyRenderer.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE)
+      //noinspection ScalaDeprecation
+      val state = Block.getBlockFromItem(likedFlower.getItem).getStateFromMeta(likedFlower.getItemDamage)
 
-        blockRenderer.renderBlockBrightness(state, 1.0F)
-        GlStateManager.popMatrix()
-        GlStateManager.disableRescaleNormal()
-      }
+      blockRenderer.renderBlockBrightness(state, 1.0F)
+      GlStateManager.popMatrix()
+      GlStateManager.disableRescaleNormal()
     }
   }
   override def shouldCombineTextures = false

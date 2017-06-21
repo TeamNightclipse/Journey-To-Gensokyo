@@ -70,7 +70,7 @@ class PhaseHellRaven(manager: PhaseManager, star: Boolean, val getType: PhaseTyp
           val template = DanmakuTemplate.builder().setUser(entity).setShot(otherShotData).setDirection(forward)
 
           for (i <- 1 until num) {
-            entity.world.spawnEntityInWorld(template.setMovementData(0.3D * (i + i / 2D), 0.3D * (i / 2D), 0D).build().asEntity())
+            entity.world.spawnEntity(template.setMovementData(0.3D * (i + i / 2D), 0.3D * (i / 2D), 0D).build().asEntity())
           }
 
           DanmakuHelper.playShotSound(entity)
@@ -86,7 +86,7 @@ class PhaseHellRaven(manager: PhaseManager, star: Boolean, val getType: PhaseTyp
   override def dropLoot(source: DamageSource): Unit = {
     val stack  = new ItemStack(LibItems.DANMAKU)
     val entity = getEntity
-    stack.stackSize = entity.getRNG.nextInt(5) + 1
+    stack.setCount(entity.getRNG.nextInt(5) + 1)
 
     if (star) {
       ItemDanmaku.setAmount(stack, Math.max(5, entity.getRNG.nextInt(8) + 1))

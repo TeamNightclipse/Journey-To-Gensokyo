@@ -11,12 +11,12 @@ package net.katsstuff.journeytogensokyo
 import net.katsstuff.journeytogensokyo.block.JTGBlocks
 import net.katsstuff.journeytogensokyo.lib.LibMod
 import net.minecraft.creativetab.CreativeTabs
-import net.minecraft.item.Item
+import net.minecraft.item.ItemStack
 
 object JTGCreativeTab extends CreativeTabs(LibMod.Id) {
 
   setNoTitle()
   setBackgroundImageName("item_search.png")
 
-  override def getTabIconItem: Item = Item.getItemFromBlock(JTGBlocks.DanmakuCrafting)
+  override def getTabIconItem: ItemStack = new ItemStack(JTGBlocks.DanmakuCrafting)
 }

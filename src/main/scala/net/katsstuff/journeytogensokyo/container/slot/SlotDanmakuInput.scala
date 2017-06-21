@@ -17,7 +17,7 @@ class SlotDanmakuInput(inv: IInventory, index: Int, xPos: Int, yPos: Int, slotTy
     extends Slot(inv, index, xPos, yPos) {
 
   override def isItemValid(stack: ItemStack): Boolean = {
-    if (stack == null) return false
+    if (stack.isEmpty) return false
 
     slotType match {
       case SlotDanmakuType.Danmaku    => stack.getItem == LibItems.DANMAKU

@@ -27,20 +27,25 @@ class SlotDanmakuOutput(
     yPos:        Int
 ) extends SlotCrafting(player, matrix, inv, index, xPos, yPos) {
 
-  override def onPickupFromSlot(playerIn: EntityPlayer, stack: ItemStack): Unit = {
+  override def onTake(playerIn: EntityPlayer, stack: ItemStack): ItemStack = {
     for {
       ctx <- container.createContext
       data <- TouhouHelper.getDanmakuCoreData(playerIn).toOption
       requiredScore = ctx.requiredScore
       if data.getScore >= requiredScore
     } {
-      ingredients.setInventorySlotContents(3, null)
+
+      ctx.recipe.foreach { _ =>
+        ingredients.setInventorySlotContents(3, ItemStack.EMPTY)
+      }
       TouhouHelper.changeAndSyncPlayerData((data: IDanmakuCoreData) => data.addScore(-requiredScore), playerIn)
     }
 
     matrix.clear()
-    ingredients.setInventorySlotContents(0, null)
-    ingredients.setInventorySlotContents(1, null)
-    ingredients.setInventorySlotContents(2, null)
+    ingredients.setInventorySlotContents(0, ItemStack.EMPTY)
+    ingredients.setInventorySlotContents(1, ItemStack.EMPTY)
+    ingredients.setInventorySlotContents(2, ItemStack.EMPTY)
+
+    stack
   }
 }

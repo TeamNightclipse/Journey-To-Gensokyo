@@ -50,12 +50,12 @@ class EntityAITemptStack(val temptedEntity: EntityCreature, val speed: Double, v
     res
   }
 
-  protected def isTempting(@Nullable stack: ItemStack): Boolean = {
-    if (stack == null) false
+  protected def isTempting(stack: ItemStack): Boolean = {
+    if (stack.isEmpty) false
     else this._temptStacks.exists(_.isItemEqual(stack))
   }
 
-  override def continueExecuting: Boolean = {
+  override def shouldContinueExecuting: Boolean = {
     if (scaredByPlayerMovement) {
       if (temptedEntity.getDistanceSqToEntity(temptingPlayer) < 36.0D) {
         if (Math.abs(temptingPlayer.rotationPitch.toDouble - pitch) > 5.0D ||

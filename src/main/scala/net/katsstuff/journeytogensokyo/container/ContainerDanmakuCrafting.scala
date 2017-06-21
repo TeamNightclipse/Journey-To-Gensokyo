@@ -8,8 +8,6 @@
  */
 package net.katsstuff.journeytogensokyo.container
 
-import scala.collection.mutable.ListBuffer
-
 import net.katsstuff.danmakucore.data.{ShotData, Vector3}
 import net.katsstuff.danmakucore.handler.ConfigHandler
 import net.katsstuff.danmakucore.helper.TouhouHelper
@@ -24,7 +22,6 @@ import net.minecraft.item.ItemStack
 import net.minecraft.util.math.{BlockPos, MathHelper}
 import net.minecraft.world.World
 import net.katsstuff.journeytogensokyo.helper.Implicits._
-import net.katsstuff.journeytogensokyo.helper.LogHelper
 
 class ContainerDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: BlockPos) extends Container {
 
@@ -74,32 +71,40 @@ class ContainerDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: Bl
   onCraftMatrixChanged(null)
 
   override def onCraftMatrixChanged(inventoryIn: IInventory): Unit = {
-    val out = for {
+    val out = (for {
       data <- TouhouHelper.getDanmakuCoreData(invPlayer.player).toOption
       ctx <- createContext
-      output <- ctx.createOutput(data.getScore)
-    } yield output
+    } yield ctx.createOutput(data.getScore)).getOrElse(ItemStack.EMPTY)
 
-    slotOutput.putStack(out.orNull)
+    if(ItemStack.areItemStacksEqual(out, slotDanmaku.getStack)) {
+      slotOutput.putStack(slotDanmaku.getStack)
+    }
+    else {
+      slotOutput.putStack(out)
+    }
+
     detectAndSendChanges()
   }
 
-  def createContext: Option[DanmakuCraftingContext] = Option(slotDanmaku.getStack).map { danmakuStack =>
-    DanmakuCraftingContext(
-      danmakuStack = danmakuStack,
-      copyStack = Option(slotCopy.getStack),
-      amountStack = Option(slotAmount.getStack),
-      recipe = CraftingManager.findMatchingRecipeDanmaku(slotMaterial),
-      patternResult = getPattern
-    )
+  def createContext: Option[DanmakuCraftingContext] = {
+    val danStack = slotDanmaku.getStack
+    if(!danStack.isEmpty) {
+      Some(DanmakuCraftingContext(
+        danmakuStack = danStack,
+        copyStack = slotCopy.getStack,
+        amountStack = slotAmount.getStack,
+        recipe = CraftingManager.findMatchingRecipeDanmaku(slotMaterial),
+        patternResult = getPattern
+      ))
+    } else None
   }
 
   def getPattern(amount: Int): Option[ItemDanmaku.Pattern] = {
     def pattern(slots: Int*): Boolean = {
-      val (nonNull, nullable) = (0 until 9).partition(slots.contains)
+      val (nonEmpty, empty) = (0 until 9).partition(slots.contains)
 
-      !nonNull.map(craftMatrix.getStackInSlot).contains(null) &&
-        nullable.map(craftMatrix.getStackInSlot).forall(_ == null)
+      !nonEmpty.map(craftMatrix.getStackInSlot).exists(_.isEmpty) &&
+        empty.map(craftMatrix.getStackInSlot).forall(_.isEmpty)
     }
 
     if (pattern(4)) Some(ItemDanmaku.Pattern.LINE)
@@ -124,15 +129,14 @@ class ContainerDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: Bl
     if (!world.isRemote) {
       def drop(stack: ItemStack) = player.dropItem(stack, false)
 
-      val stacks = new ListBuffer[ItemStack]
-      stacks ++= (0 until craftIngredients.getSizeInventory).map(craftIngredients.getStackInSlot)
-      stacks ++= (0 until craftMatrix.getSizeInventory).map(craftMatrix.getStackInSlot)
+      val stacks = (0 until craftIngredients.getSizeInventory).map(craftIngredients.getStackInSlot) ++
+        (0 until craftMatrix.getSizeInventory).map(craftMatrix.getStackInSlot)
       stacks.foreach(drop)
     }
   }
 
   override def transferStackInSlot(player: EntityPlayer, index: Int): ItemStack = {
-    var resultStack: ItemStack = null
+    var resultStack = ItemStack.EMPTY
     val slot = inventorySlots.get(index)
 
     if (slot != null && slot.getHasStack) {
@@ -142,7 +146,11 @@ class ContainerDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: Bl
       def merge(from: Int, to: Int, reverse: Boolean = false): Boolean = mergeItemStack(slotStack, from, to, reverse)
 
       def mergeType(defaultFrom: Int, defaultTo: Int): Boolean = slotStack.getItem match {
-        case item if item == LibItems.DANMAKU => merge(1, 2)
+        case item if item == LibItems.DANMAKU =>
+          if(!slotDanmaku.getHasStack) {
+            slotDanmaku.putStack(slotStack.splitStack(1))
+            true
+          } else false
         case _                                => merge(defaultFrom, defaultTo)
       }
 
@@ -156,14 +164,14 @@ class ContainerDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: Bl
         case _                        => merge(14, 50)
       }
 
-      if (!mergeRes) return null
+      if (!mergeRes) return ItemStack.EMPTY
 
-      if (slotStack.stackSize == 0) {
-        slot.putStack(null)
+      if (slotStack.isEmpty) {
+        slot.putStack(ItemStack.EMPTY)
       } else slot.onSlotChanged()
 
-      if (slotStack.stackSize == resultStack.stackSize) return null
-      slot.onPickupFromSlot(player, slotStack)
+      if (slotStack.getCount == resultStack.getCount) return ItemStack.EMPTY
+      slot.onTake(player, slotStack)
     }
 
     resultStack
@@ -176,8 +184,8 @@ class ContainerDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: Bl
 
 case class DanmakuCraftingContext(
     danmakuStack: ItemStack,
-    copyStack: Option[ItemStack],
-    amountStack: Option[ItemStack],
+    copyStack: ItemStack,
+    amountStack: ItemStack,
     recipe: Option[IRecipeDanmaku],
     patternResult: Int => Option[ItemDanmaku.Pattern]
 ) {
@@ -192,22 +200,24 @@ case class DanmakuCraftingContext(
     ItemDanmaku.Pattern.RING -> 35
   )
 
-  def requiredScore: Int = recipe.fold(0)(_.scoreCost()) + patternResult(usedAmount).fold(0)(PatternCosts)
+  def requiredScore: Int = recipe.fold(0)(_.scoreCost()) + patternResult(amountCombined).fold(0)(PatternCosts)
 
-  def createOutput(currentScore: Int): Option[ItemStack] = {
-    if(requiredScore > currentScore) None
+  def createOutput(currentScore: Int): ItemStack = {
+    if(requiredScore > currentScore) ItemStack.EMPTY
     else {
       val danmakuCopy = danmakuStack.copy()
 
       shotCombined.foreach(ShotData.serializeNBTItemStack(danmakuCopy, _))
       speedCombined.foreach(ItemDanmaku.setSpeed(danmakuCopy, _))
       gravityCombined.foreach(ItemDanmaku.setGravity(danmakuCopy, _))
-      patternResult(usedAmount).foreach(ItemDanmaku.setPattern(danmakuCopy, _))
-      stackSizeCombined.foreach(danmakuCopy.stackSize = _)
-      amountCombined.foreach(ItemDanmaku.setAmount(danmakuCopy, _))
+      patternResult(amountCombined).foreach(ItemDanmaku.setPattern(danmakuCopy, _))
+      danmakuCopy.setCount(stackSizeCombined)
+      if(amountCombined != 1) {
+        ItemDanmaku.setAmount(danmakuCopy, amountCombined)
+      }
       recipe.foreach(_ => ItemDanmaku.setCustom(danmakuCopy, true))
 
-      Some(danmakuCopy)
+      danmakuCopy
     }
   }
 
@@ -265,16 +275,15 @@ case class DanmakuCraftingContext(
 
   def patternCurrent: ItemDanmaku.Pattern = ItemDanmaku.getPattern(danmakuStack)
 
-  def stackSizeCurrent:  Int = danmakuStack.stackSize
-  def stackSizeResult:   Option[Int] = copyStack.map(_.stackSize)
-  def stackSizeCombined: Option[Int] = stackSizeResult.map(result => Math.min(result + stackSizeCurrent, 64))
+  def stackSizeCurrent:  Int = danmakuStack.getCount
+  def stackSizeResult:   Int = copyStack.getCount
+  def stackSizeCombined: Int = Math.min(stackSizeResult + stackSizeCurrent, 64)
 
   def amountCurrent: Int = ItemDanmaku.getAmount(danmakuStack)
-  def amountResult: Option[Int] = amountStack.map(_.stackSize)
-  def amountCombined: Option[Int] = amountResult.map { result =>
+  def amountResult: Int = amountStack.getCount
+  def amountCombined: Int =  {
     val maxNumber = ConfigHandler.danmaku.danmakuMaxNumber
-    val total     = amountCurrent + result
+    val total     = amountCurrent + amountResult
     if (total > maxNumber) maxNumber else total
   }
-  def usedAmount: Int = amountCombined.getOrElse(amountCurrent)
 }

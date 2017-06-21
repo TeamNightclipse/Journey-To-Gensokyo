@@ -8,15 +8,14 @@
  */
 package net.katsstuff.journeytogensokyo.block
 
+import net.katsstuff.journeytogensokyo.JourneyToGensokyo
 import net.katsstuff.journeytogensokyo.lib.{LibBlockName, LibGuiId}
-import net.katsstuff.journeytogensokyo.{JTGCreativeTab, JourneyToGensokyo}
 import net.minecraft.block.material.Material
 import net.minecraft.block.state.IBlockState
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.item.ItemStack
 import net.minecraft.util.math.{AxisAlignedBB, BlockPos}
 import net.minecraft.util.{EnumFacing, EnumHand}
-import net.minecraft.world.World
+import net.minecraft.world.{IBlockAccess, World}
 import net.minecraftforge.fml.relauncher.{Side, SideOnly}
 
 class BlockDanmakuCrafting extends BlockJTGBase(Material.WOOD, LibBlockName.DanmakuCrafting) {
@@ -29,7 +28,6 @@ class BlockDanmakuCrafting extends BlockJTGBase(Material.WOOD, LibBlockName.Danm
       state:    IBlockState,
       player:   EntityPlayer,
       hand:     EnumHand,
-      heldItem: ItemStack,
       side:     EnumFacing,
       hitX:     Float,
       hitY:     Float,
@@ -41,7 +39,7 @@ class BlockDanmakuCrafting extends BlockJTGBase(Material.WOOD, LibBlockName.Danm
     true
   }
 
-  override def getCollisionBoundingBox(blockState: IBlockState, worldIn: World, pos: BlockPos) = BoundingBoxAABB
+  override def getCollisionBoundingBox(blockState: IBlockState, worldIn: IBlockAccess, pos: BlockPos): AxisAlignedBB = BoundingBoxAABB
 
   @SideOnly(Side.CLIENT)
   override def getSelectedBoundingBox(state: IBlockState, worldIn: World, pos: BlockPos): AxisAlignedBB = BoundingBoxAABB.offset(pos)

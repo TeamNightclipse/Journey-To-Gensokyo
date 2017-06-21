@@ -61,8 +61,8 @@ val minecraft = the<ForgeExtension>()
 
 configure<ForgeExtension> {
     version = "${config["mc_version"]}-${config["forge_version"]}"
-    if (file("../run1.10").exists()) {
-        runDir = "../run1.10"
+    if (file("../run1.11").exists()) {
+        runDir = "../run1.11"
     } else {
         runDir = "run"
     }
@@ -72,7 +72,7 @@ configure<ForgeExtension> {
     // stable_#            stables are built at the discretion of the MCP team.
     // Use non-default mappings at your own risk. they may not allways work.
     // simply re-run your setup task after changing the mappings to update your workspace.
-    mappings = "snapshot_20161116"
+    mappings = "snapshot_20170612"
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
 
     replace("@VERSION@", project.version)

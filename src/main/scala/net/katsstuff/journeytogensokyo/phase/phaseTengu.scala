@@ -84,7 +84,7 @@ class PhaseTengu(manager: PhaseManager, val getType: PhaseTypeTengu) extends Pha
           .setMovementData(entity.getSpeed * 1.2D)
           .build()
 
-        entity.world.spawnEntityInWorld(template.asEntity())
+        entity.world.spawnEntity(template.asEntity())
         charge = 0
       }
     }
@@ -103,7 +103,7 @@ class PhaseTengu(manager: PhaseManager, val getType: PhaseTypeTengu) extends Pha
         } else {
           val targetVec = FlyingRandomPositionGenerator.findRandomTarget(entity, 4, 1)
           if (targetVec != null) {
-            val path = entity.getNavigator.getPathToXYZ(targetVec.xCoord, targetVec.yCoord, targetVec.zCoord)
+            val path = entity.getNavigator.getPathToXYZ(targetVec.x, targetVec.y, targetVec.z)
             if (path != null) {
               if (entity.getNavigator.setPath(path, entity.getSpeed)) {
                 cooldown = 2
@@ -123,7 +123,7 @@ class PhaseTengu(manager: PhaseManager, val getType: PhaseTypeTengu) extends Pha
     val stack  = new ItemStack(LibItems.DANMAKU)
     val entity = getEntity
 
-    stack.stackSize = entity.getRNG.nextInt(5) + 1
+    stack.setCount(entity.getRNG.nextInt(5) + 1)
     ItemDanmaku.setAmount(stack, entity.getRNG.nextInt(5) + 1)
     ItemDanmaku.setSpeed(stack, 0.4D)
     ItemDanmaku.setPattern(stack, ItemDanmaku.Pattern.RANDOM_RING)

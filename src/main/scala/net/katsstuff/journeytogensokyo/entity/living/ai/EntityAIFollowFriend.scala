@@ -36,7 +36,7 @@ class EntityAIFollowFriend(val fairy: EntityFairy, val followSpeed: Double, var 
     }
   }
 
-  override def continueExecuting: Boolean =
+  override def shouldContinueExecuting: Boolean =
     !pathfinder.noPath && fairy.getDistanceSqToEntity(this.friend) > (this.maxDist * this.maxDist)
 
   override def startExecuting(): Unit = {

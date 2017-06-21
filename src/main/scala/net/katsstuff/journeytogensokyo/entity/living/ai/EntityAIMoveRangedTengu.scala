@@ -24,7 +24,7 @@ class EntityAIMoveRangedTengu(val entity: EntityTenguCrow, val moveSpeedAmp: Dou
   this.setMutexBits(3)
   def shouldExecute: Boolean = this.entity.getAttackTarget != null
 
-  override def continueExecuting: Boolean = this.shouldExecute || !this.entity.getNavigator.noPath
+  override def shouldContinueExecuting(): Boolean = this.shouldExecute || !this.entity.getNavigator.noPath
 
   override def resetTask() {
     super.resetTask()
@@ -47,7 +47,7 @@ class EntityAIMoveRangedTengu(val entity: EntityTenguCrow, val moveSpeedAmp: Dou
         val path = entity.getNavigator.getPath
         if (path != null) {
           val last = path.getFinalPathPoint
-          val vec  = Vector3(last.xCoord, last.yCoord, last.zCoord)
+          val vec  = Vector3(last.x, last.y, last.z)
           if (vec.distanceSquared(target.posX, target.posY, target.posZ) < 3 * 3) {
             entity.getNavigator.clearPathEntity()
           }

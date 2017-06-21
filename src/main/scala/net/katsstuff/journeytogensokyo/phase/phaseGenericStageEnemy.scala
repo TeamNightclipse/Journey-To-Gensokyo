@@ -122,7 +122,7 @@ class PhaseGenericStageEnemy(
     val stack  = ItemDanmaku.createStack(variant)
     val entity = getEntity
 
-    stack.stackSize = entity.getRNG.nextInt(5) + 2
+    stack.setCount(entity.getRNG.nextInt(5) + 2)
     ItemDanmaku.setAmount(stack, amount)
     ItemDanmaku.setSpeed(stack, movement.speedOriginal)
     ItemDanmaku.setGravity(stack, movement.gravity)

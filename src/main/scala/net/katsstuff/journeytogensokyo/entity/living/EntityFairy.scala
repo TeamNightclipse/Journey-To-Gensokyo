@@ -49,8 +49,8 @@ object EntityFairy {
     counter.toByte
   }
 
-  private final val LikedFlower:   DataParameter[Optional[ItemStack]] = EntityDataManager.createKey(classOf[EntityFairy], DataSerializers.OPTIONAL_ITEM_STACK)
-  private final val HoldingFlower: DataParameter[JBoolean]            = EntityDataManager.createKey(classOf[EntityFairy], DataSerializers.BOOLEAN)
+  private final val LikedFlower:   DataParameter[ItemStack] = EntityDataManager.createKey(classOf[EntityFairy], DataSerializers.OPTIONAL_ITEM_STACK)
+  private final val HoldingFlower: DataParameter[JBoolean]  = EntityDataManager.createKey(classOf[EntityFairy], DataSerializers.BOOLEAN)
 
   lazy val flowers: Seq[ItemStack] = {
     val typesForColor = ReflectionHelper.findField(classOf[BlockFlower.EnumFlowerType], "TYPES_FOR_BLOCK", "field_176981_k").get(null).asInstanceOf[Array[Array[BlockFlower.EnumFlowerType]]]
@@ -92,11 +92,14 @@ class EntityFairy(_world: World) extends EntityForm(_world) with Callable with I
   setMaxHP(2F)
 
   override def initEntityAI(): Unit = {
-    val liked = likedFlower.fold({
-      val newLiked = EntityFairy.randomFlower(rand)
-      likedFlower = newLiked
-      newLiked
-    })(identity)
+    val liked = {
+      val l = likedFlower
+      if(l.isEmpty) {
+        val newLiked = EntityFairy.randomFlower(rand)
+        likedFlower = newLiked
+        newLiked
+      } else l
+    }
 
     aiTempt = new EntityAITemptStack(this, getSpeed / 2, true, Set(liked))
     attackPlayer = new EntityAINearestAttackableTarget(this, classOf[EntityPlayer], true)
@@ -115,7 +118,7 @@ class EntityFairy(_world: World) extends EntityForm(_world) with Callable with I
   override def entityInit(): Unit = {
     super.entityInit()
 
-    dataManager.register(EntityFairy.LikedFlower, Optional.of(EntityFairy.randomFlower(rand)))
+    dataManager.register(EntityFairy.LikedFlower, EntityFairy.randomFlower(rand))
     dataManager.register(EntityFairy.HoldingFlower, Boolean.box(false))
   }
 
@@ -140,7 +143,7 @@ class EntityFairy(_world: World) extends EntityForm(_world) with Callable with I
 
       if(throwAwayTime == 0) {
         holdingFlower = false
-        likedFlower.foreach(entityDropItem(_, 0F))
+        entityDropItem(likedFlower, 0F)
       }
     }
   }
@@ -165,9 +168,10 @@ class EntityFairy(_world: World) extends EntityForm(_world) with Callable with I
     groupData
   }
 
-  override def processInteract(player: EntityPlayer, hand: EnumHand, @Nullable stack: ItemStack): Boolean = {
-    if ((aiTempt == null || aiTempt.isTempted) && stack != null && likedFlower.exists(_.isItemEqual(stack)) && player.getDistanceSqToEntity(this) < 9.0D) {
-      if (!player.capabilities.isCreativeMode) stack.stackSize -= 1
+  override def processInteract(player: EntityPlayer, hand: EnumHand): Boolean = {
+    val stack = player.getHeldItem(hand)
+    if ((aiTempt == null || aiTempt.isTempted) && !stack.isEmpty && likedFlower.isItemEqual(stack) && player.getDistanceSqToEntity(this) < 9.0D) {
+      if (!player.capabilities.isCreativeMode) stack.shrink(1)
 
       if (!world.isRemote) {
         holdingFlower = true
@@ -176,7 +180,7 @@ class EntityFairy(_world: World) extends EntityForm(_world) with Callable with I
 
       true
     }
-    else super.processInteract(player, hand, stack)
+    else super.processInteract(player, hand)
   }
 
   override def isValidLightLevel: Boolean = {
@@ -210,9 +214,9 @@ class EntityFairy(_world: World) extends EntityForm(_world) with Callable with I
     dataManager.set(EntityFairy.HoldingFlower, Boolean.box(holding))
   }
 
-  def likedFlower: Option[ItemStack] = Option(dataManager.get(EntityFairy.LikedFlower).orNull())
+  def likedFlower: ItemStack = dataManager.get(EntityFairy.LikedFlower)
   def likedFlower_=(flower: ItemStack): Unit = {
-    dataManager.set(EntityFairy.LikedFlower, Optional.of(flower))
+    dataManager.set(EntityFairy.LikedFlower, flower)
     if(aiTempt != null) {
       aiTempt.temptStacks = Set(flower)
     }
@@ -229,10 +233,9 @@ class EntityFairy(_world: World) extends EntityForm(_world) with Callable with I
 
   override def writeEntityToNBT(tag: NBTTagCompound): Unit = {
     super.writeEntityToNBT(tag)
-    likedFlower.foreach { liked =>
-      tag.setString("likedFlowerName", Item.REGISTRY.getNameForObject(liked.getItem).toString)
-      tag.setByte("likedFlowerMeta", liked.getItemDamage.toByte)
-    }
+    val liked = likedFlower
+    tag.setString("likedFlowerName", Item.REGISTRY.getNameForObject(liked.getItem).toString)
+    tag.setByte("likedFlowerMeta", liked.getItemDamage.toByte)
   }
 }
 case class FairyGroupData(form: Byte) extends IEntityLivingData
