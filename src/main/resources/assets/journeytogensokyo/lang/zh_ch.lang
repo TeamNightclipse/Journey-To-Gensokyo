@@ -31,7 +31,7 @@ crafting.danmaku.delay=延迟
 crafting.danmaku.end=结束
 crafting.danmaku.scoreCost=Score消耗
 
-entity.journeytogensokyo.tengu_crow.name=鸦天狗
-entity.journeytogensokyo.hell_raven.name=地狱鸦
-entity.journeytogensokyo.fairy.name=妖精
-entity.journeytogensokyo.phantom.name=幽灵
+entity.tengu_crow.name=鸦天狗
+entity.hell_raven.name=地狱鸦
+entity.fairy.name=妖精
+entity.phantom.name=幽灵
