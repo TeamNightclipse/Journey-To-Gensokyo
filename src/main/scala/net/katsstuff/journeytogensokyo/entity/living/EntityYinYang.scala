@@ -9,15 +9,11 @@
 package net.katsstuff.journeytogensokyo.entity.living
 
 import net.katsstuff.danmakucore.entity.living.ai.EntityAIMoveRanged
-import net.katsstuff.danmakucore.entity.living.{EntityDanmakuMob, EnumSpecies, IAllyDanmaku}
-import net.katsstuff.journeytogensokyo.handler.ConfigHandler
+import net.katsstuff.danmakucore.entity.living.{EntityDanmakuMob, IAllyDanmaku, TouhouSpecies}
 import net.katsstuff.journeytogensokyo.phase.JTGPhases
-import net.minecraft.block.material.Material
 import net.minecraft.entity.EnumCreatureAttribute
 import net.minecraft.entity.ai.{EntityAIHurtByTarget, EntityAILookIdle, EntityAINearestAttackableTarget, EntityAISwimming, EntityAIWander}
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.init.Blocks
-import net.minecraft.util.math.{BlockPos, MathHelper}
 import net.minecraft.world.World
 
 class EntityYinYang(_world: World) extends EntityDanmakuMob(_world) with IAllyDanmaku {
@@ -28,7 +24,7 @@ class EntityYinYang(_world: World) extends EntityDanmakuMob(_world) with IAllyDa
   phaseManager.getCurrentPhase.init()
 
   setFlyingHeight(2)
-  setSpecies(EnumSpecies.OTHERS)
+  setSpecies(TouhouSpecies.OTHERS)
   setMaxHP(2F)
 
   override def initEntityAI(): Unit = {

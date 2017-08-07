@@ -8,7 +8,7 @@
  */
 package net.katsstuff.journeytogensokyo.entity.living
 
-import net.katsstuff.danmakucore.entity.living.EnumSpecies
+import net.katsstuff.danmakucore.entity.living.TouhouSpecies
 import net.katsstuff.journeytogensokyo.entity.living.ai.EntityAIMoveRangedTengu
 import net.katsstuff.journeytogensokyo.handler.ConfigHandler
 import net.katsstuff.journeytogensokyo.handler.ConfigHandler.Spawns.SpawnEntry
@@ -16,14 +16,7 @@ import net.katsstuff.journeytogensokyo.lib.LibEntityName
 import net.katsstuff.journeytogensokyo.phase.JTGPhases
 import net.minecraft.block.BlockGrass
 import net.minecraft.block.state.IBlockState
-import net.minecraft.entity.ai.{
-  EntityAIHurtByTarget,
-  EntityAILookIdle,
-  EntityAINearestAttackableTarget,
-  EntityAISwimming,
-  EntityAIWander,
-  EntityAIWatchClosest
-}
+import net.minecraft.entity.ai.{EntityAIHurtByTarget, EntityAILookIdle, EntityAINearestAttackableTarget, EntityAISwimming, EntityAIWander, EntityAIWatchClosest}
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
 import net.minecraft.world.World
@@ -34,7 +27,7 @@ class EntityTenguCrow(_world: World) extends EntityBigBird(_world) {
   phaseManager.getCurrentPhase.init()
 
   setSpeed(1D)
-  setSpecies(EnumSpecies.YOUKAI_TENGU_CROW)
+  setSpecies(TouhouSpecies.YOUKAI_TENGU_CROW)
 
   override def spawnBlockCheck(state: IBlockState): Boolean =
     super.spawnBlockCheck(state) || (state.getBlock == Blocks.GRASS && state.getValue(BlockGrass.SNOWY))

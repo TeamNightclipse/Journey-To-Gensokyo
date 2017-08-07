@@ -8,20 +8,13 @@
  */
 package net.katsstuff.journeytogensokyo.entity.living
 
-import net.katsstuff.danmakucore.entity.living.EnumSpecies
+import net.katsstuff.danmakucore.entity.living.TouhouSpecies
 import net.katsstuff.danmakucore.entity.living.ai.EntityAIMoveRanged
 import net.katsstuff.journeytogensokyo.handler.ConfigHandler
 import net.katsstuff.journeytogensokyo.handler.ConfigHandler.Spawns.SpawnEntry
 import net.katsstuff.journeytogensokyo.lib.LibEntityName
 import net.katsstuff.journeytogensokyo.phase.JTGPhases
-import net.minecraft.entity.ai.{
-  EntityAIHurtByTarget,
-  EntityAILookIdle,
-  EntityAINearestAttackableTarget,
-  EntityAISwimming,
-  EntityAIWander,
-  EntityAIWatchClosest
-}
+import net.minecraft.entity.ai.{EntityAIHurtByTarget, EntityAILookIdle, EntityAINearestAttackableTarget, EntityAISwimming, EntityAIWander, EntityAIWatchClosest}
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.world.World
 
@@ -31,7 +24,7 @@ class EntityHellRaven(_world: World) extends EntityBigBird(_world) {
   phaseManager.getCurrentPhase.init()
 
   setSpeed(0.4D)
-  setSpecies(EnumSpecies.ANIMAL_RAVEN_HELL)
+  setSpecies(TouhouSpecies.ANIMAL_RAVEN_HELL)
 
   isImmuneToFire = true
   override protected def initEntityAI(): Unit = {

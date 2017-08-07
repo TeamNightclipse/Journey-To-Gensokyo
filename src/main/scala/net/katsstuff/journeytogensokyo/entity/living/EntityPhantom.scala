@@ -11,7 +11,7 @@ package net.katsstuff.journeytogensokyo.entity.living
 import net.katsstuff.danmakucore.client.particle.{GlowTexture, ParticleUtil}
 import net.katsstuff.danmakucore.data.Vector3
 import net.katsstuff.danmakucore.entity.living.ai.EntityAIMoveRanged
-import net.katsstuff.danmakucore.entity.living.{EnumSpecies, IAllyDanmaku}
+import net.katsstuff.danmakucore.entity.living.{IAllyDanmaku, TouhouSpecies}
 import net.katsstuff.journeytogensokyo.handler.ConfigHandler
 import net.katsstuff.journeytogensokyo.handler.ConfigHandler.Spawns
 import net.katsstuff.journeytogensokyo.lib.LibEntityName
@@ -19,15 +19,7 @@ import net.katsstuff.journeytogensokyo.phase.JTGPhases
 import net.minecraft.block.material.Material
 import net.minecraft.block.state.IBlockState
 import net.minecraft.entity.{EnumCreatureAttribute, IEntityLivingData}
-import net.minecraft.entity.ai.{
-  EntityAIFleeSun,
-  EntityAIHurtByTarget,
-  EntityAILookIdle,
-  EntityAINearestAttackableTarget,
-  EntityAIRestrictSun,
-  EntityAISwimming,
-  EntityAIWander
-}
+import net.minecraft.entity.ai.{EntityAIFleeSun, EntityAIHurtByTarget, EntityAILookIdle, EntityAINearestAttackableTarget, EntityAIRestrictSun, EntityAISwimming, EntityAIWander}
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.world.{DifficultyInstance, World}
 
@@ -63,7 +55,7 @@ class EntityPhantom(_world: World) extends EntityForm(_world) with IAllyDanmaku 
   phaseManager.getCurrentPhase.init()
 
   setSpeed(0.2D)
-  setSpecies(EnumSpecies.PHANTOM)
+  setSpecies(TouhouSpecies.PHANTOM)
 
   setFlyingHeight(3)
   setMaxHP(2F)

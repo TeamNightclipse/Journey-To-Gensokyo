@@ -9,7 +9,7 @@
 package net.katsstuff.journeytogensokyo.entity.living
 
 import net.katsstuff.danmakucore.data.{MovementData, RotationData}
-import net.katsstuff.danmakucore.entity.living.EnumSpecies
+import net.katsstuff.danmakucore.entity.living.TouhouSpecies
 import net.katsstuff.danmakucore.lib.data.{LibPhases, LibShotData}
 import net.minecraft.world.World
 
@@ -21,6 +21,6 @@ class EntityFairyNether(_world: World) extends EntityFairy(_world) {
 
     phaseManager.addPhase(LibPhases.SHAPE_WIDE.instantiate(phaseManager, 8, 30F, 0F, 0D, LibShotData.SHOT_SPHERE_DARK, movement, rotation))
     phaseManager.getCurrentPhase.init()
-    setSpecies(EnumSpecies.FAIRY_HELL)
+    setSpecies(TouhouSpecies.FAIRY_HELL)
   }
 }

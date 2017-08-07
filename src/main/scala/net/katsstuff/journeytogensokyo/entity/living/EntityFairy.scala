@@ -11,18 +11,11 @@ package net.katsstuff.journeytogensokyo.entity.living
 import java.lang.{Boolean => JBoolean}
 import java.util.Random
 
-import javax.annotation.Nullable
-
-import scala.collection.JavaConverters._
-
-import com.google.common.base.Optional
-
 import net.katsstuff.danmakucore.entity.living.ai.EntityAIMoveRanged
-import net.katsstuff.danmakucore.entity.living.{EnumSpecies, IAllyDanmaku}
+import net.katsstuff.danmakucore.entity.living.{IAllyDanmaku, TouhouSpecies}
 import net.katsstuff.journeytogensokyo.entity.living.ai.{EntityAIFollowFriend, EntityAITemptStack}
 import net.katsstuff.journeytogensokyo.handler.ConfigHandler
 import net.katsstuff.journeytogensokyo.handler.ConfigHandler.Spawns.SpawnEntry
-import net.katsstuff.journeytogensokyo.helper.LogHelper
 import net.katsstuff.journeytogensokyo.lib.LibEntityName
 import net.katsstuff.journeytogensokyo.phase.JTGPhases
 import net.minecraft.block.BlockFlower
@@ -85,7 +78,7 @@ class EntityFairy(_world: World) extends EntityForm(_world) with Callable with I
   phaseManager.getCurrentPhase.init()
 
   setSpeed(0.4D)
-  setSpecies(EnumSpecies.FAIRY)
+  setSpecies(TouhouSpecies.FAIRY)
 
   setFlyingHeight(2)
   setEntityCallDistance(30)
