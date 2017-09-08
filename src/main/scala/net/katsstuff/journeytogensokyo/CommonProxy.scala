@@ -464,7 +464,7 @@ class CommonProxy {
 case class DanmakuRecipeBuilder(
     shot:     ShotData = null,
     input:    Either[String, ItemStack] = null,
-    movement: MovementData = MovementData.constant(0.4D),
+    movement: MovementData = MovementData.constant(0D),
     cost:     Int = 1000
 ) {
 
