@@ -124,11 +124,12 @@ class PhaseTengu(manager: PhaseManager, val getType: PhaseTypeTengu) extends Pha
     val entity = getEntity
 
     stack.setCount(entity.getRNG.nextInt(5) + 1)
-    ItemDanmaku.setAmount(stack, entity.getRNG.nextInt(5) + 1)
-    ItemDanmaku.setSpeed(stack, 0.4D)
+    ItemDanmaku.AMOUNT.set(entity.getRNG.nextInt(5) + 1, stack)
+    ItemDanmaku.SPEED.set(0.4D, stack)
     ItemDanmaku.setPattern(stack, ItemDanmaku.Pattern.RANDOM_RING)
     ShotData.serializeNBTItemStack(stack, shotData)
-    ItemDanmaku.setCustom(stack, true)
+    //noinspection NameBooleanParameters
+    ItemDanmaku.CUSTOM.set(true, stack)
 
     entity.entityDropItem(stack, 0F)
   }

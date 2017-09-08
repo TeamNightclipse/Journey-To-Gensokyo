@@ -89,17 +89,18 @@ class PhaseHellRaven(manager: PhaseManager, star: Boolean, val getType: PhaseTyp
     stack.setCount(entity.getRNG.nextInt(5) + 1)
 
     if (star) {
-      ItemDanmaku.setAmount(stack, Math.max(5, entity.getRNG.nextInt(8) + 1))
-      ItemDanmaku.setSpeed(stack, 0.5D)
+      ItemDanmaku.AMOUNT.set(Math.max(5, entity.getRNG.nextInt(8) + 1), stack)
+      ItemDanmaku.SPEED.set(0.5D, stack)
       ItemDanmaku.setPattern(stack, ItemDanmaku.Pattern.STAR)
       ShotData.serializeNBTItemStack(stack, starShotData)
     } else {
-      ItemDanmaku.setAmount(stack, entity.getRNG.nextInt(5) + 1)
-      ItemDanmaku.setSpeed(stack, 0.3D)
+      ItemDanmaku.AMOUNT.set(entity.getRNG.nextInt(5) + 1, stack)
+      ItemDanmaku.SPEED.set(0.3D, stack)
       ItemDanmaku.setPattern(stack, ItemDanmaku.Pattern.LINE)
       ShotData.serializeNBTItemStack(stack, otherShotData)
     }
-    ItemDanmaku.setCustom(stack, true)
+    //noinspection NameBooleanParameters
+    ItemDanmaku.CUSTOM.set(true, stack)
 
     entity.entityDropItem(stack, 0F)
   }

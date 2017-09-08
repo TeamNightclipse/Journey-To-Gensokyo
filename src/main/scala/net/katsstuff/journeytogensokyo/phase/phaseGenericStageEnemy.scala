@@ -89,7 +89,7 @@ class PhaseGenericStageEnemy(
       val baseLook = Quat.lookRotation(forward, Vector3.Up) //TODO: Add inaccuracy here?
       DanmakuHelper.playShotSound(entity)
 
-      shapeObj.drawForTick(entityPos, baseLook, 0)
+      shapeObj.draw(entityPos, baseLook, 0)
     }
   }
 
@@ -123,9 +123,9 @@ class PhaseGenericStageEnemy(
     val entity = getEntity
 
     stack.setCount(entity.getRNG.nextInt(5) + 2)
-    ItemDanmaku.setAmount(stack, amount)
-    ItemDanmaku.setSpeed(stack, movement.speedOriginal)
-    ItemDanmaku.setGravity(stack, movement.gravity)
+    ItemDanmaku.AMOUNT.set(amount, stack)
+    ItemDanmaku.SPEED.set(movement.speedOriginal, stack)
+    ItemDanmaku.setGravity(movement.gravity, stack)
     ItemDanmaku.setPattern(stack, shape)
     ShotData.serializeNBTItemStack(stack, shot)
 

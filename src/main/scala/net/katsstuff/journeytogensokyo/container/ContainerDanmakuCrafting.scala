@@ -208,14 +208,15 @@ case class DanmakuCraftingContext(
       val danmakuCopy = danmakuStack.copy()
 
       shotCombined.foreach(ShotData.serializeNBTItemStack(danmakuCopy, _))
-      speedCombined.foreach(ItemDanmaku.setSpeed(danmakuCopy, _))
-      gravityCombined.foreach(ItemDanmaku.setGravity(danmakuCopy, _))
+      speedCombined.foreach(ItemDanmaku.SPEED.set(_, danmakuCopy))
+      gravityCombined.foreach(ItemDanmaku.setGravity(_, danmakuCopy))
       patternResult(amountCombined).foreach(ItemDanmaku.setPattern(danmakuCopy, _))
       danmakuCopy.setCount(stackSizeCombined)
       if(amountCombined != 1) {
-        ItemDanmaku.setAmount(danmakuCopy, amountCombined)
+        ItemDanmaku.AMOUNT.set(amountCombined, danmakuCopy)
       }
-      recipe.foreach(_ => ItemDanmaku.setCustom(danmakuCopy, true))
+      //noinspection NameBooleanParameters
+      recipe.foreach(_ => ItemDanmaku.CUSTOM.set(true, danmakuCopy))
 
       danmakuCopy
     }
@@ -256,7 +257,7 @@ case class DanmakuCraftingContext(
     )
   }
 
-  def speedCurrent:  Double = ItemDanmaku.getSpeed(danmakuStack)
+  def speedCurrent:  Double = ItemDanmaku.SPEED.get(danmakuStack)
   def speedResult:   Option[Double] = recipe.map(_.outputMovement.getSpeedOriginal)
   def speedCombined: Option[Double] = speedResult.map(result => MathHelper.clamp(speedCurrent + result, 0D, 2D))
 
@@ -279,7 +280,7 @@ case class DanmakuCraftingContext(
   def stackSizeResult:   Int = copyStack.getCount
   def stackSizeCombined: Int = Math.min(stackSizeResult + stackSizeCurrent, 64)
 
-  def amountCurrent: Int = ItemDanmaku.getAmount(danmakuStack)
+  def amountCurrent: Int = ItemDanmaku.AMOUNT.get(danmakuStack)
   def amountResult: Int = amountStack.getCount
   def amountCombined: Int =  {
     val maxNumber = ConfigHandler.danmaku.danmakuMaxNumber
