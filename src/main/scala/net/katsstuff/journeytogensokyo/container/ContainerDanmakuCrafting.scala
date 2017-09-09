@@ -210,7 +210,7 @@ case class DanmakuCraftingContext(
       shotCombined.foreach(ShotData.serializeNBTItemStack(danmakuCopy, _))
       speedCombined.foreach(ItemDanmaku.SPEED.set(_, danmakuCopy))
       gravityCombined.foreach(ItemDanmaku.setGravity(_, danmakuCopy))
-      patternResult(amountCombined).foreach(ItemDanmaku.setPattern(danmakuCopy, _))
+      patternResult(amountCombined).foreach(ItemDanmaku.PATTERN.set(_, danmakuCopy))
       danmakuCopy.setCount(stackSizeCombined)
       if(amountCombined != 1) {
         ItemDanmaku.AMOUNT.set(amountCombined, danmakuCopy)
@@ -274,7 +274,7 @@ case class DanmakuCraftingContext(
     Vector3(x, y, z)
   }
 
-  def patternCurrent: ItemDanmaku.Pattern = ItemDanmaku.getPattern(danmakuStack)
+  def patternCurrent: ItemDanmaku.Pattern = ItemDanmaku.PATTERN.get(danmakuStack)
 
   def stackSizeCurrent:  Int = danmakuStack.getCount
   def stackSizeResult:   Int = copyStack.getCount

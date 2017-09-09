@@ -10,6 +10,7 @@ package net.katsstuff.journeytogensokyo
 
 import net.katsstuff.journeytogensokyo.client.ClientProxy
 import net.katsstuff.journeytogensokyo.handler.{GuiHandler, LootHandler}
+import net.katsstuff.journeytogensokyo.helper.LogHelper
 import net.katsstuff.journeytogensokyo.lib.{LibMod, LibModJ}
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.fml.common.Mod.EventHandler
@@ -34,6 +35,7 @@ object JourneyToGensokyo {
 
   @EventHandler
   def preInit(event: FMLPreInitializationEvent): Unit = {
+    LogHelper.assignLog(event.getModLog)
     val lootHandler = new LootHandler
     lootHandler.registerLootTables()
     MinecraftForge.EVENT_BUS.register(lootHandler)

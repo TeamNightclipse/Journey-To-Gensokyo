@@ -126,7 +126,7 @@ class PhaseGenericStageEnemy(
     ItemDanmaku.AMOUNT.set(amount, stack)
     ItemDanmaku.SPEED.set(movement.speedOriginal, stack)
     ItemDanmaku.setGravity(movement.gravity, stack)
-    ItemDanmaku.setPattern(stack, shape)
+    ItemDanmaku.PATTERN.set(shape, stack)
     ShotData.serializeNBTItemStack(stack, shot)
 
     entity.entityDropItem(stack, 0F)

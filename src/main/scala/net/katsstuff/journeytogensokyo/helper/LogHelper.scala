@@ -8,14 +8,20 @@
  */
 package net.katsstuff.journeytogensokyo.helper
 
-import org.apache.logging.log4j.Level
-
-import net.katsstuff.danmakucore.lib.LibMod
-import net.minecraftforge.fml.common.FMLLog
+import org.apache.logging.log4j.{Level, Logger}
 
 object LogHelper {
 
-  private def log(level: Level, obj: Any): Unit = FMLLog.log(LibMod.NAME, level, String.valueOf(obj))
+  private var logger: Logger = _
+
+  private def log(level: Level, obj: Any): Unit = logger.log(level, String.valueOf(obj))
+
+  def assignLog(logger: Logger): Unit = {
+    if(this.logger != null) {
+      throw new IllegalStateException("Logger already set")
+    }
+    this.logger = logger
+  }
 
   def all(obj:   Any): Unit = log(Level.ALL, obj)
   def debug(obj: Any): Unit = log(Level.DEBUG, obj)
