@@ -21,7 +21,14 @@ import net.minecraft.util.ResourceLocation
 class RenderPhantom(manager: RenderManager) extends RenderLiving[EntityPhantom](manager, EmptyModel, 0.5F) {
   val White = new ResourceLocation(LibMod.MODID, "textures/white.png")
 
-  override def doRender(entity: EntityPhantom, x: Double, y: Double, z: Double, entityYaw: Float, partialTicks: Float): Unit = {
+  override def doRender(
+      entity: EntityPhantom,
+      x: Double,
+      y: Double,
+      z: Double,
+      entityYaw: Float,
+      partialTicks: Float
+  ): Unit = {
     super.doRender(entity, x, y, z, entityYaw, partialTicks)
     GlStateManager.pushMatrix()
 

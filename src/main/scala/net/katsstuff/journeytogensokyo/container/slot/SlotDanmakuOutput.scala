@@ -17,19 +17,19 @@ import net.minecraft.item.ItemStack
 import net.katsstuff.journeytogensokyo.helper.Implicits._
 
 class SlotDanmakuOutput(
-    container:   ContainerDanmakuCrafting,
-    player:      EntityPlayer,
+    container: ContainerDanmakuCrafting,
+    player: EntityPlayer,
     ingredients: IInventory,
-    matrix:      InventoryCrafting,
-    inv:         IInventory,
-    index:       Int,
-    xPos:        Int,
-    yPos:        Int
+    matrix: InventoryCrafting,
+    inv: IInventory,
+    index: Int,
+    xPos: Int,
+    yPos: Int
 ) extends SlotCrafting(player, matrix, inv, index, xPos, yPos) {
 
   override def onTake(playerIn: EntityPlayer, stack: ItemStack): ItemStack = {
     for {
-      ctx <- container.createContext
+      ctx  <- container.createContext
       data <- TouhouHelper.getDanmakuCoreData(playerIn).toOption
       requiredScore = ctx.requiredScore
       if data.getScore >= requiredScore

@@ -12,7 +12,13 @@ import net.katsstuff.danmakucore.entity.living.ai.EntityAIMoveRanged
 import net.katsstuff.danmakucore.entity.living.{EntityDanmakuMob, IAllyDanmaku, TouhouSpecies}
 import net.katsstuff.journeytogensokyo.phase.JTGPhases
 import net.minecraft.entity.EnumCreatureAttribute
-import net.minecraft.entity.ai.{EntityAIHurtByTarget, EntityAILookIdle, EntityAINearestAttackableTarget, EntityAISwimming, EntityAIWander}
+import net.minecraft.entity.ai.{
+  EntityAIHurtByTarget,
+  EntityAILookIdle,
+  EntityAINearestAttackableTarget,
+  EntityAISwimming,
+  EntityAIWander
+}
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.world.World
 

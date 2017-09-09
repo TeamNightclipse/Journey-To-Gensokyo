@@ -70,6 +70,9 @@ class ClientProxy extends CommonProxy {
 
   def registerEntityRenderer[A <: Entity: ClassTag](f: RenderManager => Render[A]): Unit = {
     val factory: IRenderFactory[A] = manager => f(manager)
-    RenderingRegistry.registerEntityRenderingHandler(implicitly[ClassTag[A]].runtimeClass.asInstanceOf[Class[A]], factory)
+    RenderingRegistry.registerEntityRenderingHandler(
+      implicitly[ClassTag[A]].runtimeClass.asInstanceOf[Class[A]],
+      factory
+    )
   }
 }

@@ -19,11 +19,13 @@ import net.minecraftforge.fml.common.network.IGuiHandler
 //Might need to change this to a class
 object GuiHandler extends IGuiHandler {
 
-  override def getClientGuiElement(ID: Int, player: EntityPlayer, world: World, x: Int, y: Int, z: Int): AnyRef = ID match {
-    case LibGuiId.DanmakuCraftingGui => new GuiDanmakuCrafting(player.inventory, world, new BlockPos(x, y, z))
-  }
+  override def getClientGuiElement(ID: Int, player: EntityPlayer, world: World, x: Int, y: Int, z: Int): AnyRef =
+    ID match {
+      case LibGuiId.DanmakuCraftingGui => new GuiDanmakuCrafting(player.inventory, world, new BlockPos(x, y, z))
+    }
 
-  override def getServerGuiElement(ID: Int, player: EntityPlayer, world: World, x: Int, y: Int, z: Int): AnyRef = ID match {
-    case LibGuiId.DanmakuCraftingGui => new ContainerDanmakuCrafting(player.inventory, world, new BlockPos(x, y, z))
-  }
+  override def getServerGuiElement(ID: Int, player: EntityPlayer, world: World, x: Int, y: Int, z: Int): AnyRef =
+    ID match {
+      case LibGuiId.DanmakuCraftingGui => new ContainerDanmakuCrafting(player.inventory, world, new BlockPos(x, y, z))
+    }
 }

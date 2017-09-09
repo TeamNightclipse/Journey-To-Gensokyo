@@ -17,8 +17,9 @@ import net.minecraft.pathfinding.{PathNavigateGround, PathNodeType}
 import net.minecraft.util.EnumFacing
 import net.minecraft.util.math.{BlockPos, MathHelper}
 
-class EntityAIFollowFriend(val fairy: EntityFairy, val followSpeed: Double, var minDist: Float, var maxDist: Float) extends EntityAIBase {
-  private var friend: EntityPlayer         = _
+class EntityAIFollowFriend(val fairy: EntityFairy, val followSpeed: Double, var minDist: Float, var maxDist: Float)
+    extends EntityAIBase {
+  private var friend: EntityPlayer = _
 
   private val world            = fairy.world
   private val pathfinder       = fairy.getNavigator
@@ -29,7 +30,8 @@ class EntityAIFollowFriend(val fairy: EntityFairy, val followSpeed: Double, var 
 
   override def shouldExecute: Boolean = {
     fairy.friend.fold(false) {
-      case fairyFriend if this.fairy.getDistanceSqToEntity(fairyFriend) >= (this.minDist * this.minDist) && !fairyFriend.isSpectator =>
+      case fairyFriend
+          if this.fairy.getDistanceSqToEntity(fairyFriend) >= (this.minDist * this.minDist) && !fairyFriend.isSpectator =>
         friend = fairyFriend
         true
       case _ => false
@@ -63,10 +65,12 @@ class EntityAIFollowFriend(val fairy: EntityFairy, val followSpeed: Double, var 
 
     if (timeToRecalcPath <= 0) {
       timeToRecalcPath = 10
-      if (!pathfinder.tryMoveToEntityLiving(friend, followSpeed) && !fairy.getLeashed && fairy.getDistanceSqToEntity(this.friend) >= 144.0D) {
-        val i = MathHelper.floor(friend.posX) - 2
-        val j = MathHelper.floor(friend.posZ) - 2
-        val k = MathHelper.floor(friend.getEntityBoundingBox.minY)
+      if (!pathfinder.tryMoveToEntityLiving(friend, followSpeed) && !fairy.getLeashed && fairy.getDistanceSqToEntity(
+            this.friend
+          ) >= 144.0D) {
+        val i    = MathHelper.floor(friend.posX) - 2
+        val j    = MathHelper.floor(friend.posZ) - 2
+        val k    = MathHelper.floor(friend.getEntityBoundingBox.minY)
         var done = false
 
         for {
@@ -79,7 +83,9 @@ class EntityAIFollowFriend(val fairy: EntityFairy, val followSpeed: Double, var 
           val air1   = new BlockPos(i + l, k, j + i1)
           val ground = air1.down()
           val air2   = air1.up()
-          if (world.getBlockState(ground).isSideSolid(world, ground, EnumFacing.UP) && isEmptyBlock(air1) && isEmptyBlock(air2)) {
+          if (world
+                .getBlockState(ground)
+                .isSideSolid(world, ground, EnumFacing.UP) && isEmptyBlock(air1) && isEmptyBlock(air2)) {
             this.fairy.setLocationAndAngles(i + l + 0.5F, k, j + i1 + 0.5F, fairy.rotationYaw, fairy.rotationPitch)
             this.pathfinder.clearPathEntity()
             done = true

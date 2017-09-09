@@ -25,7 +25,7 @@ abstract class EntityForm(_world: World) extends EntityJTGDanmakuMob(_world) {
     dataManager.register(EntityForm.Form, Byte.box(0))
   }
 
-  def form: Byte = dataManager.get(EntityForm.Form)
+  def form:               Byte = dataManager.get(EntityForm.Form)
   def form_=(byte: Byte): Unit = dataManager.set(EntityForm.Form, Byte.box(byte))
 
   override def readEntityFromNBT(tag: NBTTagCompound): Unit = {

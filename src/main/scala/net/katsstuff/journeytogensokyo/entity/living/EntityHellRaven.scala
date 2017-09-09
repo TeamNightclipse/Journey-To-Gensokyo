@@ -14,7 +14,14 @@ import net.katsstuff.journeytogensokyo.handler.ConfigHandler
 import net.katsstuff.journeytogensokyo.handler.ConfigHandler.Spawns.SpawnEntry
 import net.katsstuff.journeytogensokyo.lib.LibEntityName
 import net.katsstuff.journeytogensokyo.phase.JTGPhases
-import net.minecraft.entity.ai.{EntityAIHurtByTarget, EntityAILookIdle, EntityAINearestAttackableTarget, EntityAISwimming, EntityAIWander, EntityAIWatchClosest}
+import net.minecraft.entity.ai.{
+  EntityAIHurtByTarget,
+  EntityAILookIdle,
+  EntityAINearestAttackableTarget,
+  EntityAISwimming,
+  EntityAIWander,
+  EntityAIWatchClosest
+}
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.world.World
 

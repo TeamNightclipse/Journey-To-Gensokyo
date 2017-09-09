@@ -16,16 +16,17 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
 class LootHandler {
 
-  val toReplace = Seq(LootTableList.CHESTS_SIMPLE_DUNGEON, LootTableList.CHESTS_END_CITY_TREASURE, LootTableList.CHESTS_NETHER_BRIDGE)
+  val toReplace =
+    Seq(LootTableList.CHESTS_SIMPLE_DUNGEON, LootTableList.CHESTS_END_CITY_TREASURE, LootTableList.CHESTS_NETHER_BRIDGE)
 
   val poolNames: Seq[String] = Seq("gensokyo", "makai", "celestial").map(s => s"journeytogensokyo:extra_${s}_loot")
 
   @SubscribeEvent
   def onLoot(event: LootTableLoadEvent): Unit =
     if (toReplace.contains(event.getName)) {
-      val custom = new ResourceLocation(LibMod.Id, event.getName.getResourcePath)
+      val custom       = new ResourceLocation(LibMod.Id, event.getName.getResourcePath)
       val tableManager = event.getLootTableManager
-      val table = tableManager.getLootTableFromLocation(custom)
+      val table        = tableManager.getLootTableFromLocation(custom)
 
       for {
         poolName <- poolNames

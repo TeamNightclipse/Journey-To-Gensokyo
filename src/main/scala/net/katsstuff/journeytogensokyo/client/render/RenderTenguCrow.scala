@@ -14,6 +14,8 @@ import net.katsstuff.journeytogensokyo.lib.LibMod
 import net.minecraft.client.renderer.entity.{RenderLiving, RenderManager}
 import net.minecraft.util.ResourceLocation
 
-class RenderTenguCrow(renderManager: RenderManager) extends RenderLiving[EntityTenguCrow](renderManager, ModelTenguCrow, 0.5F) {
-  protected def getEntityTexture(entity: EntityTenguCrow) = new ResourceLocation(LibMod.Id, "textures/entity/mob/tengu_crow.png")
+class RenderTenguCrow(renderManager: RenderManager)
+    extends RenderLiving[EntityTenguCrow](renderManager, ModelTenguCrow, 0.5F) {
+  protected def getEntityTexture(entity: EntityTenguCrow) =
+    new ResourceLocation(LibMod.Id, "textures/entity/mob/tengu_crow.png")
 }

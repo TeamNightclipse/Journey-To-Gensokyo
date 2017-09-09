@@ -84,7 +84,15 @@ object ModelTenguCrow extends ModelBase {
     tenguBody.render(size)
     tenguHead.render(size)
   }
-  override def setRotationAngles(movement: Float, far: Float, tick: Float, yaw: Float, pitch: Float, size: Float, entity: Entity) {
+  override def setRotationAngles(
+      movement: Float,
+      far: Float,
+      tick: Float,
+      yaw: Float,
+      pitch: Float,
+      size: Float,
+      entity: Entity
+  ) {
     tenguHead.rotateAngleY = (yaw / (180F / Math.PI)).toFloat
     tenguHead.rotateAngleX = (pitch / (180F / Math.PI)).toFloat
     tenguBody.rotateAngleX = (Math.PI / 3F + MathHelper.cos(tick * 0.1F) * 0.15F).toFloat

@@ -44,7 +44,7 @@ class PhaseTengu(manager: PhaseManager, val getType: PhaseTypeTengu) extends Pha
 
     if (!isFrozen && target != null && entity.getEntitySenses.canSee(target)) {
       val entityPos = new Vector3(entity)
-      val forward = Vector3.directionToEntity(entityPos, target)
+      val forward   = Vector3.directionToEntity(entityPos, target)
       entity.faceEntity(target, 30F, 30F)
       if (counter % 12 == 0) {
         val template = DanmakuTemplate
@@ -55,7 +55,13 @@ class PhaseTengu(manager: PhaseManager, val getType: PhaseTypeTengu) extends Pha
           .setMovementData(0.4D)
           .build()
 
-        DanmakuCreationHelper.createRandomRingShot(Quat.lookRotation(forward, Vector3.Up), template, 3 * level.getMultiplier, 40F, 0.5D)
+        DanmakuCreationHelper.createRandomRingShot(
+          Quat.lookRotation(forward, Vector3.Up),
+          template,
+          3 * level.getMultiplier,
+          40F,
+          0.5D
+        )
         DanmakuHelper.playShotSound(entity)
       }
 
@@ -115,9 +121,8 @@ class PhaseTengu(manager: PhaseManager, val getType: PhaseTypeTengu) extends Pha
     }
   }
 
-  private def createChargeSphere(entity: EntityDanmakuMob): Unit = {
+  private def createChargeSphere(entity: EntityDanmakuMob): Unit =
     TouhouHelper.createChargeSpherePacket(new Vector3(entity), entity, 50 * charge, 2D, 10D, 1F, 0.1F, 0.1F, 40)
-  }
 
   override def dropLoot(source: DamageSource): Unit = {
     val stack  = new ItemStack(LibItems.DANMAKU)

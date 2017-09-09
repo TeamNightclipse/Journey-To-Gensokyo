@@ -33,7 +33,15 @@ abstract class ModelFairy extends ModelBase {
   def rightWing: ModelRenderer
   def leftWing:  ModelRenderer
 
-  override def render(entity: Entity, limbSwing: Float, limbSwingAmount: Float, age: Float, yaw: Float, pitch: Float, scale: Float): Unit = {
+  override def render(
+      entity: Entity,
+      limbSwing: Float,
+      limbSwingAmount: Float,
+      age: Float,
+      yaw: Float,
+      pitch: Float,
+      scale: Float
+  ): Unit = {
     setRotationAngles(limbSwing, limbSwingAmount, age, yaw, pitch, scale, entity)
     GlStateManager.enableBlend()
     GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
@@ -49,13 +57,13 @@ abstract class ModelFairy extends ModelBase {
 
   //Adapted from ModelBiped
   override def setRotationAngles(
-      limbSwing:       Float,
+      limbSwing: Float,
       limbSwingAmount: Float,
-      age:             Float,
-      headYaw:         Float,
-      headPitch:       Float,
-      scale:           Float,
-      entity:          Entity
+      age: Float,
+      headYaw: Float,
+      headPitch: Float,
+      scale: Float,
+      entity: Entity
   ): Unit = {
     val fairy = entity.asInstanceOf[EntityFairy]
 
@@ -137,7 +145,8 @@ abstract class ModelFairy extends ModelBase {
       f1 = 1.0F - f1
       val f2 = MathHelper.sin(f1 * Math.PI.toFloat)
       val f3 = MathHelper.sin(this.swingProgress * Math.PI.toFloat) * -(head.rotateAngleX - 0.7F) * 0.75F
-      primaryHandModel.rotateAngleX = (primaryHandModel.rotateAngleX.toDouble - (f2.toDouble * 1.2D + f3.toDouble)).toFloat
+      primaryHandModel.rotateAngleX =
+        (primaryHandModel.rotateAngleX.toDouble - (f2.toDouble * 1.2D + f3.toDouble)).toFloat
       primaryHandModel.rotateAngleY += body.rotateAngleY * 2.0F
       primaryHandModel.rotateAngleZ += MathHelper.sin(this.swingProgress * Math.PI.toFloat) * -0.4F
     }

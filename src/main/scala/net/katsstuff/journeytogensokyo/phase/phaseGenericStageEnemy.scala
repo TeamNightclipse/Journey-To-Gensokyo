@@ -15,7 +15,15 @@ import net.katsstuff.danmakucore.entity.danmaku.{DanmakuTemplate, DanmakuVariant
 import net.katsstuff.danmakucore.entity.living.phase.{Phase, PhaseManager, PhaseType}
 import net.katsstuff.danmakucore.handler.ConfigHandler
 import net.katsstuff.danmakucore.helper.DanmakuHelper
-import net.katsstuff.danmakucore.impl.shape.{ShapeArrow, ShapeCircle, ShapeRandomRing, ShapeRing, ShapeSphere, ShapeStar, ShapeWide}
+import net.katsstuff.danmakucore.impl.shape.{
+  ShapeArrow,
+  ShapeCircle,
+  ShapeRandomRing,
+  ShapeRing,
+  ShapeSphere,
+  ShapeStar,
+  ShapeWide
+}
 import net.katsstuff.danmakucore.item.ItemDanmaku
 import net.katsstuff.danmakucore.lib.data.LibDanmakuVariants
 import net.katsstuff.danmakucore.registry.DanmakuRegistry
@@ -26,10 +34,11 @@ import net.minecraft.util.{DamageSource, ResourceLocation}
 class PhaseTypeGenericStageEnemy extends PhaseType {
 
   val ShapeAmount: Int = ItemDanmaku.Pattern.values().length
-  private val rand           = new Random()
+  private val rand = new Random()
 
-  override def instantiate(phaseManager: PhaseManager): Phase = instantiate(phaseManager, DanmakuRegistry.getRandomObject(classOf[DanmakuVariant], rand.self))
-  def instantiate(phaseManager:          PhaseManager, variant: DanmakuVariant): Phase = {
+  override def instantiate(phaseManager: PhaseManager): Phase =
+    instantiate(phaseManager, DanmakuRegistry.getRandomObject(classOf[DanmakuVariant], rand.self))
+  def instantiate(phaseManager: PhaseManager, variant: DanmakuVariant): Phase = {
 
     val shot   = variant.getShotData.copy(color = DanmakuHelper.randomSaturatedColor())
     val shape  = ItemDanmaku.Pattern.values()(rand.nextInt(ShapeAmount))
@@ -40,14 +49,14 @@ class PhaseTypeGenericStageEnemy extends PhaseType {
 }
 
 class PhaseGenericStageEnemy(
-    manager:      PhaseManager,
-    var variant:  DanmakuVariant,
-    var shot:     ShotData,
+    manager: PhaseManager,
+    var variant: DanmakuVariant,
+    var shot: ShotData,
     var movement: MovementData,
-    var shape:    ItemDanmaku.Pattern,
-    var amount:   Int,
-    var width:    Float,
-    val getType:  PhaseTypeGenericStageEnemy
+    var shape: ItemDanmaku.Pattern,
+    var amount: Int,
+    var width: Float,
+    val getType: PhaseTypeGenericStageEnemy
 ) extends Phase(manager) {
 
   private val NbtVariant  = "variant"
@@ -62,13 +71,13 @@ class PhaseGenericStageEnemy(
     val distance = 0.1D
     val danmaku  = DanmakuTemplate.builder.setUser(getEntity).setShot(shot).setMovementData(movement).build()
     shape match {
-      case ItemDanmaku.Pattern.LINE => new ShapeArrow(danmaku, amount, distance, width)
-      case ItemDanmaku.Pattern.CIRCLE => new ShapeCircle(danmaku, amount, 0F, distance)
+      case ItemDanmaku.Pattern.LINE        => new ShapeArrow(danmaku, amount, distance, width)
+      case ItemDanmaku.Pattern.CIRCLE      => new ShapeCircle(danmaku, amount, 0F, distance)
       case ItemDanmaku.Pattern.RANDOM_RING => new ShapeRandomRing(danmaku, amount, width, distance)
-      case ItemDanmaku.Pattern.RING => new ShapeRing(danmaku, amount, width, 0F, distance)
-      case ItemDanmaku.Pattern.STAR => new ShapeStar(danmaku, amount, width, 0F, distance)
-      case ItemDanmaku.Pattern.WIDE => new ShapeWide(danmaku, amount, width, 0F, distance)
-      case ItemDanmaku.Pattern.SPHERE => new ShapeSphere(danmaku, amount, amount / 2, 0F, distance)
+      case ItemDanmaku.Pattern.RING        => new ShapeRing(danmaku, amount, width, 0F, distance)
+      case ItemDanmaku.Pattern.STAR        => new ShapeStar(danmaku, amount, width, 0F, distance)
+      case ItemDanmaku.Pattern.WIDE        => new ShapeWide(danmaku, amount, width, 0F, distance)
+      case ItemDanmaku.Pattern.SPHERE      => new ShapeSphere(danmaku, amount, amount / 2, 0F, distance)
     }
   }
 
@@ -85,8 +94,8 @@ class PhaseGenericStageEnemy(
 
     if (isCounterStart && !isFrozen && target != null && entity.getEntitySenses.canSee(target)) {
       val entityPos = new Vector3(entity)
-      val forward = Vector3.directionToEntity(entityPos, target)
-      val baseLook = Quat.lookRotation(forward, Vector3.Up) //TODO: Add inaccuracy here?
+      val forward   = Vector3.directionToEntity(entityPos, target)
+      val baseLook  = Quat.lookRotation(forward, Vector3.Up) //TODO: Add inaccuracy here?
       DanmakuHelper.playShotSound(entity)
 
       shapeObj.draw(entityPos, baseLook, 0)
@@ -110,7 +119,8 @@ class PhaseGenericStageEnemy(
 
   override def deserializeNBT(tag: NBTTagCompound) {
     super.deserializeNBT(tag)
-    variant = Option(DanmakuRegistry.DANMAKU_VARIANT.getValue(new ResourceLocation(tag.getString(NbtVariant)))).getOrElse(LibDanmakuVariants.DEFAULT_TYPE)
+    variant = Option(DanmakuRegistry.DANMAKU_VARIANT.getValue(new ResourceLocation(tag.getString(NbtVariant))))
+      .getOrElse(LibDanmakuVariants.DEFAULT_TYPE)
     shape = ItemDanmaku.Pattern.values()(tag.getInteger(NbtShape))
     amount = tag.getInteger(NbtAmount)
     width = tag.getFloat(NbtWidth)

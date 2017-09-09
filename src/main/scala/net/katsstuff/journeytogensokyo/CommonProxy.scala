@@ -17,7 +17,12 @@ import net.katsstuff.journeytogensokyo.entity.living.{EntityFairy, EntityHellRav
 import net.katsstuff.journeytogensokyo.handler.ConfigHandler
 import net.katsstuff.journeytogensokyo.item.{ItemJTGBase, JTGItems}
 import net.katsstuff.journeytogensokyo.lib.{LibBlockName, LibEntityName, LibItemName, LibMod, LibPhaseName}
-import net.katsstuff.journeytogensokyo.phase.{PhaseTypeGenericStageEnemy, PhaseTypeHellRaven, PhaseTypeShapeArrow, PhaseTypeTengu}
+import net.katsstuff.journeytogensokyo.phase.{
+  PhaseTypeGenericStageEnemy,
+  PhaseTypeHellRaven,
+  PhaseTypeShapeArrow,
+  PhaseTypeTengu
+}
 import net.katsstuff.journeytogensokyo.worldgen.OreWorldGen
 import net.minecraft.block.Block
 import net.minecraft.entity.{Entity, EntityLiving, EnumCreatureType}
@@ -112,14 +117,34 @@ class CommonProxy {
   def registerEntities(): Unit = {
     import BiomeDictionary.{Type => BiomeType}
 
-    def registerEntity[A <: Entity](clazz: Class[A], name: String, id: Int, trackingRange: Int = 64, updateFrequency: Int = 1, sendVelocityUpdates: Boolean = true, eggPrimary: Int, eggSecondary: Int): Unit =
-      EntityRegistry.registerModEntity(new ResourceLocation(LibMod.Id, name), clazz, name, id, JourneyToGensokyo, trackingRange, updateFrequency, sendVelocityUpdates, eggPrimary, eggSecondary)
+    def registerEntity[A <: Entity](
+        clazz: Class[A],
+        name: String,
+        id: Int,
+        trackingRange: Int = 64,
+        updateFrequency: Int = 1,
+        sendVelocityUpdates: Boolean = true,
+        eggPrimary: Int,
+        eggSecondary: Int
+    ): Unit =
+      EntityRegistry.registerModEntity(
+        new ResourceLocation(LibMod.Id, name),
+        clazz,
+        name,
+        id,
+        JourneyToGensokyo,
+        trackingRange,
+        updateFrequency,
+        sendVelocityUpdates,
+        eggPrimary,
+        eggSecondary
+      )
 
     def registerSpawn(
-        clazz:        Class[_ <: EntityLiving],
-        entry:        ConfigHandler.Spawns.SpawnEntry,
+        clazz: Class[_ <: EntityLiving],
+        entry: ConfigHandler.Spawns.SpawnEntry,
         creatureType: EnumCreatureType,
-        biomeTypes:   BiomeDictionary.Type*
+        biomeTypes: BiomeDictionary.Type*
     ): Unit =
       EntityRegistry.addSpawn(
         clazz,
@@ -134,16 +159,36 @@ class CommonProxy {
       types.flatMap(BiomeDictionary.getBiomes(_).asScala).distinct
 
     registerEntity(classOf[EntityFairy], LibEntityName.Fairy, 0, eggPrimary = 0xCCCCCC, eggSecondary = 0x65D159)
-    registerSpawn(classOf[EntityFairy], ConfigHandler.spawns.fairy, EnumCreatureType.MONSTER, BiomeType.HILLS, BiomeType.PLAINS, BiomeType.FOREST)
+    registerSpawn(
+      classOf[EntityFairy],
+      ConfigHandler.spawns.fairy,
+      EnumCreatureType.MONSTER,
+      BiomeType.HILLS,
+      BiomeType.PLAINS,
+      BiomeType.FOREST
+    )
 
     registerEntity(classOf[EntityTenguCrow], LibEntityName.TenguCrow, 1, eggPrimary = 0x191713, eggSecondary = 0x494742)
-    registerSpawn(classOf[EntityTenguCrow], ConfigHandler.spawns.tenguCrow, EnumCreatureType.MONSTER, BiomeType.MOUNTAIN)
+    registerSpawn(
+      classOf[EntityTenguCrow],
+      ConfigHandler.spawns.tenguCrow,
+      EnumCreatureType.MONSTER,
+      BiomeType.MOUNTAIN
+    )
 
     registerEntity(classOf[EntityHellRaven], LibEntityName.HellRaven, 2, eggPrimary = 0x0F1116, eggSecondary = 0x1E5096)
     registerSpawn(classOf[EntityHellRaven], ConfigHandler.spawns.hellRaven, EnumCreatureType.MONSTER, BiomeType.NETHER)
 
     registerEntity(classOf[EntityPhantom], LibEntityName.Phantom, 3, eggPrimary = 0x384FFF, eggSecondary = 0xFFFFFF)
-    registerSpawn(classOf[EntityPhantom], ConfigHandler.spawns.hellRaven, EnumCreatureType.MONSTER, BiomeType.HILLS, BiomeType.PLAINS, BiomeType.FOREST, BiomeType.NETHER)
+    registerSpawn(
+      classOf[EntityPhantom],
+      ConfigHandler.spawns.hellRaven,
+      EnumCreatureType.MONSTER,
+      BiomeType.HILLS,
+      BiomeType.PLAINS,
+      BiomeType.FOREST,
+      BiomeType.NETHER
+    )
   }
 
   def registerCrafting(): Unit = {
@@ -155,12 +200,17 @@ class CommonProxy {
     GameRegistry.addRecipe(
       recipe
         .withPattern("ccc", "cbc", "ccc")
-        .where('c').mapsTo(JTGItems.BulletCore)
-        .where('b').mapsTo(new ItemStack(LibItems.DANMAKU, 1, OreDictionary.WILDCARD_VALUE))
+        .where('c')
+        .mapsTo(JTGItems.BulletCore)
+        .where('b')
+        .mapsTo(new ItemStack(LibItems.DANMAKU, 1, OreDictionary.WILDCARD_VALUE))
         .returns(JTGBlocks.DanmakuCrafting)
     )
 
-    GameRegistry.addShapelessRecipe(new ItemStack(JTGItems.BulletCore), new ItemStack(LibItems.DANMAKU, 1, OreDictionary.WILDCARD_VALUE))
+    GameRegistry.addShapelessRecipe(
+      new ItemStack(JTGItems.BulletCore),
+      new ItemStack(LibItems.DANMAKU, 1, OreDictionary.WILDCARD_VALUE)
+    )
   }
 
   def registerWorldGen(): Unit = {
@@ -176,16 +226,8 @@ class CommonProxy {
     val strGravity       = Vector3.GravityDefault * 2.5D
 
     def recipe = new DanmakuRecipeBuilder
-    def shot   = ShotData(
-      form = null,
-      color = -1,
-      damage = 0F,
-      sizeX = 0F,
-      sizeY = 0F,
-      sizeZ = 0F,
-      end = 0,
-      subEntity = null
-    )
+    def shot =
+      ShotData(form = null, color = -1, damage = 0F, sizeX = 0F, sizeY = 0F, sizeZ = 0F, end = 0, subEntity = null)
 
     import net.katsstuff.danmakucore.data.Vector3.gravity
     import net.katsstuff.danmakucore.lib.LibColor._
@@ -415,7 +457,9 @@ class CommonProxy {
       .build()
 
     recipe
-      .withShot(shot.setForm(LibForms.FIRE).setColor(COLOR_SATURATED_RED).setDamage(0.5F).setSubEntity(LibSubEntities.FIRE))
+      .withShot(
+        shot.setForm(LibForms.FIRE).setColor(COLOR_SATURATED_RED).setDamage(0.5F).setSubEntity(LibSubEntities.FIRE)
+      )
       .withSpeed(-0.2D)
       .withInput(Items.LAVA_BUCKET)
       .withCost(300)
@@ -440,7 +484,8 @@ class CommonProxy {
       .withCost(300)
       .build()
 
-    def dyeRecipe(color: Int, oreName: String): Unit = recipe.withShot(shot.setColor(color)).withOreInput(oreName).withCost(200).build()
+    def dyeRecipe(color: Int, oreName: String): Unit =
+      recipe.withShot(shot.setColor(color)).withOreInput(oreName).withCost(200).build()
 
     dyeRecipe(COLOR_VANILLA_BLACK, "dyeBlack")
     dyeRecipe(COLOR_VANILLA_BLUE, "dyeBlue")
@@ -462,22 +507,23 @@ class CommonProxy {
 }
 
 case class DanmakuRecipeBuilder(
-    shot:     ShotData = null,
-    input:    Either[String, ItemStack] = null,
+    shot: ShotData = null,
+    input: Either[String, ItemStack] = null,
     movement: MovementData = MovementData.constant(0D),
-    cost:     Int = 1000
+    cost: Int = 1000
 ) {
 
   import net.katsstuff.journeytogensokyo.helper.Implicits._
 
-  def withShot(shot:       ShotData):  DanmakuRecipeBuilder = copy(shot = shot)
-  def withOreInput(string: String):    DanmakuRecipeBuilder = copy(input = Left(string))
-  def withInput(stack:     ItemStack): DanmakuRecipeBuilder = copy(input = Right(stack))
-  def withCost(cost:       Int):       DanmakuRecipeBuilder = copy(cost = cost)
-  def withInput(block:     Block):     DanmakuRecipeBuilder = withInput(block.toStack)
-  def withInput(item:      Item):      DanmakuRecipeBuilder = withInput(item.toStack)
-  def withSpeed(speed:     Double):    DanmakuRecipeBuilder = copy(movement = MovementData(speed, speed, speed, 0D, movement.gravity))
-  def withGravity(gravity: Vector3):   DanmakuRecipeBuilder = copy(movement = movement.copy(gravity = gravity))
-  def build(): Unit = JTGAPI.addDanmakuRecipe(shot, movement, input.merge, cost)
+  def withShot(shot: ShotData):     DanmakuRecipeBuilder = copy(shot = shot)
+  def withOreInput(string: String): DanmakuRecipeBuilder = copy(input = Left(string))
+  def withInput(stack: ItemStack):  DanmakuRecipeBuilder = copy(input = Right(stack))
+  def withCost(cost: Int):          DanmakuRecipeBuilder = copy(cost = cost)
+  def withInput(block: Block):      DanmakuRecipeBuilder = withInput(block.toStack)
+  def withInput(item: Item):        DanmakuRecipeBuilder = withInput(item.toStack)
+  def withSpeed(speed: Double): DanmakuRecipeBuilder =
+    copy(movement = MovementData(speed, speed, speed, 0D, movement.gravity))
+  def withGravity(gravity: Vector3): DanmakuRecipeBuilder = copy(movement = movement.copy(gravity = gravity))
+  def build():                       Unit                 = JTGAPI.addDanmakuRecipe(shot, movement, input.merge, cost)
 
 }

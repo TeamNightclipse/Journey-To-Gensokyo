@@ -17,28 +17,37 @@ import net.minecraft.nbt.NBTTagCompound
 class PhaseTypeShapeArrow extends PhaseType {
 
   override def instantiate(phaseManager: PhaseManager): Phase =
-    new PhaseArrow(phaseManager, ShotData.DefaultShotData, MovementData.constant(0.4D), RotationData.none, 5, 1D, 1D, this)
+    new PhaseArrow(
+      phaseManager,
+      ShotData.DefaultShotData,
+      MovementData.constant(0.4D),
+      RotationData.none,
+      5,
+      1D,
+      1D,
+      this
+    )
 
   def instantiate(
       phaseManager: PhaseManager,
-      shotData:     ShotData,
+      shotData: ShotData,
       movementData: MovementData,
       rotationData: RotationData,
-      amount:       Int,
-      distance:     Double,
-      width:        Double
+      amount: Int,
+      distance: Double,
+      width: Double
   ): Phase = new PhaseArrow(phaseManager, shotData, movementData, rotationData, amount, distance, width, this)
 }
 
 class PhaseArrow(
-    manager:          PhaseManager,
-    var shotData:     ShotData,
+    manager: PhaseManager,
+    var shotData: ShotData,
     var movementData: MovementData,
     var rotationData: RotationData,
-    var amount:       Int,
-    var distance:     Double,
-    var width:        Double,
-    val getType:      PhaseTypeShapeArrow
+    var amount: Int,
+    var distance: Double,
+    var width: Double,
+    val getType: PhaseTypeShapeArrow
 ) extends Phase(manager) {
 
   private val NbtShotData     = "shotData"
@@ -61,7 +70,7 @@ class PhaseArrow(
     val target = entity.getAttackTarget
     if (!isFrozen && isCounterStart && target != null && entity.getEntitySenses.canSee(target)) {
       val entityPos = new Vector3(entity)
-      val forward = Vector3.directionToEntity(entityPos, target)
+      val forward   = Vector3.directionToEntity(entityPos, target)
 
       shape.draw(entityPos, Quat.lookRotation(forward, Vector3.Up), 0)
     }

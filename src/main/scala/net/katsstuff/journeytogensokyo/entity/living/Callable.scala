@@ -14,6 +14,6 @@ trait Callable extends ICallable {
 
   private var distance = 0
   override def setEntityCallDistance(distance: Int): Unit = this.distance = distance
-  override def getEntityCallDistance: Int = distance
+  override def getEntityCallDistance:                Int  = distance
 
 }

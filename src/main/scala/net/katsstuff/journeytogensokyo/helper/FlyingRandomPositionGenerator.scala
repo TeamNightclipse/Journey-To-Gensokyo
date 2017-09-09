@@ -31,7 +31,12 @@ object FlyingRandomPositionGenerator {
     findRandomTargetBlock(entity, xz, y, staticVector)
   }
 
-  @Nullable private def findRandomTargetBlock(entity: EntityDanmakuMob, xz: Int, y: Int, @Nullable targetVec3: Vec3d) = {
+  @Nullable private def findRandomTargetBlock(
+      entity: EntityDanmakuMob,
+      xz: Int,
+      y: Int,
+      @Nullable targetVec3: Vec3d
+  ) = {
     val navigate = entity.getNavigator
     val rand     = entity.getRNG
     var flag     = false

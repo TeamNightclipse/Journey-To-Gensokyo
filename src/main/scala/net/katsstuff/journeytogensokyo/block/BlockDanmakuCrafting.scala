@@ -23,15 +23,15 @@ class BlockDanmakuCrafting extends BlockJTGBase(Material.WOOD, LibBlockName.Danm
   protected val BoundingBoxAABB = new AxisAlignedBB(0.0625D, 0.0D, 0.0625D, 0.9375D, 0.5D, 0.9375D)
 
   override def onBlockActivated(
-      world:    World,
-      pos:      BlockPos,
-      state:    IBlockState,
-      player:   EntityPlayer,
-      hand:     EnumHand,
-      side:     EnumFacing,
-      hitX:     Float,
-      hitY:     Float,
-      hitZ:     Float
+      world: World,
+      pos: BlockPos,
+      state: IBlockState,
+      player: EntityPlayer,
+      hand: EnumHand,
+      side: EnumFacing,
+      hitX: Float,
+      hitY: Float,
+      hitZ: Float
   ): Boolean = {
     if (!world.isRemote) {
       player.openGui(JourneyToGensokyo, LibGuiId.DanmakuCraftingGui, world, pos.getX, pos.getY, pos.getZ)
@@ -39,11 +39,13 @@ class BlockDanmakuCrafting extends BlockJTGBase(Material.WOOD, LibBlockName.Danm
     true
   }
 
-  override def getCollisionBoundingBox(blockState: IBlockState, worldIn: IBlockAccess, pos: BlockPos): AxisAlignedBB = BoundingBoxAABB
+  override def getCollisionBoundingBox(blockState: IBlockState, worldIn: IBlockAccess, pos: BlockPos): AxisAlignedBB =
+    BoundingBoxAABB
 
   @SideOnly(Side.CLIENT)
-  override def getSelectedBoundingBox(state: IBlockState, worldIn: World, pos: BlockPos): AxisAlignedBB = BoundingBoxAABB.offset(pos)
+  override def getSelectedBoundingBox(state: IBlockState, worldIn: World, pos: BlockPos): AxisAlignedBB =
+    BoundingBoxAABB.offset(pos)
 
   override def isOpaqueCube(state: IBlockState) = false
-  override def isFullCube(state:   IBlockState) = false
+  override def isFullCube(state: IBlockState)   = false
 }

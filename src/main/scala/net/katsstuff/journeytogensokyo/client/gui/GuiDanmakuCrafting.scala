@@ -43,16 +43,16 @@ class GuiDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: BlockPos
       startY + incrementY * strings.length
     }
 
-    def i18n(string: String)                           = I18n.format(string)
-    def i18nPrefix(prefix: String)                     = (str: String) => i18n(s"$prefix.$str")
+    def i18n(string: String)                                      = I18n.format(string)
+    def i18nPrefix(prefix: String)                                = (str: String) => i18n(s"$prefix.$str")
     def i18nDouble[A, B](first: A => String, second: B => String) = first(_: A) + SpaceDivider + second(_: B)
 
     def i18nTranslatable(translatable: ITranslatable) = i18n(translatable.getUnlocalizedName)
 
-    val i18nDanmaku = i18nPrefix("item.danmaku")
-    val i18nDanmaku2 = i18nDouble(i18nDanmaku, i18nDanmaku)
+    val i18nDanmaku          = i18nPrefix("item.danmaku")
+    val i18nDanmaku2         = i18nDouble(i18nDanmaku, i18nDanmaku)
     val i18nDanmakuTranslate = i18nDouble(i18nDanmaku, i18nTranslatable)
-    val i18nCrafting = i18nPrefix("crafting.danmaku")
+    val i18nCrafting         = i18nPrefix("crafting.danmaku")
 
     def i18nValueOpt(string: String, value: (_, Option[_])*) = {
       val builder = new StringBuilder(i18n(string) + SpaceDivider)
@@ -62,7 +62,7 @@ class GuiDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: BlockPos
         //LogHelper.info(builder.toString())
       } else {
         builder.append(s"(${value.map(_._1).mkString(", ")})")
-        if(!value.map(_._2).forall(_.isEmpty)) {
+        if (!value.map(_._2).forall(_.isEmpty)) {
           builder.append(" + ")
           builder.append(s"(${value.map(_._2.fold("0")(_.toString)).mkString(", ")})")
         }
@@ -87,8 +87,8 @@ class GuiDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: BlockPos
     }
 
     def i18nDanmakuValueOpt(string: String, value: (_, Option[_])*) = i18nValueOpt(s"item.danmaku.$string", value: _*)
-    def i18nDanmakuValue(string: String, value: (_, _)*) = i18nValue(s"item.danmaku.$string", value: _*)
-    def i18nCraftingValue(string: String, value: (_, Option[_])*) = i18nValueOpt(s"crafting.danmaku.$string", value: _*)
+    def i18nDanmakuValue(string: String, value: (_, _)*)            = i18nValue(s"item.danmaku.$string", value: _*)
+    def i18nCraftingValue(string: String, value: (_, Option[_])*)   = i18nValueOpt(s"crafting.danmaku.$string", value: _*)
 
     draw(i18nCrafting("copy"), 18, 150, 0x404040)
     draw(i18nDanmaku("amount"), 54, 150, 0x404040)
@@ -102,12 +102,20 @@ class GuiDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: BlockPos
       val amountCurrent  = ctx.amountCurrent
       val amountCombined = ctx.amountCombined
 
-      val endsAt = drawAll(14, 10, 10,
+      val endsAt = drawAll(
+        14,
+        10,
+        10,
         Seq(
           i18nDanmakuTranslate("form", result.filter(_.form != null).fold(current.form)(_.form)),
           i18nDanmaku2("color", s"color.${result.filter(_.color != -1).fold(current.color)(_.color)}"),
           i18nDanmakuValueOpt("damage", current.damage -> result.map(_.damage)),
-          i18nDanmakuValueOpt("size", current.sizeX -> result.map(_.sizeX), current.sizeY -> result.map(_.sizeY), current.sizeZ -> result.map(_.sizeZ)),
+          i18nDanmakuValueOpt(
+            "size",
+            current.sizeX -> result.map(_.sizeX),
+            current.sizeY -> result.map(_.sizeY),
+            current.sizeZ -> result.map(_.sizeZ)
+          ),
           i18nDanmakuValueOpt("speed", ctx.speedCurrent -> ctx.speedResult),
           i18nDanmakuValueOpt("gravity", toTuple(ctx.gravityCurrent, ctx.gravityResult): _*),
           i18nDanmakuValue("amount", amountCurrent -> (amountCombined - amountCurrent)),

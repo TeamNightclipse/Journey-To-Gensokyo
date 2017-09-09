@@ -15,7 +15,12 @@ import net.katsstuff.danmakucore.item.ItemDanmaku
 import net.katsstuff.danmakucore.lib.data.LibItems
 import net.katsstuff.journeytogensokyo.api.recipe.{CraftingManager, IRecipeDanmaku}
 import net.katsstuff.journeytogensokyo.block.JTGBlocks
-import net.katsstuff.journeytogensokyo.container.slot.{SingleItemSlot, SlotDanmakuInput, SlotDanmakuOutput, SlotDanmakuType}
+import net.katsstuff.journeytogensokyo.container.slot.{
+  SingleItemSlot,
+  SlotDanmakuInput,
+  SlotDanmakuOutput,
+  SlotDanmakuType
+}
 import net.minecraft.entity.player.{EntityPlayer, InventoryPlayer}
 import net.minecraft.inventory.{ClickType, Container, IInventory, InventoryCraftResult, InventoryCrafting, Slot}
 import net.minecraft.item.ItemStack
@@ -35,7 +40,8 @@ class ContainerDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: Bl
   private val slotAmount   = new SlotDanmakuInput(craftIngredients, 2, 56, 160, SlotDanmakuType.BulletCore, false)
   private val slotMaterial = new SingleItemSlot(craftIngredients, 3, 161, 142)
 
-  private val slotOutput = new SlotDanmakuOutput(this, invPlayer.player, craftIngredients, craftMatrix, craftResult, 0, 224, 142)
+  private val slotOutput =
+    new SlotDanmakuOutput(this, invPlayer.player, craftIngredients, craftMatrix, craftResult, 0, 224, 142)
 
   addSlotToContainer(slotOutput)
   addSlotToContainer(slotDanmaku)
@@ -52,7 +58,14 @@ class ContainerDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: Bl
       j <- 0 until 3
     } {
       addSlotToContainer(
-        new SlotDanmakuInput(craftMatrix, j + i * 3, offsetX - 69 + j * 18, offsetY + 22 + i * 18, SlotDanmakuType.BulletCore, true)
+        new SlotDanmakuInput(
+          craftMatrix,
+          j + i * 3,
+          offsetX - 69 + j * 18,
+          offsetY + 22 + i * 18,
+          SlotDanmakuType.BulletCore,
+          true
+        )
       )
     }
 
@@ -73,13 +86,12 @@ class ContainerDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: Bl
   override def onCraftMatrixChanged(inventoryIn: IInventory): Unit = {
     val out = (for {
       data <- TouhouHelper.getDanmakuCoreData(invPlayer.player).toOption
-      ctx <- createContext
+      ctx  <- createContext
     } yield ctx.createOutput(data.getScore)).getOrElse(ItemStack.EMPTY)
 
-    if(ItemStack.areItemStacksEqual(out, slotDanmaku.getStack)) {
+    if (ItemStack.areItemStacksEqual(out, slotDanmaku.getStack)) {
       slotOutput.putStack(slotDanmaku.getStack)
-    }
-    else {
+    } else {
       slotOutput.putStack(out)
     }
 
@@ -88,14 +100,16 @@ class ContainerDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: Bl
 
   def createContext: Option[DanmakuCraftingContext] = {
     val danStack = slotDanmaku.getStack
-    if(!danStack.isEmpty) {
-      Some(DanmakuCraftingContext(
-        danmakuStack = danStack,
-        copyStack = slotCopy.getStack,
-        amountStack = slotAmount.getStack,
-        recipe = CraftingManager.findMatchingRecipeDanmaku(slotMaterial),
-        patternResult = getPattern
-      ))
+    if (!danStack.isEmpty) {
+      Some(
+        DanmakuCraftingContext(
+          danmakuStack = danStack,
+          copyStack = slotCopy.getStack,
+          amountStack = slotAmount.getStack,
+          recipe = CraftingManager.findMatchingRecipeDanmaku(slotMaterial),
+          patternResult = getPattern
+        )
+      )
     } else None
   }
 
@@ -104,7 +118,7 @@ class ContainerDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: Bl
       val (nonEmpty, empty) = (0 until 9).partition(slots.contains)
 
       !nonEmpty.map(craftMatrix.getStackInSlot).exists(_.isEmpty) &&
-        empty.map(craftMatrix.getStackInSlot).forall(_.isEmpty)
+      empty.map(craftMatrix.getStackInSlot).forall(_.isEmpty)
     }
 
     if (pattern(4)) Some(ItemDanmaku.Pattern.LINE)
@@ -137,7 +151,7 @@ class ContainerDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: Bl
 
   override def transferStackInSlot(player: EntityPlayer, index: Int): ItemStack = {
     var resultStack = ItemStack.EMPTY
-    val slot = inventorySlots.get(index)
+    val slot        = inventorySlots.get(index)
 
     if (slot != null && slot.getHasStack) {
       val slotStack = slot.getStack
@@ -147,11 +161,11 @@ class ContainerDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: Bl
 
       def mergeType(defaultFrom: Int, defaultTo: Int): Boolean = slotStack.getItem match {
         case item if item == LibItems.DANMAKU =>
-          if(!slotDanmaku.getHasStack) {
+          if (!slotDanmaku.getHasStack) {
             slotDanmaku.putStack(slotStack.splitStack(1))
             true
           } else false
-        case _                                => merge(defaultFrom, defaultTo)
+        case _ => merge(defaultFrom, defaultTo)
       }
 
       val mergeRes = index match {
@@ -191,19 +205,19 @@ case class DanmakuCraftingContext(
 ) {
 
   val PatternCosts = Map(
-    ItemDanmaku.Pattern.LINE -> 10,
+    ItemDanmaku.Pattern.LINE        -> 10,
     ItemDanmaku.Pattern.RANDOM_RING -> 20,
-    ItemDanmaku.Pattern.WIDE -> 30,
-    ItemDanmaku.Pattern.CIRCLE -> 35,
-    ItemDanmaku.Pattern.STAR -> 45,
-    ItemDanmaku.Pattern.SPHERE -> 2000,
-    ItemDanmaku.Pattern.RING -> 35
+    ItemDanmaku.Pattern.WIDE        -> 30,
+    ItemDanmaku.Pattern.CIRCLE      -> 35,
+    ItemDanmaku.Pattern.STAR        -> 45,
+    ItemDanmaku.Pattern.SPHERE      -> 2000,
+    ItemDanmaku.Pattern.RING        -> 35
   )
 
   def requiredScore: Int = recipe.fold(0)(_.scoreCost()) + patternResult(amountCombined).fold(0)(PatternCosts)
 
   def createOutput(currentScore: Int): ItemStack = {
-    if(requiredScore > currentScore) ItemStack.EMPTY
+    if (requiredScore > currentScore) ItemStack.EMPTY
     else {
       val danmakuCopy = danmakuStack.copy()
 
@@ -212,7 +226,7 @@ case class DanmakuCraftingContext(
       gravityCombined.foreach(ItemDanmaku.setGravity(_, danmakuCopy))
       patternResult(amountCombined).foreach(ItemDanmaku.PATTERN.set(_, danmakuCopy))
       danmakuCopy.setCount(stackSizeCombined)
-      if(amountCombined != 1) {
+      if (amountCombined != 1) {
         ItemDanmaku.AMOUNT.set(amountCombined, danmakuCopy)
       }
       //noinspection NameBooleanParameters
@@ -222,11 +236,12 @@ case class DanmakuCraftingContext(
     }
   }
 
-  def shotCurrent: ShotData = ShotData.fromNBTItemStack(danmakuStack)
+  def shotCurrent: ShotData         = ShotData.fromNBTItemStack(danmakuStack)
   def shotResult:  Option[ShotData] = recipe.map(_.outputShotData)
 
   def shotCombined: Option[ShotData] = shotResult.map { result =>
-    def round(d: Float, decimalPlace: Int): Float = BigDecimal(d.toDouble).setScale(decimalPlace, BigDecimal.RoundingMode.HALF_UP).toFloat
+    def round(d: Float, decimalPlace: Int): Float =
+      BigDecimal(d.toDouble).setScale(decimalPlace, BigDecimal.RoundingMode.HALF_UP).toFloat
     val current = shotCurrent
 
     val roundedDamage = round(current.damage + result.damage, 2)
@@ -257,12 +272,12 @@ case class DanmakuCraftingContext(
     )
   }
 
-  def speedCurrent:  Double = ItemDanmaku.SPEED.get(danmakuStack)
+  def speedCurrent:  Double         = ItemDanmaku.SPEED.get(danmakuStack)
   def speedResult:   Option[Double] = recipe.map(_.outputMovement.getSpeedOriginal)
   def speedCombined: Option[Double] = speedResult.map(result => MathHelper.clamp(speedCurrent + result, 0D, 2D))
 
   def gravityResult:  Option[Vector3] = recipe.map(_.outputMovement.getGravity)
-  def gravityCurrent: Vector3 = ItemDanmaku.getGravity(danmakuStack)
+  def gravityCurrent: Vector3         = ItemDanmaku.getGravity(danmakuStack)
 
   def gravityCombined: Option[Vector3] = gravityResult.map { result =>
     val current = gravityCurrent
@@ -281,8 +296,8 @@ case class DanmakuCraftingContext(
   def stackSizeCombined: Int = Math.min(stackSizeResult + stackSizeCurrent, 64)
 
   def amountCurrent: Int = ItemDanmaku.AMOUNT.get(danmakuStack)
-  def amountResult: Int = amountStack.getCount
-  def amountCombined: Int =  {
+  def amountResult:  Int = amountStack.getCount
+  def amountCombined: Int = {
     val maxNumber = ConfigHandler.danmaku.danmakuMaxNumber
     val total     = amountCurrent + amountResult
     if (total > maxNumber) maxNumber else total

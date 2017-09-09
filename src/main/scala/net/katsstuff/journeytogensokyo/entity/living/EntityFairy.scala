@@ -21,7 +21,14 @@ import net.katsstuff.journeytogensokyo.phase.JTGPhases
 import net.minecraft.block.BlockFlower
 import net.minecraft.block.material.Material
 import net.minecraft.block.state.IBlockState
-import net.minecraft.entity.ai.{EntityAIHurtByTarget, EntityAILookIdle, EntityAINearestAttackableTarget, EntityAISwimming, EntityAIWander, EntityAIWatchClosest}
+import net.minecraft.entity.ai.{
+  EntityAIHurtByTarget,
+  EntityAILookIdle,
+  EntityAINearestAttackableTarget,
+  EntityAISwimming,
+  EntityAIWander,
+  EntityAIWatchClosest
+}
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.entity.{EntityLivingBase, IEntityLivingData}
 import net.minecraft.item.{Item, ItemStack}
@@ -42,26 +49,34 @@ object EntityFairy {
     counter.toByte
   }
 
-  private final val LikedFlower:   DataParameter[ItemStack] = EntityDataManager.createKey(classOf[EntityFairy], DataSerializers.OPTIONAL_ITEM_STACK)
-  private final val HoldingFlower: DataParameter[JBoolean]  = EntityDataManager.createKey(classOf[EntityFairy], DataSerializers.BOOLEAN)
+  private final val LikedFlower: DataParameter[ItemStack] =
+    EntityDataManager.createKey(classOf[EntityFairy], DataSerializers.OPTIONAL_ITEM_STACK)
+  private final val HoldingFlower: DataParameter[JBoolean] =
+    EntityDataManager.createKey(classOf[EntityFairy], DataSerializers.BOOLEAN)
 
   lazy val flowers: Seq[ItemStack] = {
-    val typesForColor = ReflectionHelper.findField(classOf[BlockFlower.EnumFlowerType], "TYPES_FOR_BLOCK", "field_176981_k").get(null).asInstanceOf[Array[Array[BlockFlower.EnumFlowerType]]]
+    val typesForColor = ReflectionHelper
+      .findField(classOf[BlockFlower.EnumFlowerType], "TYPES_FOR_BLOCK", "field_176981_k")
+      .get(null)
+      .asInstanceOf[Array[Array[BlockFlower.EnumFlowerType]]]
 
-    BlockFlower.EnumFlowerColor.values().flatMap { flowerColor =>
-      val blockTypes = typesForColor(flowerColor.ordinal())
-      val block = flowerColor.getBlock
-      blockTypes.map(tpe => new ItemStack(block, 1, tpe.getMeta))
-    }.toSeq
+    BlockFlower.EnumFlowerColor
+      .values()
+      .flatMap { flowerColor =>
+        val blockTypes = typesForColor(flowerColor.ordinal())
+        val block      = flowerColor.getBlock
+        blockTypes.map(tpe => new ItemStack(block, 1, tpe.getMeta))
+      }
+      .toSeq
   }
 
   def randomFlower(rand: Random): ItemStack = flowers(rand.nextInt(flowers.length))
 }
 class EntityFairy(_world: World) extends EntityForm(_world) with Callable with IAllyDanmaku {
 
-  private var aiTempt: EntityAITemptStack = _
+  private var aiTempt:      EntityAITemptStack                            = _
   private var attackPlayer: EntityAINearestAttackableTarget[EntityPlayer] = _
-  private var followFriend: EntityAIFollowFriend = _
+  private var followFriend: EntityAIFollowFriend                          = _
 
   private var throwAwayTime = 0
   private var _friend: Option[EntityPlayer] = None
@@ -87,7 +102,7 @@ class EntityFairy(_world: World) extends EntityForm(_world) with Callable with I
   override def initEntityAI(): Unit = {
     val liked = {
       val l = likedFlower
-      if(l.isEmpty) {
+      if (l.isEmpty) {
         val newLiked = EntityFairy.randomFlower(rand)
         likedFlower = newLiked
         newLiked
@@ -117,24 +132,25 @@ class EntityFairy(_world: World) extends EntityForm(_world) with Callable with I
 
   override def onUpdate(): Unit = {
     super.onUpdate()
-    if(aiTempt != null) {
-      if(aiTempt.isTempted) {
+    if (aiTempt != null) {
+      if (aiTempt.isTempted) {
         targetTasks.removeTask(attackPlayer)
 
-        if(ticksExisted % 10 == 0 && world.isInstanceOf[WorldServer]) {
-          world.asInstanceOf[WorldServer].spawnParticle(EnumParticleTypes.HEART, false, posX, posY, posZ, 1 + rand.nextInt(2), 0D, 0D, 0D, 0.1D)
+        if (ticksExisted % 10 == 0 && world.isInstanceOf[WorldServer]) {
+          world
+            .asInstanceOf[WorldServer]
+            .spawnParticle(EnumParticleTypes.HEART, false, posX, posY, posZ, 1 + rand.nextInt(2), 0D, 0D, 0D, 0.1D)
         }
-      }
-      else if(!holdingFlower) {
+      } else if (!holdingFlower) {
         targetTasks.addTask(2, attackPlayer)
       }
 
     }
 
-    if(throwAwayTime > 0) {
+    if (throwAwayTime > 0) {
       throwAwayTime -= 1
 
-      if(throwAwayTime == 0) {
+      if (throwAwayTime == 0) {
         holdingFlower = false
         entityDropItem(likedFlower, 0F)
       }
@@ -153,7 +169,7 @@ class EntityFairy(_world: World) extends EntityForm(_world) with Callable with I
 
     val groupData = superData match {
       case fairy: FairyGroupData => fairy
-      case _ => FairyGroupData(form)
+      case _                     => FairyGroupData(form)
     }
 
     form = groupData.form
@@ -163,7 +179,8 @@ class EntityFairy(_world: World) extends EntityForm(_world) with Callable with I
 
   override def processInteract(player: EntityPlayer, hand: EnumHand): Boolean = {
     val stack = player.getHeldItem(hand)
-    if ((aiTempt == null || aiTempt.isTempted) && !stack.isEmpty && likedFlower.isItemEqual(stack) && player.getDistanceSqToEntity(this) < 9.0D) {
+    if ((aiTempt == null || aiTempt.isTempted) && !stack.isEmpty && likedFlower.isItemEqual(stack) && player
+          .getDistanceSqToEntity(this) < 9.0D) {
       if (!player.capabilities.isCreativeMode) stack.shrink(1)
 
       if (!world.isRemote) {
@@ -172,8 +189,7 @@ class EntityFairy(_world: World) extends EntityForm(_world) with Callable with I
       }
 
       true
-    }
-    else super.processInteract(player, hand)
+    } else super.processInteract(player, hand)
   }
 
   override def isValidLightLevel: Boolean = {
@@ -193,12 +209,11 @@ class EntityFairy(_world: World) extends EntityForm(_world) with Callable with I
 
   def holdingFlower: Boolean = dataManager.get(EntityFairy.HoldingFlower)
   def holdingFlower_=(holding: Boolean): Unit = {
-    if(holding) {
+    if (holding) {
       throwAwayTime = 400 + rand.nextInt(1201)
       targetTasks.removeTask(attackPlayer)
       tasks.addTask(3, followFriend)
-    }
-    else {
+    } else {
       _friend = None
       targetTasks.addTask(2, attackPlayer)
       tasks.removeTask(followFriend)
@@ -210,7 +225,7 @@ class EntityFairy(_world: World) extends EntityForm(_world) with Callable with I
   def likedFlower: ItemStack = dataManager.get(EntityFairy.LikedFlower)
   def likedFlower_=(flower: ItemStack): Unit = {
     dataManager.set(EntityFairy.LikedFlower, flower)
-    if(aiTempt != null) {
+    if (aiTempt != null) {
       aiTempt.temptStacks = Set(flower)
     }
   }

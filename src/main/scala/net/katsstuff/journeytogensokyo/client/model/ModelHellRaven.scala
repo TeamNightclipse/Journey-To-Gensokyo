@@ -76,13 +76,29 @@ object ModelHellRaven extends ModelBase {
   ravenBody.addChild(ravenTail)
   ravenBody.addChild(ravenWingRight)
 
-  override def render(entity: Entity, movement: Float, far: Float, tick: Float, yaw: Float, pitch: Float, size: Float): Unit = {
+  override def render(
+      entity: Entity,
+      movement: Float,
+      far: Float,
+      tick: Float,
+      yaw: Float,
+      pitch: Float,
+      size: Float
+  ): Unit = {
     setRotationAngles(movement, far, tick, yaw, pitch, size, entity)
     ravenBody.render(size)
     ravenHead.render(size)
   }
 
-  override def setRotationAngles(movement: Float, far: Float, tick: Float, yaw: Float, pitch: Float, size: Float, entity: Entity): Unit = {
+  override def setRotationAngles(
+      movement: Float,
+      far: Float,
+      tick: Float,
+      yaw: Float,
+      pitch: Float,
+      size: Float,
+      entity: Entity
+  ): Unit = {
     ravenHead.rotateAngleY = yaw / (180F / Math.PI.toFloat)
     ravenHead.rotateAngleX = pitch / (180F / Math.PI.toFloat)
     ravenBody.rotateAngleX = (Math.PI / 3F + MathHelper.cos(tick * 0.1F) * 0.15F).toFloat

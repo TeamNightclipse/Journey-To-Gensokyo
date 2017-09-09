@@ -13,7 +13,8 @@ import net.katsstuff.journeytogensokyo.entity.living.EntityTenguCrow
 import net.minecraft.entity.ai.EntityAIBase
 
 //Same as EntityAIMoveRanged, except it doesn't delete the current path
-class EntityAIMoveRangedTengu(val entity: EntityTenguCrow, val moveSpeedAmp: Double, val maxDistance: Float) extends EntityAIBase {
+class EntityAIMoveRangedTengu(val entity: EntityTenguCrow, val moveSpeedAmp: Double, val maxDistance: Float)
+    extends EntityAIBase {
   final private var maxAttackDistance = .0
   private var seeTime                 = 0
   private var strafingClockwise       = false

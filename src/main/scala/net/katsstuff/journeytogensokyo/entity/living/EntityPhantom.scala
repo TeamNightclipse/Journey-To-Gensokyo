@@ -19,7 +19,15 @@ import net.katsstuff.journeytogensokyo.phase.JTGPhases
 import net.minecraft.block.material.Material
 import net.minecraft.block.state.IBlockState
 import net.minecraft.entity.{EnumCreatureAttribute, IEntityLivingData}
-import net.minecraft.entity.ai.{EntityAIFleeSun, EntityAIHurtByTarget, EntityAILookIdle, EntityAINearestAttackableTarget, EntityAIRestrictSun, EntityAISwimming, EntityAIWander}
+import net.minecraft.entity.ai.{
+  EntityAIFleeSun,
+  EntityAIHurtByTarget,
+  EntityAILookIdle,
+  EntityAINearestAttackableTarget,
+  EntityAIRestrictSun,
+  EntityAISwimming,
+  EntityAIWander
+}
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.world.{DifficultyInstance, World}
 
@@ -76,7 +84,7 @@ class EntityPhantom(_world: World) extends EntityForm(_world) with IAllyDanmaku 
 
     val groupData = superData match {
       case fairy: PhantomGroupData => fairy
-      case _ => PhantomGroupData(form)
+      case _                       => PhantomGroupData(form)
     }
 
     form = groupData.form
@@ -100,9 +108,14 @@ class EntityPhantom(_world: World) extends EntityForm(_world) with IAllyDanmaku 
       val size  = 0.4F
 
       for (i <- 0 until 2) {
-        val coeff  = i / 2D
-        val pos    = Vector3(prevPosX + (posX - prevPosX) * coeff, 0.2F + prevPosY + (posY - prevPosY) * coeff, prevPosZ + (posZ - prevPosZ) * coeff)
-        val motion = Vector3(0.0125f * (rand.nextFloat - 0.5f), 0.075f * rand.nextFloat, 0.0125f * (rand.nextFloat - 0.5f))
+        val coeff = i / 2D
+        val pos = Vector3(
+          prevPosX + (posX - prevPosX) * coeff,
+          0.2F + prevPosY + (posY - prevPosY) * coeff,
+          prevPosZ + (posZ - prevPosZ) * coeff
+        )
+        val motion =
+          Vector3(0.0125f * (rand.nextFloat - 0.5f), 0.075f * rand.nextFloat, 0.0125f * (rand.nextFloat - 0.5f))
         ParticleUtil.spawnParticleGlow(world, pos, motion, r, g, b, size * 15F, 40, GlowTexture.MOTE)
       }
     }

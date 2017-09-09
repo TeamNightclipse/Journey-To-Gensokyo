@@ -19,12 +19,20 @@ import net.minecraftforge.fml.relauncher.{Side, SideOnly}
 
 @SideOnly(Side.CLIENT)
 class LayerFairyFlower(val fairyRenderer: RenderFairy) extends LayerRenderer[EntityFairy] {
-  override def doRenderLayer(fairy: EntityFairy, limbSwing: Float, limbSwingAmount: Float, partialTicks: Float, ageInTicks: Float,
-      netHeadYaw: Float, headPitch: Float, scale: Float): Unit = {
+  override def doRenderLayer(
+      fairy: EntityFairy,
+      limbSwing: Float,
+      limbSwingAmount: Float,
+      partialTicks: Float,
+      ageInTicks: Float,
+      netHeadYaw: Float,
+      headPitch: Float,
+      scale: Float
+  ): Unit = {
     val fairyModel = fairyRenderer.getMainModel.asInstanceOf[ModelFairy]
 
     if (fairy.holdingFlower) {
-      val likedFlower = fairy.likedFlower
+      val likedFlower   = fairy.likedFlower
       val blockRenderer = Minecraft.getMinecraft.getBlockRendererDispatcher
 
       GlStateManager.enableRescaleNormal()

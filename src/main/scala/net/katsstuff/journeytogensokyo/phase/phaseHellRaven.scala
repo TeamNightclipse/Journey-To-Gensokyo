@@ -22,7 +22,8 @@ import net.minecraft.item.ItemStack
 import net.minecraft.util.DamageSource
 
 class PhaseTypeHellRaven extends PhaseType {
-  override def instantiate(manager: PhaseManager): Phase = new PhaseHellRaven(manager, ThreadLocalRandom.current().nextBoolean(), this)
+  override def instantiate(manager: PhaseManager): Phase =
+    new PhaseHellRaven(manager, ThreadLocalRandom.current().nextBoolean(), this)
 }
 
 class PhaseHellRaven(manager: PhaseManager, star: Boolean, val getType: PhaseTypeHellRaven) extends Phase(manager) {
@@ -51,13 +52,26 @@ class PhaseHellRaven(manager: PhaseManager, star: Boolean, val getType: PhaseTyp
 
     if (!isFrozen && target != null && entity.getEntitySenses.canSee(target)) {
       val entityPos = new Vector3(entity)
-      val forward = Vector3.directionToEntity(entityPos, target)
+      val forward   = Vector3.directionToEntity(entityPos, target)
       if (star) {
         if (counter >= 20) {
           val template =
-            DanmakuTemplate.builder().setUser(entity).setShot(starShotData).setDirection(forward).setMovementData(0.3D * level.getMultiplier).build()
+            DanmakuTemplate
+              .builder()
+              .setUser(entity)
+              .setShot(starShotData)
+              .setDirection(forward)
+              .setMovementData(0.3D * level.getMultiplier)
+              .build()
           //TODO: Use star shot when it's working again
-          DanmakuCreationHelper.createSphereShot(Quat.lookRotation(forward, Vector3.Up), template, 4, Math.max(8, 2 * level.getMultiplier), 0F, 0.5D)
+          DanmakuCreationHelper.createSphereShot(
+            Quat.lookRotation(forward, Vector3.Up),
+            template,
+            4,
+            Math.max(8, 2 * level.getMultiplier),
+            0F,
+            0.5D
+          )
           DanmakuHelper.playShotSound(entity)
         }
 
@@ -70,7 +84,9 @@ class PhaseHellRaven(manager: PhaseManager, star: Boolean, val getType: PhaseTyp
           val template = DanmakuTemplate.builder().setUser(entity).setShot(otherShotData).setDirection(forward)
 
           for (i <- 1 until num) {
-            entity.world.spawnEntity(template.setMovementData(0.3D * (i + i / 2D), 0.3D * (i / 2D), 0D).build().asEntity())
+            entity.world.spawnEntity(
+              template.setMovementData(0.3D * (i + i / 2D), 0.3D * (i / 2D), 0D).build().asEntity()
+            )
           }
 
           DanmakuHelper.playShotSound(entity)
