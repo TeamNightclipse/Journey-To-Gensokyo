@@ -115,6 +115,24 @@ class CommonProxy {
     def registerEntity[A <: Entity](clazz: Class[A], name: String, id: Int, trackingRange: Int = 64, updateFrequency: Int = 1, sendVelocityUpdates: Boolean = true, eggPrimary: Int, eggSecondary: Int): Unit =
       EntityRegistry.registerModEntity(new ResourceLocation(LibMod.Id, name), clazz, name, id, JourneyToGensokyo, trackingRange, updateFrequency, sendVelocityUpdates, eggPrimary, eggSecondary)
 
+    def registerSpawn(
+        clazz:        Class[_ <: EntityLiving],
+        entry:        ConfigHandler.Spawns.SpawnEntry,
+        creatureType: EnumCreatureType,
+        biomeTypes:   BiomeDictionary.Type*
+    ): Unit =
+      EntityRegistry.addSpawn(
+        clazz,
+        entry.weightedProbability(),
+        entry.minAmount(),
+        entry.maxAmount(),
+        creatureType,
+        biomesForTypes(biomeTypes: _*): _*
+      )
+
+    def biomesForTypes(types: BiomeDictionary.Type*): Seq[Biome] =
+      types.flatMap(BiomeDictionary.getBiomes(_).asScala).distinct
+
     registerEntity(classOf[EntityFairy], LibEntityName.Fairy, 0, eggPrimary = 0xCCCCCC, eggSecondary = 0x65D159)
     registerSpawn(classOf[EntityFairy], ConfigHandler.spawns.fairy, EnumCreatureType.MONSTER, BiomeType.HILLS, BiomeType.PLAINS, BiomeType.FOREST)
 
@@ -150,24 +168,6 @@ class CommonProxy {
     GameRegistry.registerWorldGenerator(OreWorldGen.MakaiOreGen, 5)
     GameRegistry.registerWorldGenerator(OreWorldGen.CelestialOreGen, 5)
   }
-
-  def registerSpawn(
-      clazz:        Class[_ <: EntityLiving],
-      entry:        ConfigHandler.Spawns.SpawnEntry,
-      creatureType: EnumCreatureType,
-      biomeTypes:   BiomeDictionary.Type*
-  ): Unit =
-    EntityRegistry.addSpawn(
-      clazz,
-      entry.weightedProbability(),
-      entry.minAmount(),
-      entry.maxAmount(),
-      creatureType,
-      biomesForTypes(biomeTypes: _*): _*
-    )
-
-  def biomesForTypes(types: BiomeDictionary.Type*): Seq[Biome] =
-    types.flatMap(BiomeDictionary.getBiomes(_).asScala).distinct
 
   def registerDanmakuCrafting(): Unit = {
     val defaultForm      = LibForms.SPHERE
