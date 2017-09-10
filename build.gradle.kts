@@ -47,7 +47,7 @@ getTask<ScalaCompile>("compileScala") {
 
 version = "${config["mc_version"]}-${config["version"]}-${config["build_number"]}"
 group = "net.katsstuff"
-base.archivesBaseName = "danmakucore"
+base.archivesBaseName = "journeyToGensokyo"
 
 val mainSourceSet = java.sourceSets.get("main")
 val javaSourceSet = mainSourceSet.java
