@@ -1,20 +1,15 @@
 import groovy.util.ConfigObject
 import groovy.util.ConfigSlurper
+import net.minecraftforge.gradle.user.IReobfuscator
+import net.minecraftforge.gradle.user.ReobfTaskFactory
 import net.minecraftforge.gradle.user.patcherUser.forge.ForgeExtension
 import org.gradle.api.internal.HasConvention
 import org.gradle.jvm.tasks.Jar
 import java.util.Properties
 
 buildscript {
-    repositories {
-        jcenter()
-        maven {
-            name = "forge"
-            setUrl("http://files.minecraftforge.net/maven")
-        }
-    }
     dependencies {
-        classpath("net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT")
+        classpath("net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT")
     }
 }
 
@@ -37,11 +32,11 @@ java {
     targetCompatibility = JavaVersion.VERSION_1_8
 }
 
-getTask<JavaCompile>("compileJava") {
+tasks.withType<JavaCompile> {
     options.encoding = "UTF-8"
 }
 
-getTask<ScalaCompile>("compileScala") {
+tasks.withType<ScalaCompile> {
     scalaCompileOptions.additionalParameters = listOf("-Xexperimental")
 }
 
@@ -61,18 +56,14 @@ val minecraft = the<ForgeExtension>()
 
 configure<ForgeExtension> {
     version = "${config["mc_version"]}-${config["forge_version"]}"
-    if (file("../run1.11").exists()) {
-        runDir = "../run1.11"
-    } else {
-        runDir = "run"
-    }
+    runDir = if (file("../run1.12").exists()) "../run1.12" else "run"
 
     // the mappings can be changed at any time, and must be in the following format.
     // snapshot_YYYYMMDD   snapshot are built nightly.
     // stable_#            stables are built at the discretion of the MCP team.
     // Use non-default mappings at your own risk. they may not allways work.
     // simply re-run your setup task after changing the mappings to update your workspace.
-    mappings = "snapshot_20170612"
+    mappings = "snapshot_20171128"
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
 
     replace("@VERSION@", project.version)
@@ -80,10 +71,14 @@ configure<ForgeExtension> {
 }
 
 dependencies {
-    compile(project(":danmakuCore"))
+    compile(project("DanmakuCore"))
 }
 
-getTask<ProcessResources>("processResources") {
+tasks.withType<Jar> {
+    exclude("**/*.psd")
+}
+
+tasks.withType<ProcessResources> {
     inputs.property("version", project.version)
     inputs.property("mcversion", minecraft.version)
 
@@ -115,11 +110,4 @@ fun parseConfig(config: File): ConfigObject {
 
 idea.module.inheritOutputDirs = true
 
-getTask<Jar>("jar") {
-    exclude("**/*.psd")
-}
-
 defaultTasks("clean", "build", "incrementBuildNumber")
-
-@Suppress("UNCHECKED_CAST")
-fun <T: Task> Project.getTask(name: String, configuration: T.() -> Unit) = (tasks.get(name) as T).apply(configuration)

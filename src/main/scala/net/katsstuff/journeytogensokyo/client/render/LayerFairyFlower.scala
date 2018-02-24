@@ -41,7 +41,7 @@ class LayerFairyFlower(val fairyRenderer: RenderFairy) extends LayerRenderer[Ent
       GlStateManager.translate(-0.45F, -0.04F, -0.87F)
       GlStateManager.rotate(Math.toDegrees(fairyModel.rightArm.rotateAngleX).toFloat, 1F, 0F, 0F)
       GlStateManager.scale(0.4F, -0.4F, 0.4F)
-      val i = fairy.getBrightnessForRender(partialTicks)
+      val i = fairy.getBrightnessForRender
       val j = i % 65536
       val k = i / 65536
       OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, j.toFloat, k.toFloat)

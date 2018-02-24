@@ -8,13 +8,10 @@
  */
 package net.katsstuff.journeytogensokyo.entity.living.ai
 
-import javax.annotation.Nullable
-
 import net.minecraft.entity.EntityCreature
 import net.minecraft.entity.ai.EntityAIBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
-import net.minecraft.pathfinding.PathNavigateGround
 
 class EntityAITemptStack(
     val temptedEntity: EntityCreature,
@@ -23,8 +20,6 @@ class EntityAITemptStack(
     private var _temptStacks: Set[ItemStack]
 ) extends EntityAIBase {
   this.setMutexBits(3)
-  if (!temptedEntity.getNavigator.isInstanceOf[PathNavigateGround])
-    throw new IllegalArgumentException("Unsupported mob type for TemptGoal")
 
   private var targetX = 0D
   private var targetY = 0D
@@ -61,7 +56,7 @@ class EntityAITemptStack(
 
   override def shouldContinueExecuting: Boolean = {
     if (scaredByPlayerMovement) {
-      if (temptedEntity.getDistanceSqToEntity(temptingPlayer) < 36.0D) {
+      if (temptedEntity.getDistanceSq(temptingPlayer) < 36.0D) {
         if (Math.abs(temptingPlayer.rotationPitch.toDouble - pitch) > 5.0D ||
             Math.abs(temptingPlayer.rotationYaw.toDouble - yaw) > 5.0D) return false
       } else {
@@ -86,7 +81,7 @@ class EntityAITemptStack(
 
   override def resetTask(): Unit = {
     temptingPlayer = null
-    temptedEntity.getNavigator.clearPathEntity()
+    temptedEntity.getNavigator.clearPath()
     delayTemptCounter = 100
     _isTempted = false
   }
@@ -98,7 +93,7 @@ class EntityAITemptStack(
       temptedEntity.getVerticalFaceSpeed.toFloat
     )
 
-    if (temptedEntity.getDistanceSqToEntity(temptingPlayer) < 6.25D) temptedEntity.getNavigator.clearPathEntity()
+    if (temptedEntity.getDistanceSq(temptingPlayer) < 6.25D) temptedEntity.getNavigator.clearPath()
     else temptedEntity.getNavigator.tryMoveToEntityLiving(temptingPlayer, speed)
   }
 }

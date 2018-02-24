@@ -22,7 +22,7 @@ class EntityFairyNether(_world: World) extends EntityFairy(_world) {
     phaseManager.addPhase(
       LibPhases.SHAPE_WIDE.instantiate(phaseManager, 8, 30F, 0F, 0D, LibShotData.SHOT_SPHERE_DARK, movement, rotation)
     )
-    phaseManager.getCurrentPhase.init()
+    phaseManager.currentPhase.init()
     setSpecies(TouhouSpecies.FAIRY_HELL)
   }
 }

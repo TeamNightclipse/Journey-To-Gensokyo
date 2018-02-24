@@ -16,7 +16,9 @@ import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.entity.Entity
 import net.minecraft.util.EnumHandSide
 import net.minecraft.util.math.MathHelper
+import net.minecraftforge.fml.relauncher.{Side, SideOnly}
 
+@SideOnly(Side.CLIENT)
 abstract class ModelFairy extends ModelBase {
 
   def body:      ModelRenderer

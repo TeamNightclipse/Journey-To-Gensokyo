@@ -11,8 +11,8 @@ package net.katsstuff.journeytogensokyo.entity.living
 import java.lang.{Boolean => JBoolean}
 import java.util.Random
 
+import net.katsstuff.danmakucore.entity.living.TouhouSpecies
 import net.katsstuff.danmakucore.entity.living.ai.EntityAIMoveRanged
-import net.katsstuff.danmakucore.entity.living.{IAllyDanmaku, TouhouSpecies}
 import net.katsstuff.journeytogensokyo.entity.living.ai.{EntityAIFollowFriend, EntityAITemptStack}
 import net.katsstuff.journeytogensokyo.handler.ConfigHandler
 import net.katsstuff.journeytogensokyo.handler.ConfigHandler.Spawns.SpawnEntry
@@ -21,6 +21,7 @@ import net.katsstuff.journeytogensokyo.phase.JTGPhases
 import net.minecraft.block.BlockFlower
 import net.minecraft.block.material.Material
 import net.minecraft.block.state.IBlockState
+import net.minecraft.entity.IEntityLivingData
 import net.minecraft.entity.ai.{
   EntityAIHurtByTarget,
   EntityAILookIdle,
@@ -30,7 +31,6 @@ import net.minecraft.entity.ai.{
   EntityAIWatchClosest
 }
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.entity.{EntityLivingBase, IEntityLivingData}
 import net.minecraft.item.{Item, ItemStack}
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.network.datasync.{DataParameter, DataSerializers, EntityDataManager}
@@ -50,7 +50,7 @@ object EntityFairy {
   }
 
   private final val LikedFlower: DataParameter[ItemStack] =
-    EntityDataManager.createKey(classOf[EntityFairy], DataSerializers.OPTIONAL_ITEM_STACK)
+    EntityDataManager.createKey(classOf[EntityFairy], DataSerializers.ITEM_STACK)
   private final val HoldingFlower: DataParameter[JBoolean] =
     EntityDataManager.createKey(classOf[EntityFairy], DataSerializers.BOOLEAN)
 
@@ -71,8 +71,10 @@ object EntityFairy {
   }
 
   def randomFlower(rand: Random): ItemStack = flowers(rand.nextInt(flowers.length))
+
+  case class FairyGroupData(form: Byte) extends IEntityLivingData
 }
-class EntityFairy(_world: World) extends EntityForm(_world) with Callable with IAllyDanmaku {
+class EntityFairy(_world: World) extends EntityForm(_world) with EntityIsCallable with EntityIsAlly {
 
   private var aiTempt:      EntityAITemptStack                            = _
   private var attackPlayer: EntityAINearestAttackableTarget[EntityPlayer] = _
@@ -90,13 +92,13 @@ class EntityFairy(_world: World) extends EntityForm(_world) with Callable with I
   }
 
   phaseManager.addPhase(JTGPhases.StageEnemy.instantiate(phaseManager))
-  phaseManager.getCurrentPhase.init()
+  phaseManager.currentPhase.init()
 
-  setSpeed(0.4D)
+  setFlyingSpeed(0.3D)
+  setGroundSpeed(0.2D)
   setSpecies(TouhouSpecies.FAIRY)
 
-  setFlyingHeight(2)
-  setEntityCallDistance(30)
+  callable.setCallDistance(30)
   setMaxHP(2F)
 
   override def initEntityAI(): Unit = {
@@ -109,14 +111,14 @@ class EntityFairy(_world: World) extends EntityForm(_world) with Callable with I
       } else l
     }
 
-    aiTempt = new EntityAITemptStack(this, getSpeed / 2, true, Set(liked))
+    aiTempt = new EntityAITemptStack(this, 0.5D, true, Set(liked))
     attackPlayer = new EntityAINearestAttackableTarget(this, classOf[EntityPlayer], true)
-    followFriend = new EntityAIFollowFriend(this, getSpeed * 8, 2F, 16F)
+    followFriend = new EntityAIFollowFriend(this, 1.5D, 2F, 16F)
 
     tasks.addTask(0, new EntityAISwimming(this))
     tasks.addTask(1, aiTempt)
-    tasks.addTask(2, new EntityAIMoveRanged(this, getSpeed, 16F))
-    tasks.addTask(6, new EntityAIWander(this, getSpeed))
+    tasks.addTask(2, new EntityAIMoveRanged(this, 1D, 16F))
+    tasks.addTask(6, new EntityAIWander(this, 1D))
     tasks.addTask(6, new EntityAIWatchClosest(this, classOf[EntityPlayer], 16F))
     tasks.addTask(7, new EntityAILookIdle(this))
     targetTasks.addTask(1, new EntityAIHurtByTarget(this, false))
@@ -157,19 +159,12 @@ class EntityFairy(_world: World) extends EntityForm(_world) with Callable with I
     }
   }
 
-  override def onEntityCall(caller: EntityLivingBase, target: EntityLivingBase): Unit = {
-    def distanceTo(entity: EntityLivingBase): Double = entity.getPositionVector.distanceTo(getPositionVector)
-    if (getAttackTarget == null || distanceTo(getAttackTarget) > distanceTo(target)) {
-      setAttackTarget(target)
-    }
-  }
-
   override def onInitialSpawn(difficulty: DifficultyInstance, livingData: IEntityLivingData): IEntityLivingData = {
     val superData = super.onInitialSpawn(difficulty, livingData)
 
     val groupData = superData match {
-      case fairy: FairyGroupData => fairy
-      case _                     => FairyGroupData(form)
+      case fairy: EntityFairy.FairyGroupData => fairy
+      case _                                 => EntityFairy.FairyGroupData(form)
     }
 
     form = groupData.form
@@ -180,7 +175,7 @@ class EntityFairy(_world: World) extends EntityForm(_world) with Callable with I
   override def processInteract(player: EntityPlayer, hand: EnumHand): Boolean = {
     val stack = player.getHeldItem(hand)
     if ((aiTempt == null || aiTempt.isTempted) && !stack.isEmpty && likedFlower.isItemEqual(stack) && player
-          .getDistanceSqToEntity(this) < 9.0D) {
+          .getDistanceSq(this) < 9.0D) {
       if (!player.capabilities.isCreativeMode) stack.shrink(1)
 
       if (!world.isRemote) {
@@ -246,4 +241,3 @@ class EntityFairy(_world: World) extends EntityForm(_world) with Callable with I
     tag.setByte("likedFlowerMeta", liked.getItemDamage.toByte)
   }
 }
-case class FairyGroupData(form: Byte) extends IEntityLivingData

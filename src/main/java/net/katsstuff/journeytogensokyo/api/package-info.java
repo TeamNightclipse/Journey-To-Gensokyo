@@ -6,7 +6,7 @@
  * Journey To Gensokyo is Open Source and distributed under the
  * a modifed Botania license: https://github.com/Katrix-/JTG/blob/devDanmakuCore/LICENSE.md
  */
-@API(owner = "journeytogensokyo", apiVersion = "1", provides = "JourneyToGensokyoAPI")
+@API(owner = "journeytogensokyo", apiVersion = "2", provides = "JourneyToGensokyoAPI")
 package net.katsstuff.journeytogensokyo.api;
 
 import net.minecraftforge.fml.common.API;

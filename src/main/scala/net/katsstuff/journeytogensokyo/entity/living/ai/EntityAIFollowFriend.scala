@@ -9,11 +9,10 @@
 package net.katsstuff.journeytogensokyo.entity.living.ai
 
 import net.katsstuff.journeytogensokyo.entity.living.EntityFairy
-import net.katsstuff.journeytogensokyo.helper.LogHelper
 import net.minecraft.block.material.Material
 import net.minecraft.entity.ai.EntityAIBase
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.pathfinding.{PathNavigateGround, PathNodeType}
+import net.minecraft.pathfinding.PathNodeType
 import net.minecraft.util.EnumFacing
 import net.minecraft.util.math.{BlockPos, MathHelper}
 
@@ -31,7 +30,7 @@ class EntityAIFollowFriend(val fairy: EntityFairy, val followSpeed: Double, var 
   override def shouldExecute: Boolean = {
     fairy.friend.fold(false) {
       case fairyFriend
-          if this.fairy.getDistanceSqToEntity(fairyFriend) >= (this.minDist * this.minDist) && !fairyFriend.isSpectator =>
+          if this.fairy.getDistanceSq(fairyFriend) >= (this.minDist * this.minDist) && !fairyFriend.isSpectator =>
         friend = fairyFriend
         true
       case _ => false
@@ -39,7 +38,7 @@ class EntityAIFollowFriend(val fairy: EntityFairy, val followSpeed: Double, var 
   }
 
   override def shouldContinueExecuting: Boolean =
-    !pathfinder.noPath && fairy.getDistanceSqToEntity(this.friend) > (this.maxDist * this.maxDist)
+    !pathfinder.noPath && fairy.getDistanceSq(this.friend) > (this.maxDist * this.maxDist)
 
   override def startExecuting(): Unit = {
     timeToRecalcPath = 0
@@ -49,7 +48,7 @@ class EntityAIFollowFriend(val fairy: EntityFairy, val followSpeed: Double, var 
 
   override def resetTask(): Unit = {
     friend = null
-    pathfinder.clearPathEntity()
+    pathfinder.clearPath()
     fairy.setPathPriority(PathNodeType.WATER, oldWaterCost)
   }
 
@@ -65,7 +64,7 @@ class EntityAIFollowFriend(val fairy: EntityFairy, val followSpeed: Double, var 
 
     if (timeToRecalcPath <= 0) {
       timeToRecalcPath = 10
-      if (!pathfinder.tryMoveToEntityLiving(friend, followSpeed) && !fairy.getLeashed && fairy.getDistanceSqToEntity(
+      if (!pathfinder.tryMoveToEntityLiving(friend, followSpeed) && !fairy.getLeashed && fairy.getDistanceSq(
             this.friend
           ) >= 144.0D) {
         val i    = MathHelper.floor(friend.posX) - 2
@@ -87,7 +86,7 @@ class EntityAIFollowFriend(val fairy: EntityFairy, val followSpeed: Double, var 
                 .getBlockState(ground)
                 .isSideSolid(world, ground, EnumFacing.UP) && isEmptyBlock(air1) && isEmptyBlock(air2)) {
             this.fairy.setLocationAndAngles(i + l + 0.5F, k, j + i1 + 0.5F, fairy.rotationYaw, fairy.rotationPitch)
-            this.pathfinder.clearPathEntity()
+            this.pathfinder.clearPath()
             done = true
           }
         }

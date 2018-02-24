@@ -12,7 +12,7 @@ import net.katsstuff.danmakucore.data.MovementData;
 import net.katsstuff.danmakucore.data.ShotData;
 import net.minecraft.inventory.Slot;
 
-public interface IRecipeDanmaku {
+public interface IDanmakuRecipe {
 
 	boolean matches(Slot slot);
 

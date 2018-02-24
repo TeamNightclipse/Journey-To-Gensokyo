@@ -8,12 +8,12 @@
  */
 package net.katsstuff.journeytogensokyo.container
 
-import net.katsstuff.danmakucore.data.{ShotData, Vector3}
+import net.katsstuff.danmakucore.data.ShotData
 import net.katsstuff.danmakucore.handler.ConfigHandler
-import net.katsstuff.danmakucore.helper.TouhouHelper
 import net.katsstuff.danmakucore.item.ItemDanmaku
 import net.katsstuff.danmakucore.lib.data.LibItems
-import net.katsstuff.journeytogensokyo.api.recipe.{CraftingManager, IRecipeDanmaku}
+import net.katsstuff.danmakucore.scalastuff.TouhouHelper
+import net.katsstuff.journeytogensokyo.api.recipe.{CraftingManager, IDanmakuRecipe}
 import net.katsstuff.journeytogensokyo.block.JTGBlocks
 import net.katsstuff.journeytogensokyo.container.slot.{
   SingleItemSlot,
@@ -26,7 +26,7 @@ import net.minecraft.inventory.{ClickType, Container, IInventory, InventoryCraft
 import net.minecraft.item.ItemStack
 import net.minecraft.util.math.{BlockPos, MathHelper}
 import net.minecraft.world.World
-import net.katsstuff.journeytogensokyo.helper.Implicits._
+import net.katsstuff.mirror.data.Vector3
 
 class ContainerDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: BlockPos) extends Container {
 
@@ -85,7 +85,7 @@ class ContainerDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: Bl
 
   override def onCraftMatrixChanged(inventoryIn: IInventory): Unit = {
     val out = (for {
-      data <- TouhouHelper.getDanmakuCoreData(invPlayer.player).toOption
+      data <- TouhouHelper.getDanmakuCoreData(invPlayer.player)
       ctx  <- createContext
     } yield ctx.createOutput(data.getScore)).getOrElse(ItemStack.EMPTY)
 
@@ -106,7 +106,7 @@ class ContainerDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: Bl
           danmakuStack = danStack,
           copyStack = slotCopy.getStack,
           amountStack = slotAmount.getStack,
-          recipe = CraftingManager.findMatchingRecipeDanmaku(slotMaterial),
+          recipe = CraftingManager.findMatchingDanmakuRecipe(slotMaterial),
           patternResult = getPattern
         )
       )
@@ -121,13 +121,12 @@ class ContainerDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: Bl
       empty.map(craftMatrix.getStackInSlot).forall(_.isEmpty)
     }
 
-    if (pattern(4)) Some(ItemDanmaku.Pattern.LINE)
-    else if (pattern(1, 4)) Some(ItemDanmaku.Pattern.RANDOM_RING)
-    else if (pattern(0, 1, 2)) Some(ItemDanmaku.Pattern.WIDE)
-    else if (pattern(0, 1, 2, 3, 5, 6, 7, 8)) Some(ItemDanmaku.Pattern.CIRCLE)
-    else if (pattern(0, 2, 4, 6, 8) && amount >= 3) Some(ItemDanmaku.Pattern.STAR)
-    else if (pattern(0, 1, 2, 3, 4, 5, 6, 7, 8) && amount >= 4) Some(ItemDanmaku.Pattern.SPHERE)
-    else if (pattern(1, 3, 5, 7) && amount >= 3) Some(ItemDanmaku.Pattern.RING)
+    if (pattern(4)) Some(ItemDanmaku.Line)
+    else if (pattern(1, 4)) Some(ItemDanmaku.RandomRing)
+    else if (pattern(0, 1, 2)) Some(ItemDanmaku.Wide)
+    else if (pattern(0, 1, 2, 3, 5, 6, 7, 8)) Some(ItemDanmaku.Circle)
+    else if (pattern(0, 1, 2, 3, 4, 5, 6, 7, 8) && amount >= 4) Some(ItemDanmaku.Sphere)
+    else if (pattern(1, 3, 5, 7) && amount >= 3) Some(ItemDanmaku.Ring)
     else None
   }
 
@@ -200,18 +199,17 @@ case class DanmakuCraftingContext(
     danmakuStack: ItemStack,
     copyStack: ItemStack,
     amountStack: ItemStack,
-    recipe: Option[IRecipeDanmaku],
+    recipe: Option[IDanmakuRecipe],
     patternResult: Int => Option[ItemDanmaku.Pattern]
 ) {
 
-  val PatternCosts = Map(
-    ItemDanmaku.Pattern.LINE        -> 10,
-    ItemDanmaku.Pattern.RANDOM_RING -> 20,
-    ItemDanmaku.Pattern.WIDE        -> 30,
-    ItemDanmaku.Pattern.CIRCLE      -> 35,
-    ItemDanmaku.Pattern.STAR        -> 45,
-    ItemDanmaku.Pattern.SPHERE      -> 2000,
-    ItemDanmaku.Pattern.RING        -> 35
+  val PatternCosts: Map[ItemDanmaku.Pattern, Int] = Map(
+    ItemDanmaku.Line       -> 10,
+    ItemDanmaku.RandomRing -> 20,
+    ItemDanmaku.Wide       -> 30,
+    ItemDanmaku.Circle     -> 35,
+    ItemDanmaku.Sphere     -> 2000,
+    ItemDanmaku.Ring       -> 35
   )
 
   def requiredScore: Int = recipe.fold(0)(_.scoreCost()) + patternResult(amountCombined).fold(0)(PatternCosts)
@@ -222,15 +220,15 @@ case class DanmakuCraftingContext(
       val danmakuCopy = danmakuStack.copy()
 
       shotCombined.foreach(ShotData.serializeNBTItemStack(danmakuCopy, _))
-      speedCombined.foreach(ItemDanmaku.SPEED.set(_, danmakuCopy))
+      speedCombined.foreach(ItemDanmaku.Speed.set(_, danmakuCopy))
       gravityCombined.foreach(ItemDanmaku.setGravity(_, danmakuCopy))
-      patternResult(amountCombined).foreach(ItemDanmaku.PATTERN.set(_, danmakuCopy))
+      patternResult(amountCombined).foreach(ItemDanmaku.DanPattern.set(_, danmakuCopy))
       danmakuCopy.setCount(stackSizeCombined)
       if (amountCombined != 1) {
-        ItemDanmaku.AMOUNT.set(amountCombined, danmakuCopy)
+        ItemDanmaku.Amount.set(amountCombined, danmakuCopy)
       }
       //noinspection NameBooleanParameters
-      recipe.foreach(_ => ItemDanmaku.CUSTOM.set(true, danmakuCopy))
+      recipe.foreach(_ => ItemDanmaku.Custom.set(true, danmakuCopy))
 
       danmakuCopy
     }
@@ -249,19 +247,19 @@ case class DanmakuCraftingContext(
     val roundedSizeY  = round(current.sizeY + result.sizeY, 2)
     val roundedSizeZ  = round(current.sizeZ + result.sizeZ, 2)
 
-    val newForm      = if (result.getForm != null) result.getForm else current.getForm
-    val newColor     = if (result.color != -1) result.color else current.color
-    val newDamage    = MathHelper.clamp(roundedDamage, 0F, 6F)
-    val newSizeX     = MathHelper.clamp(roundedSizeX, 0.01F, 2F)
-    val newSizeY     = MathHelper.clamp(roundedSizeY, 0.01F, 2F)
-    val newSizeZ     = MathHelper.clamp(roundedSizeZ, 0.01F, 2F)
-    val newDelay     = MathHelper.clamp(current.delay + result.delay, 0, 100)
-    val newEnd       = MathHelper.clamp(current.end + result.end, 1, 120)
-    val newSubEntity = if (result.getSubEntity != null) result.getSubEntity else current.getSubEntity
+    val newForm           = if (result.getForm != null) result.getForm else current.getForm
+    val newMainColor      = if (result.edgeColor != -1) result.edgeColor else current.edgeColor
+    val newSecondaryColor = if (result.coreColor != -1) result.coreColor else current.coreColor
+    val newDamage         = MathHelper.clamp(roundedDamage, 0F, 6F)
+    val newSizeX          = MathHelper.clamp(roundedSizeX, 0.01F, 2F)
+    val newSizeY          = MathHelper.clamp(roundedSizeY, 0.01F, 2F)
+    val newSizeZ          = MathHelper.clamp(roundedSizeZ, 0.01F, 2F)
+    val newDelay          = MathHelper.clamp(current.delay + result.delay, 0, 100)
+    val newEnd            = MathHelper.clamp(current.end + result.end, 1, 120)
+    val newSubEntity      = if (result.getSubEntity != null) result.getSubEntity else current.getSubEntity
 
     ShotData(
       form = newForm,
-      color = newColor,
       damage = newDamage,
       sizeX = newSizeX,
       sizeY = newSizeY,
@@ -269,10 +267,10 @@ case class DanmakuCraftingContext(
       delay = newDelay,
       end = newEnd,
       subEntity = newSubEntity
-    )
+    ).setMainColor(newMainColor).setSecondaryColor(newSecondaryColor)
   }
 
-  def speedCurrent:  Double         = ItemDanmaku.SPEED.get(danmakuStack)
+  def speedCurrent:  Double         = ItemDanmaku.Speed.get(danmakuStack)
   def speedResult:   Option[Double] = recipe.map(_.outputMovement.getSpeedOriginal)
   def speedCombined: Option[Double] = speedResult.map(result => MathHelper.clamp(speedCurrent + result, 0D, 2D))
 
@@ -289,13 +287,13 @@ case class DanmakuCraftingContext(
     Vector3(x, y, z)
   }
 
-  def patternCurrent: ItemDanmaku.Pattern = ItemDanmaku.PATTERN.get(danmakuStack)
+  def patternCurrent: ItemDanmaku.Pattern = ItemDanmaku.DanPattern.get(danmakuStack)
 
   def stackSizeCurrent:  Int = danmakuStack.getCount
   def stackSizeResult:   Int = copyStack.getCount
   def stackSizeCombined: Int = Math.min(stackSizeResult + stackSizeCurrent, 64)
 
-  def amountCurrent: Int = ItemDanmaku.AMOUNT.get(danmakuStack)
+  def amountCurrent: Int = ItemDanmaku.Amount.get(danmakuStack)
   def amountResult:  Int = amountStack.getCount
   def amountCombined: Int = {
     val maxNumber = ConfigHandler.danmaku.danmakuMaxNumber

@@ -9,7 +9,7 @@
 package net.katsstuff.journeytogensokyo.entity.living
 
 import net.katsstuff.danmakucore.data.{MovementData, RotationData}
-import net.katsstuff.danmakucore.helper.DanmakuHelper
+import net.katsstuff.danmakucore.lib.LibColor
 import net.katsstuff.danmakucore.lib.data.LibDanmakuVariants
 import net.katsstuff.journeytogensokyo.phase.JTGPhases
 import net.minecraft.world.World
@@ -17,11 +17,11 @@ import net.minecraft.world.World
 class EntityFairyEnd(_world: World) extends EntityFairy(_world) {
 
   {
-    val shot = LibDanmakuVariants.LASER.getShotData.copy(color = DanmakuHelper.randomSaturatedColor(), subEntity = ???)
+    val shot = LibDanmakuVariants.LASER.getShotData.copy(edgeColor = LibColor.randomSaturatedColor(), subEntity = ???)
     phaseManager.addPhase(
       JTGPhases.ShapeArrow.instantiate(phaseManager, shot, MovementData.constant(0.4D), RotationData.none, 8, 0.5, 2D)
     )
-    phaseManager.getCurrentPhase.init()
+    phaseManager.currentPhase.init()
   }
 
 }

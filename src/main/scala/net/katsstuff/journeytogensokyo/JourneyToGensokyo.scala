@@ -45,13 +45,15 @@ object JourneyToGensokyo {
     val lootHandler = new LootHandler
     lootHandler.registerLootTables()
     MinecraftForge.EVENT_BUS.register(lootHandler)
-    proxy.registerDanmakuCrafting()
+
     proxy.registerRenderers()
   }
 
   @EventHandler
   def init(event: FMLInitializationEvent): Unit = {
     NetworkRegistry.INSTANCE.registerGuiHandler(this, GuiHandler)
+
+    proxy.registerDanmakuCrafting()
     proxy.registerEntities()
     proxy.registerCrafting()
     proxy.registerWorldGen()

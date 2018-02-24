@@ -8,8 +8,8 @@
  */
 package net.katsstuff.journeytogensokyo.entity.living.ai
 
-import net.katsstuff.danmakucore.data.Vector3
 import net.katsstuff.journeytogensokyo.entity.living.EntityTenguCrow
+import net.katsstuff.mirror.data.Vector3
 import net.minecraft.entity.ai.EntityAIBase
 
 //Same as EntityAIMoveRanged, except it doesn't delete the current path
@@ -50,7 +50,7 @@ class EntityAIMoveRangedTengu(val entity: EntityTenguCrow, val moveSpeedAmp: Dou
           val last = path.getFinalPathPoint
           val vec  = Vector3(last.x, last.y, last.z)
           if (vec.distanceSquared(target.posX, target.posY, target.posZ) < 3 * 3) {
-            entity.getNavigator.clearPathEntity()
+            entity.getNavigator.clearPath()
           }
         }
         strafingTime += 1

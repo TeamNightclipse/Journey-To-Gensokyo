@@ -1,0 +1,21 @@
+{
+  "type": "forge:ore_shaped",
+  "group": "jtg",
+  "pattern": [
+	"CCC",
+	"CBC",
+	"CCC"
+  ],
+  "key": {
+	"C": {
+	  "item": "journeytogensokyo:bullet_core"
+	},
+	"B": {
+	  "item": "danmakucore:danmaku",
+	  "data": 32767
+	}
+  },
+  "result": {
+	"item": "journeytogensokyo:danmaku_crafting_table"
+  }
+}

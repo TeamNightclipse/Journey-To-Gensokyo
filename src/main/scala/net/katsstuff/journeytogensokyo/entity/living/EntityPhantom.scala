@@ -8,27 +8,19 @@
  */
 package net.katsstuff.journeytogensokyo.entity.living
 
-import net.katsstuff.danmakucore.client.particle.{GlowTexture, ParticleUtil}
-import net.katsstuff.danmakucore.data.Vector3
+import net.katsstuff.danmakucore.entity.living.TouhouSpecies
 import net.katsstuff.danmakucore.entity.living.ai.EntityAIMoveRanged
-import net.katsstuff.danmakucore.entity.living.{IAllyDanmaku, TouhouSpecies}
 import net.katsstuff.journeytogensokyo.handler.ConfigHandler
 import net.katsstuff.journeytogensokyo.handler.ConfigHandler.Spawns
 import net.katsstuff.journeytogensokyo.lib.LibEntityName
 import net.katsstuff.journeytogensokyo.phase.JTGPhases
+import net.katsstuff.mirror.client.particles.{GlowTexture, ParticleUtil}
+import net.katsstuff.mirror.data.Vector3
 import net.minecraft.block.material.Material
 import net.minecraft.block.state.IBlockState
-import net.minecraft.entity.{EnumCreatureAttribute, IEntityLivingData}
-import net.minecraft.entity.ai.{
-  EntityAIFleeSun,
-  EntityAIHurtByTarget,
-  EntityAILookIdle,
-  EntityAINearestAttackableTarget,
-  EntityAIRestrictSun,
-  EntityAISwimming,
-  EntityAIWander
-}
+import net.minecraft.entity.ai.{EntityAIFleeSun, EntityAIHurtByTarget, EntityAILookIdle, EntityAINearestAttackableTarget, EntityAISwimming, EntityAIWander}
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.entity.{EnumCreatureAttribute, IEntityLivingData}
 import net.minecraft.world.{DifficultyInstance, World}
 
 object EntityPhantom {
@@ -49,7 +41,7 @@ object EntityPhantom {
       case _ => 0xFFFFFF
     }
 }
-class EntityPhantom(_world: World) extends EntityForm(_world) with IAllyDanmaku {
+class EntityPhantom(_world: World) extends EntityForm(_world) with EntityIsAlly {
 
   setSize(0.5F, 0.5F)
   experienceValue = 3
@@ -60,20 +52,19 @@ class EntityPhantom(_world: World) extends EntityForm(_world) with IAllyDanmaku 
   }
 
   phaseManager.addPhase(JTGPhases.StageEnemy.instantiate(phaseManager))
-  phaseManager.getCurrentPhase.init()
+  phaseManager.currentPhase.init()
 
-  setSpeed(0.2D)
+  setFlyingSpeed(0.2D)
   setSpecies(TouhouSpecies.PHANTOM)
 
-  setFlyingHeight(3)
   setMaxHP(2F)
 
   override def initEntityAI(): Unit = {
     this.tasks.addTask(0, new EntityAISwimming(this))
-    this.tasks.addTask(2, new EntityAIRestrictSun(this))
-    this.tasks.addTask(3, new EntityAIFleeSun(this, 1.0D))
-    this.tasks.addTask(4, new EntityAIMoveRanged(this, getSpeed, 16F))
-    this.tasks.addTask(6, new EntityAIWander(this, getSpeed))
+    //TODO this.tasks.addTask(2, new EntityAIRestrictSun(this))
+    this.tasks.addTask(3, new EntityAIFleeSun(this, 1D))
+    this.tasks.addTask(4, new EntityAIMoveRanged(this, 1D, 16F))
+    this.tasks.addTask(6, new EntityAIWander(this, 1D))
     this.tasks.addTask(7, new EntityAILookIdle(this))
     this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false))
     this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, classOf[EntityPlayer], true))

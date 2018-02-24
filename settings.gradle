@@ -1,2 +1,0 @@
-include ':danmakuCore'
-rootProject.buildFileName = 'build.gradle.kts'

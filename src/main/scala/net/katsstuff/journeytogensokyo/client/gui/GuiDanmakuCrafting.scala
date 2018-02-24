@@ -8,11 +8,13 @@
  */
 package net.katsstuff.journeytogensokyo.client.gui
 
-import net.katsstuff.danmakucore.data.Vector3
-import net.katsstuff.danmakucore.helper.TouhouHelper
-import net.katsstuff.danmakucore.misc.ITranslatable
+import java.text.NumberFormat
+
+import net.katsstuff.danmakucore.misc.Translatable
+import net.katsstuff.danmakucore.scalastuff.TouhouHelper
 import net.katsstuff.journeytogensokyo.container.ContainerDanmakuCrafting
 import net.katsstuff.journeytogensokyo.lib.LibMod
+import net.katsstuff.mirror.data.Vector3
 import net.minecraft.client.gui.inventory.GuiContainer
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.client.resources.I18n
@@ -20,7 +22,6 @@ import net.minecraft.entity.player.InventoryPlayer
 import net.minecraft.util.ResourceLocation
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
-import net.katsstuff.journeytogensokyo.helper.Implicits._
 
 class GuiDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: BlockPos)
     extends GuiContainer(new ContainerDanmakuCrafting(invPlayer, world, pos)) {
@@ -34,61 +35,77 @@ class GuiDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: BlockPos
 
   private val container = inventorySlots.asInstanceOf[ContainerDanmakuCrafting]
 
-  override protected def drawGuiContainerForegroundLayer(mouseX: Int, mouseY: Int) {
-    def toTuple(vector1: Vector3, vector2: Option[Vector3]) =
+  override protected def drawGuiContainerForegroundLayer(mouseX: Int, mouseY: Int): Unit = {
+    def tupled(vector1: Vector3, vector2: Option[Vector3]) =
       Seq((vector1.x, vector2.map(_.x)), (vector1.y, vector2.map(_.y)), (vector1.z, vector2.map(_.z)))
+
     def draw(string: String, x: Int, y: Int, color: Int = White) = fontRenderer.drawString(string, x, y, color)
+
     def drawAll(x: Int, startY: Int, incrementY: Int, strings: Seq[String]): Int = {
       for (i <- strings.indices) draw(strings(i), x, startY + incrementY * i)
       startY + incrementY * strings.length
     }
 
-    def i18n(string: String)                                      = I18n.format(string)
-    def i18nPrefix(prefix: String)                                = (str: String) => i18n(s"$prefix.$str")
-    def i18nDouble[A, B](first: A => String, second: B => String) = first(_: A) + SpaceDivider + second(_: B)
+    def i18n(string: String)                                   = I18n.format(string)
+    def i18nPrefix(prefix: String)                             = (str: String) => i18n(s"$prefix.$str")
+    def divided[A, B](first: A => String, second: B => String) = first(_: A) + SpaceDivider + second(_: B)
 
-    def i18nTranslatable(translatable: ITranslatable) = i18n(translatable.getUnlocalizedName)
+    def i18nTranslatable(translatable: Translatable) = i18n(translatable.unlocalizedName)
 
     val i18nDanmaku          = i18nPrefix("item.danmaku")
-    val i18nDanmaku2         = i18nDouble(i18nDanmaku, i18nDanmaku)
-    val i18nDanmakuTranslate = i18nDouble(i18nDanmaku, i18nTranslatable)
+    val i18nDanmakuDivided   = divided(i18nDanmaku, i18nDanmaku)
+    val i18nDanmakuTranslate = divided(i18nDanmaku, i18nTranslatable)
     val i18nCrafting         = i18nPrefix("crafting.danmaku")
 
-    def i18nValueOpt(string: String, value: (_, Option[_])*) = {
-      val builder = new StringBuilder(i18n(string) + SpaceDivider)
+    def i18nOptPlus[A](name: String, values: (A, Option[A])*)(implicit numeric: Numeric[A]) = {
+      val builder   = new StringBuilder(i18n(name) + SpaceDivider)
+      val formatter = NumberFormat.getNumberInstance
 
-      if (value.size == 1) {
-        builder.append(s"${value.head._1}${value.head._2.fold("")(snd => s" + $snd")}")
-        //LogHelper.info(builder.toString())
+      def format(a: A): String = formatter.format(numeric.toDouble(a))
+
+      if (values.size == 1) {
+        val value  = values.head
+        val before = format(value._1)
+        val after  = value._2.map(format)
+        builder.append(s"$before${after.fold("")(s => s" + $s")}")
       } else {
-        builder.append(s"(${value.map(_._1).mkString(", ")})")
-        if (!value.map(_._2).forall(_.isEmpty)) {
+        builder.append(s"(${values.map(t => format(t._1)).mkString(", ")})")
+        if (!values.map(_._2).forall(_.isEmpty)) {
           builder.append(" + ")
-          builder.append(s"(${value.map(_._2.fold("0")(_.toString)).mkString(", ")})")
+          builder.append(s"(${values.map(_._2.fold(numeric.zero.toString)(format)).mkString(", ")})")
         }
       }
 
       builder.mkString
     }
 
-    def i18nValue(string: String, value: (_, _)*) = {
-      val builder = new StringBuilder(i18n(string) + SpaceDivider)
+    def i18nPlus[A](name: String, values: (A, A)*)(implicit numeric: Numeric[A]) = {
+      val builder   = new StringBuilder(i18n(name) + SpaceDivider)
+      val formatter = NumberFormat.getNumberInstance
+      def format(a: A): String = formatter.format(numeric.toDouble(a))
 
-      if (value.size == 1) {
-        builder.append(s"${value.head._1} + ${value.head._2}")
-        //LogHelper.info(builder.toString())
+      if (values.size == 1) {
+        val value  = values.head
+        val before = format(value._1)
+        val after  = format(value._2)
+        builder.append(s"$before + $after")
       } else {
-        builder.append(s"(${value.map(_._1).mkString(", ")})")
+        builder.append(s"(${values.map(t => format(t._1)).mkString(", ")})")
         builder.append(" + ")
-        builder.append(s"(${value.map(_._2.toString).mkString(", ")})")
+        builder.append(s"(${values.map(t => format(t._2)).mkString(", ")})")
       }
 
       builder.mkString
     }
 
-    def i18nDanmakuValueOpt(string: String, value: (_, Option[_])*) = i18nValueOpt(s"item.danmaku.$string", value: _*)
-    def i18nDanmakuValue(string: String, value: (_, _)*)            = i18nValue(s"item.danmaku.$string", value: _*)
-    def i18nCraftingValue(string: String, value: (_, Option[_])*)   = i18nValueOpt(s"crafting.danmaku.$string", value: _*)
+    def i18nDanmakuOptPlus[A: Numeric](string: String, value: (A, Option[A])*) =
+      i18nOptPlus(s"item.danmaku.$string", value: _*)
+
+    def i18nDanmakuPlus[A: Numeric](string: String, value: (A, A)*) =
+      i18nPlus(s"item.danmaku.$string", value: _*)
+
+    def i18nCraftingPlus[A: Numeric](string: String, value: (A, Option[A])*) =
+      i18nOptPlus(s"crafting.danmaku.$string", value: _*)
 
     draw(i18nCrafting("copy"), 18, 150, 0x404040)
     draw(i18nDanmaku("amount"), 54, 150, 0x404040)
@@ -103,30 +120,40 @@ class GuiDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: BlockPos
       val amountCombined = ctx.amountCombined
 
       val endsAt = drawAll(
-        14,
-        10,
-        10,
-        Seq(
+        x = 14,
+        startY = 10,
+        incrementY = 10,
+        strings = Seq(
           i18nDanmakuTranslate("form", result.filter(_.form != null).fold(current.form)(_.form)),
-          i18nDanmaku2("color", s"color.${result.filter(_.color != -1).fold(current.color)(_.color)}"),
-          i18nDanmakuValueOpt("damage", current.damage -> result.map(_.damage)),
-          i18nDanmakuValueOpt(
+          i18nDanmakuDivided(
+            "mainColor",
+            s"color.${result.filter(_.edgeColor != -1).fold(current.mainColor)(_.edgeColor)}"
+          ),
+          i18nDanmakuDivided(
+            "secondaryColor",
+            s"color.${result.filter(_.coreColor != -1).fold(current.secondaryColor)(_.coreColor)}"
+          ),
+          i18nDanmakuOptPlus("damage", current.damage -> result.map(_.damage)),
+          i18nDanmakuOptPlus(
             "size",
             current.sizeX -> result.map(_.sizeX),
             current.sizeY -> result.map(_.sizeY),
             current.sizeZ -> result.map(_.sizeZ)
           ),
-          i18nDanmakuValueOpt("speed", ctx.speedCurrent -> ctx.speedResult),
-          i18nDanmakuValueOpt("gravity", toTuple(ctx.gravityCurrent, ctx.gravityResult): _*),
-          i18nDanmakuValue("amount", amountCurrent -> (amountCombined - amountCurrent)),
-          i18nDanmaku2("pattern", "pattern." + ctx.patternResult(ctx.amountCombined).getOrElse(ctx.patternCurrent)),
-          i18nCraftingValue("delay", current.delay -> result.map(_.delay)),
-          i18nCraftingValue("end", current.end     -> result.map(_.end)),
+          i18nDanmakuOptPlus("speed", ctx.speedCurrent -> ctx.speedResult),
+          i18nDanmakuOptPlus("gravity", tupled(ctx.gravityCurrent, ctx.gravityResult): _*),
+          i18nDanmakuPlus("amount", amountCurrent -> (amountCombined - amountCurrent)),
+          i18nDanmakuDivided(
+            "pattern",
+            "pattern." + ctx.patternResult(ctx.amountCombined).getOrElse(ctx.patternCurrent)
+          ),
+          i18nCraftingPlus("delay", current.delay -> result.map(_.delay)),
+          i18nCraftingPlus("end", current.end     -> result.map(_.end)),
           i18nDanmakuTranslate("subentity", result.filter(_.subEntity != null).fold(current.subEntity)(_.subEntity))
         )
       )
 
-      val currentScore  = TouhouHelper.getDanmakuCoreData(invPlayer.player).toOption.map(_.getScore).getOrElse(0)
+      val currentScore  = TouhouHelper.getDanmakuCoreData(invPlayer.player).map(_.getScore).getOrElse(0)
       val requiredScore = ctx.requiredScore
       val color         = if (currentScore >= requiredScore) 0x00FF00 else 0xFF0000
 

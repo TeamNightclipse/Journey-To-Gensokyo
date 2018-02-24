@@ -31,9 +31,9 @@ import net.minecraft.world.World
 class EntityTenguCrow(_world: World) extends EntityBigBird(_world) {
 
   phaseManager.addPhase(JTGPhases.Tengu.instantiate(phaseManager))
-  phaseManager.getCurrentPhase.init()
+  phaseManager.currentPhase.init()
 
-  setSpeed(1D)
+  setFlyingSpeed(1D)
   setSpecies(TouhouSpecies.YOUKAI_TENGU_CROW)
 
   override def spawnBlockCheck(state: IBlockState): Boolean =
@@ -41,8 +41,8 @@ class EntityTenguCrow(_world: World) extends EntityBigBird(_world) {
 
   override protected def initEntityAI(): Unit = {
     this.tasks.addTask(0, new EntityAISwimming(this))
-    this.tasks.addTask(2, new EntityAIMoveRangedTengu(this, getSpeed, 24F))
-    this.tasks.addTask(6, new EntityAIWander(this, getSpeed))
+    this.tasks.addTask(2, new EntityAIMoveRangedTengu(this, 1D, 24F))
+    this.tasks.addTask(6, new EntityAIWander(this, 1D))
     this.tasks.addTask(6, new EntityAIWatchClosest(this, classOf[EntityPlayer], 24F))
     this.tasks.addTask(7, new EntityAILookIdle(this))
     this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false))

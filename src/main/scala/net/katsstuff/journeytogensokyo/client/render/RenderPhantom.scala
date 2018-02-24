@@ -10,16 +10,18 @@ package net.katsstuff.journeytogensokyo.client.render
 
 import org.lwjgl.opengl.GL11
 
-import net.katsstuff.danmakucore.client.helper.RenderHelper
-import net.katsstuff.danmakucore.lib.LibMod
+import net.katsstuff.danmakucore.DanmakuCore
 import net.katsstuff.journeytogensokyo.client.model.EmptyModel
 import net.katsstuff.journeytogensokyo.entity.living.EntityPhantom
+import net.katsstuff.mirror.client.helper.MirrorRenderHelper
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.client.renderer.entity.{RenderLiving, RenderManager}
 import net.minecraft.util.ResourceLocation
+import net.minecraftforge.fml.relauncher.{Side, SideOnly}
 
+@SideOnly(Side.CLIENT)
 class RenderPhantom(manager: RenderManager) extends RenderLiving[EntityPhantom](manager, EmptyModel, 0.5F) {
-  val White = new ResourceLocation(LibMod.MODID, "textures/white.png")
+  val White: ResourceLocation = DanmakuCore.resource("textures/white.png")
 
   override def doRender(
       entity: EntityPhantom,
@@ -46,13 +48,15 @@ class RenderPhantom(manager: RenderManager) extends RenderLiving[EntityPhantom](
 
     GlStateManager.disableLighting()
 
-    RenderHelper.drawSphere(0xFFFFFF, 1F)
+    val dist = x * x + y * y + z * z
+
+    MirrorRenderHelper.drawSphere(0xFFFFFF, 1F, dist)
 
     GlStateManager.enableBlend()
     GlStateManager.blendFunc(GL11.GL_ONE, GL11.GL_ONE)
     GlStateManager.depthMask(false)
     GlStateManager.scale(1.4F, 1.4F, 1.4F) //This is bigger
-    RenderHelper.drawSphere(color, alpha)
+    MirrorRenderHelper.drawSphere(color, alpha, dist)
     GlStateManager.depthMask(true)
     GlStateManager.disableBlend()
 

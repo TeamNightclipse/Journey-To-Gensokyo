@@ -14,14 +14,14 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class RecipeDanmakuItem implements IRecipeDanmaku {
+public class DanmakuItemRecipe implements IDanmakuRecipe {
 
 	private final ShotData shot;
 	private final MovementData movement;
 	private final Object input;
 	private final int scoreCost;
 
-	RecipeDanmakuItem(ShotData outputShot, MovementData movement, Object input, int scoreCost) {
+	DanmakuItemRecipe(ShotData outputShot, MovementData movement, Object input, int scoreCost) {
 		shot = outputShot;
 		this.movement = movement;
 		this.scoreCost = scoreCost;

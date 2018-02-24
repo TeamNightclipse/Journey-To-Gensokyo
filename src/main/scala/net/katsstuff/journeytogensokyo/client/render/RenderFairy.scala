@@ -17,6 +17,7 @@ import net.katsstuff.journeytogensokyo.lib.LibMod
 import net.minecraft.client.model.ModelBase
 import net.minecraft.client.renderer.entity.{RenderLiving, RenderManager}
 import net.minecraft.util.ResourceLocation
+import net.minecraftforge.fml.relauncher.{Side, SideOnly}
 
 object RenderFairy {
 
@@ -35,6 +36,7 @@ object RenderFairy {
   final private val Gray = new ResourceLocation(LibMod.Id, "textures/entity/living/fairy_gray.png")
 }
 
+@SideOnly(Side.CLIENT)
 class RenderFairy(renderManager: RenderManager) extends RenderLiving[EntityFairy](renderManager, RedFairyModel, 0.5F) {
   this.addLayer[EntityFairy, LayerFairyFlower](new LayerFairyFlower(this))
 

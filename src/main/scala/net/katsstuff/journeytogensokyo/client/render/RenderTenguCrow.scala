@@ -13,7 +13,9 @@ import net.katsstuff.journeytogensokyo.entity.living.EntityTenguCrow
 import net.katsstuff.journeytogensokyo.lib.LibMod
 import net.minecraft.client.renderer.entity.{RenderLiving, RenderManager}
 import net.minecraft.util.ResourceLocation
+import net.minecraftforge.fml.relauncher.{Side, SideOnly}
 
+@SideOnly(Side.CLIENT)
 class RenderTenguCrow(renderManager: RenderManager)
     extends RenderLiving[EntityTenguCrow](renderManager, ModelTenguCrow, 0.5F) {
   protected def getEntityTexture(entity: EntityTenguCrow) =

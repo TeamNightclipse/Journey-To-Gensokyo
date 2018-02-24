@@ -8,13 +8,11 @@
  */
 package net.katsstuff.journeytogensokyo.container.slot
 
-import net.katsstuff.danmakucore.capability.IDanmakuCoreData
-import net.katsstuff.danmakucore.helper.TouhouHelper
+import net.katsstuff.danmakucore.scalastuff.TouhouHelper
 import net.katsstuff.journeytogensokyo.container.ContainerDanmakuCrafting
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.inventory.{IInventory, InventoryCrafting, SlotCrafting}
 import net.minecraft.item.ItemStack
-import net.katsstuff.journeytogensokyo.helper.Implicits._
 
 class SlotDanmakuOutput(
     container: ContainerDanmakuCrafting,
@@ -30,7 +28,7 @@ class SlotDanmakuOutput(
   override def onTake(playerIn: EntityPlayer, stack: ItemStack): ItemStack = {
     for {
       ctx  <- container.createContext
-      data <- TouhouHelper.getDanmakuCoreData(playerIn).toOption
+      data <- TouhouHelper.getDanmakuCoreData(playerIn)
       requiredScore = ctx.requiredScore
       if data.getScore >= requiredScore
     } {
@@ -38,7 +36,7 @@ class SlotDanmakuOutput(
       ctx.recipe.foreach { _ =>
         ingredients.setInventorySlotContents(3, ItemStack.EMPTY)
       }
-      TouhouHelper.changeAndSyncPlayerData((data: IDanmakuCoreData) => data.addScore(-requiredScore), playerIn)
+      TouhouHelper.changeAndSyncPlayerData(_.addScore(-requiredScore), playerIn)
     }
 
     matrix.clear()

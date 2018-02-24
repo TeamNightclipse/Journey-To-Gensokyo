@@ -1,0 +1,13 @@
+{
+  "type": "forge:ore_shapeless",
+  "group": "jtg",
+  "ingredients": [
+	{
+	  "item": "danmakucore:danmaku",
+	  "data": 32767
+	}
+  ],
+  "result": {
+	"item": "journeytogensokyo:bullet_core"
+  }
+}

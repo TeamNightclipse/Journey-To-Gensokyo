@@ -8,10 +8,12 @@
  */
 package net.katsstuff.journeytogensokyo.phase
 
-import net.katsstuff.danmakucore.data.{MovementData, Quat, RotationData, ShotData, Vector3}
-import net.katsstuff.danmakucore.entity.danmaku.DanmakuTemplate
+import net.katsstuff.danmakucore.DanmakuCore
+import net.katsstuff.danmakucore.danmaku.DanmakuTemplate
+import net.katsstuff.danmakucore.data.{MovementData, RotationData, ShotData}
 import net.katsstuff.danmakucore.entity.living.phase.{Phase, PhaseManager, PhaseType}
 import net.katsstuff.danmakucore.impl.shape.ShapeArrow
+import net.katsstuff.mirror.data.{Quat, Vector3}
 import net.minecraft.nbt.NBTTagCompound
 
 class PhaseTypeShapeArrow extends PhaseType {
@@ -47,7 +49,7 @@ class PhaseArrow(
     var amount: Int,
     var distance: Double,
     var width: Double,
-    val getType: PhaseTypeShapeArrow
+    val phaseType: PhaseTypeShapeArrow
 ) extends Phase(manager) {
 
   private val NbtShotData     = "shotData"
@@ -72,7 +74,7 @@ class PhaseArrow(
       val entityPos = new Vector3(entity)
       val forward   = Vector3.directionToEntity(entityPos, target)
 
-      shape.draw(entityPos, Quat.lookRotation(forward, Vector3.Up), 0)
+      DanmakuCore.spawnDanmaku(shape.draw(entityPos, Quat.lookRotation(forward, Vector3.Up), 0).spawnedDanmaku.toSeq)
     }
   }
 
@@ -100,13 +102,12 @@ class PhaseArrow(
   }
 
   private def createShape: ShapeArrow = {
-    val danmaku = DanmakuTemplate
-      .builder()
+    val danmaku = DanmakuTemplate.builder
       .setShot(shotData)
       .setMovementData(movementData)
       .setRotationData(rotationData)
       .setUser(getEntity)
-      .build()
+      .build
     new ShapeArrow(danmaku, amount, distance, width)
   }
 

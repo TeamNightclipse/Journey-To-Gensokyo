@@ -8,15 +8,17 @@
  */
 package net.katsstuff.journeytogensokyo.phase
 
-import net.katsstuff.danmakucore.data.{Quat, ShotData, Vector3}
-import net.katsstuff.danmakucore.entity.danmaku.DanmakuTemplate
+import net.katsstuff.danmakucore.DanmakuCore
+import net.katsstuff.danmakucore.danmaku.DanmakuTemplate
+import net.katsstuff.danmakucore.data.ShotData
 import net.katsstuff.danmakucore.entity.living.EntityDanmakuMob
 import net.katsstuff.danmakucore.entity.living.phase.{Phase, PhaseManager, PhaseType}
-import net.katsstuff.danmakucore.helper.{DanmakuCreationHelper, DanmakuHelper, TouhouHelper}
 import net.katsstuff.danmakucore.item.ItemDanmaku
-import net.katsstuff.danmakucore.lib.LibColor
 import net.katsstuff.danmakucore.lib.data.{LibItems, LibShotData}
+import net.katsstuff.danmakucore.lib.{LibColor, LibSounds}
+import net.katsstuff.danmakucore.scalastuff.{DanmakuCreationHelper, TouhouHelper}
 import net.katsstuff.journeytogensokyo.helper.FlyingRandomPositionGenerator
+import net.katsstuff.mirror.data.{Quat, Vector3}
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.item.ItemStack
 import net.minecraft.util.DamageSource
@@ -25,11 +27,11 @@ class PhaseTypeTengu extends PhaseType {
   override def instantiate(manager: PhaseManager): Phase = new PhaseTengu(manager, this)
 }
 
-class PhaseTengu(manager: PhaseManager, val getType: PhaseTypeTengu) extends Phase(manager) {
+class PhaseTengu(manager: PhaseManager, val phaseType: PhaseTypeTengu) extends Phase(manager) {
 
   var cooldown         = 0
   var charge           = 0
-  private val shotData = LibShotData.SHOT_SMALL.copy(color = LibColor.COLOR_SATURATED_YELLOW)
+  private val shotData = LibShotData.SHOT_SMALL.copy(edgeColor = LibColor.COLOR_SATURATED_YELLOW)
 
   override def init(): Unit = {
     super.init()
@@ -47,29 +49,23 @@ class PhaseTengu(manager: PhaseManager, val getType: PhaseTypeTengu) extends Pha
       val forward   = Vector3.directionToEntity(entityPos, target)
       entity.faceEntity(target, 30F, 30F)
       if (counter % 12 == 0) {
-        val template = DanmakuTemplate
-          .builder()
+        val template = DanmakuTemplate.builder
           .setUser(entity)
           .setDirection(Vector3.directionToLiving(entity, target))
           .setShot(shotData)
+          .setOrientation(Quat.lookRotation(forward, Vector3.Up))
           .setMovementData(0.4D)
-          .build()
+          .build
 
-        DanmakuCreationHelper.createRandomRingShot(
-          Quat.lookRotation(forward, Vector3.Up),
-          template,
-          3 * level.getMultiplier,
-          40F,
-          0.5D
-        )
-        DanmakuHelper.playShotSound(entity)
+        DanmakuCreationHelper.createRandomRingShot(template, 3 * level.getMultiplier, 40F, 0.5D)
+        entity.playSound(LibSounds.SHOT1, 1F, 1F)
       }
 
       if (charge > 0) doCharge(entity, target) else moveAround(entity, target)
     }
   }
 
-  override protected def useFreeze(): Boolean = false
+  override protected def useFreeze: Boolean = false
 
   private def doCharge(entity: EntityDanmakuMob, target: EntityLivingBase): Unit = {
     if (counter % 12 == 0) {
@@ -77,20 +73,20 @@ class PhaseTengu(manager: PhaseManager, val getType: PhaseTypeTengu) extends Pha
         charge += 1
         createChargeSphere(entity)
       } else {
-        val direction @ Vector3(x, y, z) = Vector3.directionToLiving(entity, target) * (entity.getSpeed * 2.5D)
+        val direction @ Vector3(x, y, z) = Vector3.directionToLiving(entity, target) * (entity.getFlyingSpeed * 2.5D)
         entity.motionX += x
         entity.motionY += y
         entity.motionZ += z
 
         val template = DanmakuTemplate
-          .builder()
+          .builder
           .setUser(entity)
           .setDirection(direction.normalize)
-          .setShot(shotData.setColor(LibColor.COLOR_SATURATED_RED).scaleSize(2F))
-          .setMovementData(entity.getSpeed * 1.2D)
-          .build()
+          .setShot(shotData.setMainColor(LibColor.COLOR_SATURATED_RED).scaleSize(2F))
+          .setMovementData(entity.getFlyingSpeed * 1.2D)
+          .build
 
-        entity.world.spawnEntity(template.asEntity())
+        DanmakuCore.spawnDanmaku(Seq(template.asEntity))
         charge = 0
       }
     }
@@ -111,7 +107,7 @@ class PhaseTengu(manager: PhaseManager, val getType: PhaseTypeTengu) extends Pha
           if (targetVec != null) {
             val path = entity.getNavigator.getPathToXYZ(targetVec.x, targetVec.y, targetVec.z)
             if (path != null) {
-              if (entity.getNavigator.setPath(path, entity.getSpeed)) {
+              if (entity.getNavigator.setPath(path, 1D)) {
                 cooldown = 2
               }
             }
@@ -129,12 +125,12 @@ class PhaseTengu(manager: PhaseManager, val getType: PhaseTypeTengu) extends Pha
     val entity = getEntity
 
     stack.setCount(entity.getRNG.nextInt(5) + 1)
-    ItemDanmaku.AMOUNT.set(entity.getRNG.nextInt(5) + 1, stack)
-    ItemDanmaku.SPEED.set(0.4D, stack)
-    ItemDanmaku.PATTERN.set(ItemDanmaku.Pattern.RANDOM_RING, stack)
+    ItemDanmaku.Amount.set(entity.getRNG.nextInt(5) + 1, stack)
+    ItemDanmaku.Speed.set(0.4D, stack)
+    ItemDanmaku.DanPattern.set(ItemDanmaku.RandomRing, stack)
     ShotData.serializeNBTItemStack(stack, shotData)
     //noinspection NameBooleanParameters
-    ItemDanmaku.CUSTOM.set(true, stack)
+    ItemDanmaku.Custom.set(true, stack)
 
     entity.entityDropItem(stack, 0F)
   }
