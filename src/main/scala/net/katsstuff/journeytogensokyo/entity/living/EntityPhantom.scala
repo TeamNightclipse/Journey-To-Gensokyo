@@ -21,6 +21,7 @@ import net.minecraft.block.state.IBlockState
 import net.minecraft.entity.ai.{EntityAIFleeSun, EntityAIHurtByTarget, EntityAILookIdle, EntityAINearestAttackableTarget, EntityAISwimming, EntityAIWander}
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.entity.{EnumCreatureAttribute, IEntityLivingData}
+import net.minecraft.util.math.BlockPos
 import net.minecraft.world.{DifficultyInstance, World}
 
 object EntityPhantom {
@@ -91,6 +92,16 @@ class EntityPhantom(_world: World) extends EntityForm(_world) with EntityIsAlly 
 
   override def onUpdate(): Unit = {
     super.onUpdate()
+    if(!world.isRemote && world.isDaytime) {
+      //From AbstractSkeleton
+      val brightness = getBrightness
+      val pos = new BlockPos(posX, posY.round.toDouble, posZ)
+
+      if (brightness > 0.5F && rand.nextFloat * 30F < (brightness - 0.4F) * 2.0F && world.canSeeSky(pos)) {
+        setFire(8)
+      }
+    }
+
     if (world.isRemote) {
       val color = EntityPhantom.formToColor(form)
       val r     = (color >> 16 & 255) / 255.0F
