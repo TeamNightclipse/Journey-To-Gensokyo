@@ -57,6 +57,7 @@ val minecraft = the<ForgeExtension>()
 configure<ForgeExtension> {
     version = "${config["mc_version"]}-${config["forge_version"]}"
     runDir = if (file("../run1.12").exists()) "../run1.12" else "run"
+    isUseDepAts = true
 
     // the mappings can be changed at any time, and must be in the following format.
     // snapshot_YYYYMMDD   snapshot are built nightly.
@@ -76,6 +77,9 @@ dependencies {
 
 tasks.withType<Jar> {
     exclude("**/*.psd")
+    manifest {
+        attributes(mapOf("FMLAT" to "danmakucore_at.cfg"))
+    }
 }
 
 tasks.withType<ProcessResources> {

@@ -31,12 +31,13 @@ class EntityHellRaven(_world: World) extends EntityBigBird(_world) {
   phaseManager.currentPhase.init()
 
   setFlyingSpeed(0.4D)
+  setGroundSpeed(0.2D)
   setSpecies(TouhouSpecies.ANIMAL_RAVEN_HELL)
 
   isImmuneToFire = true
   override protected def initEntityAI(): Unit = {
     this.tasks.addTask(0, new EntityAISwimming(this))
-    this.tasks.addTask(2, new EntityAIMoveRanged(this, 1D, 24F))
+    this.tasks.addTask(2, new EntityAIMoveRanged(this, 1D, 24F, 16F))
     this.tasks.addTask(6, new EntityAIWander(this, 1D))
     this.tasks.addTask(6, new EntityAIWatchClosest(this, classOf[EntityPlayer], 24F))
     this.tasks.addTask(7, new EntityAILookIdle(this))

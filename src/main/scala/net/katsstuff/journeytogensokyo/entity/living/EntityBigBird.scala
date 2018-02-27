@@ -22,7 +22,7 @@ abstract class EntityBigBird(_world: World) extends EntityJTGDanmakuMob(_world) 
 
   override def isValidLightLevel: Boolean = true
 
-  override def getBlockPathWeight(pos: BlockPos): Float = world.getLightBrightness(pos)
+  override def getBlockPathWeight(pos: BlockPos): Float = super.getBlockPathWeight(pos) + world.getLightBrightness(pos)
 
   override def spawnBlockCheck(state: IBlockState): Boolean = state.getMaterial == Material.ROCK
 }

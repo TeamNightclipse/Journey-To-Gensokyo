@@ -12,12 +12,12 @@ import net.katsstuff.danmakucore.DanmakuCore
 import net.katsstuff.danmakucore.danmaku.DanmakuTemplate
 import net.katsstuff.danmakucore.data.ShotData
 import net.katsstuff.danmakucore.entity.living.EntityDanmakuMob
+import net.katsstuff.danmakucore.entity.living.ai.FlyingRandomPositionGenerator
 import net.katsstuff.danmakucore.entity.living.phase.{Phase, PhaseManager, PhaseType}
 import net.katsstuff.danmakucore.item.ItemDanmaku
 import net.katsstuff.danmakucore.lib.data.{LibItems, LibShotData}
 import net.katsstuff.danmakucore.lib.{LibColor, LibSounds}
 import net.katsstuff.danmakucore.scalastuff.{DanmakuCreationHelper, TouhouHelper}
-import net.katsstuff.journeytogensokyo.helper.FlyingRandomPositionGenerator
 import net.katsstuff.mirror.data.{Quat, Vector3}
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.item.ItemStack
@@ -73,16 +73,18 @@ class PhaseTengu(manager: PhaseManager, val phaseType: PhaseTypeTengu) extends P
         charge += 1
         createChargeSphere(entity)
       } else {
-        val direction @ Vector3(x, y, z) = Vector3.directionToLiving(entity, target) * (entity.getFlyingSpeed * 2.5D)
+        val direction @ Vector3(x, y, z) = Vector3.directionToLiving(entity, target) * (entity.getFlyingSpeed * 3.5D)
+        if(!entity.isFlying) {
+          entity.motionY += 0.35F
+        }
         entity.motionX += x
         entity.motionY += y
         entity.motionZ += z
 
-        val template = DanmakuTemplate
-          .builder
+        val template = DanmakuTemplate.builder
           .setUser(entity)
           .setDirection(direction.normalize)
-          .setShot(shotData.setMainColor(LibColor.COLOR_SATURATED_RED).scaleSize(2F))
+          .setShot(shotData.setMainColor(LibColor.COLOR_SATURATED_RED).scaleSize(3F))
           .setMovementData(entity.getFlyingSpeed * 1.2D)
           .build
 
@@ -96,8 +98,7 @@ class PhaseTengu(manager: PhaseManager, val phaseType: PhaseTypeTengu) extends P
     if (isCounterStart) {
       if (cooldown > 0) cooldown -= 1
 
-      if (cooldown == 0 && !entity.hasPath) {
-
+      if (cooldown == 0) {
         if (entity.getRNG.nextInt(3) == 0) {
           cooldown = 3
           charge = 1
@@ -118,7 +119,17 @@ class PhaseTengu(manager: PhaseManager, val phaseType: PhaseTypeTengu) extends P
   }
 
   private def createChargeSphere(entity: EntityDanmakuMob): Unit =
-    TouhouHelper.createChargeSpherePacket(new Vector3(entity), entity, 50 * charge, 2D, 10D, 1F, 0.1F, 0.1F, 40)
+    TouhouHelper.createChargeSpherePacket(
+      packetCenter = new Vector3(entity),
+      entity = entity,
+      amount = 150 * charge,
+      offset = 2D,
+      divSpeed = 5D,
+      r = 1F,
+      g = 0.1F,
+      b = 0.1F,
+      lifetime = 40
+    )
 
   override def dropLoot(source: DamageSource): Unit = {
     val stack  = new ItemStack(LibItems.DANMAKU)

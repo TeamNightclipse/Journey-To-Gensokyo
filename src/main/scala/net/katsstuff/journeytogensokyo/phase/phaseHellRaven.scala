@@ -19,6 +19,7 @@ import net.katsstuff.danmakucore.lib.data.{LibItems, LibShotData}
 import net.katsstuff.danmakucore.lib.{LibColor, LibSounds}
 import net.katsstuff.danmakucore.scalastuff.DanmakuCreationHelper
 import net.katsstuff.journeytogensokyo.helper.Implicits._
+import net.katsstuff.journeytogensokyo.helper.LogHelper
 import net.katsstuff.mirror.data.{Quat, Vector3}
 import net.minecraft.item.ItemStack
 import net.minecraft.util.DamageSource
@@ -34,8 +35,7 @@ class PhaseHellRaven(manager: PhaseManager, star: Boolean, val phaseType: PhaseT
 
   override def init(): Unit = {
     super.init()
-    if (star) interval = 81
-    else interval = 45
+    if (star) interval = 81 else interval = 45
   }
 
   override def serverUpdate(): Unit = {
@@ -85,7 +85,7 @@ class PhaseHellRaven(manager: PhaseManager, star: Boolean, val phaseType: PhaseT
           val template = DanmakuTemplate.builder.setUser(entity).setShot(otherShotData).setDirection(forward)
 
           val toSpawn = for (i <- 1 until num) yield {
-            template.setMovementData(0.3D * (i + i / 2D), 0.3D * (i / 2D), 0D).build.asEntity
+            template.setMovementData(0.3D * (i / 2D) * 2D).build.asEntity
           }
           DanmakuCore.spawnDanmaku(toSpawn)
 

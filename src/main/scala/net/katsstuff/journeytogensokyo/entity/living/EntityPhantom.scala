@@ -56,6 +56,7 @@ class EntityPhantom(_world: World) extends EntityForm(_world) with EntityIsAlly 
   phaseManager.currentPhase.init()
 
   setFlyingSpeed(0.2D)
+  setFlyingSpeed(0.1D)
   setSpecies(TouhouSpecies.PHANTOM)
 
   setMaxHP(2F)
@@ -64,7 +65,7 @@ class EntityPhantom(_world: World) extends EntityForm(_world) with EntityIsAlly 
     this.tasks.addTask(0, new EntityAISwimming(this))
     //TODO this.tasks.addTask(2, new EntityAIRestrictSun(this))
     this.tasks.addTask(3, new EntityAIFleeSun(this, 1D))
-    this.tasks.addTask(4, new EntityAIMoveRanged(this, 1D, 16F))
+    this.tasks.addTask(4, new EntityAIMoveRanged(this, 1D, 16F, 12F))
     this.tasks.addTask(6, new EntityAIWander(this, 1D))
     this.tasks.addTask(7, new EntityAILookIdle(this))
     this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false))

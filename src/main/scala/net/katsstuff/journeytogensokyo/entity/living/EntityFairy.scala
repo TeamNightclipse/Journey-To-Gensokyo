@@ -117,7 +117,7 @@ class EntityFairy(_world: World) extends EntityForm(_world) with EntityIsCallabl
 
     tasks.addTask(0, new EntityAISwimming(this))
     tasks.addTask(1, aiTempt)
-    tasks.addTask(2, new EntityAIMoveRanged(this, 1D, 16F))
+    tasks.addTask(2, new EntityAIMoveRanged(this, 1D, 16F, 12F))
     tasks.addTask(6, new EntityAIWander(this, 1D))
     tasks.addTask(6, new EntityAIWatchClosest(this, classOf[EntityPlayer], 16F))
     tasks.addTask(7, new EntityAILookIdle(this))
@@ -192,7 +192,8 @@ class EntityFairy(_world: World) extends EntityForm(_world) with EntityIsCallabl
     world.getLightFor(EnumSkyBlock.SKY, blockpos) > 8
   }
 
-  override def getBlockPathWeight(pos: BlockPos): Float = world.getLightBrightness(pos) - 0.5F
+  override def getBlockPathWeight(pos: BlockPos): Float =
+    super.getBlockPathWeight(pos) + world.getLightBrightness(pos) - 0.5F
 
   override def lootTableName: String = LibEntityName.Fairy
 

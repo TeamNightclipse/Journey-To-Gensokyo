@@ -87,6 +87,7 @@ class PhaseGenericStageEnemy(
     val target = entity.getAttackTarget
 
     if (isCounterStart && !isFrozen && target != null && entity.getEntitySenses.canSee(target)) {
+      entity.faceEntity(target, 30F, 30F)
       val entityPos = new Vector3(entity)
       val forward   = Vector3.directionToEntity(entityPos, target)
       val baseLook  = Quat.lookRotation(forward, Vector3.Up) //TODO: Add inaccuracy here?
