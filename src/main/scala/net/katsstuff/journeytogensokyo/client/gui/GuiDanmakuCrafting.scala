@@ -66,11 +66,11 @@ class GuiDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: BlockPos
       if (values.size == 1) {
         val value  = values.head
         val before = format(value._1)
-        val after  = value._2.map(format)
+        val after  = value._2.filter(_ != 0).map(format)
         builder.append(s"$before${after.fold("")(s => s" + $s")}")
       } else {
         builder.append(s"(${values.map(t => format(t._1)).mkString(", ")})")
-        if (!values.map(_._2).forall(_.isEmpty)) {
+        if (!values.map(_._2).forall(opt => opt.isEmpty || opt.contains(0))) {
           builder.append(" + ")
           builder.append(s"(${values.map(_._2.fold(numeric.zero.toString)(format)).mkString(", ")})")
         }
@@ -79,24 +79,8 @@ class GuiDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: BlockPos
       builder.mkString
     }
 
-    def i18nPlus[A](name: String, values: (A, A)*)(implicit numeric: Numeric[A]) = {
-      val builder   = new StringBuilder(i18n(name) + SpaceDivider)
-      val formatter = NumberFormat.getNumberInstance
-      def format(a: A): String = formatter.format(numeric.toDouble(a))
-
-      if (values.size == 1) {
-        val value  = values.head
-        val before = format(value._1)
-        val after  = format(value._2)
-        builder.append(s"$before + $after")
-      } else {
-        builder.append(s"(${values.map(t => format(t._1)).mkString(", ")})")
-        builder.append(" + ")
-        builder.append(s"(${values.map(t => format(t._2)).mkString(", ")})")
-      }
-
-      builder.mkString
-    }
+    def i18nPlus[A](name: String, values: (A, A)*)(implicit numeric: Numeric[A]) =
+      i18nOptPlus(name, values.map(t => t._1 -> Some(t._2)): _*)
 
     def i18nDanmakuOptPlus[A: Numeric](string: String, value: (A, Option[A])*) =
       i18nOptPlus(s"item.danmaku.$string", value: _*)

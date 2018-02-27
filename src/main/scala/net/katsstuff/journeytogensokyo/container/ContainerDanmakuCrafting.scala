@@ -248,8 +248,8 @@ case class DanmakuCraftingContext(
     val roundedSizeZ  = round(current.sizeZ + result.sizeZ, 2)
 
     val newForm           = if (result.getForm != null) result.getForm else current.getForm
-    val newMainColor      = if (result.edgeColor != -1) result.edgeColor else current.edgeColor
-    val newSecondaryColor = if (result.coreColor != -1) result.coreColor else current.coreColor
+    val newMainColor      = if (result.edgeColor != -1) result.edgeColor else current.mainColor
+    val newSecondaryColor = if (result.coreColor != -1) result.coreColor else current.secondaryColor
     val newDamage         = MathHelper.clamp(roundedDamage, 0F, 6F)
     val newSizeX          = MathHelper.clamp(roundedSizeX, 0.01F, 2F)
     val newSizeY          = MathHelper.clamp(roundedSizeY, 0.01F, 2F)
@@ -258,7 +258,7 @@ case class DanmakuCraftingContext(
     val newEnd            = MathHelper.clamp(current.end + result.end, 1, 120)
     val newSubEntity      = if (result.getSubEntity != null) result.getSubEntity else current.getSubEntity
 
-    ShotData(
+    current.copy(
       form = newForm,
       damage = newDamage,
       sizeX = newSizeX,
