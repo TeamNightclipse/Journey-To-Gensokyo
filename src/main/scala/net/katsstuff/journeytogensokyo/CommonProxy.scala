@@ -16,9 +16,10 @@ import net.katsstuff.danmakucore.lib.data.{LibForms, LibSubEntities}
 import net.katsstuff.danmakucore.scalastuff.DanmakuHelper
 import net.katsstuff.journeytogensokyo.api.{JourneyToGensokyoAPI => JTGAPI}
 import net.katsstuff.journeytogensokyo.block.{BlockDanOre, BlockDanmakuCrafting, JTGBlocks}
+import net.katsstuff.journeytogensokyo.entity.EntityCamera
 import net.katsstuff.journeytogensokyo.entity.living.{EntityFairy, EntityHellRaven, EntityPhantom, EntityTenguCrow}
 import net.katsstuff.journeytogensokyo.handler.ConfigHandler
-import net.katsstuff.journeytogensokyo.item.{ItemJTGBase, JTGItems}
+import net.katsstuff.journeytogensokyo.item.{ItemCamera, ItemJTGBase, JTGItems}
 import net.katsstuff.journeytogensokyo.lib.{LibBlockName, LibEntityName, LibItemName, LibMod, LibPhaseName}
 import net.katsstuff.journeytogensokyo.phase.{PhaseTypeGenericStageEnemy, PhaseTypeHellRaven, PhaseTypeShapeArrow, PhaseTypeTengu}
 import net.katsstuff.journeytogensokyo.worldgen.OreWorldGen
@@ -79,6 +80,7 @@ object CommonProxy {
       new ItemJTGBase(LibItemName.GensokyoNotes),
       new ItemJTGBase(LibItemName.PatchedGensokyoNotes),
       itemBlock(JTGBlocks.DanmakuCrafting),
+      new ItemCamera
     )
 
     OreDictionary.registerOre("oreGensokyo", gensokyoOre)
@@ -187,6 +189,8 @@ class CommonProxy {
       BiomeType.FOREST,
       BiomeType.NETHER
     )
+
+    registerEntity(classOf[EntityCamera], "camera", 4, eggPrimary = 0x000000, eggSecondary = 0xFFFFFF)
   }
 
   def registerCrafting(): Unit = {

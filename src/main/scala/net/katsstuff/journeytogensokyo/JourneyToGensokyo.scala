@@ -9,7 +9,7 @@
 package net.katsstuff.journeytogensokyo
 
 import net.katsstuff.journeytogensokyo.client.ClientProxy
-import net.katsstuff.journeytogensokyo.handler.{GuiHandler, LootHandler}
+import net.katsstuff.journeytogensokyo.handler.{CameraHandler, GuiHandler, LootHandler}
 import net.katsstuff.journeytogensokyo.helper.LogHelper
 import net.katsstuff.journeytogensokyo.lib.{LibMod, LibModJ}
 import net.minecraftforge.common.MinecraftForge
@@ -31,6 +31,7 @@ object JourneyToGensokyo {
 
   if (FMLCommonHandler.instance().getSide == Side.CLIENT) {
     MinecraftForge.EVENT_BUS.register(ClientProxy)
+    MinecraftForge.EVENT_BUS.register(CameraHandler)
   }
 
   assert(LibMod.Id == LibModJ.ID)
