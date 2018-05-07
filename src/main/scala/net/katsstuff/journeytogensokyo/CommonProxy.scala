@@ -51,19 +51,19 @@ object CommonProxy {
 
   @SubscribeEvent
   def registerItems(event: RegistryEvent.Register[Item]): Unit = {
-    val gensokyoDust     = new ItemJTGBase(LibItemName.GensokyoDust) setRegistryName LibItemName.GensokyoDust
-    val makaiDust        = new ItemJTGBase(LibItemName.MakaiDust) setRegistryName LibItemName.MakaiDust
-    val celestialDust    = new ItemJTGBase(LibItemName.CelestialDust) setRegistryName LibItemName.CelestialDust
-    val gensokyoCrystal  = new ItemJTGBase(LibItemName.GensokyoCrystal) setRegistryName LibItemName.GensokyoCrystal
-    val makaiCrystal     = new ItemJTGBase(LibItemName.MakaiCrystal) setRegistryName LibItemName.MakaiCrystal
-    val celestialCrystal = new ItemJTGBase(LibItemName.CelestialCrystal) setRegistryName LibItemName.CelestialCrystal
+    val gensokyoDust     = new ItemJTGBase(LibItemName.GensokyoDust)
+    val makaiDust        = new ItemJTGBase(LibItemName.MakaiDust)
+    val celestialDust    = new ItemJTGBase(LibItemName.CelestialDust)
+    val gensokyoCrystal  = new ItemJTGBase(LibItemName.GensokyoCrystal)
+    val makaiCrystal     = new ItemJTGBase(LibItemName.MakaiCrystal)
+    val celestialCrystal = new ItemJTGBase(LibItemName.CelestialCrystal)
 
     val gensokyoOre  = itemBlock(JTGBlocks.GensokyoOre)
     val makaiOre     = itemBlock(JTGBlocks.MakaiOre)
     val celestialOre = itemBlock(JTGBlocks.CelestialOre)
 
     event.getRegistry.registerAll(
-      new ItemJTGBase(LibItemName.BulletCore) setRegistryName LibItemName.BulletCore,
+      new ItemJTGBase(LibItemName.BulletCore),
       gensokyoOre,
       makaiOre,
       celestialOre,
@@ -73,12 +73,12 @@ object CommonProxy {
       gensokyoCrystal,
       makaiCrystal,
       celestialCrystal,
-      new ItemJTGBase(LibItemName.GensokyoSpell) setRegistryName LibItemName.GensokyoSpell,
-      new ItemJTGBase(LibItemName.MakaiSpell) setRegistryName LibItemName.MakaiSpell,
-      new ItemJTGBase(LibItemName.CelestialSpell) setRegistryName LibItemName.CelestialSpell,
-      new ItemJTGBase(LibItemName.GensokyoNotes) setRegistryName LibItemName.GensokyoNotes,
-      new ItemJTGBase(LibItemName.PatchedGensokyoNotes) setRegistryName LibItemName.PatchedGensokyoNotes,
-      itemBlock(JTGBlocks.DanmakuCrafting)
+      new ItemJTGBase(LibItemName.GensokyoSpell),
+      new ItemJTGBase(LibItemName.MakaiSpell),
+      new ItemJTGBase(LibItemName.CelestialSpell),
+      new ItemJTGBase(LibItemName.GensokyoNotes),
+      new ItemJTGBase(LibItemName.PatchedGensokyoNotes),
+      itemBlock(JTGBlocks.DanmakuCrafting),
     )
 
     OreDictionary.registerOre("oreGensokyo", gensokyoOre)

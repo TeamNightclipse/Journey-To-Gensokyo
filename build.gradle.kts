@@ -1,6 +1,8 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import groovy.util.ConfigObject
 import groovy.util.ConfigSlurper
 import net.minecraftforge.gradle.user.IReobfuscator
+import net.minecraftforge.gradle.user.ReobfMappingType
 import net.minecraftforge.gradle.user.ReobfTaskFactory
 import net.minecraftforge.gradle.user.patcherUser.forge.ForgeExtension
 import org.gradle.api.internal.HasConvention
@@ -8,13 +10,16 @@ import org.gradle.jvm.tasks.Jar
 import java.util.Properties
 
 buildscript {
+    repositories {
+        jcenter()
+        maven {
+            name = "forge"
+            setUrl("http://files.minecraftforge.net/maven")
+        }
+    }
     dependencies {
         classpath("net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT")
     }
-}
-
-apply {
-    plugin("net.minecraftforge.gradle.forge")
 }
 
 plugins {
@@ -22,6 +27,11 @@ plugins {
     //We apply these to get pretty build script
     java
     idea
+    id("com.github.johnrengelman.shadow").version("2.0.4")
+}
+
+apply {
+    plugin("net.minecraftforge.gradle.forge")
 }
 
 val configFile = file("build.properties")
@@ -75,6 +85,17 @@ dependencies {
     compile(project("DanmakuCore"))
 }
 
+tasks.withType<ShadowJar> {
+    classifier = ""
+    relocate("shapeless", "net.katsstuff.mirror.shade.shapeless")
+    dependencies {
+        exclude(project("DanmakuCore"))
+        exclude(project("DanmakuCore:Mirror"))
+        exclude(dependency("com.chuusai:shapeless_2.11:2.3.3"))
+    }
+    exclude("dummyThing")
+}
+
 tasks.withType<Jar> {
     exclude("**/*.psd")
     manifest {
@@ -96,9 +117,28 @@ tasks.withType<ProcessResources> {
     }
 }
 
+idea.module.inheritOutputDirs = true
+
+val reobf: NamedDomainObjectContainer<IReobfuscator> by extensions
+
+tasks.get("build").dependsOn("shadowJar")
+
+artifacts {
+    add("archives", tasks.get("shadowJar"))
+}
+
+reobf {
+    "shadowJar" {
+        mappingType = ReobfMappingType.SEARGE
+    }
+}
+
+tasks.get("reobfShadowJar").mustRunAfter("shadowJar")
+tasks.get("build").dependsOn("reobfShadowJar")
+
 tasks {
     "incrementBuildNumber" {
-        dependsOn("reobfJar")
+        dependsOn("reobfShadowJar")
         doLast {
             config["build_number"] = config["build_number"].toString().toInt() + 1
             config.toProperties().store(configFile.writer(), "")
@@ -111,7 +151,5 @@ fun parseConfig(config: File): ConfigObject {
     prop.load(config.reader())
     return ConfigSlurper().parse(prop)
 }
-
-idea.module.inheritOutputDirs = true
 
 defaultTasks("clean", "build", "incrementBuildNumber")
