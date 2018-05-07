@@ -3,7 +3,7 @@ package net.katsstuff.journeytogensokyo.handler
 import net.katsstuff.journeytogensokyo.entity.EntityCamera
 import net.minecraft.client.Minecraft
 import net.minecraft.entity.Entity
-import net.minecraftforge.client.event.{EntityViewRenderEvent, RenderGameOverlayEvent, RenderHandEvent, RenderPlayerEvent}
+import net.minecraftforge.client.event.{EntityViewRenderEvent, FOVUpdateEvent, RenderGameOverlayEvent, RenderHandEvent, RenderPlayerEvent}
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.gameevent.TickEvent
 import net.minecraftforge.fml.relauncher.Side
@@ -13,6 +13,7 @@ object CameraHandler {
   private val mc                 = Minecraft.getMinecraft
   private var cameraView: Entity = _
   private var realView: Entity   = _
+  private var realThirdPerson: Int = 0
 
   def setCamera(entity: Entity): Unit = {
     if(cameraView != null) {
@@ -23,6 +24,7 @@ object CameraHandler {
       camera.forceSpawn = true
       entity.world.spawnEntity(camera)
       cameraView = camera
+      realThirdPerson = mc.gameSettings.thirdPersonView
     }
   }
 
@@ -30,10 +32,12 @@ object CameraHandler {
     cameraView.setDead()
     cameraView = null
     useRealView()
+    mc.gameSettings.thirdPersonView = realThirdPerson
   }
 
   private def useCameraView(): Unit = {
     if (cameraView != null) {
+      mc.gameSettings.thirdPersonView = 0
       realView = mc.getRenderViewEntity
       mc.getRenderManager.renderViewEntity = cameraView
       mc.setRenderViewEntity(cameraView)
@@ -54,8 +58,14 @@ object CameraHandler {
   @SubscribeEvent
   def onRenderTick(event: TickEvent.RenderTickEvent): Unit =
     if (cameraView != null) {
-      if (event.phase == TickEvent.Phase.START) useCameraView()
-      else useRealView()
+      if (event.phase == TickEvent.Phase.START) {
+        cameraView.setPosition(cameraView.posX, cameraView.posY, cameraView.posZ + 0.0025)
+        mc.gameSettings.thirdPersonView = 0
+        useCameraView()
+      }
+      else {
+        useRealView()
+      }
     }
 
   @SubscribeEvent
@@ -103,8 +113,15 @@ object CameraHandler {
   }
 
   @SubscribeEvent
+  def onFov(event: EntityViewRenderEvent.FOVModifier): Unit = {
+    if(cameraView != null) {
+      event.setFOV(75F)
+    }
+  }
+
+  @SubscribeEvent
   def onPlayerUpdate(event: TickEvent.PlayerTickEvent): Unit = {
-    if(cameraView != null && event.side == Side.CLIENT && event.phase == TickEvent.Phase.END) {
+    if(cameraView != null && event.side == Side.CLIENT && event.phase == TickEvent.Phase.START) {
       val player = event.player
       player.setPositionAndRotation(player.posX, player.posY, player.posZ, cameraView.rotationYaw, 0F)
     }
