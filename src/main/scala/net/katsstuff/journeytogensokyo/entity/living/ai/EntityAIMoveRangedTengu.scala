@@ -10,7 +10,7 @@ package net.katsstuff.journeytogensokyo.entity.living.ai
 
 import net.katsstuff.journeytogensokyo.entity.living.EntityTenguCrow
 import net.katsstuff.journeytogensokyo.helper.LogHelper
-import net.katsstuff.mirror.data.Vector3
+import net.katsstuff.teamnightclipse.mirror.data.Vector3
 import net.minecraft.entity.ai.EntityAIBase
 
 //Same as EntityAIMoveRanged, except it doesn't delete the current path

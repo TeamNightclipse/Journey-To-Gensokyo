@@ -11,8 +11,8 @@ package net.katsstuff.journeytogensokyo.entity.living
 import java.lang.{Boolean => JBoolean}
 import java.util.Random
 
-import net.katsstuff.danmakucore.entity.living.TouhouSpecies
-import net.katsstuff.danmakucore.entity.living.ai.EntityAIMoveRanged
+import net.katsstuff.teamnightclipse.danmakucore.entity.living.TouhouSpecies
+import net.katsstuff.teamnightclipse.danmakucore.entity.living.ai.EntityAIMoveRanged
 import net.katsstuff.journeytogensokyo.entity.living.ai.{EntityAIFollowFriend, EntityAITemptStack}
 import net.katsstuff.journeytogensokyo.handler.ConfigHandler
 import net.katsstuff.journeytogensokyo.handler.ConfigHandler.Spawns.SpawnEntry

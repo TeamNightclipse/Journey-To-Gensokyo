@@ -8,8 +8,8 @@
  */
 package net.katsstuff.journeytogensokyo.entity.living
 
-import net.katsstuff.danmakucore.entity.living.TouhouSpecies
-import net.katsstuff.danmakucore.entity.living.ai.EntityAIMoveRanged
+import net.katsstuff.teamnightclipse.danmakucore.entity.living.TouhouSpecies
+import net.katsstuff.teamnightclipse.danmakucore.entity.living.ai.EntityAIMoveRanged
 import net.katsstuff.journeytogensokyo.phase.JTGPhases
 import net.minecraft.entity.EnumCreatureAttribute
 import net.minecraft.entity.ai.{EntityAIHurtByTarget, EntityAILookIdle, EntityAINearestAttackableTarget, EntityAISwimming, EntityAIWander}

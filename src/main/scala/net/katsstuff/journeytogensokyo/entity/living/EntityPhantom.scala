@@ -8,14 +8,14 @@
  */
 package net.katsstuff.journeytogensokyo.entity.living
 
-import net.katsstuff.danmakucore.entity.living.TouhouSpecies
-import net.katsstuff.danmakucore.entity.living.ai.EntityAIMoveRanged
+import net.katsstuff.teamnightclipse.danmakucore.entity.living.TouhouSpecies
+import net.katsstuff.teamnightclipse.danmakucore.entity.living.ai.EntityAIMoveRanged
 import net.katsstuff.journeytogensokyo.handler.ConfigHandler
 import net.katsstuff.journeytogensokyo.handler.ConfigHandler.Spawns
 import net.katsstuff.journeytogensokyo.lib.LibEntityName
 import net.katsstuff.journeytogensokyo.phase.JTGPhases
-import net.katsstuff.mirror.client.particles.{GlowTexture, ParticleUtil}
-import net.katsstuff.mirror.data.Vector3
+import net.katsstuff.teamnightclipse.mirror.client.particles.{GlowTexture, ParticleUtil}
+import net.katsstuff.teamnightclipse.mirror.data.Vector3
 import net.minecraft.block.material.Material
 import net.minecraft.block.state.IBlockState
 import net.minecraft.entity.ai.{EntityAIFleeSun, EntityAIHurtByTarget, EntityAILookIdle, EntityAINearestAttackableTarget, EntityAISwimming, EntityAIWander}

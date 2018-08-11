@@ -8,12 +8,12 @@
  */
 package net.katsstuff.journeytogensokyo.phase
 
-import net.katsstuff.danmakucore.DanmakuCore
-import net.katsstuff.danmakucore.danmaku.DanmakuTemplate
-import net.katsstuff.danmakucore.data.{MovementData, RotationData, ShotData}
-import net.katsstuff.danmakucore.entity.living.phase.{Phase, PhaseManager, PhaseType}
-import net.katsstuff.danmakucore.impl.shape.ShapeArrow
-import net.katsstuff.mirror.data.{Quat, Vector3}
+import net.katsstuff.teamnightclipse.danmakucore.DanmakuCore
+import net.katsstuff.teamnightclipse.danmakucore.danmaku.DanmakuTemplate
+import net.katsstuff.teamnightclipse.danmakucore.data.{MovementData, RotationData, ShotData}
+import net.katsstuff.teamnightclipse.danmakucore.entity.living.phase.{Phase, PhaseManager, PhaseType}
+import net.katsstuff.teamnightclipse.danmakucore.impl.shape.ShapeArrow
+import net.katsstuff.teamnightclipse.mirror.data.{Quat, Vector3}
 import net.minecraft.nbt.NBTTagCompound
 
 class PhaseTypeShapeArrow extends PhaseType {

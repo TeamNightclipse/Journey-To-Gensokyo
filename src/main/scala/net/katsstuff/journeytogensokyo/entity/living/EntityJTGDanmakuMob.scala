@@ -8,7 +8,7 @@
  */
 package net.katsstuff.journeytogensokyo.entity.living
 
-import net.katsstuff.danmakucore.entity.living.EntityDanmakuMob
+import net.katsstuff.teamnightclipse.danmakucore.entity.living.EntityDanmakuMob
 import net.katsstuff.journeytogensokyo.handler.ConfigHandler
 import net.katsstuff.journeytogensokyo.lib.LibMod
 import net.minecraft.block.state.IBlockState

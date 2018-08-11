@@ -8,17 +8,17 @@
  */
 package net.katsstuff.journeytogensokyo.phase
 
-import net.katsstuff.danmakucore.DanmakuCore
-import net.katsstuff.danmakucore.danmaku.DanmakuTemplate
-import net.katsstuff.danmakucore.data.ShotData
-import net.katsstuff.danmakucore.entity.living.EntityDanmakuMob
-import net.katsstuff.danmakucore.entity.living.ai.FlyingRandomPositionGenerator
-import net.katsstuff.danmakucore.entity.living.phase.{Phase, PhaseManager, PhaseType}
-import net.katsstuff.danmakucore.item.ItemDanmaku
-import net.katsstuff.danmakucore.lib.data.{LibItems, LibShotData}
-import net.katsstuff.danmakucore.lib.{LibColor, LibSounds}
-import net.katsstuff.danmakucore.scalastuff.{DanmakuCreationHelper, TouhouHelper}
-import net.katsstuff.mirror.data.{Quat, Vector3}
+import net.katsstuff.teamnightclipse.danmakucore.DanmakuCore
+import net.katsstuff.teamnightclipse.danmakucore.danmaku.DanmakuTemplate
+import net.katsstuff.teamnightclipse.danmakucore.data.ShotData
+import net.katsstuff.teamnightclipse.danmakucore.entity.living.EntityDanmakuMob
+import net.katsstuff.teamnightclipse.danmakucore.entity.living.ai.FlyingRandomPositionGenerator
+import net.katsstuff.teamnightclipse.danmakucore.entity.living.phase.{Phase, PhaseManager, PhaseType}
+import net.katsstuff.teamnightclipse.danmakucore.item.ItemDanmaku
+import net.katsstuff.teamnightclipse.danmakucore.lib.data.{LibItems, LibShotData}
+import net.katsstuff.teamnightclipse.danmakucore.lib.{LibColor, LibSounds}
+import net.katsstuff.teamnightclipse.danmakucore.scalastuff.{DanmakuCreationHelper, TouhouHelper}
+import net.katsstuff.teamnightclipse.mirror.data.{Quat, Vector3}
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.item.ItemStack
 import net.minecraft.util.DamageSource

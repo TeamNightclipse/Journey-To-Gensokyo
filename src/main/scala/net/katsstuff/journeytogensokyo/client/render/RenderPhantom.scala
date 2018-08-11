@@ -10,10 +10,10 @@ package net.katsstuff.journeytogensokyo.client.render
 
 import org.lwjgl.opengl.GL11
 
-import net.katsstuff.danmakucore.DanmakuCore
+import net.katsstuff.teamnightclipse.danmakucore.DanmakuCore
 import net.katsstuff.journeytogensokyo.client.model.EmptyModel
 import net.katsstuff.journeytogensokyo.entity.living.EntityPhantom
-import net.katsstuff.mirror.client.helper.MirrorRenderHelper
+import net.katsstuff.teamnightclipse.mirror.client.helper.MirrorRenderHelper
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.client.renderer.entity.{RenderLiving, RenderManager}
 import net.minecraft.util.ResourceLocation

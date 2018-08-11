@@ -22,6 +22,10 @@ buildscript {
     }
 }
 
+apply {
+    plugin("net.minecraftforge.gradle.forge")
+}
+
 plugins {
     scala
     //We apply these to get pretty build script
@@ -30,50 +34,42 @@ plugins {
     id("com.github.johnrengelman.shadow").version("2.0.4")
 }
 
-apply {
-    plugin("net.minecraftforge.gradle.forge")
-}
+val compileJava: JavaCompile by tasks
+val compileScala: ScalaCompile by tasks
+val shadowJar: ShadowJar by tasks
 
-val configFile = file("build.properties")
-val config = parseConfig(configFile)
+val config = parseConfig(file("build.properties"))
 
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
 }
 
-tasks.withType<JavaCompile> {
-    options.encoding = "UTF-8"
-}
-
-tasks.withType<ScalaCompile> {
-    scalaCompileOptions.additionalParameters = listOf("-Xexperimental")
-}
+compileJava.options.encoding = "UTF-8"
+compileScala.scalaCompileOptions.additionalParameters = listOf("-Xexperimental")
 
 version = "${config["mc_version"]}-${config["version"]}-${config["build_number"]}"
-group = "net.katsstuff"
+group = "net.katsstuff.teamnightclipse"
 base.archivesBaseName = "journeyToGensokyo"
 
-val mainSourceSet = java.sourceSets.get("main")
-val javaSourceSet = mainSourceSet.java
-val scalaSourceSet = (mainSourceSet as HasConvention).convention.getPlugin<ScalaSourceSet>().scala
-
-//Join compilation
-scalaSourceSet.srcDir("src/main/java")
-javaSourceSet.setSrcDirs(listOf<File>())
+java.sourceSets {
+    "main" {
+        //Join compilation
+        java {
+            setSrcDirs(listOf<File>())
+        }
+        withConvention(ScalaSourceSet::class) {
+            scala {
+                srcDir("src/main/java")
+            }
+        }
+    }
+}
 
 val minecraft = the<ForgeExtension>()
-
-configure<ForgeExtension> {
+minecraft.apply {
     version = "${config["mc_version"]}-${config["forge_version"]}"
     runDir = if (file("../run1.12").exists()) "../run1.12" else "run"
-    isUseDepAts = true
-
-    // the mappings can be changed at any time, and must be in the following format.
-    // snapshot_YYYYMMDD   snapshot are built nightly.
-    // stable_#            stables are built at the discretion of the MCP team.
-    // Use non-default mappings at your own risk. they may not allways work.
-    // simply re-run your setup task after changing the mappings to update your workspace.
     mappings = "snapshot_20171128"
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
 
@@ -81,19 +77,26 @@ configure<ForgeExtension> {
     replaceIn("LibMod.Scala")
 }
 
-dependencies {
-    compile(project("DanmakuCore"))
+repositories {
+    maven {
+        name = "TeamNightclipse Bintray"
+        setUrl("https://dl.bintray.com/team-nightclipse/maven/")
+    }
 }
 
-tasks.withType<ShadowJar> {
-    classifier = ""
-    relocate("shapeless", "net.katsstuff.mirror.shade.shapeless")
+dependencies {
+    compile("net.katsstuff.teamnightclipse:danmakucore:1.12.2-0.7.0")
+}
+
+shadowJar.apply {
+    classifier = "shaded"
     dependencies {
-        exclude(project("DanmakuCore"))
-        exclude(project("DanmakuCore:Mirror"))
         exclude(dependency("com.chuusai:shapeless_2.11:2.3.3"))
+        exclude(dependency("net.katsstuff.teamnightclipse:mirror:1.12.2-0.3.0"))
+        exclude(dependency("net.katsstuff.teamnightclipse:danmakucore:1.12.2-0.7.0"))
     }
     exclude("dummyThing")
+    relocate("shapeless", "net.katsstuff.mirror.shade.shapeless")
 }
 
 tasks.withType<Jar> {
@@ -107,42 +110,13 @@ tasks.withType<ProcessResources> {
     inputs.property("version", project.version)
     inputs.property("mcversion", minecraft.version)
 
-    from(mainSourceSet.resources.srcDirs) {
+    from(java.sourceSets["main"].resources.srcDirs) {
         include("mcmod.info")
-        expand(mapOf("version" to project.version, "mcversion" to minecraft.version))
+        expand(kotlin.collections.mapOf("version" to project.version, "mcversion" to minecraft.version))
     }
 
-    from(mainSourceSet.resources.srcDirs) {
+    from(java.sourceSets["main"].resources.srcDirs) {
         exclude("mcmod.info")
-    }
-}
-
-idea.module.inheritOutputDirs = true
-
-val reobf: NamedDomainObjectContainer<IReobfuscator> by extensions
-
-tasks.get("build").dependsOn("shadowJar")
-
-artifacts {
-    add("archives", tasks.get("shadowJar"))
-}
-
-reobf {
-    "shadowJar" {
-        mappingType = ReobfMappingType.SEARGE
-    }
-}
-
-tasks.get("reobfShadowJar").mustRunAfter("shadowJar")
-tasks.get("build").dependsOn("reobfShadowJar")
-
-tasks {
-    "incrementBuildNumber" {
-        dependsOn("reobfShadowJar")
-        doLast {
-            config["build_number"] = config["build_number"].toString().toInt() + 1
-            config.toProperties().store(configFile.writer(), "")
-        }
     }
 }
 
@@ -152,4 +126,21 @@ fun parseConfig(config: File): ConfigObject {
     return ConfigSlurper().parse(prop)
 }
 
-defaultTasks("clean", "build", "incrementBuildNumber")
+idea.module.inheritOutputDirs = true
+
+val reobf: NamedDomainObjectContainer<IReobfuscator> by extensions
+
+tasks["build"].dependsOn(shadowJar)
+
+artifacts {
+    add("archives", shadowJar)
+}
+
+reobf {
+    "shadowJar" {
+        mappingType = ReobfMappingType.SEARGE
+    }
+}
+
+tasks["reobfShadowJar"].mustRunAfter(shadowJar)
+tasks["build"].dependsOn("reobfShadowJar")

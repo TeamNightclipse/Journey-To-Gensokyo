@@ -8,9 +8,9 @@
  */
 package net.katsstuff.journeytogensokyo.entity.living
 
-import net.katsstuff.danmakucore.data.{MovementData, RotationData}
-import net.katsstuff.danmakucore.entity.living.TouhouSpecies
-import net.katsstuff.danmakucore.lib.data.{LibPhases, LibShotData}
+import net.katsstuff.teamnightclipse.danmakucore.data.{MovementData, RotationData}
+import net.katsstuff.teamnightclipse.danmakucore.entity.living.TouhouSpecies
+import net.katsstuff.teamnightclipse.danmakucore.lib.data.{LibPhases, LibShotData}
 import net.minecraft.world.World
 
 class EntityFairyNether(_world: World) extends EntityFairy(_world) {

@@ -8,9 +8,9 @@
  */
 package net.katsstuff.journeytogensokyo.entity.living
 
-import net.katsstuff.danmakucore.data.{MovementData, RotationData}
-import net.katsstuff.danmakucore.lib.LibColor
-import net.katsstuff.danmakucore.lib.data.LibDanmakuVariants
+import net.katsstuff.teamnightclipse.danmakucore.data.{MovementData, RotationData}
+import net.katsstuff.teamnightclipse.danmakucore.lib.LibColor
+import net.katsstuff.teamnightclipse.danmakucore.lib.data.LibDanmakuVariants
 import net.katsstuff.journeytogensokyo.phase.JTGPhases
 import net.minecraft.world.World
 

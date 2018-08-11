@@ -8,7 +8,7 @@
  */
 package net.katsstuff.journeytogensokyo.container.slot
 
-import net.katsstuff.danmakucore.scalastuff.TouhouHelper
+import net.katsstuff.teamnightclipse.danmakucore.scalastuff.TouhouHelper
 import net.katsstuff.journeytogensokyo.container.ContainerDanmakuCrafting
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.inventory.{IInventory, InventoryCrafting, SlotCrafting}

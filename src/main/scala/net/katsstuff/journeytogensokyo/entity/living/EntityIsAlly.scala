@@ -1,6 +1,6 @@
 package net.katsstuff.journeytogensokyo.entity.living
 
-import net.katsstuff.danmakucore.capability.danmakuhit.{AllyDanmakuHitBehavior, CapabilityDanmakuHitBehaviorJ}
+import net.katsstuff.teamnightclipse.danmakucore.capability.danmakuhit.{AllyDanmakuHitBehavior, CapabilityDanmakuHitBehaviorJ}
 import net.minecraft.util.EnumFacing
 import net.minecraftforge.common.capabilities.Capability
 

@@ -8,7 +8,7 @@
  */
 package net.katsstuff.journeytogensokyo.helper
 
-import net.katsstuff.mirror.data.Vector3
+import net.katsstuff.teamnightclipse.mirror.data.Vector3
 import net.minecraft.block.Block
 import net.minecraft.entity.Entity
 import net.minecraft.item.{Item, ItemStack}

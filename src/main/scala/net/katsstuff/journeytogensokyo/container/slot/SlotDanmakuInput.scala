@@ -8,7 +8,7 @@
  */
 package net.katsstuff.journeytogensokyo.container.slot
 
-import net.katsstuff.danmakucore.lib.data.LibItems
+import net.katsstuff.teamnightclipse.danmakucore.lib.data.LibItems
 import net.katsstuff.journeytogensokyo.item.JTGItems
 import net.minecraft.inventory.{IInventory, Slot}
 import net.minecraft.item.ItemStack

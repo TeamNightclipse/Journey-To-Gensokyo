@@ -1,6 +1,6 @@
 package net.katsstuff.journeytogensokyo.entity.living
 
-import net.katsstuff.danmakucore.capability.callableentity.{CallableEntity, CapabilityCallableEntityJ}
+import net.katsstuff.teamnightclipse.danmakucore.capability.callableentity.{CallableEntity, CapabilityCallableEntityJ}
 import net.minecraft.util.EnumFacing
 import net.minecraftforge.common.capabilities.Capability
 

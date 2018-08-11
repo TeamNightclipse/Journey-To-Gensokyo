@@ -8,7 +8,7 @@
  */
 package net.katsstuff.journeytogensokyo.entity.living
 
-import net.katsstuff.danmakucore.entity.living.TouhouSpecies
+import net.katsstuff.teamnightclipse.danmakucore.entity.living.TouhouSpecies
 import net.katsstuff.journeytogensokyo.entity.living.ai.EntityAIMoveRangedTengu
 import net.katsstuff.journeytogensokyo.handler.ConfigHandler
 import net.katsstuff.journeytogensokyo.handler.ConfigHandler.Spawns.SpawnEntry

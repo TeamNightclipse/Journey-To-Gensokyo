@@ -8,11 +8,11 @@
  */
 package net.katsstuff.journeytogensokyo.container
 
-import net.katsstuff.danmakucore.data.ShotData
-import net.katsstuff.danmakucore.handler.ConfigHandler
-import net.katsstuff.danmakucore.item.ItemDanmaku
-import net.katsstuff.danmakucore.lib.data.LibItems
-import net.katsstuff.danmakucore.scalastuff.TouhouHelper
+import net.katsstuff.teamnightclipse.danmakucore.data.ShotData
+import net.katsstuff.teamnightclipse.danmakucore.handler.ConfigHandler
+import net.katsstuff.teamnightclipse.danmakucore.item.ItemDanmaku
+import net.katsstuff.teamnightclipse.danmakucore.lib.data.LibItems
+import net.katsstuff.teamnightclipse.danmakucore.scalastuff.TouhouHelper
 import net.katsstuff.journeytogensokyo.api.recipe.{CraftingManager, IDanmakuRecipe}
 import net.katsstuff.journeytogensokyo.block.JTGBlocks
 import net.katsstuff.journeytogensokyo.container.slot.{
@@ -26,7 +26,7 @@ import net.minecraft.inventory.{ClickType, Container, IInventory, InventoryCraft
 import net.minecraft.item.ItemStack
 import net.minecraft.util.math.{BlockPos, MathHelper}
 import net.minecraft.world.World
-import net.katsstuff.mirror.data.Vector3
+import net.katsstuff.teamnightclipse.mirror.data.Vector3
 
 class ContainerDanmakuCrafting(invPlayer: InventoryPlayer, world: World, pos: BlockPos) extends Container {
 

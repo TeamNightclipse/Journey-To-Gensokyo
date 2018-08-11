@@ -10,11 +10,11 @@ package net.katsstuff.journeytogensokyo.client.gui
 
 import java.text.NumberFormat
 
-import net.katsstuff.danmakucore.misc.Translatable
-import net.katsstuff.danmakucore.scalastuff.TouhouHelper
+import net.katsstuff.teamnightclipse.danmakucore.misc.Translatable
+import net.katsstuff.teamnightclipse.danmakucore.scalastuff.TouhouHelper
 import net.katsstuff.journeytogensokyo.container.ContainerDanmakuCrafting
 import net.katsstuff.journeytogensokyo.lib.LibMod
-import net.katsstuff.mirror.data.Vector3
+import net.katsstuff.teamnightclipse.mirror.data.Vector3
 import net.minecraft.client.gui.inventory.GuiContainer
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.client.resources.I18n

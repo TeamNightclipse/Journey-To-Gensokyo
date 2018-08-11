@@ -8,8 +8,8 @@
  */
 package net.katsstuff.journeytogensokyo.api.recipe;
 
-import net.katsstuff.danmakucore.data.MovementData;
-import net.katsstuff.danmakucore.data.ShotData;
+import net.katsstuff.teamnightclipse.danmakucore.data.MovementData;
+import net.katsstuff.teamnightclipse.danmakucore.data.ShotData;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;

@@ -13,8 +13,8 @@ import java.util.List;
 
 import com.google.common.collect.ImmutableList;
 
-import net.katsstuff.danmakucore.data.MovementData;
-import net.katsstuff.danmakucore.data.ShotData;
+import net.katsstuff.teamnightclipse.danmakucore.data.MovementData;
+import net.katsstuff.teamnightclipse.danmakucore.data.ShotData;
 import net.minecraft.inventory.Slot;
 import scala.Option;
 

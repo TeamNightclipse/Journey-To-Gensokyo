@@ -8,8 +8,8 @@
  */
 package net.katsstuff.journeytogensokyo.api;
 
-import net.katsstuff.danmakucore.data.MovementData;
-import net.katsstuff.danmakucore.data.ShotData;
+import net.katsstuff.teamnightclipse.danmakucore.data.MovementData;
+import net.katsstuff.teamnightclipse.danmakucore.data.ShotData;
 import net.katsstuff.journeytogensokyo.api.recipe.CraftingManager;
 
 public final class JourneyToGensokyoAPI {
