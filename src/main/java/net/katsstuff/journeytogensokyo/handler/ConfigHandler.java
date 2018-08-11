@@ -17,6 +17,8 @@ public class ConfigHandler {
 
 	public static Spawns spawns = new Spawns();
 
+	public static Behavior behavior = new Behavior();
+
 	public static class Spawns {
 
 		public Fairy fairy = new Fairy();
@@ -165,5 +167,10 @@ public class ConfigHandler {
 			int lastProbability();
 			int maxInChunk();
 		}
+	}
+
+	public static class Behavior {
+
+		public boolean neutralFairies = true;
 	}
 }

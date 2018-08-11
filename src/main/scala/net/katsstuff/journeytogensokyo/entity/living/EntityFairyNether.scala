@@ -25,4 +25,6 @@ class EntityFairyNether(_world: World) extends EntityFairy(_world) {
     phaseManager.currentPhase.init()
     setSpecies(TouhouSpecies.FAIRY_HELL)
   }
+
+  override def isNeutral: Boolean = false
 }

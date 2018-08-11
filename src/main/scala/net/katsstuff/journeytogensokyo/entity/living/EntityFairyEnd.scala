@@ -24,4 +24,6 @@ class EntityFairyEnd(_world: World) extends EntityFairy(_world) {
     phaseManager.currentPhase.init()
   }
 
+  override def isNeutral: Boolean = false
+
 }

@@ -122,8 +122,12 @@ class EntityFairy(_world: World) extends EntityForm(_world) with EntityIsCallabl
     tasks.addTask(6, new EntityAIWatchClosest(this, classOf[EntityPlayer], 16F))
     tasks.addTask(7, new EntityAILookIdle(this))
     targetTasks.addTask(1, new EntityAIHurtByTarget(this, false))
-    targetTasks.addTask(2, attackPlayer)
+    if(!isNeutral) {
+      targetTasks.addTask(2, attackPlayer)
+    }
   }
+
+  def isNeutral: Boolean = ConfigHandler.behavior.neutralFairies
 
   override def entityInit(): Unit = {
     super.entityInit()
@@ -143,7 +147,7 @@ class EntityFairy(_world: World) extends EntityForm(_world) with EntityIsCallabl
             .asInstanceOf[WorldServer]
             .spawnParticle(EnumParticleTypes.HEART, false, posX, posY, posZ, 1 + rand.nextInt(2), 0D, 0D, 0D, 0.1D)
         }
-      } else if (!holdingFlower) {
+      } else if (!holdingFlower && !isNeutral) {
         targetTasks.addTask(2, attackPlayer)
       }
 
@@ -211,7 +215,9 @@ class EntityFairy(_world: World) extends EntityForm(_world) with EntityIsCallabl
       tasks.addTask(3, followFriend)
     } else {
       _friend = None
-      targetTasks.addTask(2, attackPlayer)
+      if(!isNeutral) {
+        targetTasks.addTask(2, attackPlayer)
+      }
       tasks.removeTask(followFriend)
     }
 
