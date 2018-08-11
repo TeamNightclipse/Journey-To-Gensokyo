@@ -18,5 +18,5 @@ object JTGCreativeTab extends CreativeTabs(LibMod.Id) {
   setNoTitle()
   setBackgroundImageName("item_search.png")
 
-  override def getTabIconItem: ItemStack = new ItemStack(JTGBlocks.DanmakuCrafting)
+  override def createIcon: ItemStack = new ItemStack(JTGBlocks.DanmakuCrafting)
 }

@@ -13,6 +13,6 @@ import net.minecraft.item.Item
 
 class ItemJTGBase(name: String) extends Item {
   setCreativeTab(JTGCreativeTab)
-  setUnlocalizedName(name)
+  setTranslationKey(name)
   setRegistryName(name)
 }

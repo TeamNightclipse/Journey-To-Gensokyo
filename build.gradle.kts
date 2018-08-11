@@ -70,7 +70,7 @@ val minecraft = the<ForgeExtension>()
 minecraft.apply {
     version = "${config["mc_version"]}-${config["forge_version"]}"
     runDir = if (file("../run1.12").exists()) "../run1.12" else "run"
-    mappings = "snapshot_20171128"
+    mappings = "snapshot_20180810"
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
 
     replace("@VERSION@", project.version)

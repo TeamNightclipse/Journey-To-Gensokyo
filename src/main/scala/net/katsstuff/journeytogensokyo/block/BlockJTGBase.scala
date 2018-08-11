@@ -14,5 +14,5 @@ import net.minecraft.block.material.Material
 
 class BlockJTGBase(material: Material, name: String) extends Block(material) {
   setCreativeTab(JTGCreativeTab)
-  setUnlocalizedName(name)
+  setTranslationKey(name)
 }

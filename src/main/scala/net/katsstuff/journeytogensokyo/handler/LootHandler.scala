@@ -24,7 +24,7 @@ class LootHandler {
   @SubscribeEvent
   def onLoot(event: LootTableLoadEvent): Unit =
     if (toReplace.contains(event.getName)) {
-      val custom       = new ResourceLocation(LibMod.Id, event.getName.getResourcePath)
+      val custom       = new ResourceLocation(LibMod.Id, event.getName.getPath)
       val tableManager = event.getLootTableManager
       val table        = tableManager.getLootTableFromLocation(custom)
 
@@ -37,5 +37,5 @@ class LootHandler {
     }
 
   def registerLootTables(): Unit =
-    toReplace.map(r => new ResourceLocation(LibMod.Id, r.getResourcePath)).foreach(LootTableList.register)
+    toReplace.map(r => new ResourceLocation(LibMod.Id, r.getPath)).foreach(LootTableList.register)
 }
