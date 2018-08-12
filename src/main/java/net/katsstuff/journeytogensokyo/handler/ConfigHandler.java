@@ -25,6 +25,7 @@ public class ConfigHandler {
 		public SpawnEntry tenguCrow = new SpawnEntry(5, 1, 2, 100, 2);
 		public SpawnEntry hellRaven = new SpawnEntry(10, 1, 2, 100, 2);
 		public SpawnEntry phantom = new SpawnEntry(10, 1, 2, 100, 2);
+		public SpawnEntry reimu = new SpawnEntry(1, 1, 1, 100, 1);
 
 		public static class SpawnEntry {
 

@@ -16,7 +16,7 @@ import net.katsstuff.teamnightclipse.danmakucore.lib.data.{LibForms, LibSubEntit
 import net.katsstuff.teamnightclipse.danmakucore.scalastuff.DanmakuHelper
 import net.katsstuff.journeytogensokyo.api.{JourneyToGensokyoAPI => JTGAPI}
 import net.katsstuff.journeytogensokyo.block.{BlockDanOre, BlockDanmakuCrafting, JTGBlocks}
-import net.katsstuff.journeytogensokyo.entity.living.{EntityFairy, EntityHellRaven, EntityPhantom, EntityTenguCrow}
+import net.katsstuff.journeytogensokyo.entity.living.{EntityFairy, EntityHellRaven, EntityPhantom, EntityReimuNPC, EntityTenguCrow}
 import net.katsstuff.journeytogensokyo.handler.ConfigHandler
 import net.katsstuff.journeytogensokyo.item.{ItemJTGBase, JTGItems}
 import net.katsstuff.journeytogensokyo.lib.{LibBlockName, LibEntityName, LibItemName, LibMod, LibPhaseName}
@@ -191,6 +191,17 @@ class CommonProxy {
       BiomeType.PLAINS,
       BiomeType.FOREST,
       BiomeType.NETHER
+    )
+
+    registerEntity(classOf[EntityReimuNPC], LibEntityName.ReimuNPC, 4, eggPrimary = 0xBE3E3F, eggSecondary = 0xFCFCFC)
+    registerSpawn(
+      classOf[EntityReimuNPC],
+      ConfigHandler.spawns.reimu,
+      EnumCreatureType.CREATURE,
+      BiomeType.HILLS,
+      BiomeType.PLAINS,
+      BiomeType.FOREST,
+      BiomeType.MAGICAL
     )
   }
 
