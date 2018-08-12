@@ -12,9 +12,10 @@ import net.katsstuff.journeytogensokyo.client.ClientProxy
 import net.katsstuff.journeytogensokyo.handler.{GuiHandler, LootHandler}
 import net.katsstuff.journeytogensokyo.helper.LogHelper
 import net.katsstuff.journeytogensokyo.lib.{LibMod, LibModJ}
+import net.katsstuff.journeytogensokyo.network.JTGPacketHandler
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.fml.common.Mod.EventHandler
-import net.minecraftforge.fml.common.event.{FMLInitializationEvent, FMLPreInitializationEvent}
+import net.minecraftforge.fml.common.event.{FMLInitializationEvent, FMLPreInitializationEvent, FMLServerStartingEvent, FMLServerStoppedEvent}
 import net.minecraftforge.fml.common.network.NetworkRegistry
 import net.minecraftforge.fml.common.{FMLCommonHandler, Mod, SidedProxy}
 import net.minecraftforge.fml.relauncher.Side
@@ -52,10 +53,20 @@ object JourneyToGensokyo {
   @EventHandler
   def init(event: FMLInitializationEvent): Unit = {
     NetworkRegistry.INSTANCE.registerGuiHandler(this, GuiHandler)
+    JTGPacketHandler.load()
 
     proxy.registerDanmakuCrafting()
     proxy.registerEntities()
     proxy.registerCrafting()
     proxy.registerWorldGen()
   }
+
+  @Mod.EventHandler
+  def serverStarting(event: FMLServerStartingEvent): Unit = {
+    proxy.serverStarting(event)
+  }
+
+  @Mod.EventHandler
+  def serverStopped(event: FMLServerStoppedEvent): Unit =
+    proxy.serverStopped(event)
 }

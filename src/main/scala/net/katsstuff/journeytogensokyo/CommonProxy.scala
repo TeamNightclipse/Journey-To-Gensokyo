@@ -31,6 +31,7 @@ import net.minecraft.util.ResourceLocation
 import net.minecraft.world.biome.Biome
 import net.minecraftforge.common.BiomeDictionary
 import net.minecraftforge.event.RegistryEvent
+import net.minecraftforge.fml.common.event.{FMLServerStartingEvent, FMLServerStoppedEvent}
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.registry.{EntityRegistry, GameRegistry}
 import net.minecraftforge.oredict.OreDictionary
@@ -111,6 +112,10 @@ object CommonProxy {
 class CommonProxy {
 
   def registerRenderers(): Unit = {}
+
+  def serverStarting(event: FMLServerStartingEvent): Unit = {}
+
+  def serverStopped(event: FMLServerStoppedEvent): Unit = {}
 
   def registerEntities(): Unit = {
     import BiomeDictionary.{Type => BiomeType}

@@ -12,6 +12,7 @@ import scala.reflect.ClassTag
 
 import net.katsstuff.journeytogensokyo.CommonProxy
 import net.katsstuff.journeytogensokyo.client.render.{RenderFairy, RenderHellRaven, RenderPhantom, RenderTenguCrow}
+import net.katsstuff.journeytogensokyo.client.handler.ClientDialogueHandler
 import net.minecraft.block.Block
 import net.minecraft.client.renderer.block.model.{ModelResourceLocation => MRL}
 import net.minecraft.client.renderer.entity.{Render, RenderManager}
@@ -19,8 +20,11 @@ import net.minecraft.entity.Entity
 import net.minecraft.item.Item
 import net.minecraftforge.client.event.ModelRegistryEvent
 import net.minecraftforge.client.model.ModelLoader
+import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.fml.client.registry.{IRenderFactory, RenderingRegistry}
+import net.minecraftforge.fml.common.event.{FMLServerStartingEvent, FMLServerStoppedEvent}
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
+import net.minecraftforge.fml.common.network.FMLNetworkEvent.{ClientConnectedToServerEvent, ClientDisconnectionFromServerEvent}
 
 object ClientProxy {
 
@@ -61,12 +65,30 @@ object ClientProxy {
 
 class ClientProxy extends CommonProxy {
 
+  val dialogueHandler = new ClientDialogueHandler
+
   override def registerRenderers(): Unit = {
     registerEntityRenderer(new RenderFairy(_))
     registerEntityRenderer(new RenderTenguCrow(_))
     registerEntityRenderer(new RenderHellRaven(_))
     registerEntityRenderer(new RenderPhantom(_))
+
+    MinecraftForge.EVENT_BUS.register(dialogueHandler)
   }
+
+  override def serverStarting(event: FMLServerStartingEvent): Unit =
+    dialogueHandler.refresh()
+
+  override def serverStopped(event: FMLServerStoppedEvent): Unit =
+    dialogueHandler.refresh()
+
+  @SubscribeEvent
+  def onJoined(event: ClientConnectedToServerEvent): Unit =
+    dialogueHandler.refresh()
+
+  @SubscribeEvent
+  def onQuit(event: ClientDisconnectionFromServerEvent): Unit =
+    dialogueHandler.refresh()
 
   def registerEntityRenderer[A <: Entity: ClassTag](f: RenderManager => Render[A]): Unit = {
     val factory: IRenderFactory[A] = manager => f(manager)
