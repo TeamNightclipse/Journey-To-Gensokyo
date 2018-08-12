@@ -21,151 +21,26 @@ public class ConfigHandler {
 
 	public static class Spawns {
 
-		public Fairy fairy = new Fairy();
-		public TenguCrow tenguCrow = new TenguCrow();
-		public HellRaven hellRaven = new HellRaven();
-		public Phantom phantom = new Phantom();
+		public SpawnEntry fairy = new SpawnEntry(15, 1, 3, 100, 3);
+		public SpawnEntry tenguCrow = new SpawnEntry(5, 1, 2, 100, 2);
+		public SpawnEntry hellRaven = new SpawnEntry(10, 1, 2, 100, 2);
+		public SpawnEntry phantom = new SpawnEntry(10, 1, 2, 100, 2);
 
-		public static class Fairy implements SpawnEntry {
-			public int weightedProbability = 15;
-			public int minAmount = 1;
-			public int maxAmount = 3;
-			public int lastProbability = 100;
-			public int maxInChunk = 3;
+		public static class SpawnEntry {
 
-			@Override
-			public int weightedProbability() {
-				return weightedProbability;
+			public int weightedProbability;
+			public int minAmount;
+			public int maxAmount;
+			public int lastProbability;
+			public int maxInChunk;
+
+			public SpawnEntry(int weightedProbability, int minAmount, int maxAmount, int lastProbability, int maxInChunk) {
+				this.weightedProbability = weightedProbability;
+				this.minAmount = minAmount;
+				this.maxAmount = maxAmount;
+				this.lastProbability = lastProbability;
+				this.maxInChunk = maxInChunk;
 			}
-
-			@Override
-			public int minAmount() {
-				return minAmount;
-			}
-
-			@Override
-			public int maxAmount() {
-				return maxAmount;
-			}
-
-			@Override
-			public int lastProbability() {
-				return lastProbability;
-			}
-
-			@Override
-			public int maxInChunk() {
-				return maxInChunk;
-			}
-		}
-
-		public static class TenguCrow implements SpawnEntry {
-			public int weightedProbability = 5;
-			public int minAmount = 1;
-			public int maxAmount = 2;
-			public int lastProbability = 100;
-			public int maxInChunk = 2;
-
-			@Override
-			public int weightedProbability() {
-				return weightedProbability;
-			}
-
-			@Override
-			public int minAmount() {
-				return minAmount;
-			}
-
-			@Override
-			public int maxAmount() {
-				return maxAmount;
-			}
-
-			@Override
-			public int lastProbability() {
-				return lastProbability;
-			}
-
-			@Override
-			public int maxInChunk() {
-				return maxInChunk;
-			}
-		}
-
-		public static class HellRaven implements SpawnEntry {
-			public int weightedProbability = 10;
-			public int minAmount = 1;
-			public int maxAmount = 2;
-			public int lastProbability = 100;
-			public int maxInChunk = 2;
-
-			@Override
-			public int weightedProbability() {
-				return weightedProbability;
-			}
-
-			@Override
-			public int minAmount() {
-				return minAmount;
-			}
-
-			@Override
-			public int maxAmount() {
-				return maxAmount;
-			}
-
-			@Override
-			public int lastProbability() {
-				return lastProbability;
-			}
-
-			@Override
-			public int maxInChunk() {
-				return maxInChunk;
-			}
-		}
-
-		public static class Phantom implements SpawnEntry {
-			public int weightedProbability = 10;
-			public int minAmount = 1;
-			public int maxAmount = 3;
-			public int lastProbability = 100;
-			public int maxInChunk = 3;
-
-			@Override
-			public int weightedProbability() {
-				return weightedProbability;
-			}
-
-			@Override
-			public int minAmount() {
-				return minAmount;
-			}
-
-			@Override
-			public int maxAmount() {
-				return maxAmount;
-			}
-
-			@Override
-			public int lastProbability() {
-				return lastProbability;
-			}
-
-			@Override
-			public int maxInChunk() {
-				return maxInChunk;
-			}
-		}
-
-		public interface SpawnEntry {
-
-			int weightedProbability();
-			int minAmount();
-			int maxAmount();
-
-			int lastProbability();
-			int maxInChunk();
 		}
 	}
 

@@ -151,9 +151,9 @@ class CommonProxy {
     ): Unit =
       EntityRegistry.addSpawn(
         clazz,
-        entry.weightedProbability(),
-        entry.minAmount(),
-        entry.maxAmount(),
+        entry.weightedProbability,
+        entry.minAmount,
+        entry.maxAmount,
         creatureType,
         biomesForTypes(biomeTypes: _*): _*
       )
