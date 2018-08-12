@@ -1,5 +1,6 @@
 package net.katsstuff.journeytogensokyo.client.render
-import net.katsstuff.journeytogensokyo.client.model.{ModelReimu, ModelReimu}
+
+import net.katsstuff.journeytogensokyo.client.model.ModelReimu
 import net.katsstuff.journeytogensokyo.entity.living.EntityReimuNPC
 import net.katsstuff.journeytogensokyo.lib.LibMod
 import net.minecraft.client.renderer.entity.{RenderLiving, RenderManager}

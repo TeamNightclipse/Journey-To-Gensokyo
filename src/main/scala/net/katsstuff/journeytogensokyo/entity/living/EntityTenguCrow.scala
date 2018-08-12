@@ -14,16 +14,10 @@ import net.katsstuff.journeytogensokyo.handler.ConfigHandler
 import net.katsstuff.journeytogensokyo.handler.ConfigHandler.Spawns.SpawnEntry
 import net.katsstuff.journeytogensokyo.lib.LibEntityName
 import net.katsstuff.journeytogensokyo.phase.JTGPhases
+import net.katsstuff.teamnightclipse.danmakucore.entity.living.ai.EntityAIWanderHover
 import net.minecraft.block.BlockGrass
 import net.minecraft.block.state.IBlockState
-import net.minecraft.entity.ai.{
-  EntityAIHurtByTarget,
-  EntityAILookIdle,
-  EntityAINearestAttackableTarget,
-  EntityAISwimming,
-  EntityAIWander,
-  EntityAIWatchClosest
-}
+import net.minecraft.entity.ai.{EntityAIHurtByTarget, EntityAILookIdle, EntityAINearestAttackableTarget, EntityAISwimming, EntityAIWander, EntityAIWatchClosest}
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
 import net.minecraft.world.World
@@ -43,7 +37,8 @@ class EntityTenguCrow(_world: World) extends EntityBigBird(_world) {
   override protected def initEntityAI(): Unit = {
     this.tasks.addTask(0, new EntityAISwimming(this))
     this.tasks.addTask(2, new EntityAIMoveRangedTengu(this, 1D, 24F, 18F))
-    this.tasks.addTask(6, new EntityAIWander(this, 1D))
+    this.tasks.addTask(4, new EntityAIWanderHover(this, 1D, 120))
+    this.tasks.addTask(6, new EntityAIWander(this, 1D, 200))
     this.tasks.addTask(6, new EntityAIWatchClosest(this, classOf[EntityPlayer], 24F))
     this.tasks.addTask(7, new EntityAILookIdle(this))
     this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false))

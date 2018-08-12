@@ -1,12 +1,8 @@
 package net.katsstuff.journeytogensokyo.entity.living
 
 import net.katsstuff.journeytogensokyo.handler.DialogueActions
-import net.katsstuff.journeytogensokyo.network.{
-  DialogueSendBlocksPacket,
-  JTGPacketHandler,
-  ServerDialogueButton,
-  ServerDialogueText
-}
+import net.katsstuff.journeytogensokyo.network.{DialogueSendBlocksPacket, JTGPacketHandler, ServerDialogueButton, ServerDialogueText}
+import net.katsstuff.teamnightclipse.danmakucore.entity.living.ai.EntityAIWanderHover
 import net.katsstuff.teamnightclipse.danmakucore.entity.living.{EntityDanmakuCreature, TouhouSpecies}
 import net.minecraft.entity.INpc
 import net.minecraft.entity.ai.{EntityAILookIdle, EntityAISwimming, EntityAIWander, EntityAIWatchClosest}
@@ -25,7 +21,8 @@ class EntityReimuNPC(_world: World) extends EntityDanmakuCreature(_world) with I
 
   override def initEntityAI(): Unit = {
     tasks.addTask(0, new EntityAISwimming(this))
-    tasks.addTask(4, new EntityAIWander(this, 1D))
+    tasks.addTask(4, new EntityAIWander(this, 1D, 120))
+    tasks.addTask(4, new EntityAIWanderHover(this, 1D, 140))
     tasks.addTask(6, new EntityAIWatchClosest(this, classOf[EntityPlayer], 16F))
     tasks.addTask(7, new EntityAILookIdle(this))
   }

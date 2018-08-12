@@ -9,7 +9,7 @@
 package net.katsstuff.journeytogensokyo.entity.living
 
 import net.katsstuff.teamnightclipse.danmakucore.entity.living.TouhouSpecies
-import net.katsstuff.teamnightclipse.danmakucore.entity.living.ai.EntityAIMoveRanged
+import net.katsstuff.teamnightclipse.danmakucore.entity.living.ai.{EntityAIMoveRanged, EntityAIWanderHover}
 import net.katsstuff.journeytogensokyo.phase.JTGPhases
 import net.minecraft.entity.EnumCreatureAttribute
 import net.minecraft.entity.ai.{EntityAIHurtByTarget, EntityAILookIdle, EntityAINearestAttackableTarget, EntityAISwimming, EntityAIWander}
@@ -29,8 +29,9 @@ abstract class EntityYinYang(_world: World) extends EntityJTGDanmakuMob(_world) 
   override def initEntityAI(): Unit = {
     this.tasks.addTask(0, new EntityAISwimming(this))
     this.tasks.addTask(3, new EntityAIMoveRanged(this, 1D, 8F, 6F))
-    this.tasks.addTask(4, new EntityAIWander(this, 1D))
-    this.tasks.addTask(5, new EntityAILookIdle(this))
+    this.tasks.addTask(4, new EntityAIWanderHover(this, 1D, 120))
+    this.tasks.addTask(5, new EntityAIWander(this, 1D, 150))
+    this.tasks.addTask(6, new EntityAILookIdle(this))
     this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false))
     this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, classOf[EntityPlayer], true))
   }

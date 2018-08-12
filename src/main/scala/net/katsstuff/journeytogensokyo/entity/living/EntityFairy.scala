@@ -12,7 +12,7 @@ import java.lang.{Boolean => JBoolean}
 import java.util.Random
 
 import net.katsstuff.teamnightclipse.danmakucore.entity.living.TouhouSpecies
-import net.katsstuff.teamnightclipse.danmakucore.entity.living.ai.EntityAIMoveRanged
+import net.katsstuff.teamnightclipse.danmakucore.entity.living.ai.{EntityAIMoveRanged, EntityAIWanderHover}
 import net.katsstuff.journeytogensokyo.entity.living.ai.{EntityAIFollowFriend, EntityAITemptStack}
 import net.katsstuff.journeytogensokyo.handler.ConfigHandler
 import net.katsstuff.journeytogensokyo.handler.ConfigHandler.Spawns.SpawnEntry
@@ -22,14 +22,7 @@ import net.minecraft.block.BlockFlower
 import net.minecraft.block.material.Material
 import net.minecraft.block.state.IBlockState
 import net.minecraft.entity.IEntityLivingData
-import net.minecraft.entity.ai.{
-  EntityAIHurtByTarget,
-  EntityAILookIdle,
-  EntityAINearestAttackableTarget,
-  EntityAISwimming,
-  EntityAIWander,
-  EntityAIWatchClosest
-}
+import net.minecraft.entity.ai.{EntityAIHurtByTarget, EntityAILookIdle, EntityAINearestAttackableTarget, EntityAISwimming, EntityAIWander, EntityAIWatchClosest}
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.{Item, ItemStack}
 import net.minecraft.nbt.NBTTagCompound
@@ -118,7 +111,8 @@ class EntityFairy(_world: World) extends EntityForm(_world) with EntityIsCallabl
     tasks.addTask(0, new EntityAISwimming(this))
     tasks.addTask(1, aiTempt)
     tasks.addTask(2, new EntityAIMoveRanged(this, 1D, 16F, 12F))
-    tasks.addTask(6, new EntityAIWander(this, 1D))
+    tasks.addTask(4, new EntityAIWander(this, 1D, 120))
+    tasks.addTask(6, new EntityAIWanderHover(this, 1D, 150))
     tasks.addTask(6, new EntityAIWatchClosest(this, classOf[EntityPlayer], 16F))
     tasks.addTask(7, new EntityAILookIdle(this))
     targetTasks.addTask(1, new EntityAIHurtByTarget(this, false))

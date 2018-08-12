@@ -9,7 +9,7 @@
 package net.katsstuff.journeytogensokyo.entity.living
 
 import net.katsstuff.teamnightclipse.danmakucore.entity.living.TouhouSpecies
-import net.katsstuff.teamnightclipse.danmakucore.entity.living.ai.EntityAIMoveRanged
+import net.katsstuff.teamnightclipse.danmakucore.entity.living.ai.{EntityAIMoveRanged, EntityAIWanderHover}
 import net.katsstuff.journeytogensokyo.handler.ConfigHandler
 import net.katsstuff.journeytogensokyo.handler.ConfigHandler.Spawns
 import net.katsstuff.journeytogensokyo.lib.LibEntityName
@@ -66,7 +66,8 @@ class EntityPhantom(_world: World) extends EntityForm(_world) with EntityIsAlly 
     //TODO this.tasks.addTask(2, new EntityAIRestrictSun(this))
     this.tasks.addTask(3, new EntityAIFleeSun(this, 1D))
     this.tasks.addTask(4, new EntityAIMoveRanged(this, 1D, 16F, 12F))
-    this.tasks.addTask(6, new EntityAIWander(this, 1D))
+    this.tasks.addTask(5, new EntityAIWanderHover(this, 1D, 120))
+    this.tasks.addTask(6, new EntityAIWander(this, 1D, 150))
     this.tasks.addTask(7, new EntityAILookIdle(this))
     this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false))
     this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, classOf[EntityPlayer], true))
