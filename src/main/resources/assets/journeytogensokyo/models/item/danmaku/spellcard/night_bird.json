@@ -1,0 +1,6 @@
+{
+  "parent": "danmakucore:item/danmaku/spellcard/spellcard_base",
+  "textures": {
+	"1": "journeytogensokyo:items/spellcard/night_bird"
+  }
+}

@@ -31,7 +31,24 @@ crafting.danmaku.delay=Delay
 crafting.danmaku.end=End
 crafting.danmaku.scoreCost=Score cost
 
+#Entities
 entity.tengu_crow.name=Crow Tengu
 entity.hell_raven.name=Hell raven
 entity.fairy.name=Fairy
 entity.phantom.name=Phantom
+entity.reimu_npc.name=Reimu NPC
+entity.rumia_easy.name=Rumia
+
+#Spellcard item names
+item.spellcard.spellcard.journeytogensokyo.demarcation.name=Spellcard: Darkness Sign "Demarcation"
+item.spellcard.spellcard.journeytogensokyo.moonlight_ray.name=Spellcard: Moon Sign "Moonlight Ray"
+item.spellcard.spellcard.journeytogensokyo.night_bird.name=Spellcard: Night Sign "Night Bird"
+item.spellcard.spellcard.journeytogensokyo.mesh_light_darkness.name=Spellcard: Boundary "Mesh of Light and Darkness"
+item.spellcard.spellcard.journeytogensokyo.curse_dreams_reality.name=Spellcard: Boundary "Curse of Dreams and Reality"
+
+#Spellcard names
+spellcard.journeytogensokyo.demarcation=Darkness Sign "Demarcation"
+spellcard.journeytogensokyo.moonlight_ray=Moon Sign "Moonlight Ray"
+spellcard.journeytogensokyo.night_bird=Night Sign "Night Bird"
+spellcard.journeytogensokyo.mesh_light_darkness=Boundary "Mesh of Light and Darkness"
+spellcard.journeytogensokyo.curse_dreams_reality=Boundary "Curse of Dreams and Reality"

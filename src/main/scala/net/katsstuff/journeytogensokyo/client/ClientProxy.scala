@@ -12,7 +12,7 @@ import scala.reflect.ClassTag
 
 import net.katsstuff.journeytogensokyo.CommonProxy
 import net.katsstuff.journeytogensokyo.client.handler.ClientDialogueHandler
-import net.katsstuff.journeytogensokyo.client.render.{RenderFairy, RenderHellRaven, RenderPhantom, RenderReimu, RenderTenguCrow}
+import net.katsstuff.journeytogensokyo.client.render.{RenderFairy, RenderHellRaven, RenderPhantom, RenderReimu, RenderRumia, RenderTenguCrow}
 import net.minecraft.block.Block
 import net.minecraft.client.renderer.block.model.{ModelResourceLocation => MRL}
 import net.minecraft.client.renderer.entity.{Render, RenderManager}
@@ -73,6 +73,7 @@ class ClientProxy extends CommonProxy {
     registerEntityRenderer(new RenderHellRaven(_))
     registerEntityRenderer(new RenderPhantom(_))
     registerEntityRenderer(new RenderReimu(_))
+    registerEntityRenderer(new RenderRumia(_))
 
     MinecraftForge.EVENT_BUS.register(dialogueHandler)
   }

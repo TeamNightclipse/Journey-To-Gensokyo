@@ -14,4 +14,8 @@ public class LibPhaseName {
 	public static final String StageEnemy = "stage_enemy";
 	public static final String Tengu = "tengu";
 	public static final String HellRaven = "hell_raven";
+
+	public static final String RumiaEasyWarmup1 = "rumiaeasy_warmup1";
+	public static final String RumiaEasyWarmup2 = "rumiaeasy_warmup2";
+	public static final String RumiaEasyWarmup3 = "rumiaeasy_warmup3";
 }

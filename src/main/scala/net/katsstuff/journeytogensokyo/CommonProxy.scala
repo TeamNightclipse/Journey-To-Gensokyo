@@ -16,12 +16,18 @@ import net.katsstuff.teamnightclipse.danmakucore.lib.data.{LibForms, LibSubEntit
 import net.katsstuff.teamnightclipse.danmakucore.scalastuff.DanmakuHelper
 import net.katsstuff.journeytogensokyo.api.{JourneyToGensokyoAPI => JTGAPI}
 import net.katsstuff.journeytogensokyo.block.{BlockDanOre, BlockDanmakuCrafting, JTGBlocks}
+import net.katsstuff.journeytogensokyo.entity.living.boss.EntityRumiaEasy
+import net.katsstuff.journeytogensokyo.entity.living.boss.phase.PhaseRumiaEasy
 import net.katsstuff.journeytogensokyo.entity.living.{EntityFairy, EntityHellRaven, EntityPhantom, EntityReimuNPC, EntityTenguCrow}
 import net.katsstuff.journeytogensokyo.handler.ConfigHandler
 import net.katsstuff.journeytogensokyo.item.{ItemJTGBase, JTGItems}
 import net.katsstuff.journeytogensokyo.lib.{LibBlockName, LibEntityName, LibItemName, LibMod, LibPhaseName}
 import net.katsstuff.journeytogensokyo.phase.{PhaseTypeGenericStageEnemy, PhaseTypeHellRaven, PhaseTypeShapeArrow, PhaseTypeTengu}
+import net.katsstuff.journeytogensokyo.spellcard.{SpellcardCurseDreamsReality, SpellcardDemarcation, SpellcardMeshLightDarknes, SpellcardMoonlightRay, SpellcardNightBird}
+import net.katsstuff.journeytogensokyo.subentity.{SubEntityTypeDelayedHoming, SubEntityTypeDelayedRotate}
 import net.katsstuff.journeytogensokyo.worldgen.OreWorldGen
+import net.katsstuff.teamnightclipse.danmakucore.danmaku.subentity.SubEntityType
+import net.katsstuff.teamnightclipse.danmakucore.entity.spellcard.Spellcard
 import net.katsstuff.teamnightclipse.mirror.data.Vector3
 import net.minecraft.block.Block
 import net.minecraft.entity.{Entity, EntityLiving, EnumCreatureType}
@@ -98,12 +104,33 @@ object CommonProxy {
   @SubscribeEvent
   def registerPhases(event: RegistryEvent.Register[PhaseType]): Unit = {
     event.getRegistry.registerAll(
-      new PhaseTypeGenericStageEnemy setRegistryName LibPhaseName.StageEnemy,
-      new PhaseTypeShapeArrow setRegistryName LibPhaseName.ShapeArrow,
-      new PhaseTypeTengu setRegistryName LibPhaseName.Tengu,
-      new PhaseTypeHellRaven setRegistryName LibPhaseName.HellRaven
+      new PhaseTypeGenericStageEnemy().setRegistryName(LibPhaseName.StageEnemy),
+      new PhaseTypeShapeArrow().setRegistryName(LibPhaseName.ShapeArrow),
+      new PhaseTypeTengu().setRegistryName(LibPhaseName.Tengu),
+      new PhaseTypeHellRaven().setRegistryName(LibPhaseName.HellRaven),
+      new PhaseRumiaEasy.Warmup1Type().setRegistryName(LibPhaseName.RumiaEasyWarmup1),
+      new PhaseRumiaEasy.Warmup2Type().setRegistryName(LibPhaseName.RumiaEasyWarmup2),
+      new PhaseRumiaEasy.Warmup3Type().setRegistryName(LibPhaseName.RumiaEasyWarmup3)
     )
   }
+
+  @SubscribeEvent
+  def registerSpellcards(event: RegistryEvent.Register[Spellcard]): Unit = {
+    event.getRegistry.registerAll(
+      new SpellcardMoonlightRay,
+      new SpellcardNightBird,
+      new SpellcardDemarcation,
+      new SpellcardMeshLightDarknes,
+      new SpellcardCurseDreamsReality
+    )
+  }
+
+  @SubscribeEvent
+  def registerSubEntities(event: RegistryEvent.Register[SubEntityType]): Unit =
+    event.getRegistry.registerAll(
+      new SubEntityTypeDelayedHoming,
+      new SubEntityTypeDelayedRotate
+    )
 
   private def itemBlock(block: Block): Item =
     new ItemBlock(block).setRegistryName(block.getRegistryName)
@@ -196,8 +223,19 @@ class CommonProxy {
     registerEntity(classOf[EntityReimuNPC], LibEntityName.ReimuNPC, 4, eggPrimary = 0xBE3E3F, eggSecondary = 0xFCFCFC)
     registerSpawn(
       classOf[EntityReimuNPC],
-      ConfigHandler.spawns.reimu,
+      ConfigHandler.spawns.reimu_npc,
       EnumCreatureType.CREATURE,
+      BiomeType.HILLS,
+      BiomeType.PLAINS,
+      BiomeType.FOREST,
+      BiomeType.MAGICAL
+    )
+
+    registerEntity(classOf[EntityRumiaEasy], LibEntityName.RumiaEasy, 5, eggPrimary = 0xFFFFFF, eggSecondary = 0x000000)
+    registerSpawn(
+      classOf[EntityRumiaEasy],
+      ConfigHandler.spawns.rumia_easy,
+      EnumCreatureType.MONSTER,
       BiomeType.HILLS,
       BiomeType.PLAINS,
       BiomeType.FOREST,
@@ -524,15 +562,15 @@ case class DanmakuRecipeBuilder(
 
   import net.katsstuff.journeytogensokyo.helper.Implicits._
 
-  def withShot(shot: ShotData):     DanmakuRecipeBuilder = copy(shot = shot)
+  def withShot(shot: ShotData): DanmakuRecipeBuilder     = copy(shot = shot)
   def withOreInput(string: String): DanmakuRecipeBuilder = copy(input = Left(string))
-  def withInput(stack: ItemStack):  DanmakuRecipeBuilder = copy(input = Right(stack))
-  def withCost(cost: Int):          DanmakuRecipeBuilder = copy(cost = cost)
-  def withInput(block: Block):      DanmakuRecipeBuilder = withInput(block.toStack)
-  def withInput(item: Item):        DanmakuRecipeBuilder = withInput(item.toStack)
+  def withInput(stack: ItemStack): DanmakuRecipeBuilder  = copy(input = Right(stack))
+  def withCost(cost: Int): DanmakuRecipeBuilder          = copy(cost = cost)
+  def withInput(block: Block): DanmakuRecipeBuilder      = withInput(block.toStack)
+  def withInput(item: Item): DanmakuRecipeBuilder        = withInput(item.toStack)
   def withSpeed(speed: Double): DanmakuRecipeBuilder =
     copy(movement = MovementData(speed, speed, speed, 0D, movement.gravity))
   def withGravity(gravity: Vector3): DanmakuRecipeBuilder = copy(movement = movement.copy(gravity = gravity))
-  def build():                       Unit                 = JTGAPI.addDanmakuRecipe(shot, movement, input.merge, cost)
+  def build(): Unit                                       = JTGAPI.addDanmakuRecipe(shot, movement, input.merge, cost)
 
 }
